@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"reflect"
 	"runtime"
-	"sync"
 	"unsafe"
 )
 
@@ -120,35 +119,6 @@ func (s *_Stack) toCString(src string) alloc {
 	buf[n-1] = 0
 
 	return alloc{Addr: mem, tls: s, size: n}
-}
-
-var heaps sync.Map
-
-//go:noescape
-//go:linkname checkptrBase runtime.checkptrBase
-func checkptrBase(p unsafe.Pointer) uintptr
-
-func (s *_Stack) RequireInHeap(ptr uintptr) {
-	return
-	if ptr < 0x1000000 {
-		return
-	}
-
-	base := checkptrBase(unsafe.Pointer(ptr))
-
-	if base == uintptr(unsafe.Pointer(unsafe.SliceData(s.Stack))) {
-		return
-	}
-
-	if base == uintptr(unsafe.Pointer(unsafe.SliceData(theStack.Stack))) {
-		return
-	}
-
-	if _, ok := s.heap[base]; ok {
-		return
-	}
-
-	fmt.Printf("pointer at %#x not in heap, base: %#x\n", ptr, base)
 }
 
 type alloc struct {

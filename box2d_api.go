@@ -1,8 +1,8 @@
 package b2
 
 import (
-	"runtime"
 	"unsafe"
+	"runtime"
 )
 
 var _ unsafe.Pointer
@@ -467,12 +467,6 @@ func ShapeCastPolygon(input ShapeCastInput, shape Polygon) (r CastOutput) {
 	shapeStack := copyToStack(theStack, shape)
 	defer shapeStack.Free()
 	r = b2ShapeCastPolygon(theStack, inputStack.Addr, shapeStack.Addr)
-	return
-}
-func ComputeHull(points Vec2, count int32) (r1 Hull) {
-	pointsStack := copyToStack(theStack, points)
-	defer pointsStack.Free()
-	r1 = b2ComputeHull(theStack, pointsStack.Addr, count)
 	return
 }
 func ValidateHull(hull Hull) (r uint8) {

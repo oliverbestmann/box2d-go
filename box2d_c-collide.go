@@ -1,8 +1,8 @@
 package b2
 
 import (
-	"reflect"
 	"unsafe"
+	"reflect"
 )
 
 var _ unsafe.Pointer

@@ -980,6 +980,7 @@ func readAPI() API {
 	// we do not really need those, do we?
 	api.Exposed["b2GetMillisecondsAndReset"] = false
 	api.Exposed["b2Hash"] = false
+	api.Exposed["b2ComputeHull"] = false
 
 	for key := range api.Exposed {
 		if strings.Contains(key, "DynamicTree") {

@@ -18,6 +18,24 @@ func init() {
 	b2SetAssertFcn(theStack, __ccgo_fp(b2DefaultAssertFcnGo))
 }
 
+func ComputeHull(points []Vec2) (Hull, bool) {
+	if len(points) > _B2_MAX_POLYGON_VERTICES {
+		return Hull{}, false
+	}
+
+	// copy to array
+	var arr [_B2_MAX_POLYGON_VERTICES]Vec2
+	for idx := range min(len(points), len(arr)) {
+		arr[idx] = points[idx]
+	}
+
+	pArr := copyToStack(theStack, arr)
+	defer pArr.Free()
+
+	hull := b2ComputeHull(theStack, pArr.Addr, int32(len(points)))
+	return hull, hull.Count >= 3
+}
+
 func (b Body) SetName(name string) {
 	nameC := theStack.toCString(name)
 	defer nameC.Free()
