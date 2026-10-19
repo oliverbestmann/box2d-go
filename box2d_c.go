@@ -1,4 +1,4 @@
-// Code generated for linux/arm64 by 'ccgo -verify-types --package-name b2 -D BOX2D_DISABLE_SIMD --predef \n#include <stdbool.h>\n#include <stdint.h>\nbool __builtin___atomic_compare_exchange_n(int32_t *ptr, int32_t *expected, int32_t desired, bool weak, int32_t success_memorder, int32_t failure_memorder);\n --predef \n#include <stddef.h>\n#define aligned_alloc __builtin_aligned_alloc\nextern void* __builtin_aligned_alloc(size_t align, size_t size);\n --prefix-field ｆ -o ../box2d_c.go -I ../box2d-c/include/ ../box2d-c/src/aabb.c ../box2d-c/src/arena_allocator.c ../box2d-c/src/array.c ../box2d-c/src/bitset.c ../box2d-c/src/body.c ../box2d-c/src/broad_phase.c ../box2d-c/src/constraint_graph.c ../box2d-c/src/contact.c ../box2d-c/src/contact_solver.c ../box2d-c/src/core.c ../box2d-c/src/distance.c ../box2d-c/src/distance_joint.c ../box2d-c/src/dynamic_tree.c ../box2d-c/src/geometry.c ../box2d-c/src/hull.c ../box2d-c/src/id_pool.c ../box2d-c/src/island.c ../box2d-c/src/joint.c ../box2d-c/src/manifold.c ../box2d-c/src/math_functions.c ../box2d-c/src/motor_joint.c ../box2d-c/src/mouse_joint.c ../box2d-c/src/mover.c ../box2d-c/src/prismatic_joint.c ../box2d-c/src/revolute_joint.c ../box2d-c/src/sensor.c ../box2d-c/src/shape.c ../box2d-c/src/solver.c ../box2d-c/src/solver_set.c ../box2d-c/src/statics.c ../box2d-c/src/table.c ../box2d-c/src/timer.c ../box2d-c/src/types.c ../box2d-c/src/weld_joint.c ../box2d-c/src/wheel_joint.c ../box2d-c/src/world.c', DO NOT EDIT.
+// Code generated for linux/arm64 by 'ccgo -verify-types --package-name b2 -D BOX2D_DISABLE_SIMD --predef \n#include <stdbool.h>\n#include <stdint.h>\nbool __builtin___atomic_compare_exchange_n(int32_t *ptr, int32_t *expected, int32_t desired, bool weak, int32_t success_memorder, int32_t failure_memorder);\n --predef \n#include <stddef.h>\n#define aligned_alloc __builtin_aligned_alloc\nextern void* __builtin_aligned_alloc(size_t align, size_t size);\n --prefix-field ｆ -o ../box2d_c.go -I ../box2d-c/include/ ../box2d-c/src/aabb.c ../box2d-c/src/arena_allocator.c ../box2d-c/src/array.c ../box2d-c/src/bitset.c ../box2d-c/src/body.c ../box2d-c/src/broad_phase.c ../box2d-c/src/constraint_graph.c ../box2d-c/src/contact.c ../box2d-c/src/contact_solver.c ../box2d-c/src/core.c ../box2d-c/src/distance.c ../box2d-c/src/distance_joint.c ../box2d-c/src/dynamic_tree.c ../box2d-c/src/geometry.c ../box2d-c/src/hull.c ../box2d-c/src/id_pool.c ../box2d-c/src/island.c ../box2d-c/src/joint.c ../box2d-c/src/manifold.c ../box2d-c/src/math_functions.c ../box2d-c/src/motor_joint.c ../box2d-c/src/mouse_joint.c ../box2d-c/src/mover.c ../box2d-c/src/prismatic_joint.c ../box2d-c/src/revolute_joint.c ../box2d-c/src/sensor.c ../box2d-c/src/shape.c ../box2d-c/src/solver.c ../box2d-c/src/solver_set.c ../box2d-c/src/statics.c ../box2d-c/src/table.c ../box2d-c/src/timer.c ../box2d-c/src/types.c ../box2d-c/src/weld_joint.c ../box2d-c/src/wheel_joint.c ../box2d-c/src/world.c csrc/callbacks.c', DO NOT EDIT.
 
 package b2
 
@@ -17638,6 +17638,108 @@ func b2ValidateConnectivity(tls *_Stack, world uintptr) {
 
 func b2ValidateContacts(tls *_Stack, world uintptr) {
 	_ = uint64FromInt64(4)
+}
+
+const _FLT_MAX9 = 3.40282346638528859812e+38
+const _UINT16_MAX2 = 0xffff
+const _UINT64_MAX12 = "0xffffffffffffffffu"
+
+/**@}*/
+
+/**@}*/
+
+func b2go_TaskCallback(tls *_Stack, startIndex int32, endIndex int32, workerIndex uint32, taskContext uintptr) {
+}
+
+type __ccgo_fp__Xb2go_EnqueueTaskCallback_0 = func(*_Stack, int32, int32, uint32, uintptr)
+
+func b2go_EnqueueTaskCallback(tls *_Stack, __ccgo_fp_task uintptr, itemCount int32, minRange int32, taskContext uintptr, userContext uintptr) (r uintptr) {
+	return uintptr(0)
+}
+
+func b2go_FinishTaskCallback(tls *_Stack, userTask uintptr, userContext uintptr) {
+}
+
+func b2go_FrictionCallback(tls *_Stack, frictionA float32, userMaterialIdA int32, frictionB float32, userMaterialIdB int32) (r float32) {
+	return float32FromInt32(0)
+}
+
+func b2go_RestitutionCallback(tls *_Stack, restitutionA float32, userMaterialIdA int32, restitutionB float32, userMaterialIdB int32) (r float32) {
+	return float32FromInt32(0)
+}
+
+func b2go_CustomFilterFcn(tls *_Stack, shapeIdA ShapeId, shapeIdB ShapeId, context uintptr) (r uint8) {
+	return boolUint8(0 != 0)
+}
+
+func b2go_PreSolveFcn(tls *_Stack, shapeIdA ShapeId, shapeIdB ShapeId, manifold uintptr, context uintptr) (r uint8) {
+	return boolUint8(0 != 0)
+}
+
+func b2go_OverlapResultFcn(tls *_Stack, shapeId ShapeId, context uintptr) (r uint8) {
+	return boolUint8(0 != 0)
+}
+
+func b2go_CastResultFcn(tls *_Stack, shapeId ShapeId, point Vec2, normal Vec2, fraction float32, context uintptr) (r float32) {
+	return float32FromInt32(0)
+}
+
+func b2go_AssertFcn(tls *_Stack, condition uintptr, fileName uintptr, lineNumber int32) (r int32) {
+	return 0
+}
+
+func b2go_DrawPolygonFcn(tls *_Stack, vertices uintptr, vertexCount int32, color HexColor, context uintptr) {
+}
+
+func b2go_DrawSolidPolygonFcn(tls *_Stack, transform Transform, vertices uintptr, vertexCount int32, radius float32, color HexColor, context uintptr) {
+}
+
+func b2go_DrawCircleFcn(tls *_Stack, center Vec2, radius float32, color HexColor, context uintptr) {
+}
+
+func b2go_DrawSolidCircleFcn(tls *_Stack, transform Transform, radius float32, color HexColor, context uintptr) {
+}
+
+func b2go_DrawSolidCapsuleFcn(tls *_Stack, p1 Vec2, p2 Vec2, radius float32, color HexColor, context uintptr) {
+}
+
+func b2go_DrawSegmentFcn(tls *_Stack, p1 Vec2, p2 Vec2, color HexColor, context uintptr) {
+}
+
+func b2go_DrawTransformFcn(tls *_Stack, transform Transform, context uintptr) {
+}
+
+func b2go_DrawPointFcn(tls *_Stack, p Vec2, size float32, color HexColor, context uintptr) {
+}
+
+func b2go_DrawStringFcn(tls *_Stack, p Vec2, s uintptr, color HexColor, context uintptr) {
+}
+
+func b2go_check(tls *_Stack) {
+	var assert, castResult, customFilter, enqueueTask, finishTask, friction, overlapResult, preSolve, restitution, task uintptr
+	var draw b2DebugDraw
+	_, _, _, _, _, _, _, _, _, _, _ = assert, castResult, customFilter, draw, enqueueTask, finishTask, friction, overlapResult, preSolve, restitution, task
+	task = __ccgo_fp(b2go_TaskCallback)
+	enqueueTask = __ccgo_fp(b2go_EnqueueTaskCallback)
+	finishTask = __ccgo_fp(b2go_FinishTaskCallback)
+	friction = __ccgo_fp(b2go_FrictionCallback)
+	restitution = __ccgo_fp(b2go_RestitutionCallback)
+	customFilter = __ccgo_fp(b2go_CustomFilterFcn)
+	preSolve = __ccgo_fp(b2go_PreSolveFcn)
+	overlapResult = __ccgo_fp(b2go_OverlapResultFcn)
+	castResult = __ccgo_fp(b2go_CastResultFcn)
+	assert = __ccgo_fp(b2go_AssertFcn)
+	draw = b2DebugDraw{
+		DrawPolygonFcn:      __ccgo_fp(b2go_DrawPolygonFcn),
+		DrawSolidPolygonFcn: __ccgo_fp(b2go_DrawSolidPolygonFcn),
+		DrawCircleFcn:       __ccgo_fp(b2go_DrawCircleFcn),
+		DrawSolidCircleFcn:  __ccgo_fp(b2go_DrawSolidCircleFcn),
+		DrawSolidCapsuleFcn: __ccgo_fp(b2go_DrawSolidCapsuleFcn),
+		DrawSegmentFcn:      __ccgo_fp(b2go_DrawSegmentFcn),
+		DrawTransformFcn:    __ccgo_fp(b2go_DrawTransformFcn),
+		DrawPointFcn:        __ccgo_fp(b2go_DrawPointFcn),
+		DrawStringFcn:       __ccgo_fp(b2go_DrawStringFcn),
+	}
 }
 
 func __ccgo_fp(f interface{}) uintptr {

@@ -115,3 +115,12 @@ which `unsafeptr` reports everywhere. This cannot be fixed without changing how 
 
 The tests use `-race` only with checkptr disabled for the same reason:
 `go test -race -gcflags=all=-d=checkptr=0 ./...`.
+
+### Updating box2d
+
+- Callbacks: box2d only sees a `uintptr` for Go callbacks, so a changed signature would corrupt memory at runtime.
+  `transpile/csrc/callbacks.c` repeats every callback signature the Go code implements, and `./transpile.sh`
+  checks it against the box2d headers with the host C compiler. `callbacks.go` checks the Go closures against
+  the transpiled result. Update both when the build fails there.
+- Determinism: take the expected hash and sleep step from box2d's `test/test_determinism.c` and update
+  `determinism_test.go`.

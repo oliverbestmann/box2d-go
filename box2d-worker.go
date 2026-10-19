@@ -17,8 +17,8 @@ func EnableConcurrency(def *WorldDef) {
 	startWorker()
 
 	def.WorkerCount = 8
-	def.EnqueueTask = __ccgo_fp(enqueueTask)
-	def.FinishTask = __ccgo_fp(finishTask)
+	def.EnqueueTask = __ccgo_fp(enqueueTaskCallback(enqueueTask))
+	def.FinishTask = __ccgo_fp(finishTaskCallback(finishTask))
 }
 
 type task struct {
@@ -66,11 +66,9 @@ func work(stack *_Stack, workerId uint32, step *taskStep) {
 
 	task := step.task
 
-	// int startIndex, int endIndex, uint32_t workerIndex, void* taskContext
-	type TaskCallback func(*_Stack, int32, int32, uint32, uintptr)
 	type FunctionPtr struct{ uintptr }
 
-	(*(*TaskCallback)(unsafe.Pointer(&FunctionPtr{task.taskCallback})))(stack, step.start, step.end, workerId, task.taskContext)
+	(*(*taskCallback)(unsafe.Pointer(&FunctionPtr{task.taskCallback})))(stack, step.start, step.end, workerId, task.taskContext)
 
 	if task.remainingSteps.Add(-1) == 0 {
 		close(task.doneSignal)

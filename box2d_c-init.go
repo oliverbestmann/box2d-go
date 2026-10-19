@@ -3547,7 +3547,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactData"
+	// struct "b2ContactBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v57), uintptr(128); g != e {
 		panic(g)
 	}
@@ -6931,7 +6931,7 @@ func init() {
 		PrevKey int32
 		NextKey int32
 	}
-	// struct "b2JointEdge"
+	// struct "b2ContactEdge"
 	if g, e := unsafe.Sizeof(v20), uintptr(12); g != e {
 		panic(g)
 	}
@@ -12970,7 +12970,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorBeginTouchEvent"
+	// struct "b2SensorEndTouchEvent"
 	if g, e := unsafe.Sizeof(v95), uintptr(16); g != e {
 		panic(g)
 	}
@@ -13371,7 +13371,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactData"
+	// struct "b2ContactBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v100), uintptr(128); g != e {
 		panic(g)
 	}
@@ -18925,7 +18925,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ShapeId"
+	// struct "b2BodyId"
 	if g, e := unsafe.Sizeof(v48), uintptr(8); g != e {
 		panic(g)
 	}
@@ -20571,7 +20571,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorBeginTouchEvent"
+	// struct "b2SensorEndTouchEvent"
 	if g, e := unsafe.Sizeof(v81), uintptr(16); g != e {
 		panic(g)
 	}
@@ -20800,7 +20800,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactData"
+	// struct "b2ContactBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v84), uintptr(128); g != e {
 		panic(g)
 	}
@@ -35028,7 +35028,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ChainId"
+	// struct "b2JointId"
 	if g, e := unsafe.Sizeof(v52), uintptr(8); g != e {
 		panic(g)
 	}
@@ -37049,7 +37049,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactData"
+	// struct "b2ContactBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v89), uintptr(128); g != e {
 		panic(g)
 	}
@@ -42414,7 +42414,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2BodyId"
+	// struct "b2JointId"
 	if g, e := unsafe.Sizeof(v55), uintptr(8); g != e {
 		panic(g)
 	}
@@ -44744,7 +44744,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactData"
+	// struct "b2ContactBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v90), uintptr(128); g != e {
 		panic(g)
 	}
@@ -52127,7 +52127,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2JointId"
+	// struct "b2BodyId"
 	if g, e := unsafe.Sizeof(v50), uintptr(8); g != e {
 		panic(g)
 	}
@@ -55214,7 +55214,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorBeginTouchEvent"
+	// struct "b2SensorEndTouchEvent"
 	if g, e := unsafe.Sizeof(v88), uintptr(16); g != e {
 		panic(g)
 	}
@@ -55317,7 +55317,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactBeginTouchEvent"
+	// struct "b2ContactData"
 	if g, e := unsafe.Sizeof(v90), uintptr(128); g != e {
 		panic(g)
 	}
@@ -60666,7 +60666,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorBeginTouchEvent"
+	// struct "b2SensorEndTouchEvent"
 	if g, e := unsafe.Sizeof(v60), uintptr(16); g != e {
 		panic(g)
 	}
@@ -60769,7 +60769,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactData"
+	// struct "b2ContactBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v62), uintptr(128); g != e {
 		panic(g)
 	}
@@ -64475,7 +64475,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ShapeId"
+	// struct "b2ChainId"
 	if g, e := unsafe.Sizeof(v32), uintptr(8); g != e {
 		panic(g)
 	}
@@ -65721,7 +65721,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorBeginTouchEvent"
+	// struct "b2SensorEndTouchEvent"
 	if g, e := unsafe.Sizeof(v60), uintptr(16); g != e {
 		panic(g)
 	}
@@ -72739,7 +72739,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2JointId"
+	// struct "b2ShapeId"
 	if g, e := unsafe.Sizeof(v51), uintptr(8); g != e {
 		panic(g)
 	}
@@ -76171,7 +76171,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactBeginTouchEvent"
+	// struct "b2ContactData"
 	if g, e := unsafe.Sizeof(v93), uintptr(128); g != e {
 		panic(g)
 	}
@@ -82114,7 +82114,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ShapeId"
+	// struct "b2BodyId"
 	if g, e := unsafe.Sizeof(v54), uintptr(8); g != e {
 		panic(g)
 	}
@@ -85238,7 +85238,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v95), uintptr(16); g != e {
 		panic(g)
 	}
@@ -93060,7 +93060,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ChainId"
+	// struct "b2ShapeId"
 	if g, e := unsafe.Sizeof(v49), uintptr(8); g != e {
 		panic(g)
 	}
@@ -96101,7 +96101,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v86), uintptr(16); g != e {
 		panic(g)
 	}
@@ -101623,7 +101623,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ShapeId"
+	// struct "b2ChainId"
 	if g, e := unsafe.Sizeof(v49), uintptr(8); g != e {
 		panic(g)
 	}
@@ -104664,7 +104664,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorBeginTouchEvent"
+	// struct "b2SensorEndTouchEvent"
 	if g, e := unsafe.Sizeof(v86), uintptr(16); g != e {
 		panic(g)
 	}
@@ -111816,7 +111816,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2BodyId"
+	// struct "b2JointId"
 	if g, e := unsafe.Sizeof(v50), uintptr(8); g != e {
 		panic(g)
 	}
@@ -114903,7 +114903,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v88), uintptr(16); g != e {
 		panic(g)
 	}
@@ -123524,7 +123524,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v88), uintptr(16); g != e {
 		panic(g)
 	}
@@ -123627,7 +123627,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactData"
+	// struct "b2ContactBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v90), uintptr(128); g != e {
 		panic(g)
 	}
@@ -136404,7 +136404,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2BodyId"
+	// struct "b2ShapeId"
 	if g, e := unsafe.Sizeof(v49), uintptr(8); g != e {
 		panic(g)
 	}
@@ -138070,7 +138070,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorBeginTouchEvent"
+	// struct "b2SensorEndTouchEvent"
 	if g, e := unsafe.Sizeof(v82), uintptr(16); g != e {
 		panic(g)
 	}
@@ -144032,7 +144032,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2BodyId"
+	// struct "b2JointId"
 	if g, e := unsafe.Sizeof(v58), uintptr(8); g != e {
 		panic(g)
 	}
@@ -147296,7 +147296,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v99), uintptr(16); g != e {
 		panic(g)
 	}
@@ -147671,7 +147671,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactBeginTouchEvent"
+	// struct "b2ContactData"
 	if g, e := unsafe.Sizeof(v103), uintptr(128); g != e {
 		panic(g)
 	}
@@ -153347,7 +153347,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ShapeId"
+	// struct "b2BodyId"
 	if g, e := unsafe.Sizeof(v51), uintptr(8); g != e {
 		panic(g)
 	}
@@ -156779,7 +156779,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactData"
+	// struct "b2ContactBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v93), uintptr(128); g != e {
 		panic(g)
 	}
@@ -158859,7 +158859,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2JointId"
+	// struct "b2ChainId"
 	if g, e := unsafe.Sizeof(v12), uintptr(8); g != e {
 		panic(g)
 	}
@@ -163180,7 +163180,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2JointId"
+	// struct "b2ChainId"
 	if g, e := unsafe.Sizeof(v29), uintptr(8); g != e {
 		panic(g)
 	}
@@ -169221,7 +169221,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2BodyId"
+	// struct "b2ShapeId"
 	if g, e := unsafe.Sizeof(v49), uintptr(8); g != e {
 		panic(g)
 	}
@@ -172262,7 +172262,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v86), uintptr(16); g != e {
 		panic(g)
 	}
@@ -172365,7 +172365,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactData"
+	// struct "b2ContactBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v88), uintptr(128); g != e {
 		panic(g)
 	}
@@ -177788,7 +177788,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2JointId"
+	// struct "b2BodyId"
 	if g, e := unsafe.Sizeof(v50), uintptr(8); g != e {
 		panic(g)
 	}
@@ -180875,7 +180875,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorBeginTouchEvent"
+	// struct "b2SensorEndTouchEvent"
 	if g, e := unsafe.Sizeof(v88), uintptr(16); g != e {
 		panic(g)
 	}
@@ -184052,7 +184052,7 @@ func init() {
 		PrevKey int32
 		NextKey int32
 	}
-	// struct "b2ContactEdge"
+	// struct "b2JointEdge"
 	if g, e := unsafe.Sizeof(v24), uintptr(12); g != e {
 		panic(g)
 	}
@@ -186957,7 +186957,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ShapeId"
+	// struct "b2JointId"
 	if g, e := unsafe.Sizeof(v58), uintptr(8); g != e {
 		panic(g)
 	}
@@ -192700,6 +192700,4586 @@ func init() {
 		SimdConstraints     uintptr
 	}
 	if g, e := unsafe.Sizeof(v138), uintptr(8); g != e {
+		panic(g)
+	}
+}
+
+func init() {
+	var v0 [12]int32
+	if g, e := unsafe.Sizeof(v0), uintptr(48); g != e {
+		panic(g)
+	}
+	var v1 [2]ManifoldPoint
+	if g, e := unsafe.Sizeof(v1), uintptr(96); g != e {
+		panic(g)
+	}
+	var v2 [3]uint8_t
+	if g, e := unsafe.Sizeof(v2), uintptr(3); g != e {
+		panic(g)
+	}
+	var v3 [8]Vec2
+	if g, e := unsafe.Sizeof(v3), uintptr(64); g != e {
+		panic(g)
+	}
+	var v4 struct {
+		DrawPolygonFcn       uintptr
+		DrawSolidPolygonFcn  uintptr
+		DrawCircleFcn        uintptr
+		DrawSolidCircleFcn   uintptr
+		DrawSolidCapsuleFcn  uintptr
+		DrawSegmentFcn       uintptr
+		DrawTransformFcn     uintptr
+		DrawPointFcn         uintptr
+		DrawStringFcn        uintptr
+		DrawingBounds        AABB
+		UseDrawingBounds     uint8
+		DrawShapes           uint8
+		DrawJoints           uint8
+		DrawJointExtras      uint8
+		DrawBounds           uint8
+		DrawMass             uint8
+		DrawBodyNames        uint8
+		DrawContacts         uint8
+		DrawGraphColors      uint8
+		DrawContactNormals   uint8
+		DrawContactImpulses  uint8
+		DrawContactFeatures  uint8
+		DrawFrictionImpulses uint8
+		DrawIslands          uint8
+		Context              uintptr
+	}
+	// struct "b2DebugDraw"
+	if g, e := unsafe.Sizeof(v4), uintptr(112); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawPolygonFcn), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawPolygonFcn), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawPolygonFcn)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawSolidPolygonFcn), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawSolidPolygonFcn), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawSolidPolygonFcn)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawCircleFcn), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawCircleFcn), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawCircleFcn)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawSolidCircleFcn), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawSolidCircleFcn), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawSolidCircleFcn)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawSolidCapsuleFcn), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawSolidCapsuleFcn), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawSolidCapsuleFcn)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawSegmentFcn), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawSegmentFcn), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawSegmentFcn)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawTransformFcn), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawTransformFcn), uintptr(48); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawTransformFcn)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawPointFcn), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawPointFcn), uintptr(56); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawPointFcn)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawStringFcn), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawStringFcn), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawStringFcn)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawingBounds), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawingBounds), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawingBounds)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.UseDrawingBounds), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.UseDrawingBounds), uintptr(88); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.UseDrawingBounds)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawShapes), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawShapes), uintptr(89); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawShapes)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawJoints), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawJoints), uintptr(90); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawJoints)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawJointExtras), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawJointExtras), uintptr(91); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawJointExtras)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawBounds), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawBounds), uintptr(92); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawBounds)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawMass), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawMass), uintptr(93); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawMass)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawBodyNames), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawBodyNames), uintptr(94); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawBodyNames)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawContacts), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawContacts), uintptr(95); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawContacts)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawGraphColors), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawGraphColors), uintptr(96); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawGraphColors)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawContactNormals), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawContactNormals), uintptr(97); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawContactNormals)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawContactImpulses), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawContactImpulses), uintptr(98); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawContactImpulses)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawContactFeatures), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawContactFeatures), uintptr(99); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawContactFeatures)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawFrictionImpulses), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawFrictionImpulses), uintptr(100); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawFrictionImpulses)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.DrawIslands), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawIslands), uintptr(101); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.DrawIslands)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v4.Context), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.Context), uintptr(104); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v4.Context)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	var v5 struct {
+		ｆ__ll int64
+		ｆ__ld float64
+	}
+	if g, e := unsafe.Sizeof(v5), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v5.ｆ__ll), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v5.ｆ__ll), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v5.ｆ__ll)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v5.ｆ__ld), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v5.ｆ__ld), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v5.ｆ__ld)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	var v6 struct {
+		BeginEvents uintptr
+		EndEvents   uintptr
+		BeginCount  int32
+		EndCount    int32
+	}
+	// struct "b2SensorEvents"
+	if g, e := unsafe.Sizeof(v6), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v6.BeginEvents), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v6.BeginEvents), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v6.BeginEvents)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v6.EndEvents), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v6.EndEvents), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v6.EndEvents)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v6.BeginCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v6.BeginCount), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v6.BeginCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v6.EndCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v6.EndCount), uintptr(20); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v6.EndCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v7 struct {
+		BeginEvents uintptr
+		EndEvents   uintptr
+		HitEvents   uintptr
+		BeginCount  int32
+		EndCount    int32
+		HitCount    int32
+	}
+	// struct "b2ContactEvents"
+	if g, e := unsafe.Sizeof(v7), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v7.BeginEvents), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v7.BeginEvents), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v7.BeginEvents)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v7.EndEvents), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v7.EndEvents), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v7.EndEvents)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v7.HitEvents), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v7.HitEvents), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v7.HitEvents)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v7.BeginCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v7.BeginCount), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v7.BeginCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v7.EndCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v7.EndCount), uintptr(28); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v7.EndCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v7.HitCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v7.HitCount), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v7.HitCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v8 struct {
+		BodyCount        int32
+		ShapeCount       int32
+		ContactCount     int32
+		JointCount       int32
+		IslandCount      int32
+		StackUsed        int32
+		StaticTreeHeight int32
+		TreeHeight       int32
+		ByteCount        int32
+		TaskCount        int32
+		ColorCounts      [12]int32
+	}
+	// struct "b2Counters"
+	if g, e := unsafe.Sizeof(v8), uintptr(88); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v8.BodyCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.BodyCount), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.BodyCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v8.ShapeCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.ShapeCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.ShapeCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v8.ContactCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.ContactCount), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.ContactCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v8.JointCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.JointCount), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.JointCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v8.IslandCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.IslandCount), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.IslandCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v8.StackUsed), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.StackUsed), uintptr(20); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.StackUsed)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v8.StaticTreeHeight), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.StaticTreeHeight), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.StaticTreeHeight)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v8.TreeHeight), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.TreeHeight), uintptr(28); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.TreeHeight)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v8.ByteCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.ByteCount), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.ByteCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v8.TaskCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.TaskCount), uintptr(36); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.TaskCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v8.ColorCounts), uintptr(48); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.ColorCounts), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v8.ColorCounts)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v9 struct {
+		BodyIdA          BodyId
+		BodyIdB          BodyId
+		LinearOffset     Vec2
+		AngularOffset    float32
+		MaxForce         float32
+		MaxTorque        float32
+		CorrectionFactor float32
+		CollideConnected uint8
+		UserData         uintptr
+		InternalValue    int32
+	}
+	// struct "b2MotorJointDef"
+	if g, e := unsafe.Sizeof(v9), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v9.BodyIdA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.BodyIdA), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.BodyIdA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v9.BodyIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.BodyIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.BodyIdB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v9.LinearOffset), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.LinearOffset), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.LinearOffset)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v9.AngularOffset), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.AngularOffset), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.AngularOffset)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v9.MaxForce), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.MaxForce), uintptr(28); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.MaxForce)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v9.MaxTorque), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.MaxTorque), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.MaxTorque)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v9.CorrectionFactor), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.CorrectionFactor), uintptr(36); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.CorrectionFactor)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v9.CollideConnected), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.CollideConnected), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.CollideConnected)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v9.UserData), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.UserData), uintptr(48); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.UserData)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v9.InternalValue), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.InternalValue), uintptr(56); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v9.InternalValue)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v10 struct {
+		BodyIdA          BodyId
+		BodyIdB          BodyId
+		LocalAnchorA     Vec2
+		LocalAnchorB     Vec2
+		Length           float32
+		EnableSpring     uint8
+		Hertz            float32
+		DampingRatio     float32
+		EnableLimit      uint8
+		MinLength        float32
+		MaxLength        float32
+		EnableMotor      uint8
+		MaxMotorForce    float32
+		MotorSpeed       float32
+		CollideConnected uint8
+		UserData         uintptr
+		InternalValue    int32
+	}
+	// struct "b2DistanceJointDef"
+	if g, e := unsafe.Sizeof(v10), uintptr(96); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v10.BodyIdA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.BodyIdA), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.BodyIdA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v10.BodyIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.BodyIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.BodyIdB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v10.LocalAnchorA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.LocalAnchorA), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.LocalAnchorA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v10.LocalAnchorB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.LocalAnchorB), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.LocalAnchorB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v10.Length), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.Length), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.Length)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v10.EnableSpring), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.EnableSpring), uintptr(36); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.EnableSpring)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v10.Hertz), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.Hertz), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.Hertz)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v10.DampingRatio), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.DampingRatio), uintptr(44); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.DampingRatio)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v10.EnableLimit), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.EnableLimit), uintptr(48); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.EnableLimit)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v10.MinLength), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.MinLength), uintptr(52); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.MinLength)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v10.MaxLength), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.MaxLength), uintptr(56); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.MaxLength)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v10.EnableMotor), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.EnableMotor), uintptr(60); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.EnableMotor)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v10.MaxMotorForce), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.MaxMotorForce), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.MaxMotorForce)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v10.MotorSpeed), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.MotorSpeed), uintptr(68); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.MotorSpeed)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v10.CollideConnected), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.CollideConnected), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.CollideConnected)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v10.UserData), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.UserData), uintptr(80); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.UserData)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v10.InternalValue), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.InternalValue), uintptr(88); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v10.InternalValue)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v11 struct {
+		BodyIdA          BodyId
+		BodyIdB          BodyId
+		LocalAnchorA     Vec2
+		LocalAnchorB     Vec2
+		LocalAxisA       Vec2
+		EnableSpring     uint8
+		Hertz            float32
+		DampingRatio     float32
+		EnableLimit      uint8
+		LowerTranslation float32
+		UpperTranslation float32
+		EnableMotor      uint8
+		MaxMotorTorque   float32
+		MotorSpeed       float32
+		CollideConnected uint8
+		UserData         uintptr
+		InternalValue    int32
+	}
+	// struct "b2WheelJointDef"
+	if g, e := unsafe.Sizeof(v11), uintptr(96); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v11.BodyIdA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.BodyIdA), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.BodyIdA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v11.BodyIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.BodyIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.BodyIdB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v11.LocalAnchorA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.LocalAnchorA), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.LocalAnchorA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v11.LocalAnchorB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.LocalAnchorB), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.LocalAnchorB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v11.LocalAxisA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.LocalAxisA), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.LocalAxisA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v11.EnableSpring), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.EnableSpring), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.EnableSpring)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v11.Hertz), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.Hertz), uintptr(44); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.Hertz)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v11.DampingRatio), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.DampingRatio), uintptr(48); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.DampingRatio)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v11.EnableLimit), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.EnableLimit), uintptr(52); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.EnableLimit)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v11.LowerTranslation), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.LowerTranslation), uintptr(56); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.LowerTranslation)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v11.UpperTranslation), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.UpperTranslation), uintptr(60); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.UpperTranslation)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v11.EnableMotor), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.EnableMotor), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.EnableMotor)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v11.MaxMotorTorque), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.MaxMotorTorque), uintptr(68); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.MaxMotorTorque)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v11.MotorSpeed), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.MotorSpeed), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.MotorSpeed)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v11.CollideConnected), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.CollideConnected), uintptr(76); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.CollideConnected)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v11.UserData), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.UserData), uintptr(80); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.UserData)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v11.InternalValue), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.InternalValue), uintptr(88); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v11.InternalValue)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v12 struct {
+		BodyIdA           BodyId
+		BodyIdB           BodyId
+		LocalAnchorA      Vec2
+		LocalAnchorB      Vec2
+		LocalAxisA        Vec2
+		ReferenceAngle    float32
+		TargetTranslation float32
+		EnableSpring      uint8
+		Hertz             float32
+		DampingRatio      float32
+		EnableLimit       uint8
+		LowerTranslation  float32
+		UpperTranslation  float32
+		EnableMotor       uint8
+		MaxMotorForce     float32
+		MotorSpeed        float32
+		CollideConnected  uint8
+		UserData          uintptr
+		InternalValue     int32
+	}
+	// struct "b2PrismaticJointDef"
+	if g, e := unsafe.Sizeof(v12), uintptr(104); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.BodyIdA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.BodyIdA), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.BodyIdA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.BodyIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.BodyIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.BodyIdB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.LocalAnchorA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.LocalAnchorA), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.LocalAnchorA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.LocalAnchorB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.LocalAnchorB), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.LocalAnchorB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.LocalAxisA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.LocalAxisA), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.LocalAxisA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.ReferenceAngle), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.ReferenceAngle), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.ReferenceAngle)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.TargetTranslation), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.TargetTranslation), uintptr(44); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.TargetTranslation)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.EnableSpring), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.EnableSpring), uintptr(48); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.EnableSpring)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.Hertz), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.Hertz), uintptr(52); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.Hertz)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.DampingRatio), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.DampingRatio), uintptr(56); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.DampingRatio)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.EnableLimit), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.EnableLimit), uintptr(60); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.EnableLimit)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.LowerTranslation), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.LowerTranslation), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.LowerTranslation)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.UpperTranslation), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.UpperTranslation), uintptr(68); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.UpperTranslation)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.EnableMotor), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.EnableMotor), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.EnableMotor)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.MaxMotorForce), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.MaxMotorForce), uintptr(76); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.MaxMotorForce)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.MotorSpeed), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.MotorSpeed), uintptr(80); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.MotorSpeed)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.CollideConnected), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.CollideConnected), uintptr(84); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.CollideConnected)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.UserData), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.UserData), uintptr(88); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.UserData)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v12.InternalValue), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.InternalValue), uintptr(96); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v12.InternalValue)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v13 struct {
+		BodyIdA             BodyId
+		BodyIdB             BodyId
+		LocalAnchorA        Vec2
+		LocalAnchorB        Vec2
+		ReferenceAngle      float32
+		LinearHertz         float32
+		AngularHertz        float32
+		LinearDampingRatio  float32
+		AngularDampingRatio float32
+		CollideConnected    uint8
+		UserData            uintptr
+		InternalValue       int32
+	}
+	// struct "b2WeldJointDef"
+	if g, e := unsafe.Sizeof(v13), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v13.BodyIdA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.BodyIdA), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.BodyIdA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v13.BodyIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.BodyIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.BodyIdB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v13.LocalAnchorA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.LocalAnchorA), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.LocalAnchorA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v13.LocalAnchorB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.LocalAnchorB), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.LocalAnchorB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v13.ReferenceAngle), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.ReferenceAngle), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.ReferenceAngle)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v13.LinearHertz), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.LinearHertz), uintptr(36); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.LinearHertz)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v13.AngularHertz), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.AngularHertz), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.AngularHertz)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v13.LinearDampingRatio), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.LinearDampingRatio), uintptr(44); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.LinearDampingRatio)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v13.AngularDampingRatio), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.AngularDampingRatio), uintptr(48); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.AngularDampingRatio)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v13.CollideConnected), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.CollideConnected), uintptr(52); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.CollideConnected)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v13.UserData), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.UserData), uintptr(56); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.UserData)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v13.InternalValue), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.InternalValue), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v13.InternalValue)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v14 struct {
+		BodyIdA          BodyId
+		BodyIdB          BodyId
+		LocalAnchorA     Vec2
+		LocalAnchorB     Vec2
+		ReferenceAngle   float32
+		TargetAngle      float32
+		EnableSpring     uint8
+		Hertz            float32
+		DampingRatio     float32
+		EnableLimit      uint8
+		LowerAngle       float32
+		UpperAngle       float32
+		EnableMotor      uint8
+		MaxMotorTorque   float32
+		MotorSpeed       float32
+		DrawSize         float32
+		CollideConnected uint8
+		UserData         uintptr
+		InternalValue    int32
+	}
+	// struct "b2RevoluteJointDef"
+	if g, e := unsafe.Sizeof(v14), uintptr(104); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.BodyIdA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.BodyIdA), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.BodyIdA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.BodyIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.BodyIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.BodyIdB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.LocalAnchorA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.LocalAnchorA), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.LocalAnchorA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.LocalAnchorB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.LocalAnchorB), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.LocalAnchorB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.ReferenceAngle), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.ReferenceAngle), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.ReferenceAngle)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.TargetAngle), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.TargetAngle), uintptr(36); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.TargetAngle)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.EnableSpring), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.EnableSpring), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.EnableSpring)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.Hertz), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.Hertz), uintptr(44); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.Hertz)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.DampingRatio), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.DampingRatio), uintptr(48); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.DampingRatio)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.EnableLimit), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.EnableLimit), uintptr(52); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.EnableLimit)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.LowerAngle), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.LowerAngle), uintptr(56); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.LowerAngle)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.UpperAngle), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.UpperAngle), uintptr(60); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.UpperAngle)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.EnableMotor), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.EnableMotor), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.EnableMotor)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.MaxMotorTorque), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.MaxMotorTorque), uintptr(68); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.MaxMotorTorque)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.MotorSpeed), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.MotorSpeed), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.MotorSpeed)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.DrawSize), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.DrawSize), uintptr(76); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.DrawSize)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.CollideConnected), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.CollideConnected), uintptr(80); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.CollideConnected)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.UserData), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.UserData), uintptr(88); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.UserData)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v14.InternalValue), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.InternalValue), uintptr(96); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v14.InternalValue)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v15 struct {
+		BodyIdA          BodyId
+		BodyIdB          BodyId
+		Target           Vec2
+		Hertz            float32
+		DampingRatio     float32
+		MaxForce         float32
+		CollideConnected uint8
+		UserData         uintptr
+		InternalValue    int32
+	}
+	// struct "b2MouseJointDef"
+	if g, e := unsafe.Sizeof(v15), uintptr(56); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v15.BodyIdA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v15.BodyIdA), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v15.BodyIdA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v15.BodyIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v15.BodyIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v15.BodyIdB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v15.Target), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v15.Target), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v15.Target)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v15.Hertz), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v15.Hertz), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v15.Hertz)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v15.DampingRatio), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v15.DampingRatio), uintptr(28); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v15.DampingRatio)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v15.MaxForce), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v15.MaxForce), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v15.MaxForce)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v15.CollideConnected), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v15.CollideConnected), uintptr(36); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v15.CollideConnected)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v15.UserData), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v15.UserData), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v15.UserData)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v15.InternalValue), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v15.InternalValue), uintptr(48); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v15.InternalValue)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v16 struct {
+		BodyIdA       BodyId
+		BodyIdB       BodyId
+		UserData      uintptr
+		InternalValue int32
+	}
+	// struct "b2FilterJointDef"
+	if g, e := unsafe.Sizeof(v16), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v16.BodyIdA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v16.BodyIdA), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v16.BodyIdA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v16.BodyIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v16.BodyIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v16.BodyIdB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v16.UserData), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v16.UserData), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v16.UserData)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v16.InternalValue), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v16.InternalValue), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v16.InternalValue)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v17 struct {
+		C float32
+		S float32
+	}
+	// struct "b2Rot"
+	if g, e := unsafe.Sizeof(v17), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v17.C), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v17.C), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v17.C)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v17.S), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v17.S), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v17.S)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v18 struct {
+		CategoryBits uint64
+		MaskBits     uint64
+		GroupIndex   int32
+	}
+	// struct "b2Filter"
+	if g, e := unsafe.Sizeof(v18), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v18.CategoryBits), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v18.CategoryBits), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v18.CategoryBits)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v18.MaskBits), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v18.MaskBits), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v18.MaskBits)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v18.GroupIndex), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v18.GroupIndex), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v18.GroupIndex)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v19 struct {
+		CategoryBits uint64
+		MaskBits     uint64
+	}
+	// struct "b2QueryFilter"
+	if g, e := unsafe.Sizeof(v19), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v19.CategoryBits), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v19.CategoryBits), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v19.CategoryBits)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v19.MaskBits), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v19.MaskBits), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v19.MaskBits)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	var v20 struct {
+		Center Vec2
+		Radius float32
+	}
+	// struct "b2Circle"
+	if g, e := unsafe.Sizeof(v20), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v20.Center), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v20.Center), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v20.Center)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v20.Radius), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v20.Radius), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v20.Radius)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v21 struct {
+		Center1 Vec2
+		Center2 Vec2
+		Radius  float32
+	}
+	// struct "b2Capsule"
+	if g, e := unsafe.Sizeof(v21), uintptr(20); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v21.Center1), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v21.Center1), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v21.Center1)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v21.Center2), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v21.Center2), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v21.Center2)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v21.Radius), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v21.Radius), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v21.Radius)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v22 struct {
+		Closest1        Vec2
+		Closest2        Vec2
+		Fraction1       float32
+		Fraction2       float32
+		DistanceSquared float32
+	}
+	// struct "b2SegmentDistanceResult"
+	if g, e := unsafe.Sizeof(v22), uintptr(28); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v22.Closest1), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v22.Closest1), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v22.Closest1)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v22.Closest2), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v22.Closest2), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v22.Closest2)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v22.Fraction1), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v22.Fraction1), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v22.Fraction1)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v22.Fraction2), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v22.Fraction2), uintptr(20); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v22.Fraction2)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v22.DistanceSquared), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v22.DistanceSquared), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v22.DistanceSquared)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v23 struct {
+		Cosine float32
+		Sine   float32
+	}
+	// struct "b2CosSin"
+	if g, e := unsafe.Sizeof(v23), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v23.Cosine), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v23.Cosine), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v23.Cosine)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v23.Sine), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v23.Sine), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v23.Sine)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v24 struct {
+		Count  uint16
+		IndexA [3]uint8_t
+		IndexB [3]uint8_t
+	}
+	// struct "b2SimplexCache"
+	if g, e := unsafe.Sizeof(v24), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v24.Count), uintptr(2); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v24.Count), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v24.Count)%2, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v24.IndexA), uintptr(3); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v24.IndexA), uintptr(2); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v24.IndexA)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v24.IndexB), uintptr(3); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v24.IndexB), uintptr(5); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v24.IndexB)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	var v25 struct {
+		Cx Vec2
+		Cy Vec2
+	}
+	// struct "b2Mat22"
+	if g, e := unsafe.Sizeof(v25), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v25.Cx), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v25.Cx), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v25.Cx)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v25.Cy), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v25.Cy), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v25.Cy)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v26 struct {
+		Friction          float32
+		Restitution       float32
+		RollingResistance float32
+		TangentSpeed      float32
+		UserMaterialId    int32
+		CustomColor       uint32
+	}
+	// struct "b2SurfaceMaterial"
+	if g, e := unsafe.Sizeof(v26), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v26.Friction), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v26.Friction), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v26.Friction)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v26.Restitution), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v26.Restitution), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v26.Restitution)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v26.RollingResistance), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v26.RollingResistance), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v26.RollingResistance)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v26.TangentSpeed), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v26.TangentSpeed), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v26.TangentSpeed)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v26.UserMaterialId), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v26.UserMaterialId), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v26.UserMaterialId)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v26.CustomColor), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v26.CustomColor), uintptr(20); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v26.CustomColor)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v27 struct {
+		Ghost1  Vec2
+		Segment Segment
+		Ghost2  Vec2
+		ChainId int32
+	}
+	// struct "b2ChainSegment"
+	if g, e := unsafe.Sizeof(v27), uintptr(36); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v27.Ghost1), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v27.Ghost1), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v27.Ghost1)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v27.Segment), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v27.Segment), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v27.Segment)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v27.Ghost2), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v27.Ghost2), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v27.Ghost2)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v27.ChainId), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v27.ChainId), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v27.ChainId)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v28 struct {
+		Gravity              Vec2
+		RestitutionThreshold float32
+		HitEventThreshold    float32
+		ContactHertz         float32
+		ContactDampingRatio  float32
+		MaxContactPushSpeed  float32
+		MaximumLinearSpeed   float32
+		FrictionCallback     uintptr
+		RestitutionCallback  uintptr
+		EnableSleep          uint8
+		EnableContinuous     uint8
+		WorkerCount          int32
+		EnqueueTask          uintptr
+		FinishTask           uintptr
+		UserTaskContext      uintptr
+		UserData             uintptr
+		InternalValue        int32
+	}
+	// struct "b2WorldDef"
+	if g, e := unsafe.Sizeof(v28), uintptr(96); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v28.Gravity), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.Gravity), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.Gravity)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v28.RestitutionThreshold), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.RestitutionThreshold), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.RestitutionThreshold)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v28.HitEventThreshold), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.HitEventThreshold), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.HitEventThreshold)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v28.ContactHertz), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.ContactHertz), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.ContactHertz)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v28.ContactDampingRatio), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.ContactDampingRatio), uintptr(20); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.ContactDampingRatio)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v28.MaxContactPushSpeed), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.MaxContactPushSpeed), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.MaxContactPushSpeed)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v28.MaximumLinearSpeed), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.MaximumLinearSpeed), uintptr(28); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.MaximumLinearSpeed)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v28.FrictionCallback), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.FrictionCallback), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.FrictionCallback)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v28.RestitutionCallback), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.RestitutionCallback), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.RestitutionCallback)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v28.EnableSleep), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.EnableSleep), uintptr(48); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.EnableSleep)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v28.EnableContinuous), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.EnableContinuous), uintptr(49); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.EnableContinuous)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v28.WorkerCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.WorkerCount), uintptr(52); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.WorkerCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v28.EnqueueTask), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.EnqueueTask), uintptr(56); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.EnqueueTask)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v28.FinishTask), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.FinishTask), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.FinishTask)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v28.UserTaskContext), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.UserTaskContext), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.UserTaskContext)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v28.UserData), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.UserData), uintptr(80); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.UserData)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v28.InternalValue), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.InternalValue), uintptr(88); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v28.InternalValue)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v29 struct {
+		Index1     int32
+		World0     uint16
+		Generation uint16
+	}
+	// struct "b2ShapeId"
+	if g, e := unsafe.Sizeof(v29), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v29.Index1), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v29.Index1), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v29.Index1)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v29.World0), uintptr(2); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v29.World0), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v29.World0)%2, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v29.Generation), uintptr(2); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v29.Generation), uintptr(6); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v29.Generation)%2, uintptr(0); g != e {
+		panic(g)
+	}
+	var v30 struct {
+		Index1     uint16
+		Generation uint16
+	}
+	// struct "b2WorldId"
+	if g, e := unsafe.Sizeof(v30), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v30.Index1), uintptr(2); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v30.Index1), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v30.Index1)%2, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v30.Generation), uintptr(2); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v30.Generation), uintptr(2); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v30.Generation)%2, uintptr(0); g != e {
+		panic(g)
+	}
+	var v31 struct {
+		LocalCenter Vec2
+		C1          Vec2
+		C2          Vec2
+		Q1          Rot
+		Q2          Rot
+	}
+	// struct "b2Sweep"
+	if g, e := unsafe.Sizeof(v31), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v31.LocalCenter), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v31.LocalCenter), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v31.LocalCenter)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v31.C1), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v31.C1), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v31.C1)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v31.C2), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v31.C2), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v31.C2)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v31.Q1), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v31.Q1), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v31.Q1)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v31.Q2), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v31.Q2), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v31.Q2)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v32 struct {
+		LowerBound Vec2
+		UpperBound Vec2
+	}
+	// struct "b2AABB"
+	if g, e := unsafe.Sizeof(v32), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v32.LowerBound), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v32.LowerBound), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v32.LowerBound)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v32.UpperBound), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v32.UpperBound), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v32.UpperBound)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v33 struct {
+		Major    int32
+		Minor    int32
+		Revision int32
+	}
+	// struct "b2Version"
+	if g, e := unsafe.Sizeof(v33), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v33.Major), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v33.Major), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v33.Major)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v33.Minor), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v33.Minor), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v33.Minor)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v33.Revision), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v33.Revision), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v33.Revision)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v34 struct {
+		MaskBits         uint64
+		Position         Vec2
+		Radius           float32
+		Falloff          float32
+		ImpulsePerLength float32
+	}
+	// struct "b2ExplosionDef"
+	if g, e := unsafe.Sizeof(v34), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v34.MaskBits), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v34.MaskBits), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v34.MaskBits)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v34.Position), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v34.Position), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v34.Position)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v34.Radius), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v34.Radius), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v34.Radius)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v34.Falloff), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v34.Falloff), uintptr(20); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v34.Falloff)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v34.ImpulsePerLength), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v34.ImpulsePerLength), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v34.ImpulsePerLength)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v35 struct {
+		Mass              float32
+		Center            Vec2
+		RotationalInertia float32
+	}
+	// struct "b2MassData"
+	if g, e := unsafe.Sizeof(v35), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v35.Mass), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v35.Mass), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v35.Mass)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v35.Center), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v35.Center), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v35.Center)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v35.RotationalInertia), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v35.RotationalInertia), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v35.RotationalInertia)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v36 struct {
+		MoveEvents uintptr
+		MoveCount  int32
+	}
+	// struct "b2BodyEvents"
+	if g, e := unsafe.Sizeof(v36), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v36.MoveEvents), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v36.MoveEvents), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v36.MoveEvents)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v36.MoveCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v36.MoveCount), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v36.MoveCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v37 struct {
+		NodeVisits int32
+		LeafVisits int32
+	}
+	// struct "b2TreeStats"
+	if g, e := unsafe.Sizeof(v37), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v37.NodeVisits), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v37.NodeVisits), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v37.NodeVisits)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v37.LeafVisits), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v37.LeafVisits), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v37.LeafVisits)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v38 struct {
+		Nodes           uintptr
+		Root            int32
+		NodeCount       int32
+		NodeCapacity    int32
+		FreeList        int32
+		ProxyCount      int32
+		LeafIndices     uintptr
+		LeafBoxes       uintptr
+		LeafCenters     uintptr
+		BinIndices      uintptr
+		RebuildCapacity int32
+	}
+	// struct "b2DynamicTree"
+	if g, e := unsafe.Sizeof(v38), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v38.Nodes), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.Nodes), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.Nodes)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v38.Root), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.Root), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.Root)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v38.NodeCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.NodeCount), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.NodeCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v38.NodeCapacity), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.NodeCapacity), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.NodeCapacity)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v38.FreeList), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.FreeList), uintptr(20); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.FreeList)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v38.ProxyCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.ProxyCount), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.ProxyCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v38.LeafIndices), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.LeafIndices), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.LeafIndices)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v38.LeafBoxes), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.LeafBoxes), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.LeafBoxes)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v38.LeafCenters), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.LeafCenters), uintptr(48); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.LeafCenters)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v38.BinIndices), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.BinIndices), uintptr(56); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.BinIndices)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v38.RebuildCapacity), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.RebuildCapacity), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v38.RebuildCapacity)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v39 struct {
+		Normal Vec2
+		Offset float32
+	}
+	// struct "b2Plane"
+	if g, e := unsafe.Sizeof(v39), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v39.Normal), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v39.Normal), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v39.Normal)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v39.Offset), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v39.Offset), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v39.Offset)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v40 struct {
+		Normal     Vec2
+		Point      Vec2
+		Fraction   float32
+		Iterations int32
+		Hit        uint8
+	}
+	// struct "b2CastOutput"
+	if g, e := unsafe.Sizeof(v40), uintptr(28); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v40.Normal), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v40.Normal), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v40.Normal)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v40.Point), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v40.Point), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v40.Point)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v40.Fraction), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v40.Fraction), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v40.Fraction)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v40.Iterations), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v40.Iterations), uintptr(20); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v40.Iterations)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v40.Hit), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v40.Hit), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v40.Hit)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	var v41 struct {
+		Normal         Vec2
+		RollingImpulse float32
+		Points         [2]ManifoldPoint
+		PointCount     int32
+	}
+	// struct "b2Manifold"
+	if g, e := unsafe.Sizeof(v41), uintptr(112); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v41.Normal), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v41.Normal), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v41.Normal)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v41.RollingImpulse), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v41.RollingImpulse), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v41.RollingImpulse)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v41.Points), uintptr(96); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v41.Points), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v41.Points)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v41.PointCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v41.PointCount), uintptr(108); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v41.PointCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v42 struct {
+		Origin      Vec2
+		Translation Vec2
+		MaxFraction float32
+	}
+	// struct "b2RayCastInput"
+	if g, e := unsafe.Sizeof(v42), uintptr(20); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v42.Origin), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v42.Origin), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v42.Origin)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v42.Translation), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v42.Translation), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v42.Translation)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v42.MaxFraction), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v42.MaxFraction), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v42.MaxFraction)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v43 struct {
+		P Vec2
+		Q Rot
+	}
+	// struct "b2Transform"
+	if g, e := unsafe.Sizeof(v43), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v43.P), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v43.P), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v43.P)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v43.Q), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v43.Q), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v43.Q)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v44 struct {
+		Plane Plane
+		Point Vec2
+		Hit   uint8
+	}
+	// struct "b2PlaneResult"
+	if g, e := unsafe.Sizeof(v44), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v44.Plane), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v44.Plane), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v44.Plane)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v44.Point), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v44.Point), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v44.Point)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v44.Hit), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v44.Hit), uintptr(20); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v44.Hit)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	var v45 struct {
+		Plane        Plane
+		PushLimit    float32
+		Push         float32
+		ClipVelocity uint8
+	}
+	// struct "b2CollisionPlane"
+	if g, e := unsafe.Sizeof(v45), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v45.Plane), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v45.Plane), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v45.Plane)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v45.PushLimit), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v45.PushLimit), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v45.PushLimit)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v45.Push), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v45.Push), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v45.Push)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v45.ClipVelocity), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v45.ClipVelocity), uintptr(20); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v45.ClipVelocity)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	var v46 struct {
+		Point              Vec2
+		AnchorA            Vec2
+		AnchorB            Vec2
+		Separation         float32
+		NormalImpulse      float32
+		TangentImpulse     float32
+		TotalNormalImpulse float32
+		NormalVelocity     float32
+		Id                 uint16
+		Persisted          uint8
+	}
+	// struct "b2ManifoldPoint"
+	if g, e := unsafe.Sizeof(v46), uintptr(48); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v46.Point), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.Point), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.Point)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v46.AnchorA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.AnchorA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.AnchorA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v46.AnchorB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.AnchorB), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.AnchorB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v46.Separation), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.Separation), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.Separation)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v46.NormalImpulse), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.NormalImpulse), uintptr(28); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.NormalImpulse)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v46.TangentImpulse), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.TangentImpulse), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.TangentImpulse)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v46.TotalNormalImpulse), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.TotalNormalImpulse), uintptr(36); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.TotalNormalImpulse)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v46.NormalVelocity), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.NormalVelocity), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.NormalVelocity)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v46.Id), uintptr(2); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.Id), uintptr(44); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.Id)%2, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v46.Persisted), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.Persisted), uintptr(46); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v46.Persisted)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	var v47 struct {
+		Point1 Vec2
+		Point2 Vec2
+	}
+	// struct "b2Segment"
+	if g, e := unsafe.Sizeof(v47), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v47.Point1), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v47.Point1), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v47.Point1)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v47.Point2), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v47.Point2), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v47.Point2)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v48 struct {
+		PointA       Vec2
+		PointB       Vec2
+		Normal       Vec2
+		Distance     float32
+		Iterations   int32
+		SimplexCount int32
+	}
+	// struct "b2DistanceOutput"
+	if g, e := unsafe.Sizeof(v48), uintptr(36); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v48.PointA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v48.PointA), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v48.PointA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v48.PointB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v48.PointB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v48.PointB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v48.Normal), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v48.Normal), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v48.Normal)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v48.Distance), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v48.Distance), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v48.Distance)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v48.Iterations), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v48.Iterations), uintptr(28); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v48.Iterations)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v48.SimplexCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v48.SimplexCount), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v48.SimplexCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v49 struct {
+		Points [8]Vec2
+		Count  int32
+		Radius float32
+	}
+	// struct "b2ShapeProxy"
+	if g, e := unsafe.Sizeof(v49), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v49.Points), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v49.Points), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v49.Points)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v49.Count), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v49.Count), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v49.Count)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v49.Radius), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v49.Radius), uintptr(68); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v49.Radius)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v50 struct {
+		Points [8]Vec2
+		Count  int32
+	}
+	// struct "b2Hull"
+	if g, e := unsafe.Sizeof(v50), uintptr(68); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v50.Points), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v50.Points), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v50.Points)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v50.Count), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v50.Count), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v50.Count)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v51 struct {
+		Proxy       ShapeProxy
+		Translation Vec2
+		MaxFraction float32
+		CanEncroach uint8
+	}
+	// struct "b2ShapeCastInput"
+	if g, e := unsafe.Sizeof(v51), uintptr(88); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v51.Proxy), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v51.Proxy), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v51.Proxy)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v51.Translation), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v51.Translation), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v51.Translation)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v51.MaxFraction), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v51.MaxFraction), uintptr(80); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v51.MaxFraction)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v51.CanEncroach), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v51.CanEncroach), uintptr(84); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v51.CanEncroach)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	var v52 struct {
+		ProxyA      ShapeProxy
+		ProxyB      ShapeProxy
+		SweepA      Sweep
+		SweepB      Sweep
+		MaxFraction float32
+	}
+	// struct "b2TOIInput"
+	if g, e := unsafe.Sizeof(v52), uintptr(228); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v52.ProxyA), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v52.ProxyA), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v52.ProxyA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v52.ProxyB), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v52.ProxyB), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v52.ProxyB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v52.SweepA), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v52.SweepA), uintptr(144); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v52.SweepA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v52.SweepB), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v52.SweepB), uintptr(184); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v52.SweepB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v52.MaxFraction), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v52.MaxFraction), uintptr(224); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v52.MaxFraction)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v53 struct {
+		ProxyA       ShapeProxy
+		ProxyB       ShapeProxy
+		TransformA   Transform
+		TransformB   Transform
+		TranslationB Vec2
+		MaxFraction  float32
+		CanEncroach  uint8
+	}
+	// struct "b2ShapeCastPairInput"
+	if g, e := unsafe.Sizeof(v53), uintptr(192); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v53.ProxyA), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v53.ProxyA), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v53.ProxyA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v53.ProxyB), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v53.ProxyB), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v53.ProxyB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v53.TransformA), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v53.TransformA), uintptr(144); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v53.TransformA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v53.TransformB), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v53.TransformB), uintptr(160); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v53.TransformB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v53.TranslationB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v53.TranslationB), uintptr(176); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v53.TranslationB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v53.MaxFraction), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v53.MaxFraction), uintptr(184); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v53.MaxFraction)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v53.CanEncroach), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v53.CanEncroach), uintptr(188); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v53.CanEncroach)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	var v54 struct {
+		ProxyA     ShapeProxy
+		ProxyB     ShapeProxy
+		TransformA Transform
+		TransformB Transform
+		UseRadii   uint8
+	}
+	// struct "b2DistanceInput"
+	if g, e := unsafe.Sizeof(v54), uintptr(180); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v54.ProxyA), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v54.ProxyA), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v54.ProxyA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v54.ProxyB), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v54.ProxyB), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v54.ProxyB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v54.TransformA), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v54.TransformA), uintptr(144); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v54.TransformA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v54.TransformB), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v54.TransformB), uintptr(160); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v54.TransformB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v54.UseRadii), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v54.UseRadii), uintptr(176); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v54.UseRadii)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	var v55 struct {
+		SensorShapeId  ShapeId
+		VisitorShapeId ShapeId
+	}
+	// struct "b2SensorEndTouchEvent"
+	if g, e := unsafe.Sizeof(v55), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v55.SensorShapeId), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v55.SensorShapeId), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v55.SensorShapeId)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v55.VisitorShapeId), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v55.VisitorShapeId), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v55.VisitorShapeId)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v56 struct {
+		ShapeId    ShapeId
+		Point      Vec2
+		Normal     Vec2
+		Fraction   float32
+		NodeVisits int32
+		LeafVisits int32
+		Hit        uint8
+	}
+	// struct "b2RayResult"
+	if g, e := unsafe.Sizeof(v56), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v56.ShapeId), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v56.ShapeId), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v56.ShapeId)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v56.Point), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v56.Point), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v56.Point)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v56.Normal), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v56.Normal), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v56.Normal)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v56.Fraction), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v56.Fraction), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v56.Fraction)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v56.NodeVisits), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v56.NodeVisits), uintptr(28); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v56.NodeVisits)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v56.LeafVisits), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v56.LeafVisits), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v56.LeafVisits)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v56.Hit), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v56.Hit), uintptr(36); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v56.Hit)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	var v57 struct {
+		ShapeIdA ShapeId
+		ShapeIdB ShapeId
+		Manifold Manifold
+	}
+	// struct "b2ContactBeginTouchEvent"
+	if g, e := unsafe.Sizeof(v57), uintptr(128); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v57.ShapeIdA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v57.ShapeIdA), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v57.ShapeIdA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v57.ShapeIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v57.ShapeIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v57.ShapeIdB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v57.Manifold), uintptr(112); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v57.Manifold), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v57.Manifold)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v58 struct {
+		ShapeIdA      ShapeId
+		ShapeIdB      ShapeId
+		Point         Vec2
+		Normal        Vec2
+		ApproachSpeed float32
+	}
+	// struct "b2ContactHitEvent"
+	if g, e := unsafe.Sizeof(v58), uintptr(36); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v58.ShapeIdA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v58.ShapeIdA), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v58.ShapeIdA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v58.ShapeIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v58.ShapeIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v58.ShapeIdB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v58.Point), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v58.Point), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v58.Point)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v58.Normal), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v58.Normal), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v58.Normal)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v58.ApproachSpeed), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v58.ApproachSpeed), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v58.ApproachSpeed)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v59 struct {
+		ShapeIdA ShapeId
+		ShapeIdB ShapeId
+	}
+	// struct "b2ContactEndTouchEvent"
+	if g, e := unsafe.Sizeof(v59), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v59.ShapeIdA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v59.ShapeIdA), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v59.ShapeIdA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v59.ShapeIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v59.ShapeIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v59.ShapeIdB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v60 struct {
+		State    TOIState
+		Fraction float32
+	}
+	// struct "b2TOIOutput"
+	if g, e := unsafe.Sizeof(v60), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v60.State), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v60.State), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v60.State)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v60.Fraction), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v60.Fraction), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v60.Fraction)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v61 struct {
+		Step                float32
+		Pairs               float32
+		Collide             float32
+		Solve               float32
+		MergeIslands        float32
+		PrepareStages       float32
+		SolveConstraints    float32
+		PrepareConstraints  float32
+		IntegrateVelocities float32
+		WarmStart           float32
+		SolveImpulses       float32
+		IntegratePositions  float32
+		RelaxImpulses       float32
+		ApplyRestitution    float32
+		StoreImpulses       float32
+		SplitIslands        float32
+		Transforms          float32
+		HitEvents           float32
+		Refit               float32
+		Bullets             float32
+		SleepIslands        float32
+		Sensors             float32
+	}
+	// struct "b2Profile"
+	if g, e := unsafe.Sizeof(v61), uintptr(88); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.Step), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.Step), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.Step)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.Pairs), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.Pairs), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.Pairs)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.Collide), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.Collide), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.Collide)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.Solve), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.Solve), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.Solve)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.MergeIslands), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.MergeIslands), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.MergeIslands)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.PrepareStages), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.PrepareStages), uintptr(20); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.PrepareStages)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.SolveConstraints), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.SolveConstraints), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.SolveConstraints)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.PrepareConstraints), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.PrepareConstraints), uintptr(28); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.PrepareConstraints)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.IntegrateVelocities), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.IntegrateVelocities), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.IntegrateVelocities)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.WarmStart), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.WarmStart), uintptr(36); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.WarmStart)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.SolveImpulses), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.SolveImpulses), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.SolveImpulses)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.IntegratePositions), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.IntegratePositions), uintptr(44); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.IntegratePositions)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.RelaxImpulses), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.RelaxImpulses), uintptr(48); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.RelaxImpulses)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.ApplyRestitution), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.ApplyRestitution), uintptr(52); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.ApplyRestitution)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.StoreImpulses), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.StoreImpulses), uintptr(56); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.StoreImpulses)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.SplitIslands), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.SplitIslands), uintptr(60); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.SplitIslands)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.Transforms), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.Transforms), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.Transforms)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.HitEvents), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.HitEvents), uintptr(68); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.HitEvents)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.Refit), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.Refit), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.Refit)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.Bullets), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.Bullets), uintptr(76); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.Bullets)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.SleepIslands), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.SleepIslands), uintptr(80); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.SleepIslands)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v61.Sensors), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.Sensors), uintptr(84); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v61.Sensors)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v62 struct {
+		Transform  Transform
+		BodyId     BodyId
+		UserData   uintptr
+		FellAsleep uint8
+	}
+	// struct "b2BodyMoveEvent"
+	if g, e := unsafe.Sizeof(v62), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v62.Transform), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v62.Transform), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v62.Transform)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v62.BodyId), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v62.BodyId), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v62.BodyId)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v62.UserData), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v62.UserData), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v62.UserData)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v62.FellAsleep), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v62.FellAsleep), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v62.FellAsleep)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	var v63 struct {
+		Translation    Vec2
+		IterationCount int32
+	}
+	// struct "b2PlaneSolverResult"
+	if g, e := unsafe.Sizeof(v63), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v63.Translation), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v63.Translation), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v63.Translation)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v63.IterationCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v63.IterationCount), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v63.IterationCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v64 struct {
+		Type1             BodyType
+		Position          Vec2
+		Rotation          Rot
+		LinearVelocity    Vec2
+		AngularVelocity   float32
+		LinearDamping     float32
+		AngularDamping    float32
+		GravityScale      float32
+		SleepThreshold    float32
+		Name              uintptr
+		UserData          uintptr
+		EnableSleep       uint8
+		IsAwake           uint8
+		FixedRotation     uint8
+		IsBullet          uint8
+		IsEnabled         uint8
+		AllowFastRotation uint8
+		InternalValue     int32
+	}
+	// struct "b2BodyDef"
+	if g, e := unsafe.Sizeof(v64), uintptr(80); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v64.Type1), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.Type1), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.Type1)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v64.Position), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.Position), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.Position)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v64.Rotation), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.Rotation), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.Rotation)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v64.LinearVelocity), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.LinearVelocity), uintptr(20); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.LinearVelocity)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v64.AngularVelocity), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.AngularVelocity), uintptr(28); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.AngularVelocity)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v64.LinearDamping), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.LinearDamping), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.LinearDamping)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v64.AngularDamping), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.AngularDamping), uintptr(36); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.AngularDamping)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v64.GravityScale), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.GravityScale), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.GravityScale)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v64.SleepThreshold), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.SleepThreshold), uintptr(44); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.SleepThreshold)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v64.Name), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.Name), uintptr(48); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.Name)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v64.UserData), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.UserData), uintptr(56); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.UserData)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v64.EnableSleep), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.EnableSleep), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.EnableSleep)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v64.IsAwake), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.IsAwake), uintptr(65); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.IsAwake)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v64.FixedRotation), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.FixedRotation), uintptr(66); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.FixedRotation)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v64.IsBullet), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.IsBullet), uintptr(67); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.IsBullet)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v64.IsEnabled), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.IsEnabled), uintptr(68); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.IsEnabled)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v64.AllowFastRotation), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.AllowFastRotation), uintptr(69); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.AllowFastRotation)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v64.InternalValue), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.InternalValue), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v64.InternalValue)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v65 struct {
+		UserData              uintptr
+		Material              SurfaceMaterial
+		Density               float32
+		Filter                Filter
+		IsSensor              uint8
+		EnableSensorEvents    uint8
+		EnableContactEvents   uint8
+		EnableHitEvents       uint8
+		EnablePreSolveEvents  uint8
+		InvokeContactCreation uint8
+		UpdateBodyMass        uint8
+		InternalValue         int32
+	}
+	// struct "b2ShapeDef"
+	if g, e := unsafe.Sizeof(v65), uintptr(80); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v65.UserData), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.UserData), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.UserData)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v65.Material), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.Material), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.Material)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v65.Density), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.Density), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.Density)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v65.Filter), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.Filter), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.Filter)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v65.IsSensor), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.IsSensor), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.IsSensor)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v65.EnableSensorEvents), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.EnableSensorEvents), uintptr(65); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.EnableSensorEvents)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v65.EnableContactEvents), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.EnableContactEvents), uintptr(66); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.EnableContactEvents)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v65.EnableHitEvents), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.EnableHitEvents), uintptr(67); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.EnableHitEvents)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v65.EnablePreSolveEvents), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.EnablePreSolveEvents), uintptr(68); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.EnablePreSolveEvents)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v65.InvokeContactCreation), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.InvokeContactCreation), uintptr(69); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.InvokeContactCreation)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v65.UpdateBodyMass), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.UpdateBodyMass), uintptr(70); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.UpdateBodyMass)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v65.InternalValue), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.InternalValue), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v65.InternalValue)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v66 struct {
+		UserData           uintptr
+		Points             uintptr
+		Count              int32
+		Materials          uintptr
+		MaterialCount      int32
+		Filter             Filter
+		IsLoop             uint8
+		EnableSensorEvents uint8
+		InternalValue      int32
+	}
+	// struct "b2ChainDef"
+	if g, e := unsafe.Sizeof(v66), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v66.UserData), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v66.UserData), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v66.UserData)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v66.Points), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v66.Points), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v66.Points)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v66.Count), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v66.Count), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v66.Count)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v66.Materials), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v66.Materials), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v66.Materials)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v66.MaterialCount), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v66.MaterialCount), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v66.MaterialCount)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v66.Filter), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v66.Filter), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v66.Filter)%8, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v66.IsLoop), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v66.IsLoop), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v66.IsLoop)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v66.EnableSensorEvents), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v66.EnableSensorEvents), uintptr(65); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v66.EnableSensorEvents)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v66.InternalValue), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v66.InternalValue), uintptr(68); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v66.InternalValue)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v67 struct {
+		V1    SimplexVertex
+		V2    SimplexVertex
+		V3    SimplexVertex
+		Count int32
+	}
+	// struct "b2Simplex"
+	if g, e := unsafe.Sizeof(v67), uintptr(112); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v67.V1), uintptr(36); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v67.V1), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v67.V1)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v67.V2), uintptr(36); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v67.V2), uintptr(36); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v67.V2)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v67.V3), uintptr(36); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v67.V3), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v67.V3)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v67.Count), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v67.Count), uintptr(108); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v67.Count)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v68 struct {
+		Vertices [8]Vec2
+		Normals  [8]Vec2
+		Centroid Vec2
+		Radius   float32
+		Count    int32
+	}
+	// struct "b2Polygon"
+	if g, e := unsafe.Sizeof(v68), uintptr(144); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v68.Vertices), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v68.Vertices), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v68.Vertices)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v68.Normals), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v68.Normals), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v68.Normals)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v68.Centroid), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v68.Centroid), uintptr(128); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v68.Centroid)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v68.Radius), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v68.Radius), uintptr(136); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v68.Radius)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v68.Count), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v68.Count), uintptr(140); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v68.Count)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v69 struct {
+		WA     Vec2
+		WB     Vec2
+		W      Vec2
+		A      float32
+		IndexA int32
+		IndexB int32
+	}
+	// struct "b2SimplexVertex"
+	if g, e := unsafe.Sizeof(v69), uintptr(36); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v69.WA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v69.WA), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v69.WA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v69.WB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v69.WB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v69.WB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v69.W), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v69.W), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v69.W)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v69.A), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v69.A), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v69.A)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v69.IndexA), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v69.IndexA), uintptr(28); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v69.IndexA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v69.IndexB), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v69.IndexB), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v69.IndexB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v70 struct {
+		X float32
+		Y float32
+	}
+	// struct "b2Vec2"
+	if g, e := unsafe.Sizeof(v70), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v70.X), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v70.X), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v70.X)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v70.Y), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v70.Y), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v70.Y)%4, uintptr(0); g != e {
 		panic(g)
 	}
 }

@@ -50,15 +50,15 @@ func (b World) Draw(draw DebugDraw) {
 	defer theStack.ForgetObject(context)
 
 	var dd b2DebugDraw
-	dd.DrawPolygonFcn = __ccgo_fp(cbDrawPolygon)
-	dd.DrawSolidPolygonFcn = __ccgo_fp(cbDrawSolidPolygon)
-	dd.DrawCircleFcn = __ccgo_fp(cbDrawCircle)
-	dd.DrawSolidCircleFcn = __ccgo_fp(cbDrawSolidCircle)
-	dd.DrawSolidCapsuleFcn = __ccgo_fp(cbDrawSolidCapsule)
-	dd.DrawSegmentFcn = __ccgo_fp(cbDrawSegment)
-	dd.DrawTransformFcn = __ccgo_fp(cbDrawTransform)
-	dd.DrawPointFcn = __ccgo_fp(cbDrawPoint)
-	dd.DrawStringFcn = __ccgo_fp(cbDrawString)
+	dd.DrawPolygonFcn = __ccgo_fp(drawPolygonFcn(cbDrawPolygon))
+	dd.DrawSolidPolygonFcn = __ccgo_fp(drawSolidPolygonFcn(cbDrawSolidPolygon))
+	dd.DrawCircleFcn = __ccgo_fp(drawCircleFcn(cbDrawCircle))
+	dd.DrawSolidCircleFcn = __ccgo_fp(drawSolidCircleFcn(cbDrawSolidCircle))
+	dd.DrawSolidCapsuleFcn = __ccgo_fp(drawSolidCapsuleFcn(cbDrawSolidCapsule))
+	dd.DrawSegmentFcn = __ccgo_fp(drawSegmentFcn(cbDrawSegment))
+	dd.DrawTransformFcn = __ccgo_fp(drawTransformFcn(cbDrawTransform))
+	dd.DrawPointFcn = __ccgo_fp(drawPointFcn(cbDrawPoint))
+	dd.DrawStringFcn = __ccgo_fp(drawStringFcn(cbDrawString))
 
 	dd.DrawingBounds = draw.DrawingBounds
 	dd.UseDrawingBounds = boolUint8(draw.UseDrawingBounds)

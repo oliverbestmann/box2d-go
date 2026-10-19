@@ -7,6 +7,7 @@ import (
 	"go/token"
 	"log/slog"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"regexp"
 	"runtime"
@@ -51,6 +52,9 @@ func main() {
 	files, err := filepath.Glob("../box2d-c/src/*.c")
 	must(err)
 
+	// signatures of the callbacks implemented in Go, see callbacks.go
+	files = append(files, "csrc/callbacks.c")
+
 	args := []string{
 		"ccgo",
 		"-verify-types",
@@ -67,6 +71,12 @@ func main() {
 	args = append(args, files...)
 
 	if !noTranspile {
+		// ccgo does not reject incompatible function pointers, the host compiler does
+		slog.Info("Check callback signatures")
+		check := exec.Command("cc", "-fsyntax-only", "-Werror=incompatible-pointer-types", "-I", "../box2d-c/include/", "csrc/callbacks.c")
+		check.Stdout, check.Stderr = os.Stdout, os.Stderr
+		must(check.Run())
+
 		// remove previous files
 		gofs, err := filepath.Glob("../box2d_c*.go")
 		must(err)

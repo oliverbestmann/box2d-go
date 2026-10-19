@@ -16,7 +16,7 @@ var IdentityTransform = Transform{Q: IdentityRot}
 var ZeroMat = Mat22{}
 
 func init() {
-	b2SetAssertFcn(theStack, __ccgo_fp(b2DefaultAssertFcnGo))
+	b2SetAssertFcn(theStack, __ccgo_fp(assertFcn(b2DefaultAssertFcnGo)))
 }
 
 func ComputeHull(points []Vec2) (Hull, bool) {
@@ -226,9 +226,9 @@ func (b World) keepCallback(kind string, fn any) uintptr {
 func (b World) SetRestitutionCallback(callback RestitutionCallback) {
 	var fn uintptr
 	if callback != nil {
-		fn = b.keepCallback("restitution", func(_ *_Stack, restitutionA float32, userMaterialIdA int32, restitutionB float32, userMaterialIdB int32) float32 {
+		fn = b.keepCallback("restitution", restitutionCallback(func(_ *_Stack, restitutionA float32, userMaterialIdA int32, restitutionB float32, userMaterialIdB int32) float32 {
 			return callback(restitutionA, userMaterialIdA, restitutionB, userMaterialIdB)
-		})
+		}))
 	}
 
 	b2World_SetRestitutionCallback(theStack, b.Id, fn)
@@ -239,9 +239,9 @@ func (b World) SetRestitutionCallback(callback RestitutionCallback) {
 func (b World) SetFrictionCallback(callback FrictionCallback) {
 	var fn uintptr
 	if callback != nil {
-		fn = b.keepCallback("friction", func(_ *_Stack, frictionA float32, userMaterialIdA int32, frictionB float32, userMaterialIdB int32) float32 {
+		fn = b.keepCallback("friction", frictionCallback(func(_ *_Stack, frictionA float32, userMaterialIdA int32, frictionB float32, userMaterialIdB int32) float32 {
 			return callback(frictionA, userMaterialIdA, frictionB, userMaterialIdB)
-		})
+		}))
 	}
 
 	b2World_SetFrictionCallback(theStack, b.Id, fn)
@@ -270,7 +270,7 @@ func (b World) OverlapShape(proxy ShapeProxy, filter QueryFilter, fcn OverlapRes
 	return
 }
 
-func worldOverlapCallback(fcn OverlapResult) func(*_Stack, ShapeId, uintptr) uint8 {
+func worldOverlapCallback(fcn OverlapResult) overlapResultFcn {
 	fn := func(_ *_Stack, shapeId ShapeId, _ uintptr) uint8 {
 		return boolUint8(fcn(Shape{Id: shapeId}))
 	}
@@ -304,7 +304,7 @@ func (b World) CastShape(proxy ShapeProxy, translation Vec2, filter QueryFilter,
 	return b2World_CastShape(theStack, b.Id, proxyStack.Addr, translation, filter, __ccgo_fp(fn), 0)
 }
 
-func worldCastCallback(fcn CastResult) func(*_Stack, ShapeId, Vec2, Vec2, float32, uintptr) float32 {
+func worldCastCallback(fcn CastResult) castResultFcn {
 	fn := func(_ *_Stack, shapeId ShapeId, point, normal Vec2, fraction float32, _ uintptr) float32 {
 		return fcn(Shape{Id: shapeId}, point, normal, fraction)
 	}
@@ -323,9 +323,9 @@ type CustomFilter func(shapeIdA, shapeIdB Shape) bool
 func (b World) SetCustomFilterCallback(fcn CustomFilter) {
 	var fn uintptr
 	if fcn != nil {
-		fn = b.keepCallback("customFilter", func(_ *_Stack, shapeIdA, shapeIdB ShapeId, _ uintptr) uint8 {
+		fn = b.keepCallback("customFilter", customFilterFcn(func(_ *_Stack, shapeIdA, shapeIdB ShapeId, _ uintptr) uint8 {
 			return boolUint8(fcn(Shape{Id: shapeIdA}, Shape{Id: shapeIdB}))
-		})
+		}))
 	}
 
 	b2World_SetCustomFilterCallback(theStack, b.Id, fn, 0)
@@ -339,9 +339,9 @@ type PreSolve = func(shapeIdA, shapeIdB Shape, manifold Manifold) bool
 func (b World) SetPreSolveCallback(fcn PreSolve) {
 	var fn uintptr
 	if fcn != nil {
-		fn = b.keepCallback("preSolve", func(_ *_Stack, shapeIdA, shapeIdB ShapeId, manifold uintptr, _ uintptr) uint8 {
+		fn = b.keepCallback("preSolve", preSolveFcn(func(_ *_Stack, shapeIdA, shapeIdB ShapeId, manifold uintptr, _ uintptr) uint8 {
 			return boolUint8(fcn(Shape{Id: shapeIdA}, Shape{Id: shapeIdB}, derefToValue[Manifold](manifold)))
-		})
+		}))
 	}
 
 	b2World_SetPreSolveCallback(theStack, b.Id, fn, 0)
