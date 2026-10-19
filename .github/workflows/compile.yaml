@@ -21,6 +21,10 @@ jobs:
          - name: Run tests
            run: go test -v ./...
 
+         # the transpiled code keeps memory as uintptr and has dead code after returns, see README
+         - name: Run go vet
+           run: go vet -unsafeptr=false ./...
+
    transpile:
       runs-on: ubuntu-latest
 

@@ -15,7 +15,6 @@ type _Stack struct {
 	allocs []int
 	pos    int
 
-	heap    map[uintptr]unsafe.Pointer
 	objects map[uintptr]any
 }
 
@@ -23,7 +22,6 @@ type _Stack struct {
 func newStack(stackSize int) *_Stack {
 	stack := &_Stack{
 		Stack:   make([]byte, stackSize),
-		heap:    make(map[uintptr]unsafe.Pointer, 4096),
 		objects: make(map[uintptr]any),
 	}
 
@@ -139,6 +137,14 @@ func copyToStack[T any](tls *_Stack, value T) alloc {
 	runtime.KeepAlive(value)
 
 	return alloc{Addr: stack, tls: tls, size: int(n)}
+}
+
+func sliceToStack[T any](tls *_Stack, values []T) alloc {
+	n := len(values) * int(unsafe.Sizeof(*new(T)))
+	stack := tls.Alloc(n)
+	copy(unsafe.Slice((*T)(unsafe.Pointer(stack)), len(values)), values)
+
+	return alloc{Addr: stack, tls: tls, size: n}
 }
 
 func derefToValue[T any](ptr uintptr) T {

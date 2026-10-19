@@ -35028,7 +35028,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ChainId"
+	// struct "b2JointId"
 	if g, e := unsafe.Sizeof(v52), uintptr(8); g != e {
 		panic(g)
 	}
@@ -36674,7 +36674,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorBeginTouchEvent"
+	// struct "b2SensorEndTouchEvent"
 	if g, e := unsafe.Sizeof(v85), uintptr(16); g != e {
 		panic(g)
 	}
@@ -42414,7 +42414,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2JointId"
+	// struct "b2BodyId"
 	if g, e := unsafe.Sizeof(v55), uintptr(8); g != e {
 		panic(g)
 	}
@@ -44515,7 +44515,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorBeginTouchEvent"
+	// struct "b2SensorEndTouchEvent"
 	if g, e := unsafe.Sizeof(v87), uintptr(16); g != e {
 		panic(g)
 	}
@@ -44744,7 +44744,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactBeginTouchEvent"
+	// struct "b2ContactData"
 	if g, e := unsafe.Sizeof(v90), uintptr(128); g != e {
 		panic(g)
 	}
@@ -52127,7 +52127,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2BodyId"
+	// struct "b2ShapeId"
 	if g, e := unsafe.Sizeof(v50), uintptr(8); g != e {
 		panic(g)
 	}
@@ -55214,7 +55214,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorBeginTouchEvent"
+	// struct "b2SensorEndTouchEvent"
 	if g, e := unsafe.Sizeof(v88), uintptr(16); g != e {
 		panic(g)
 	}
@@ -58969,31 +58969,6 @@ func init() {
 		panic(g)
 	}
 	var v26 struct {
-		Child1 int32
-		Child2 int32
-	}
-	if g, e := unsafe.Sizeof(v26), uintptr(8); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v26.Child1), uintptr(4); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v26.Child1), uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v26.Child1)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v26.Child2), uintptr(4); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v26.Child2), uintptr(4); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v26.Child2)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	var v27 struct {
 		Closest1        Vec2
 		Closest2        Vec2
 		Fraction1       float32
@@ -59001,143 +58976,143 @@ func init() {
 		DistanceSquared float32
 	}
 	// struct "b2SegmentDistanceResult"
-	if g, e := unsafe.Sizeof(v27), uintptr(28); g != e {
+	if g, e := unsafe.Sizeof(v26), uintptr(28); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v27.Closest1), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v26.Closest1), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v27.Closest1), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v26.Closest1), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v27.Closest1)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v26.Closest1)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v27.Closest2), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v26.Closest2), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v27.Closest2), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v26.Closest2), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v27.Closest2)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v26.Closest2)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v27.Fraction1), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v26.Fraction1), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v27.Fraction1), uintptr(16); g != e {
+	if g, e := unsafe.Offsetof(v26.Fraction1), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v27.Fraction1)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v26.Fraction1)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v27.Fraction2), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v26.Fraction2), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v27.Fraction2), uintptr(20); g != e {
+	if g, e := unsafe.Offsetof(v26.Fraction2), uintptr(20); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v27.Fraction2)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v26.Fraction2)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v27.DistanceSquared), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v26.DistanceSquared), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v27.DistanceSquared), uintptr(24); g != e {
+	if g, e := unsafe.Offsetof(v26.DistanceSquared), uintptr(24); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v27.DistanceSquared)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v26.DistanceSquared)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v28 struct {
+	var v27 struct {
 		Cosine float32
 		Sine   float32
 	}
 	// struct "b2CosSin"
-	if g, e := unsafe.Sizeof(v28), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v27), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v28.Cosine), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v27.Cosine), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v28.Cosine), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v27.Cosine), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v28.Cosine)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v27.Cosine)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v28.Sine), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v27.Sine), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v28.Sine), uintptr(4); g != e {
+	if g, e := unsafe.Offsetof(v27.Sine), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v28.Sine)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v27.Sine)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v29 struct {
+	var v28 struct {
 		Count  uint16
 		IndexA [3]uint8_t
 		IndexB [3]uint8_t
 	}
 	// struct "b2SimplexCache"
-	if g, e := unsafe.Sizeof(v29), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v28), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v29.Count), uintptr(2); g != e {
+	if g, e := unsafe.Sizeof(v28.Count), uintptr(2); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v29.Count), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v28.Count), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v29.Count)%2, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v28.Count)%2, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v29.IndexA), uintptr(3); g != e {
+	if g, e := unsafe.Sizeof(v28.IndexA), uintptr(3); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v29.IndexA), uintptr(2); g != e {
+	if g, e := unsafe.Offsetof(v28.IndexA), uintptr(2); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v29.IndexA)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v28.IndexA)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v29.IndexB), uintptr(3); g != e {
+	if g, e := unsafe.Sizeof(v28.IndexB), uintptr(3); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v29.IndexB), uintptr(5); g != e {
+	if g, e := unsafe.Offsetof(v28.IndexB), uintptr(5); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v29.IndexB)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v28.IndexB)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	var v30 struct {
+	var v29 struct {
 		Cx Vec2
 		Cy Vec2
 	}
 	// struct "b2Mat22"
-	if g, e := unsafe.Sizeof(v30), uintptr(16); g != e {
+	if g, e := unsafe.Sizeof(v29), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v30.Cx), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v29.Cx), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v30.Cx), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v29.Cx), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v30.Cx)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v29.Cx)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v30.Cy), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v29.Cy), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v30.Cy), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v29.Cy), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v30.Cy)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v29.Cy)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v31 struct {
+	var v30 struct {
 		Friction          float32
 		Restitution       float32
 		RollingResistance float32
@@ -59146,110 +59121,110 @@ func init() {
 		CustomColor       uint32
 	}
 	// struct "b2SurfaceMaterial"
-	if g, e := unsafe.Sizeof(v31), uintptr(24); g != e {
+	if g, e := unsafe.Sizeof(v30), uintptr(24); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v31.Friction), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v30.Friction), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v31.Friction), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v30.Friction), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v31.Friction)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v30.Friction)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v31.Restitution), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v30.Restitution), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v31.Restitution), uintptr(4); g != e {
+	if g, e := unsafe.Offsetof(v30.Restitution), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v31.Restitution)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v30.Restitution)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v31.RollingResistance), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v30.RollingResistance), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v31.RollingResistance), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v30.RollingResistance), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v31.RollingResistance)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v30.RollingResistance)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v31.TangentSpeed), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v30.TangentSpeed), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v31.TangentSpeed), uintptr(12); g != e {
+	if g, e := unsafe.Offsetof(v30.TangentSpeed), uintptr(12); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v31.TangentSpeed)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v30.TangentSpeed)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v31.UserMaterialId), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v30.UserMaterialId), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v31.UserMaterialId), uintptr(16); g != e {
+	if g, e := unsafe.Offsetof(v30.UserMaterialId), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v31.UserMaterialId)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v30.UserMaterialId)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v31.CustomColor), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v30.CustomColor), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v31.CustomColor), uintptr(20); g != e {
+	if g, e := unsafe.Offsetof(v30.CustomColor), uintptr(20); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v31.CustomColor)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v30.CustomColor)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v32 struct {
+	var v31 struct {
 		Ghost1  Vec2
 		Segment Segment
 		Ghost2  Vec2
 		ChainId int32
 	}
 	// struct "b2ChainSegment"
-	if g, e := unsafe.Sizeof(v32), uintptr(36); g != e {
+	if g, e := unsafe.Sizeof(v31), uintptr(36); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v32.Ghost1), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v31.Ghost1), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v32.Ghost1), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v31.Ghost1), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v32.Ghost1)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v31.Ghost1)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v32.Segment), uintptr(16); g != e {
+	if g, e := unsafe.Sizeof(v31.Segment), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v32.Segment), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v31.Segment), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v32.Segment)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v31.Segment)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v32.Ghost2), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v31.Ghost2), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v32.Ghost2), uintptr(24); g != e {
+	if g, e := unsafe.Offsetof(v31.Ghost2), uintptr(24); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v32.Ghost2)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v31.Ghost2)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v32.ChainId), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v31.ChainId), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v32.ChainId), uintptr(32); g != e {
+	if g, e := unsafe.Offsetof(v31.ChainId), uintptr(32); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v32.ChainId)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v31.ChainId)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v33 struct {
+	var v32 struct {
 		Gravity              Vec2
 		RestitutionThreshold float32
 		HitEventThreshold    float32
@@ -59269,225 +59244,225 @@ func init() {
 		InternalValue        int32
 	}
 	// struct "b2WorldDef"
-	if g, e := unsafe.Sizeof(v33), uintptr(96); g != e {
+	if g, e := unsafe.Sizeof(v32), uintptr(96); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v33.Gravity), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v32.Gravity), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.Gravity), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v32.Gravity), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.Gravity)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v32.Gravity)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v33.RestitutionThreshold), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v32.RestitutionThreshold), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.RestitutionThreshold), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v32.RestitutionThreshold), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.RestitutionThreshold)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v32.RestitutionThreshold)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v33.HitEventThreshold), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v32.HitEventThreshold), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.HitEventThreshold), uintptr(12); g != e {
+	if g, e := unsafe.Offsetof(v32.HitEventThreshold), uintptr(12); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.HitEventThreshold)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v32.HitEventThreshold)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v33.ContactHertz), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v32.ContactHertz), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.ContactHertz), uintptr(16); g != e {
+	if g, e := unsafe.Offsetof(v32.ContactHertz), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.ContactHertz)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v32.ContactHertz)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v33.ContactDampingRatio), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v32.ContactDampingRatio), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.ContactDampingRatio), uintptr(20); g != e {
+	if g, e := unsafe.Offsetof(v32.ContactDampingRatio), uintptr(20); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.ContactDampingRatio)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v32.ContactDampingRatio)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v33.MaxContactPushSpeed), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v32.MaxContactPushSpeed), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.MaxContactPushSpeed), uintptr(24); g != e {
+	if g, e := unsafe.Offsetof(v32.MaxContactPushSpeed), uintptr(24); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.MaxContactPushSpeed)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v32.MaxContactPushSpeed)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v33.MaximumLinearSpeed), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v32.MaximumLinearSpeed), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.MaximumLinearSpeed), uintptr(28); g != e {
+	if g, e := unsafe.Offsetof(v32.MaximumLinearSpeed), uintptr(28); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.MaximumLinearSpeed)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v32.MaximumLinearSpeed)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v33.FrictionCallback), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v32.FrictionCallback), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.FrictionCallback), uintptr(32); g != e {
+	if g, e := unsafe.Offsetof(v32.FrictionCallback), uintptr(32); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.FrictionCallback)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v32.FrictionCallback)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v33.RestitutionCallback), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v32.RestitutionCallback), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.RestitutionCallback), uintptr(40); g != e {
+	if g, e := unsafe.Offsetof(v32.RestitutionCallback), uintptr(40); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.RestitutionCallback)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v32.RestitutionCallback)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v33.EnableSleep), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v32.EnableSleep), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.EnableSleep), uintptr(48); g != e {
+	if g, e := unsafe.Offsetof(v32.EnableSleep), uintptr(48); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.EnableSleep)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v32.EnableSleep)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v33.EnableContinuous), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v32.EnableContinuous), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.EnableContinuous), uintptr(49); g != e {
+	if g, e := unsafe.Offsetof(v32.EnableContinuous), uintptr(49); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.EnableContinuous)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v32.EnableContinuous)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v33.WorkerCount), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v32.WorkerCount), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.WorkerCount), uintptr(52); g != e {
+	if g, e := unsafe.Offsetof(v32.WorkerCount), uintptr(52); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.WorkerCount)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v32.WorkerCount)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v33.EnqueueTask), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v32.EnqueueTask), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.EnqueueTask), uintptr(56); g != e {
+	if g, e := unsafe.Offsetof(v32.EnqueueTask), uintptr(56); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.EnqueueTask)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v32.EnqueueTask)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v33.FinishTask), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v32.FinishTask), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.FinishTask), uintptr(64); g != e {
+	if g, e := unsafe.Offsetof(v32.FinishTask), uintptr(64); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.FinishTask)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v32.FinishTask)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v33.UserTaskContext), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v32.UserTaskContext), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.UserTaskContext), uintptr(72); g != e {
+	if g, e := unsafe.Offsetof(v32.UserTaskContext), uintptr(72); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.UserTaskContext)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v32.UserTaskContext)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v33.UserData), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v32.UserData), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.UserData), uintptr(80); g != e {
+	if g, e := unsafe.Offsetof(v32.UserData), uintptr(80); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.UserData)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v32.UserData)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v33.InternalValue), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v32.InternalValue), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.InternalValue), uintptr(88); g != e {
+	if g, e := unsafe.Offsetof(v32.InternalValue), uintptr(88); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v33.InternalValue)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v32.InternalValue)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v34 struct {
+	var v33 struct {
 		Index1     int32
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ShapeId"
-	if g, e := unsafe.Sizeof(v34), uintptr(8); g != e {
+	// struct "b2ChainId"
+	if g, e := unsafe.Sizeof(v33), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v34.Index1), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v33.Index1), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v33.Index1), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v33.Index1)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v33.World0), uintptr(2); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v33.World0), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v33.World0)%2, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v33.Generation), uintptr(2); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v33.Generation), uintptr(6); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v33.Generation)%2, uintptr(0); g != e {
+		panic(g)
+	}
+	var v34 struct {
+		Index1     uint16
+		Generation uint16
+	}
+	// struct "b2WorldId"
+	if g, e := unsafe.Sizeof(v34), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v34.Index1), uintptr(2); g != e {
 		panic(g)
 	}
 	if g, e := unsafe.Offsetof(v34.Index1), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v34.Index1)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v34.World0), uintptr(2); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v34.World0), uintptr(4); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v34.World0)%2, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v34.Index1)%2, uintptr(0); g != e {
 		panic(g)
 	}
 	if g, e := unsafe.Sizeof(v34.Generation), uintptr(2); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v34.Generation), uintptr(6); g != e {
+	if g, e := unsafe.Offsetof(v34.Generation), uintptr(2); g != e {
 		panic(g)
 	}
 	if g, e := unsafe.Offsetof(v34.Generation)%2, uintptr(0); g != e {
 		panic(g)
 	}
 	var v35 struct {
-		Index1     uint16
-		Generation uint16
-	}
-	// struct "b2WorldId"
-	if g, e := unsafe.Sizeof(v35), uintptr(4); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v35.Index1), uintptr(2); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v35.Index1), uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v35.Index1)%2, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v35.Generation), uintptr(2); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v35.Generation), uintptr(2); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v35.Generation)%2, uintptr(0); g != e {
-		panic(g)
-	}
-	var v36 struct {
 		LocalCenter Vec2
 		C1          Vec2
 		C2          Vec2
@@ -59495,117 +59470,117 @@ func init() {
 		Q2          Rot
 	}
 	// struct "b2Sweep"
-	if g, e := unsafe.Sizeof(v36), uintptr(40); g != e {
+	if g, e := unsafe.Sizeof(v35), uintptr(40); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v36.LocalCenter), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v35.LocalCenter), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v36.LocalCenter), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v35.LocalCenter), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v36.LocalCenter)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v35.LocalCenter)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v36.C1), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v35.C1), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v36.C1), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v35.C1), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v36.C1)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v35.C1)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v36.C2), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v35.C2), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v36.C2), uintptr(16); g != e {
+	if g, e := unsafe.Offsetof(v35.C2), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v36.C2)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v35.C2)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v36.Q1), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v35.Q1), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v36.Q1), uintptr(24); g != e {
+	if g, e := unsafe.Offsetof(v35.Q1), uintptr(24); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v36.Q1)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v35.Q1)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v36.Q2), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v35.Q2), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v36.Q2), uintptr(32); g != e {
+	if g, e := unsafe.Offsetof(v35.Q2), uintptr(32); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v36.Q2)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v35.Q2)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v37 struct {
+	var v36 struct {
 		LowerBound Vec2
 		UpperBound Vec2
 	}
 	// struct "b2AABB"
-	if g, e := unsafe.Sizeof(v37), uintptr(16); g != e {
+	if g, e := unsafe.Sizeof(v36), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v37.LowerBound), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v36.LowerBound), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v37.LowerBound), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v36.LowerBound), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v37.LowerBound)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v36.LowerBound)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v37.UpperBound), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v36.UpperBound), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v37.UpperBound), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v36.UpperBound), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v37.UpperBound)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v36.UpperBound)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v38 struct {
+	var v37 struct {
 		Major    int32
 		Minor    int32
 		Revision int32
 	}
 	// struct "b2Version"
-	if g, e := unsafe.Sizeof(v38), uintptr(12); g != e {
+	if g, e := unsafe.Sizeof(v37), uintptr(12); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v38.Major), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v37.Major), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v38.Major), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v37.Major), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v38.Major)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v37.Major)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v38.Minor), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v37.Minor), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v38.Minor), uintptr(4); g != e {
+	if g, e := unsafe.Offsetof(v37.Minor), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v38.Minor)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v37.Minor)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v38.Revision), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v37.Revision), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v38.Revision), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v37.Revision), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v38.Revision)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v37.Revision)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v39 struct {
+	var v38 struct {
 		MaskBits         uint64
 		Position         Vec2
 		Radius           float32
@@ -59613,117 +59588,117 @@ func init() {
 		ImpulsePerLength float32
 	}
 	// struct "b2ExplosionDef"
-	if g, e := unsafe.Sizeof(v39), uintptr(32); g != e {
+	if g, e := unsafe.Sizeof(v38), uintptr(32); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v39.MaskBits), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v38.MaskBits), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v39.MaskBits), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v38.MaskBits), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v39.MaskBits)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v38.MaskBits)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v39.Position), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v38.Position), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v39.Position), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v38.Position), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v39.Position)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v38.Position)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v39.Radius), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v38.Radius), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v39.Radius), uintptr(16); g != e {
+	if g, e := unsafe.Offsetof(v38.Radius), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v39.Radius)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v38.Radius)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v39.Falloff), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v38.Falloff), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v39.Falloff), uintptr(20); g != e {
+	if g, e := unsafe.Offsetof(v38.Falloff), uintptr(20); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v39.Falloff)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v38.Falloff)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v39.ImpulsePerLength), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v38.ImpulsePerLength), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v39.ImpulsePerLength), uintptr(24); g != e {
+	if g, e := unsafe.Offsetof(v38.ImpulsePerLength), uintptr(24); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v39.ImpulsePerLength)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v38.ImpulsePerLength)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v40 struct {
+	var v39 struct {
 		Mass              float32
 		Center            Vec2
 		RotationalInertia float32
 	}
 	// struct "b2MassData"
-	if g, e := unsafe.Sizeof(v40), uintptr(16); g != e {
+	if g, e := unsafe.Sizeof(v39), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v40.Mass), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v39.Mass), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v40.Mass), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v39.Mass), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v40.Mass)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v39.Mass)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v40.Center), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v39.Center), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v40.Center), uintptr(4); g != e {
+	if g, e := unsafe.Offsetof(v39.Center), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v40.Center)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v39.Center)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v40.RotationalInertia), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v39.RotationalInertia), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v40.RotationalInertia), uintptr(12); g != e {
+	if g, e := unsafe.Offsetof(v39.RotationalInertia), uintptr(12); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v40.RotationalInertia)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v39.RotationalInertia)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v41 struct {
+	var v40 struct {
 		MoveEvents uintptr
 		MoveCount  int32
 	}
 	// struct "b2BodyEvents"
-	if g, e := unsafe.Sizeof(v41), uintptr(16); g != e {
+	if g, e := unsafe.Sizeof(v40), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v41.MoveEvents), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v40.MoveEvents), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v41.MoveEvents), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v40.MoveEvents), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v41.MoveEvents)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v40.MoveEvents)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v41.MoveCount), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v40.MoveCount), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v41.MoveCount), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v40.MoveCount), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v41.MoveCount)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v40.MoveCount)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v42 struct {
+	var v41 struct {
 		NodeIndex  int32
 		ChildCount int32
 		StartIndex int32
@@ -59731,81 +59706,81 @@ func init() {
 		EndIndex   int32
 	}
 	// struct "b2RebuildItem"
-	if g, e := unsafe.Sizeof(v42), uintptr(20); g != e {
+	if g, e := unsafe.Sizeof(v41), uintptr(20); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v42.NodeIndex), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v41.NodeIndex), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v42.NodeIndex), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v41.NodeIndex), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v42.NodeIndex)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v41.NodeIndex)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v42.ChildCount), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v41.ChildCount), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v42.ChildCount), uintptr(4); g != e {
+	if g, e := unsafe.Offsetof(v41.ChildCount), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v42.ChildCount)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v41.ChildCount)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v42.StartIndex), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v41.StartIndex), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v42.StartIndex), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v41.StartIndex), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v42.StartIndex)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v41.StartIndex)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v42.SplitIndex), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v41.SplitIndex), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v42.SplitIndex), uintptr(12); g != e {
+	if g, e := unsafe.Offsetof(v41.SplitIndex), uintptr(12); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v42.SplitIndex)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v41.SplitIndex)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v42.EndIndex), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v41.EndIndex), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v42.EndIndex), uintptr(16); g != e {
+	if g, e := unsafe.Offsetof(v41.EndIndex), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v42.EndIndex)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v41.EndIndex)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v43 struct {
+	var v42 struct {
 		NodeVisits int32
 		LeafVisits int32
 	}
 	// struct "b2TreeStats"
-	if g, e := unsafe.Sizeof(v43), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v42), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v43.NodeVisits), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v42.NodeVisits), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v43.NodeVisits), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v42.NodeVisits), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v43.NodeVisits)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v42.NodeVisits)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v43.LeafVisits), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v42.LeafVisits), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v43.LeafVisits), uintptr(4); g != e {
+	if g, e := unsafe.Offsetof(v42.LeafVisits), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v43.LeafVisits)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v42.LeafVisits)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v44 struct {
+	var v43 struct {
 		Nodes           uintptr
 		Root            int32
 		NodeCount       int32
@@ -59819,114 +59794,143 @@ func init() {
 		RebuildCapacity int32
 	}
 	// struct "b2DynamicTree"
-	if g, e := unsafe.Sizeof(v44), uintptr(72); g != e {
+	if g, e := unsafe.Sizeof(v43), uintptr(72); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v44.Nodes), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v43.Nodes), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.Nodes), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v43.Nodes), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.Nodes)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v43.Nodes)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v44.Root), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v43.Root), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.Root), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v43.Root), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.Root)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v43.Root)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v44.NodeCount), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v43.NodeCount), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.NodeCount), uintptr(12); g != e {
+	if g, e := unsafe.Offsetof(v43.NodeCount), uintptr(12); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.NodeCount)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v43.NodeCount)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v44.NodeCapacity), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v43.NodeCapacity), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.NodeCapacity), uintptr(16); g != e {
+	if g, e := unsafe.Offsetof(v43.NodeCapacity), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.NodeCapacity)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v43.NodeCapacity)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v44.FreeList), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v43.FreeList), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.FreeList), uintptr(20); g != e {
+	if g, e := unsafe.Offsetof(v43.FreeList), uintptr(20); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.FreeList)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v43.FreeList)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v44.ProxyCount), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v43.ProxyCount), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.ProxyCount), uintptr(24); g != e {
+	if g, e := unsafe.Offsetof(v43.ProxyCount), uintptr(24); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.ProxyCount)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v43.ProxyCount)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v44.LeafIndices), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v43.LeafIndices), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.LeafIndices), uintptr(32); g != e {
+	if g, e := unsafe.Offsetof(v43.LeafIndices), uintptr(32); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.LeafIndices)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v43.LeafIndices)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v44.LeafBoxes), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v43.LeafBoxes), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.LeafBoxes), uintptr(40); g != e {
+	if g, e := unsafe.Offsetof(v43.LeafBoxes), uintptr(40); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.LeafBoxes)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v43.LeafBoxes)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v44.LeafCenters), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v43.LeafCenters), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.LeafCenters), uintptr(48); g != e {
+	if g, e := unsafe.Offsetof(v43.LeafCenters), uintptr(48); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.LeafCenters)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v43.LeafCenters)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v44.BinIndices), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v43.BinIndices), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.BinIndices), uintptr(56); g != e {
+	if g, e := unsafe.Offsetof(v43.BinIndices), uintptr(56); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.BinIndices)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v43.BinIndices)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v44.RebuildCapacity), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v43.RebuildCapacity), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.RebuildCapacity), uintptr(64); g != e {
+	if g, e := unsafe.Offsetof(v43.RebuildCapacity), uintptr(64); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v44.RebuildCapacity)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v43.RebuildCapacity)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v45 struct {
+	var v44 struct {
 		Normal Vec2
 		Offset float32
 	}
 	// struct "b2Plane"
-	if g, e := unsafe.Sizeof(v45), uintptr(12); g != e {
+	if g, e := unsafe.Sizeof(v44), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v44.Normal), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v44.Normal), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v44.Normal)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v44.Offset), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v44.Offset), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v44.Offset)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v45 struct {
+		Normal     Vec2
+		Point      Vec2
+		Fraction   float32
+		Iterations int32
+		Hit        uint8
+	}
+	// struct "b2CastOutput"
+	if g, e := unsafe.Sizeof(v45), uintptr(28); g != e {
 		panic(g)
 	}
 	if g, e := unsafe.Sizeof(v45.Normal), uintptr(8); g != e {
@@ -59938,24 +59942,50 @@ func init() {
 	if g, e := unsafe.Offsetof(v45.Normal)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v45.Offset), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v45.Point), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v45.Offset), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v45.Point), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v45.Offset)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v45.Point)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v45.Fraction), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v45.Fraction), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v45.Fraction)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v45.Iterations), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v45.Iterations), uintptr(20); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v45.Iterations)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v45.Hit), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v45.Hit), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v45.Hit)%1, uintptr(0); g != e {
 		panic(g)
 	}
 	var v46 struct {
-		Normal     Vec2
-		Point      Vec2
-		Fraction   float32
-		Iterations int32
-		Hit        uint8
+		Normal         Vec2
+		RollingImpulse float32
+		Points         [2]ManifoldPoint
+		PointCount     int32
 	}
-	// struct "b2CastOutput"
-	if g, e := unsafe.Sizeof(v46), uintptr(28); g != e {
+	// struct "b2Manifold"
+	if g, e := unsafe.Sizeof(v46), uintptr(112); g != e {
 		panic(g)
 	}
 	if g, e := unsafe.Sizeof(v46.Normal), uintptr(8); g != e {
@@ -59967,156 +59997,138 @@ func init() {
 	if g, e := unsafe.Offsetof(v46.Normal)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v46.Point), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v46.RollingImpulse), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v46.Point), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v46.RollingImpulse), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v46.Point)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v46.RollingImpulse)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v46.Fraction), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v46.Points), uintptr(96); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v46.Fraction), uintptr(16); g != e {
+	if g, e := unsafe.Offsetof(v46.Points), uintptr(12); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v46.Fraction)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v46.Points)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v46.Iterations), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v46.PointCount), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v46.Iterations), uintptr(20); g != e {
+	if g, e := unsafe.Offsetof(v46.PointCount), uintptr(108); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v46.Iterations)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v46.Hit), uintptr(1); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v46.Hit), uintptr(24); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v46.Hit)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v46.PointCount)%4, uintptr(0); g != e {
 		panic(g)
 	}
 	var v47 struct {
-		Normal         Vec2
-		RollingImpulse float32
-		Points         [2]ManifoldPoint
-		PointCount     int32
-	}
-	// struct "b2Manifold"
-	if g, e := unsafe.Sizeof(v47), uintptr(112); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v47.Normal), uintptr(8); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v47.Normal), uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v47.Normal)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v47.RollingImpulse), uintptr(4); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v47.RollingImpulse), uintptr(8); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v47.RollingImpulse)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v47.Points), uintptr(96); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v47.Points), uintptr(12); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v47.Points)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v47.PointCount), uintptr(4); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v47.PointCount), uintptr(108); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v47.PointCount)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	var v48 struct {
 		Origin      Vec2
 		Translation Vec2
 		MaxFraction float32
 	}
 	// struct "b2RayCastInput"
-	if g, e := unsafe.Sizeof(v48), uintptr(20); g != e {
+	if g, e := unsafe.Sizeof(v47), uintptr(20); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v48.Origin), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v47.Origin), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v48.Origin), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v47.Origin), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v48.Origin)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v47.Origin)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v48.Translation), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v47.Translation), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v48.Translation), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v47.Translation), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v48.Translation)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v47.Translation)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v48.MaxFraction), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v47.MaxFraction), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v48.MaxFraction), uintptr(16); g != e {
+	if g, e := unsafe.Offsetof(v47.MaxFraction), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v48.MaxFraction)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v47.MaxFraction)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v49 struct {
+	var v48 struct {
 		P Vec2
 		Q Rot
 	}
 	// struct "b2Transform"
-	if g, e := unsafe.Sizeof(v49), uintptr(16); g != e {
+	if g, e := unsafe.Sizeof(v48), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v49.P), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v48.P), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v49.P), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v48.P), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v49.P)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v48.P)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v49.Q), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v48.Q), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v49.Q), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v48.Q), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v49.Q)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v48.Q)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v50 struct {
+	var v49 struct {
 		Plane Plane
 		Point Vec2
 		Hit   uint8
 	}
 	// struct "b2PlaneResult"
+	if g, e := unsafe.Sizeof(v49), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v49.Plane), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v49.Plane), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v49.Plane)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v49.Point), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v49.Point), uintptr(12); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v49.Point)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v49.Hit), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v49.Hit), uintptr(20); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v49.Hit)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	var v50 struct {
+		Plane        Plane
+		PushLimit    float32
+		Push         float32
+		ClipVelocity uint8
+	}
+	// struct "b2CollisionPlane"
 	if g, e := unsafe.Sizeof(v50), uintptr(24); g != e {
 		panic(g)
 	}
@@ -60129,71 +60141,34 @@ func init() {
 	if g, e := unsafe.Offsetof(v50.Plane)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v50.Point), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v50.PushLimit), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v50.Point), uintptr(12); g != e {
+	if g, e := unsafe.Offsetof(v50.PushLimit), uintptr(12); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v50.Point)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v50.PushLimit)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v50.Hit), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v50.Push), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v50.Hit), uintptr(20); g != e {
+	if g, e := unsafe.Offsetof(v50.Push), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v50.Hit)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v50.Push)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v50.ClipVelocity), uintptr(1); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v50.ClipVelocity), uintptr(20); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v50.ClipVelocity)%1, uintptr(0); g != e {
 		panic(g)
 	}
 	var v51 struct {
-		Plane        Plane
-		PushLimit    float32
-		Push         float32
-		ClipVelocity uint8
-	}
-	// struct "b2CollisionPlane"
-	if g, e := unsafe.Sizeof(v51), uintptr(24); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v51.Plane), uintptr(12); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v51.Plane), uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v51.Plane)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v51.PushLimit), uintptr(4); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v51.PushLimit), uintptr(12); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v51.PushLimit)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v51.Push), uintptr(4); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v51.Push), uintptr(16); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v51.Push)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v51.ClipVelocity), uintptr(1); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v51.ClipVelocity), uintptr(20); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v51.ClipVelocity)%1, uintptr(0); g != e {
-		panic(g)
-	}
-	var v52 struct {
 		Point              Vec2
 		AnchorA            Vec2
 		AnchorB            Vec2
@@ -60206,126 +60181,126 @@ func init() {
 		Persisted          uint8
 	}
 	// struct "b2ManifoldPoint"
-	if g, e := unsafe.Sizeof(v52), uintptr(48); g != e {
+	if g, e := unsafe.Sizeof(v51), uintptr(48); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v52.Point), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v51.Point), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.Point), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v51.Point), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.Point)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v51.Point)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v52.AnchorA), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v51.AnchorA), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.AnchorA), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v51.AnchorA), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.AnchorA)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v51.AnchorA)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v52.AnchorB), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v51.AnchorB), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.AnchorB), uintptr(16); g != e {
+	if g, e := unsafe.Offsetof(v51.AnchorB), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.AnchorB)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v51.AnchorB)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v52.Separation), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v51.Separation), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.Separation), uintptr(24); g != e {
+	if g, e := unsafe.Offsetof(v51.Separation), uintptr(24); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.Separation)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v51.Separation)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v52.NormalImpulse), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v51.NormalImpulse), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.NormalImpulse), uintptr(28); g != e {
+	if g, e := unsafe.Offsetof(v51.NormalImpulse), uintptr(28); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.NormalImpulse)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v51.NormalImpulse)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v52.TangentImpulse), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v51.TangentImpulse), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.TangentImpulse), uintptr(32); g != e {
+	if g, e := unsafe.Offsetof(v51.TangentImpulse), uintptr(32); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.TangentImpulse)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v51.TangentImpulse)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v52.TotalNormalImpulse), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v51.TotalNormalImpulse), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.TotalNormalImpulse), uintptr(36); g != e {
+	if g, e := unsafe.Offsetof(v51.TotalNormalImpulse), uintptr(36); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.TotalNormalImpulse)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v51.TotalNormalImpulse)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v52.NormalVelocity), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v51.NormalVelocity), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.NormalVelocity), uintptr(40); g != e {
+	if g, e := unsafe.Offsetof(v51.NormalVelocity), uintptr(40); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.NormalVelocity)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v51.NormalVelocity)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v52.Id), uintptr(2); g != e {
+	if g, e := unsafe.Sizeof(v51.Id), uintptr(2); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.Id), uintptr(44); g != e {
+	if g, e := unsafe.Offsetof(v51.Id), uintptr(44); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.Id)%2, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v51.Id)%2, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v52.Persisted), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v51.Persisted), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.Persisted), uintptr(46); g != e {
+	if g, e := unsafe.Offsetof(v51.Persisted), uintptr(46); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v52.Persisted)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v51.Persisted)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	var v53 struct {
+	var v52 struct {
 		Point1 Vec2
 		Point2 Vec2
 	}
 	// struct "b2Segment"
-	if g, e := unsafe.Sizeof(v53), uintptr(16); g != e {
+	if g, e := unsafe.Sizeof(v52), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v53.Point1), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v52.Point1), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v53.Point1), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v52.Point1), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v53.Point1)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v52.Point1)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v53.Point2), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v52.Point2), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v53.Point2), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v52.Point2), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v53.Point2)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v52.Point2)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v54 struct {
+	var v53 struct {
 		PointA       Vec2
 		PointB       Vec2
 		Normal       Vec2
@@ -60334,70 +60309,105 @@ func init() {
 		SimplexCount int32
 	}
 	// struct "b2DistanceOutput"
-	if g, e := unsafe.Sizeof(v54), uintptr(36); g != e {
+	if g, e := unsafe.Sizeof(v53), uintptr(36); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v54.PointA), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v53.PointA), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v54.PointA), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v53.PointA), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v54.PointA)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v53.PointA)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v54.PointB), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v53.PointB), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v54.PointB), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v53.PointB), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v54.PointB)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v53.PointB)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v54.Normal), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v53.Normal), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v54.Normal), uintptr(16); g != e {
+	if g, e := unsafe.Offsetof(v53.Normal), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v54.Normal)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v53.Normal)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v54.Distance), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v53.Distance), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v54.Distance), uintptr(24); g != e {
+	if g, e := unsafe.Offsetof(v53.Distance), uintptr(24); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v54.Distance)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v53.Distance)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v54.Iterations), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v53.Iterations), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v54.Iterations), uintptr(28); g != e {
+	if g, e := unsafe.Offsetof(v53.Iterations), uintptr(28); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v54.Iterations)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v53.Iterations)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v54.SimplexCount), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v53.SimplexCount), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v54.SimplexCount), uintptr(32); g != e {
+	if g, e := unsafe.Offsetof(v53.SimplexCount), uintptr(32); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v54.SimplexCount)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v53.SimplexCount)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v55 struct {
+	var v54 struct {
 		Points [8]Vec2
 		Count  int32
 		Radius float32
 	}
 	// struct "b2ShapeProxy"
-	if g, e := unsafe.Sizeof(v55), uintptr(72); g != e {
+	if g, e := unsafe.Sizeof(v54), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v54.Points), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v54.Points), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v54.Points)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v54.Count), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v54.Count), uintptr(64); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v54.Count)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v54.Radius), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v54.Radius), uintptr(68); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v54.Radius)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v55 struct {
+		Points [8]Vec2
+		Count  int32
+	}
+	// struct "b2Hull"
+	if g, e := unsafe.Sizeof(v55), uintptr(68); g != e {
 		panic(g)
 	}
 	if g, e := unsafe.Sizeof(v55.Points), uintptr(64); g != e {
@@ -60418,88 +60428,53 @@ func init() {
 	if g, e := unsafe.Offsetof(v55.Count)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v55.Radius), uintptr(4); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v55.Radius), uintptr(68); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v55.Radius)%4, uintptr(0); g != e {
-		panic(g)
-	}
 	var v56 struct {
-		Points [8]Vec2
-		Count  int32
-	}
-	// struct "b2Hull"
-	if g, e := unsafe.Sizeof(v56), uintptr(68); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v56.Points), uintptr(64); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v56.Points), uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v56.Points)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v56.Count), uintptr(4); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v56.Count), uintptr(64); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v56.Count)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	var v57 struct {
 		Proxy       ShapeProxy
 		Translation Vec2
 		MaxFraction float32
 		CanEncroach uint8
 	}
 	// struct "b2ShapeCastInput"
-	if g, e := unsafe.Sizeof(v57), uintptr(88); g != e {
+	if g, e := unsafe.Sizeof(v56), uintptr(88); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v57.Proxy), uintptr(72); g != e {
+	if g, e := unsafe.Sizeof(v56.Proxy), uintptr(72); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v57.Proxy), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v56.Proxy), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v57.Proxy)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v56.Proxy)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v57.Translation), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v56.Translation), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v57.Translation), uintptr(72); g != e {
+	if g, e := unsafe.Offsetof(v56.Translation), uintptr(72); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v57.Translation)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v56.Translation)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v57.MaxFraction), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v56.MaxFraction), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v57.MaxFraction), uintptr(80); g != e {
+	if g, e := unsafe.Offsetof(v56.MaxFraction), uintptr(80); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v57.MaxFraction)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v56.MaxFraction)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v57.CanEncroach), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v56.CanEncroach), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v57.CanEncroach), uintptr(84); g != e {
+	if g, e := unsafe.Offsetof(v56.CanEncroach), uintptr(84); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v57.CanEncroach)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v56.CanEncroach)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	var v58 struct {
+	var v57 struct {
 		ProxyA      ShapeProxy
 		ProxyB      ShapeProxy
 		SweepA      Sweep
@@ -60507,7 +60482,65 @@ func init() {
 		MaxFraction float32
 	}
 	// struct "b2TOIInput"
-	if g, e := unsafe.Sizeof(v58), uintptr(228); g != e {
+	if g, e := unsafe.Sizeof(v57), uintptr(228); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v57.ProxyA), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v57.ProxyA), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v57.ProxyA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v57.ProxyB), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v57.ProxyB), uintptr(72); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v57.ProxyB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v57.SweepA), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v57.SweepA), uintptr(144); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v57.SweepA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v57.SweepB), uintptr(40); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v57.SweepB), uintptr(184); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v57.SweepB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v57.MaxFraction), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v57.MaxFraction), uintptr(224); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v57.MaxFraction)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v58 struct {
+		ProxyA       ShapeProxy
+		ProxyB       ShapeProxy
+		TransformA   Transform
+		TransformB   Transform
+		TranslationB Vec2
+		MaxFraction  float32
+		CanEncroach  uint8
+	}
+	// struct "b2ShapeCastPairInput"
+	if g, e := unsafe.Sizeof(v58), uintptr(192); g != e {
 		panic(g)
 	}
 	if g, e := unsafe.Sizeof(v58.ProxyA), uintptr(72); g != e {
@@ -60528,44 +60561,60 @@ func init() {
 	if g, e := unsafe.Offsetof(v58.ProxyB)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v58.SweepA), uintptr(40); g != e {
+	if g, e := unsafe.Sizeof(v58.TransformA), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v58.SweepA), uintptr(144); g != e {
+	if g, e := unsafe.Offsetof(v58.TransformA), uintptr(144); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v58.SweepA)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v58.TransformA)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v58.SweepB), uintptr(40); g != e {
+	if g, e := unsafe.Sizeof(v58.TransformB), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v58.SweepB), uintptr(184); g != e {
+	if g, e := unsafe.Offsetof(v58.TransformB), uintptr(160); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v58.SweepB)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v58.TransformB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v58.TranslationB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v58.TranslationB), uintptr(176); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v58.TranslationB)%4, uintptr(0); g != e {
 		panic(g)
 	}
 	if g, e := unsafe.Sizeof(v58.MaxFraction), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v58.MaxFraction), uintptr(224); g != e {
+	if g, e := unsafe.Offsetof(v58.MaxFraction), uintptr(184); g != e {
 		panic(g)
 	}
 	if g, e := unsafe.Offsetof(v58.MaxFraction)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v59 struct {
-		ProxyA       ShapeProxy
-		ProxyB       ShapeProxy
-		TransformA   Transform
-		TransformB   Transform
-		TranslationB Vec2
-		MaxFraction  float32
-		CanEncroach  uint8
+	if g, e := unsafe.Sizeof(v58.CanEncroach), uintptr(1); g != e {
+		panic(g)
 	}
-	// struct "b2ShapeCastPairInput"
-	if g, e := unsafe.Sizeof(v59), uintptr(192); g != e {
+	if g, e := unsafe.Offsetof(v58.CanEncroach), uintptr(188); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v58.CanEncroach)%1, uintptr(0); g != e {
+		panic(g)
+	}
+	var v59 struct {
+		ProxyA     ShapeProxy
+		ProxyB     ShapeProxy
+		TransformA Transform
+		TransformB Transform
+		UseRadii   uint8
+	}
+	// struct "b2DistanceInput"
+	if g, e := unsafe.Sizeof(v59), uintptr(180); g != e {
 		panic(g)
 	}
 	if g, e := unsafe.Sizeof(v59.ProxyA), uintptr(72); g != e {
@@ -60604,116 +60653,42 @@ func init() {
 	if g, e := unsafe.Offsetof(v59.TransformB)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v59.TranslationB), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v59.UseRadii), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v59.TranslationB), uintptr(176); g != e {
+	if g, e := unsafe.Offsetof(v59.UseRadii), uintptr(176); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v59.TranslationB)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v59.MaxFraction), uintptr(4); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v59.MaxFraction), uintptr(184); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v59.MaxFraction)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v59.CanEncroach), uintptr(1); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v59.CanEncroach), uintptr(188); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v59.CanEncroach)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v59.UseRadii)%1, uintptr(0); g != e {
 		panic(g)
 	}
 	var v60 struct {
-		ProxyA     ShapeProxy
-		ProxyB     ShapeProxy
-		TransformA Transform
-		TransformB Transform
-		UseRadii   uint8
-	}
-	// struct "b2DistanceInput"
-	if g, e := unsafe.Sizeof(v60), uintptr(180); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v60.ProxyA), uintptr(72); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v60.ProxyA), uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v60.ProxyA)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v60.ProxyB), uintptr(72); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v60.ProxyB), uintptr(72); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v60.ProxyB)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v60.TransformA), uintptr(16); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v60.TransformA), uintptr(144); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v60.TransformA)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v60.TransformB), uintptr(16); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v60.TransformB), uintptr(160); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v60.TransformB)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v60.UseRadii), uintptr(1); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v60.UseRadii), uintptr(176); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v60.UseRadii)%1, uintptr(0); g != e {
-		panic(g)
-	}
-	var v61 struct {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
-	if g, e := unsafe.Sizeof(v61), uintptr(16); g != e {
+	// struct "b2SensorBeginTouchEvent"
+	if g, e := unsafe.Sizeof(v60), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v61.SensorShapeId), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v60.SensorShapeId), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v61.SensorShapeId), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v60.SensorShapeId), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v61.SensorShapeId)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v60.SensorShapeId)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v61.VisitorShapeId), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v60.VisitorShapeId), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v61.VisitorShapeId), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v60.VisitorShapeId), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v61.VisitorShapeId)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v60.VisitorShapeId)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v62 struct {
+	var v61 struct {
 		ShapeId    ShapeId
 		Point      Vec2
 		Normal     Vec2
@@ -60723,79 +60698,117 @@ func init() {
 		Hit        uint8
 	}
 	// struct "b2RayResult"
-	if g, e := unsafe.Sizeof(v62), uintptr(40); g != e {
+	if g, e := unsafe.Sizeof(v61), uintptr(40); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v62.ShapeId), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v61.ShapeId), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v62.ShapeId), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v61.ShapeId), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v62.ShapeId)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v61.ShapeId)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v62.Point), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v61.Point), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v62.Point), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v61.Point), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v62.Point)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v61.Point)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v62.Normal), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v61.Normal), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v62.Normal), uintptr(16); g != e {
+	if g, e := unsafe.Offsetof(v61.Normal), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v62.Normal)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v61.Normal)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v62.Fraction), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v61.Fraction), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v62.Fraction), uintptr(24); g != e {
+	if g, e := unsafe.Offsetof(v61.Fraction), uintptr(24); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v62.Fraction)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v61.Fraction)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v62.NodeVisits), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v61.NodeVisits), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v62.NodeVisits), uintptr(28); g != e {
+	if g, e := unsafe.Offsetof(v61.NodeVisits), uintptr(28); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v62.NodeVisits)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v61.NodeVisits)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v62.LeafVisits), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v61.LeafVisits), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v62.LeafVisits), uintptr(32); g != e {
+	if g, e := unsafe.Offsetof(v61.LeafVisits), uintptr(32); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v62.LeafVisits)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v61.LeafVisits)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v62.Hit), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v61.Hit), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v62.Hit), uintptr(36); g != e {
+	if g, e := unsafe.Offsetof(v61.Hit), uintptr(36); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v62.Hit)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v61.Hit)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	var v63 struct {
+	var v62 struct {
 		ShapeIdA ShapeId
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactBeginTouchEvent"
-	if g, e := unsafe.Sizeof(v63), uintptr(128); g != e {
+	// struct "b2ContactData"
+	if g, e := unsafe.Sizeof(v62), uintptr(128); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v62.ShapeIdA), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v62.ShapeIdA), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v62.ShapeIdA)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v62.ShapeIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v62.ShapeIdB), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v62.ShapeIdB)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v62.Manifold), uintptr(112); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v62.Manifold), uintptr(16); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v62.Manifold)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v63 struct {
+		ShapeIdA      ShapeId
+		ShapeIdB      ShapeId
+		Point         Vec2
+		Normal        Vec2
+		ApproachSpeed float32
+	}
+	// struct "b2ContactHitEvent"
+	if g, e := unsafe.Sizeof(v63), uintptr(36); g != e {
 		panic(g)
 	}
 	if g, e := unsafe.Sizeof(v63.ShapeIdA), uintptr(8); g != e {
@@ -60816,24 +60829,39 @@ func init() {
 	if g, e := unsafe.Offsetof(v63.ShapeIdB)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v63.Manifold), uintptr(112); g != e {
+	if g, e := unsafe.Sizeof(v63.Point), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v63.Manifold), uintptr(16); g != e {
+	if g, e := unsafe.Offsetof(v63.Point), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v63.Manifold)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v63.Point)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v63.Normal), uintptr(8); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v63.Normal), uintptr(24); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v63.Normal)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v63.ApproachSpeed), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v63.ApproachSpeed), uintptr(32); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v63.ApproachSpeed)%4, uintptr(0); g != e {
 		panic(g)
 	}
 	var v64 struct {
-		ShapeIdA      ShapeId
-		ShapeIdB      ShapeId
-		Point         Vec2
-		Normal        Vec2
-		ApproachSpeed float32
+		ShapeIdA ShapeId
+		ShapeIdB ShapeId
 	}
-	// struct "b2ContactHitEvent"
-	if g, e := unsafe.Sizeof(v64), uintptr(36); g != e {
+	// struct "b2ContactEndTouchEvent"
+	if g, e := unsafe.Sizeof(v64), uintptr(16); g != e {
 		panic(g)
 	}
 	if g, e := unsafe.Sizeof(v64.ShapeIdA), uintptr(8); g != e {
@@ -60854,86 +60882,33 @@ func init() {
 	if g, e := unsafe.Offsetof(v64.ShapeIdB)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v64.Point), uintptr(8); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v64.Point), uintptr(16); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v64.Point)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v64.Normal), uintptr(8); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v64.Normal), uintptr(24); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v64.Normal)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v64.ApproachSpeed), uintptr(4); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v64.ApproachSpeed), uintptr(32); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v64.ApproachSpeed)%4, uintptr(0); g != e {
-		panic(g)
-	}
 	var v65 struct {
-		ShapeIdA ShapeId
-		ShapeIdB ShapeId
-	}
-	// struct "b2ContactEndTouchEvent"
-	if g, e := unsafe.Sizeof(v65), uintptr(16); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v65.ShapeIdA), uintptr(8); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v65.ShapeIdA), uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v65.ShapeIdA)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v65.ShapeIdB), uintptr(8); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v65.ShapeIdB), uintptr(8); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v65.ShapeIdB)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	var v66 struct {
 		State    TOIState
 		Fraction float32
 	}
 	// struct "b2TOIOutput"
-	if g, e := unsafe.Sizeof(v66), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v65), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v66.State), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v65.State), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v66.State), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v65.State), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v66.State)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v65.State)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v66.Fraction), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v65.Fraction), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v66.Fraction), uintptr(4); g != e {
+	if g, e := unsafe.Offsetof(v65.Fraction), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v66.Fraction)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v65.Fraction)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v67 struct {
+	var v66 struct {
 		Step                float32
 		Pairs               float32
 		Collide             float32
@@ -60958,280 +60933,280 @@ func init() {
 		Sensors             float32
 	}
 	// struct "b2Profile"
-	if g, e := unsafe.Sizeof(v67), uintptr(88); g != e {
+	if g, e := unsafe.Sizeof(v66), uintptr(88); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.Step), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.Step), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.Step), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.Step), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.Step)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.Step)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.Pairs), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.Pairs), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.Pairs), uintptr(4); g != e {
+	if g, e := unsafe.Offsetof(v66.Pairs), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.Pairs)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.Pairs)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.Collide), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.Collide), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.Collide), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v66.Collide), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.Collide)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.Collide)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.Solve), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.Solve), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.Solve), uintptr(12); g != e {
+	if g, e := unsafe.Offsetof(v66.Solve), uintptr(12); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.Solve)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.Solve)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.MergeIslands), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.MergeIslands), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.MergeIslands), uintptr(16); g != e {
+	if g, e := unsafe.Offsetof(v66.MergeIslands), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.MergeIslands)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.MergeIslands)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.PrepareStages), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.PrepareStages), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.PrepareStages), uintptr(20); g != e {
+	if g, e := unsafe.Offsetof(v66.PrepareStages), uintptr(20); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.PrepareStages)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.PrepareStages)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.SolveConstraints), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.SolveConstraints), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.SolveConstraints), uintptr(24); g != e {
+	if g, e := unsafe.Offsetof(v66.SolveConstraints), uintptr(24); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.SolveConstraints)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.SolveConstraints)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.PrepareConstraints), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.PrepareConstraints), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.PrepareConstraints), uintptr(28); g != e {
+	if g, e := unsafe.Offsetof(v66.PrepareConstraints), uintptr(28); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.PrepareConstraints)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.PrepareConstraints)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.IntegrateVelocities), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.IntegrateVelocities), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.IntegrateVelocities), uintptr(32); g != e {
+	if g, e := unsafe.Offsetof(v66.IntegrateVelocities), uintptr(32); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.IntegrateVelocities)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.IntegrateVelocities)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.WarmStart), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.WarmStart), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.WarmStart), uintptr(36); g != e {
+	if g, e := unsafe.Offsetof(v66.WarmStart), uintptr(36); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.WarmStart)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.WarmStart)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.SolveImpulses), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.SolveImpulses), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.SolveImpulses), uintptr(40); g != e {
+	if g, e := unsafe.Offsetof(v66.SolveImpulses), uintptr(40); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.SolveImpulses)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.SolveImpulses)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.IntegratePositions), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.IntegratePositions), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.IntegratePositions), uintptr(44); g != e {
+	if g, e := unsafe.Offsetof(v66.IntegratePositions), uintptr(44); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.IntegratePositions)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.IntegratePositions)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.RelaxImpulses), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.RelaxImpulses), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.RelaxImpulses), uintptr(48); g != e {
+	if g, e := unsafe.Offsetof(v66.RelaxImpulses), uintptr(48); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.RelaxImpulses)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.RelaxImpulses)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.ApplyRestitution), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.ApplyRestitution), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.ApplyRestitution), uintptr(52); g != e {
+	if g, e := unsafe.Offsetof(v66.ApplyRestitution), uintptr(52); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.ApplyRestitution)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.ApplyRestitution)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.StoreImpulses), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.StoreImpulses), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.StoreImpulses), uintptr(56); g != e {
+	if g, e := unsafe.Offsetof(v66.StoreImpulses), uintptr(56); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.StoreImpulses)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.StoreImpulses)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.SplitIslands), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.SplitIslands), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.SplitIslands), uintptr(60); g != e {
+	if g, e := unsafe.Offsetof(v66.SplitIslands), uintptr(60); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.SplitIslands)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.SplitIslands)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.Transforms), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.Transforms), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.Transforms), uintptr(64); g != e {
+	if g, e := unsafe.Offsetof(v66.Transforms), uintptr(64); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.Transforms)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.Transforms)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.HitEvents), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.HitEvents), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.HitEvents), uintptr(68); g != e {
+	if g, e := unsafe.Offsetof(v66.HitEvents), uintptr(68); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.HitEvents)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.HitEvents)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.Refit), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.Refit), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.Refit), uintptr(72); g != e {
+	if g, e := unsafe.Offsetof(v66.Refit), uintptr(72); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.Refit)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.Refit)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.Bullets), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.Bullets), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.Bullets), uintptr(76); g != e {
+	if g, e := unsafe.Offsetof(v66.Bullets), uintptr(76); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.Bullets)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.Bullets)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.SleepIslands), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.SleepIslands), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.SleepIslands), uintptr(80); g != e {
+	if g, e := unsafe.Offsetof(v66.SleepIslands), uintptr(80); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.SleepIslands)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.SleepIslands)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v67.Sensors), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v66.Sensors), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.Sensors), uintptr(84); g != e {
+	if g, e := unsafe.Offsetof(v66.Sensors), uintptr(84); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v67.Sensors)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v66.Sensors)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v68 struct {
+	var v67 struct {
 		Transform  Transform
 		BodyId     BodyId
 		UserData   uintptr
 		FellAsleep uint8
 	}
 	// struct "b2BodyMoveEvent"
-	if g, e := unsafe.Sizeof(v68), uintptr(40); g != e {
+	if g, e := unsafe.Sizeof(v67), uintptr(40); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v68.Transform), uintptr(16); g != e {
+	if g, e := unsafe.Sizeof(v67.Transform), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v68.Transform), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v67.Transform), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v68.Transform)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v67.Transform)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v68.BodyId), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v67.BodyId), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v68.BodyId), uintptr(16); g != e {
+	if g, e := unsafe.Offsetof(v67.BodyId), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v68.BodyId)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v67.BodyId)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v68.UserData), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v67.UserData), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v68.UserData), uintptr(24); g != e {
+	if g, e := unsafe.Offsetof(v67.UserData), uintptr(24); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v68.UserData)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v67.UserData)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v68.FellAsleep), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v67.FellAsleep), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v68.FellAsleep), uintptr(32); g != e {
+	if g, e := unsafe.Offsetof(v67.FellAsleep), uintptr(32); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v68.FellAsleep)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v67.FellAsleep)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	var v69 struct {
+	var v68 struct {
 		Translation    Vec2
 		IterationCount int32
 	}
 	// struct "b2PlaneSolverResult"
-	if g, e := unsafe.Sizeof(v69), uintptr(12); g != e {
+	if g, e := unsafe.Sizeof(v68), uintptr(12); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v69.Translation), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v68.Translation), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v69.Translation), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v68.Translation), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v69.Translation)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v68.Translation)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v69.IterationCount), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v68.IterationCount), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v69.IterationCount), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v68.IterationCount), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v69.IterationCount)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v68.IterationCount)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v70 struct {
+	var v69 struct {
 		Type1             BodyType
 		Position          Vec2
 		Rotation          Rot
@@ -61252,172 +61227,172 @@ func init() {
 		InternalValue     int32
 	}
 	// struct "b2BodyDef"
-	if g, e := unsafe.Sizeof(v70), uintptr(80); g != e {
+	if g, e := unsafe.Sizeof(v69), uintptr(80); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v70.Type1), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v69.Type1), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.Type1), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.Type1), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.Type1)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.Type1)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v70.Position), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v69.Position), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.Position), uintptr(4); g != e {
+	if g, e := unsafe.Offsetof(v69.Position), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.Position)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.Position)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v70.Rotation), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v69.Rotation), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.Rotation), uintptr(12); g != e {
+	if g, e := unsafe.Offsetof(v69.Rotation), uintptr(12); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.Rotation)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.Rotation)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v70.LinearVelocity), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v69.LinearVelocity), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.LinearVelocity), uintptr(20); g != e {
+	if g, e := unsafe.Offsetof(v69.LinearVelocity), uintptr(20); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.LinearVelocity)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.LinearVelocity)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v70.AngularVelocity), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v69.AngularVelocity), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.AngularVelocity), uintptr(28); g != e {
+	if g, e := unsafe.Offsetof(v69.AngularVelocity), uintptr(28); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.AngularVelocity)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.AngularVelocity)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v70.LinearDamping), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v69.LinearDamping), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.LinearDamping), uintptr(32); g != e {
+	if g, e := unsafe.Offsetof(v69.LinearDamping), uintptr(32); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.LinearDamping)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.LinearDamping)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v70.AngularDamping), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v69.AngularDamping), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.AngularDamping), uintptr(36); g != e {
+	if g, e := unsafe.Offsetof(v69.AngularDamping), uintptr(36); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.AngularDamping)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.AngularDamping)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v70.GravityScale), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v69.GravityScale), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.GravityScale), uintptr(40); g != e {
+	if g, e := unsafe.Offsetof(v69.GravityScale), uintptr(40); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.GravityScale)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.GravityScale)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v70.SleepThreshold), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v69.SleepThreshold), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.SleepThreshold), uintptr(44); g != e {
+	if g, e := unsafe.Offsetof(v69.SleepThreshold), uintptr(44); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.SleepThreshold)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.SleepThreshold)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v70.Name), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v69.Name), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.Name), uintptr(48); g != e {
+	if g, e := unsafe.Offsetof(v69.Name), uintptr(48); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.Name)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.Name)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v70.UserData), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v69.UserData), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.UserData), uintptr(56); g != e {
+	if g, e := unsafe.Offsetof(v69.UserData), uintptr(56); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.UserData)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.UserData)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v70.EnableSleep), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v69.EnableSleep), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.EnableSleep), uintptr(64); g != e {
+	if g, e := unsafe.Offsetof(v69.EnableSleep), uintptr(64); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.EnableSleep)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.EnableSleep)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v70.IsAwake), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v69.IsAwake), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.IsAwake), uintptr(65); g != e {
+	if g, e := unsafe.Offsetof(v69.IsAwake), uintptr(65); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.IsAwake)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.IsAwake)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v70.FixedRotation), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v69.FixedRotation), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.FixedRotation), uintptr(66); g != e {
+	if g, e := unsafe.Offsetof(v69.FixedRotation), uintptr(66); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.FixedRotation)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.FixedRotation)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v70.IsBullet), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v69.IsBullet), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.IsBullet), uintptr(67); g != e {
+	if g, e := unsafe.Offsetof(v69.IsBullet), uintptr(67); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.IsBullet)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.IsBullet)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v70.IsEnabled), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v69.IsEnabled), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.IsEnabled), uintptr(68); g != e {
+	if g, e := unsafe.Offsetof(v69.IsEnabled), uintptr(68); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.IsEnabled)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.IsEnabled)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v70.AllowFastRotation), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v69.AllowFastRotation), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.AllowFastRotation), uintptr(69); g != e {
+	if g, e := unsafe.Offsetof(v69.AllowFastRotation), uintptr(69); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.AllowFastRotation)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.AllowFastRotation)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v70.InternalValue), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v69.InternalValue), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.InternalValue), uintptr(72); g != e {
+	if g, e := unsafe.Offsetof(v69.InternalValue), uintptr(72); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v70.InternalValue)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v69.InternalValue)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v71 struct {
+	var v70 struct {
 		UserData              uintptr
 		Material              SurfaceMaterial
 		Density               float32
@@ -61432,118 +61407,118 @@ func init() {
 		InternalValue         int32
 	}
 	// struct "b2ShapeDef"
-	if g, e := unsafe.Sizeof(v71), uintptr(80); g != e {
+	if g, e := unsafe.Sizeof(v70), uintptr(80); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v71.UserData), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v70.UserData), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.UserData), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v70.UserData), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.UserData)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v70.UserData)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v71.Material), uintptr(24); g != e {
+	if g, e := unsafe.Sizeof(v70.Material), uintptr(24); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.Material), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v70.Material), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.Material)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v70.Material)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v71.Density), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v70.Density), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.Density), uintptr(32); g != e {
+	if g, e := unsafe.Offsetof(v70.Density), uintptr(32); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.Density)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v70.Density)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v71.Filter), uintptr(24); g != e {
+	if g, e := unsafe.Sizeof(v70.Filter), uintptr(24); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.Filter), uintptr(40); g != e {
+	if g, e := unsafe.Offsetof(v70.Filter), uintptr(40); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.Filter)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v70.Filter)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v71.IsSensor), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v70.IsSensor), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.IsSensor), uintptr(64); g != e {
+	if g, e := unsafe.Offsetof(v70.IsSensor), uintptr(64); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.IsSensor)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v70.IsSensor)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v71.EnableSensorEvents), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v70.EnableSensorEvents), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.EnableSensorEvents), uintptr(65); g != e {
+	if g, e := unsafe.Offsetof(v70.EnableSensorEvents), uintptr(65); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.EnableSensorEvents)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v70.EnableSensorEvents)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v71.EnableContactEvents), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v70.EnableContactEvents), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.EnableContactEvents), uintptr(66); g != e {
+	if g, e := unsafe.Offsetof(v70.EnableContactEvents), uintptr(66); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.EnableContactEvents)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v70.EnableContactEvents)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v71.EnableHitEvents), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v70.EnableHitEvents), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.EnableHitEvents), uintptr(67); g != e {
+	if g, e := unsafe.Offsetof(v70.EnableHitEvents), uintptr(67); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.EnableHitEvents)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v70.EnableHitEvents)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v71.EnablePreSolveEvents), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v70.EnablePreSolveEvents), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.EnablePreSolveEvents), uintptr(68); g != e {
+	if g, e := unsafe.Offsetof(v70.EnablePreSolveEvents), uintptr(68); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.EnablePreSolveEvents)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v70.EnablePreSolveEvents)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v71.InvokeContactCreation), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v70.InvokeContactCreation), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.InvokeContactCreation), uintptr(69); g != e {
+	if g, e := unsafe.Offsetof(v70.InvokeContactCreation), uintptr(69); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.InvokeContactCreation)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v70.InvokeContactCreation)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v71.UpdateBodyMass), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v70.UpdateBodyMass), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.UpdateBodyMass), uintptr(70); g != e {
+	if g, e := unsafe.Offsetof(v70.UpdateBodyMass), uintptr(70); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.UpdateBodyMass)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v70.UpdateBodyMass)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v71.InternalValue), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v70.InternalValue), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.InternalValue), uintptr(72); g != e {
+	if g, e := unsafe.Offsetof(v70.InternalValue), uintptr(72); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v71.InternalValue)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v70.InternalValue)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v72 struct {
+	var v71 struct {
 		UserData           uintptr
 		Points             uintptr
 		Count              int32
@@ -61555,140 +61530,156 @@ func init() {
 		InternalValue      int32
 	}
 	// struct "b2ChainDef"
-	if g, e := unsafe.Sizeof(v72), uintptr(72); g != e {
+	if g, e := unsafe.Sizeof(v71), uintptr(72); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v72.UserData), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v71.UserData), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v72.UserData), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v71.UserData), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v72.UserData)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v71.UserData)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v72.Points), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v71.Points), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v72.Points), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v71.Points), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v72.Points)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v71.Points)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v72.Count), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v71.Count), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v72.Count), uintptr(16); g != e {
+	if g, e := unsafe.Offsetof(v71.Count), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v72.Count)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v71.Count)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v72.Materials), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v71.Materials), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v72.Materials), uintptr(24); g != e {
+	if g, e := unsafe.Offsetof(v71.Materials), uintptr(24); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v72.Materials)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v71.Materials)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v72.MaterialCount), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v71.MaterialCount), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v72.MaterialCount), uintptr(32); g != e {
+	if g, e := unsafe.Offsetof(v71.MaterialCount), uintptr(32); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v72.MaterialCount)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v71.MaterialCount)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v72.Filter), uintptr(24); g != e {
+	if g, e := unsafe.Sizeof(v71.Filter), uintptr(24); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v72.Filter), uintptr(40); g != e {
+	if g, e := unsafe.Offsetof(v71.Filter), uintptr(40); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v72.Filter)%8, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v71.Filter)%8, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v72.IsLoop), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v71.IsLoop), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v72.IsLoop), uintptr(64); g != e {
+	if g, e := unsafe.Offsetof(v71.IsLoop), uintptr(64); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v72.IsLoop)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v71.IsLoop)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v72.EnableSensorEvents), uintptr(1); g != e {
+	if g, e := unsafe.Sizeof(v71.EnableSensorEvents), uintptr(1); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v72.EnableSensorEvents), uintptr(65); g != e {
+	if g, e := unsafe.Offsetof(v71.EnableSensorEvents), uintptr(65); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v72.EnableSensorEvents)%1, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v71.EnableSensorEvents)%1, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v72.InternalValue), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v71.InternalValue), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v72.InternalValue), uintptr(68); g != e {
+	if g, e := unsafe.Offsetof(v71.InternalValue), uintptr(68); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v72.InternalValue)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v71.InternalValue)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v73 struct {
+	var v72 struct {
 		V1    SimplexVertex
 		V2    SimplexVertex
 		V3    SimplexVertex
 		Count int32
 	}
 	// struct "b2Simplex"
-	if g, e := unsafe.Sizeof(v73), uintptr(112); g != e {
+	if g, e := unsafe.Sizeof(v72), uintptr(112); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v73.V1), uintptr(36); g != e {
+	if g, e := unsafe.Sizeof(v72.V1), uintptr(36); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v73.V1), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v72.V1), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v73.V1)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v72.V1)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v73.V2), uintptr(36); g != e {
+	if g, e := unsafe.Sizeof(v72.V2), uintptr(36); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v73.V2), uintptr(36); g != e {
+	if g, e := unsafe.Offsetof(v72.V2), uintptr(36); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v73.V2)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v72.V2)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v73.V3), uintptr(36); g != e {
+	if g, e := unsafe.Sizeof(v72.V3), uintptr(36); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v73.V3), uintptr(72); g != e {
+	if g, e := unsafe.Offsetof(v72.V3), uintptr(72); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v73.V3)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v72.V3)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v73.Count), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v72.Count), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v73.Count), uintptr(108); g != e {
+	if g, e := unsafe.Offsetof(v72.Count), uintptr(108); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v73.Count)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v72.Count)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v74 struct {
+	var v73 struct {
 		Value int32
 	}
 	// struct "b2AtomicInt"
+	if g, e := unsafe.Sizeof(v73), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Sizeof(v73.Value), uintptr(4); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v73.Value), uintptr(0); g != e {
+		panic(g)
+	}
+	if g, e := unsafe.Offsetof(v73.Value)%4, uintptr(0); g != e {
+		panic(g)
+	}
+	var v74 struct {
+		Value uint32
+	}
+	// struct "b2AtomicU32"
 	if g, e := unsafe.Sizeof(v74), uintptr(4); g != e {
 		panic(g)
 	}
@@ -61702,22 +61693,6 @@ func init() {
 		panic(g)
 	}
 	var v75 struct {
-		Value uint32
-	}
-	// struct "b2AtomicU32"
-	if g, e := unsafe.Sizeof(v75), uintptr(4); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Sizeof(v75.Value), uintptr(4); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v75.Value), uintptr(0); g != e {
-		panic(g)
-	}
-	if g, e := unsafe.Offsetof(v75.Value)%4, uintptr(0); g != e {
-		panic(g)
-	}
-	var v76 struct {
 		Vertices [8]Vec2
 		Normals  [8]Vec2
 		Centroid Vec2
@@ -61725,55 +61700,55 @@ func init() {
 		Count    int32
 	}
 	// struct "b2Polygon"
-	if g, e := unsafe.Sizeof(v76), uintptr(144); g != e {
+	if g, e := unsafe.Sizeof(v75), uintptr(144); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v76.Vertices), uintptr(64); g != e {
+	if g, e := unsafe.Sizeof(v75.Vertices), uintptr(64); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v76.Vertices), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v75.Vertices), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v76.Vertices)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v75.Vertices)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v76.Normals), uintptr(64); g != e {
+	if g, e := unsafe.Sizeof(v75.Normals), uintptr(64); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v76.Normals), uintptr(64); g != e {
+	if g, e := unsafe.Offsetof(v75.Normals), uintptr(64); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v76.Normals)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v75.Normals)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v76.Centroid), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v75.Centroid), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v76.Centroid), uintptr(128); g != e {
+	if g, e := unsafe.Offsetof(v75.Centroid), uintptr(128); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v76.Centroid)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v75.Centroid)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v76.Radius), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v75.Radius), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v76.Radius), uintptr(136); g != e {
+	if g, e := unsafe.Offsetof(v75.Radius), uintptr(136); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v76.Radius)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v75.Radius)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v76.Count), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v75.Count), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v76.Count), uintptr(140); g != e {
+	if g, e := unsafe.Offsetof(v75.Count), uintptr(140); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v76.Count)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v75.Count)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v77 struct {
+	var v76 struct {
 		WA     Vec2
 		WB     Vec2
 		W      Vec2
@@ -61782,104 +61757,104 @@ func init() {
 		IndexB int32
 	}
 	// struct "b2SimplexVertex"
-	if g, e := unsafe.Sizeof(v77), uintptr(36); g != e {
+	if g, e := unsafe.Sizeof(v76), uintptr(36); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v77.WA), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v76.WA), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v77.WA), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v76.WA), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v77.WA)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v76.WA)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v77.WB), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v76.WB), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v77.WB), uintptr(8); g != e {
+	if g, e := unsafe.Offsetof(v76.WB), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v77.WB)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v76.WB)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v77.W), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v76.W), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v77.W), uintptr(16); g != e {
+	if g, e := unsafe.Offsetof(v76.W), uintptr(16); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v77.W)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v76.W)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v77.A), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v76.A), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v77.A), uintptr(24); g != e {
+	if g, e := unsafe.Offsetof(v76.A), uintptr(24); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v77.A)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v76.A)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v77.IndexA), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v76.IndexA), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v77.IndexA), uintptr(28); g != e {
+	if g, e := unsafe.Offsetof(v76.IndexA), uintptr(28); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v77.IndexA)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v76.IndexA)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v77.IndexB), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v76.IndexB), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v77.IndexB), uintptr(32); g != e {
+	if g, e := unsafe.Offsetof(v76.IndexB), uintptr(32); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v77.IndexB)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v76.IndexB)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v78 struct {
+	var v77 struct {
 		X float32
 		Y float32
 	}
 	// struct "b2Vec2"
-	if g, e := unsafe.Sizeof(v78), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v77), uintptr(8); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v78.X), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v77.X), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v78.X), uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v77.X), uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v78.X)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v77.X)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Sizeof(v78.Y), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v77.Y), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v78.Y), uintptr(4); g != e {
+	if g, e := unsafe.Offsetof(v77.Y), uintptr(4); g != e {
 		panic(g)
 	}
-	if g, e := unsafe.Offsetof(v78.Y)%4, uintptr(0); g != e {
+	if g, e := unsafe.Offsetof(v77.Y)%4, uintptr(0); g != e {
 		panic(g)
 	}
-	var v79 struct {
+	var v78 struct {
 		Next   [0]int32_t
 		Parent int32
 	}
-	if g, e := unsafe.Sizeof(v79), uintptr(4); g != e {
+	if g, e := unsafe.Sizeof(v78), uintptr(4); g != e {
 		panic(g)
 	}
-	var v80 struct {
+	var v79 struct {
 		UserData [0]uint64_t
 		Children struct {
 			Child1 int32
 			Child2 int32
 		}
 	}
-	if g, e := unsafe.Sizeof(v80), uintptr(8); g != e {
+	if g, e := unsafe.Sizeof(v79), uintptr(8); g != e {
 		panic(g)
 	}
 }
@@ -65746,7 +65721,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorBeginTouchEvent"
+	// struct "b2SensorEndTouchEvent"
 	if g, e := unsafe.Sizeof(v60), uintptr(16); g != e {
 		panic(g)
 	}
@@ -72764,7 +72739,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ChainId"
+	// struct "b2BodyId"
 	if g, e := unsafe.Sizeof(v51), uintptr(8); g != e {
 		panic(g)
 	}
@@ -76196,7 +76171,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactBeginTouchEvent"
+	// struct "b2ContactData"
 	if g, e := unsafe.Sizeof(v93), uintptr(128); g != e {
 		panic(g)
 	}
@@ -82139,7 +82114,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2BodyId"
+	// struct "b2JointId"
 	if g, e := unsafe.Sizeof(v54), uintptr(8); g != e {
 		panic(g)
 	}
@@ -85638,7 +85613,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactData"
+	// struct "b2ContactBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v99), uintptr(128); g != e {
 		panic(g)
 	}
@@ -93085,7 +93060,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ShapeId"
+	// struct "b2ChainId"
 	if g, e := unsafe.Sizeof(v49), uintptr(8); g != e {
 		panic(g)
 	}
@@ -96126,7 +96101,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v86), uintptr(16); g != e {
 		panic(g)
 	}
@@ -101648,7 +101623,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ShapeId"
+	// struct "b2JointId"
 	if g, e := unsafe.Sizeof(v49), uintptr(8); g != e {
 		panic(g)
 	}
@@ -104689,7 +104664,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorBeginTouchEvent"
+	// struct "b2SensorEndTouchEvent"
 	if g, e := unsafe.Sizeof(v86), uintptr(16); g != e {
 		panic(g)
 	}
@@ -104792,7 +104767,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactData"
+	// struct "b2ContactBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v88), uintptr(128); g != e {
 		panic(g)
 	}
@@ -111841,7 +111816,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2JointId"
+	// struct "b2BodyId"
 	if g, e := unsafe.Sizeof(v50), uintptr(8); g != e {
 		panic(g)
 	}
@@ -115031,7 +115006,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactBeginTouchEvent"
+	// struct "b2ContactData"
 	if g, e := unsafe.Sizeof(v90), uintptr(128); g != e {
 		panic(g)
 	}
@@ -120462,7 +120437,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ShapeId"
+	// struct "b2BodyId"
 	if g, e := unsafe.Sizeof(v50), uintptr(8); g != e {
 		panic(g)
 	}
@@ -130935,7 +130910,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v84), uintptr(16); g != e {
 		panic(g)
 	}
@@ -131190,7 +131165,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactData"
+	// struct "b2ContactBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v88), uintptr(128); g != e {
 		panic(g)
 	}
@@ -147321,7 +147296,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v99), uintptr(16); g != e {
 		panic(g)
 	}
@@ -153372,7 +153347,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2BodyId"
+	// struct "b2ChainId"
 	if g, e := unsafe.Sizeof(v51), uintptr(8); g != e {
 		panic(g)
 	}
@@ -158884,7 +158859,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ShapeId"
+	// struct "b2ChainId"
 	if g, e := unsafe.Sizeof(v12), uintptr(8); g != e {
 		panic(g)
 	}
@@ -163205,7 +163180,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ChainId"
+	// struct "b2JointId"
 	if g, e := unsafe.Sizeof(v29), uintptr(8); g != e {
 		panic(g)
 	}
@@ -169246,7 +169221,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2JointId"
+	// struct "b2BodyId"
 	if g, e := unsafe.Sizeof(v49), uintptr(8); g != e {
 		panic(g)
 	}
@@ -177813,7 +177788,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ShapeId"
+	// struct "b2JointId"
 	if g, e := unsafe.Sizeof(v50), uintptr(8); g != e {
 		panic(g)
 	}
@@ -180900,7 +180875,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v88), uintptr(16); g != e {
 		panic(g)
 	}
@@ -181003,7 +180978,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactData"
+	// struct "b2ContactBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v90), uintptr(128); g != e {
 		panic(g)
 	}
@@ -184077,7 +184052,7 @@ func init() {
 		PrevKey int32
 		NextKey int32
 	}
-	// struct "b2JointEdge"
+	// struct "b2ContactEdge"
 	if g, e := unsafe.Sizeof(v24), uintptr(12); g != e {
 		panic(g)
 	}
@@ -186982,7 +186957,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2JointId"
+	// struct "b2ChainId"
 	if g, e := unsafe.Sizeof(v58), uintptr(8); g != e {
 		panic(g)
 	}
@@ -190162,7 +190137,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorBeginTouchEvent"
+	// struct "b2SensorEndTouchEvent"
 	if g, e := unsafe.Sizeof(v100), uintptr(16); g != e {
 		panic(g)
 	}
@@ -190563,7 +190538,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactBeginTouchEvent"
+	// struct "b2ContactData"
 	if g, e := unsafe.Sizeof(v105), uintptr(128); g != e {
 		panic(g)
 	}

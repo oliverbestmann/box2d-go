@@ -101,3 +101,17 @@ accessed from multiple threads, even in read-only mode.
 ## Use of AI
 
 AI was used solely to refine the phrasing in this README. No AI-generated content is present in the code.
+
+## Development
+
+Run `go vet` with the `unsafeptr` check disabled:
+
+```sh
+go vet -unsafeptr=false ./...
+```
+
+The code transpiled by ccgo stores all C memory as `uintptr` and converts it back to `unsafe.Pointer`,
+which `unsafeptr` reports everywhere. This cannot be fixed without changing how ccgo generates code.
+
+The tests use `-race` only with checkptr disabled for the same reason:
+`go test -race -gcflags=all=-d=checkptr=0 ./...`.

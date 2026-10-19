@@ -32,7 +32,7 @@ func b2CreateBroadPhase(tls *_Stack, bp uintptr) {
 		if !(i < int32(b2_bodyTypeCount)) {
 			break
 		}
-		*(*DynamicTree)(unsafe.Pointer(bp + uintptr(i)*72)) = b2DynamicTree_Create(tls)
+		*(*DynamicTree)(unsafe.Add(nil, bp+uintptr(i)*72)) = b2DynamicTree_Create(tls)
 		goto _1
 	_1:
 		;
@@ -90,8 +90,8 @@ func b2BroadPhase_CreateProxy(tls *_Stack, bp1 uintptr, proxyType BodyType, aabb
 				newCapacity = v4
 				b2IntArray_Reserve(tls, v3, newCapacity)
 			}
-			*(*int32)(unsafe.Pointer((*b2IntArray)(unsafe.Pointer(v3)).Data + uintptr((*b2IntArray)(unsafe.Pointer(v3)).Count)*4)) = v2
-			*(*int32)(unsafe.Pointer(v3 + 8)) += int32(1)
+			*(*int32)(unsafe.Add(nil, (*b2IntArray)(unsafe.Pointer(v3)).Data+uintptr((*b2IntArray)(unsafe.Pointer(v3)).Count)*4)) = v2
+			*(*int32)(unsafe.Add(nil, v3+8)) += int32(1)
 		}
 	}
 	return proxyKey
@@ -136,8 +136,8 @@ func b2BroadPhase_MoveProxy(tls *_Stack, bp1 uintptr, proxyKey int32, aabb AABB)
 			newCapacity = v4
 			b2IntArray_Reserve(tls, v3, newCapacity)
 		}
-		*(*int32)(unsafe.Pointer((*b2IntArray)(unsafe.Pointer(v3)).Data + uintptr((*b2IntArray)(unsafe.Pointer(v3)).Count)*4)) = v2
-		*(*int32)(unsafe.Pointer(v3 + 8)) += int32(1)
+		*(*int32)(unsafe.Add(nil, (*b2IntArray)(unsafe.Pointer(v3)).Data+uintptr((*b2IntArray)(unsafe.Pointer(v3)).Count)*4)) = v2
+		*(*int32)(unsafe.Add(nil, v3+8)) += int32(1)
 	}
 }
 
@@ -169,8 +169,8 @@ func b2BroadPhase_EnlargeProxy(tls *_Stack, bp1 uintptr, proxyKey int32, aabb AA
 			newCapacity = v4
 			b2IntArray_Reserve(tls, v3, newCapacity)
 		}
-		*(*int32)(unsafe.Pointer((*b2IntArray)(unsafe.Pointer(v3)).Data + uintptr((*b2IntArray)(unsafe.Pointer(v3)).Count)*4)) = v2
-		*(*int32)(unsafe.Pointer(v3 + 8)) += int32(1)
+		*(*int32)(unsafe.Add(nil, (*b2IntArray)(unsafe.Pointer(v3)).Data+uintptr((*b2IntArray)(unsafe.Pointer(v3)).Count)*4)) = v2
+		*(*int32)(unsafe.Add(nil, v3+8)) += int32(1)
 	}
 }
 
@@ -196,7 +196,7 @@ func b2UpdateBroadPhasePairs(tls *_Stack, world uintptr) {
 	userPairTask = (*(*func(*_Stack, uintptr, int32, int32, uintptr, uintptr) uintptr)(unsafe.Pointer(&struct{ uintptr }{(*b2World)(unsafe.Pointer(world)).EnqueueTaskFcn})))(tls, __ccgo_fp(b2FindPairsTask), moveCount, minRange, world, (*b2World)(unsafe.Pointer(world)).UserTaskContext)
 	if userPairTask != uintptrFromInt32(0) {
 		(*(*func(*_Stack, uintptr, uintptr))(unsafe.Pointer(&struct{ uintptr }{(*b2World)(unsafe.Pointer(world)).FinishTaskFcn})))(tls, userPairTask, (*b2World)(unsafe.Pointer(world)).UserTaskContext)
-		*(*int32)(unsafe.Pointer(world + 1776)) += int32(1)
+		*(*int32)(unsafe.Add(nil, world+1776)) += int32(1)
 	}
 	// todo_erin could start tree rebuild here
 	// Single-threaded work

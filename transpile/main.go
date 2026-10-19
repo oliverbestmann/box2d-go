@@ -112,6 +112,7 @@ func main() {
 	dst.Inspect(root, renameApiTypes(api.ExposedTypes))
 	dst.Inspect(root, removeTypeAliases())
 	hideConsts(root)
+	removeDeadCode(root)
 
 	// dst.Inspect(root, injectCheckptr())
 
@@ -519,7 +520,7 @@ func createWrappers(decls *[]dst.Decl, api API) Visitor {
 
 		for idx := range classTypes {
 			ty := &classTypes[idx]
-			//if strings.HasPrefix(decl.Name.Name, ty.FnPrefix) {
+			// if strings.HasPrefix(decl.Name.Name, ty.FnPrefix) {
 			if decl.Type.Params != nil && len(decl.Type.Params.List) >= 2 {
 				arg0, ok := decl.Type.Params.List[1].Type.(*dst.Ident)
 				if ok && arg0.Name == ty.IdType {
@@ -698,7 +699,6 @@ func createWrappers(decls *[]dst.Decl, api API) Visitor {
 						//			},
 						//		},
 						//	})
-
 					} else {
 						assign.Lhs = append(assign.Lhs, dst.NewIdent(name.Name))
 					}
@@ -981,6 +981,11 @@ func readAPI() API {
 	api.Exposed["b2GetMillisecondsAndReset"] = false
 	api.Exposed["b2Hash"] = false
 	api.Exposed["b2ComputeHull"] = false
+
+	// these take a pointer to an array, wrapped by hand to accept a slice
+	api.Exposed["b2MakeProxy"] = false
+	api.Exposed["b2MakeOffsetProxy"] = false
+	api.Exposed["b2ClipVector"] = false
 
 	for key := range api.Exposed {
 		if strings.Contains(key, "DynamicTree") {

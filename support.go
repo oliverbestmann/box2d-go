@@ -7,6 +7,7 @@ import (
 	"regexp"
 	"sort"
 	"strings"
+	"sync"
 	"sync/atomic"
 	"time"
 	"unsafe"
@@ -39,7 +40,7 @@ func __builtin___atomic_compare_exchange_n(tls *_Stack, addr, expected uintptr, 
 	}
 }
 
-func __builtin_remainderf(_ *_Stack, a, b float32) float32 {
+func remainderf(_ *_Stack, a, b float32) float32 {
 	return float32(math.Remainder(float64(a), float64(b)))
 }
 
@@ -68,9 +69,13 @@ func __builtin_aligned_alloc(tls *_Stack, align, size uint64) uintptr {
 		panic("not aligned")
 	}
 
-	tls.heap[addr] = buf
+	heap.Store(addr, buf)
 	return addr
 }
+
+// heap keeps allocations alive. It is shared by all stacks, as box2d may allocate
+// on a worker goroutine and free on another one.
+var heap sync.Map
 
 func memset(_ *_Stack, dest uintptr, c int32, n size_t) (r uintptr) {
 	slice := sliceOf(dest, n)
@@ -94,12 +99,10 @@ func memcpy(_ *_Stack, a uintptr, b uintptr, n size_t) uintptr {
 }
 
 func free(tls *_Stack, ptr uintptr) {
-	if _, ok := tls.heap[ptr]; !ok {
+	if _, ok := heap.LoadAndDelete(ptr); !ok {
 		err := fmt.Errorf("free(%#x): unknown address", ptr)
 		panic(err)
 	}
-
-	delete(tls.heap, ptr)
 }
 
 func sqrtf(_ *_Stack, f float32) float32 {

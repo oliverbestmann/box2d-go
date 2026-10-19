@@ -189,18 +189,6 @@ func SegmentDistance(p1 Vec2, q1 Vec2, p2 Vec2, q2 Vec2) (r1 SegmentDistanceResu
 	r1 = b2SegmentDistance(theStack, p1, q1, p2, q2)
 	return
 }
-func MakeProxy(points Vec2, count int32, radius float32) (r ShapeProxy) {
-	pointsStack := copyToStack(theStack, points)
-	defer pointsStack.Free()
-	r = b2MakeProxy(theStack, pointsStack.Addr, count, radius)
-	return
-}
-func MakeOffsetProxy(points Vec2, count int32, radius float32, position Vec2, rotation Rot) (r ShapeProxy) {
-	pointsStack := copyToStack(theStack, points)
-	defer pointsStack.Free()
-	r = b2MakeOffsetProxy(theStack, pointsStack.Addr, count, radius, position, rotation)
-	return
-}
 func ShapeDistance(input DistanceInput, cache *SimplexCache, simplexes *Simplex, simplexCapacity int32) (r DistanceOutput) {
 	defer runtime.KeepAlive(simplexes)
 	defer runtime.KeepAlive(cache)
@@ -748,12 +736,6 @@ func SolvePlanes(targetDelta Vec2, planes *CollisionPlane, count int32) (r Plane
 	defer runtime.KeepAlive(planes)
 	escapes(planes)
 	r = b2SolvePlanes(theStack, targetDelta, uintptr(unsafe.Pointer(planes)), count)
-	return
-}
-func ClipVector(vector Vec2, planes CollisionPlane, count int32) (r Vec2) {
-	planesStack := copyToStack(theStack, planes)
-	defer planesStack.Free()
-	r = b2ClipVector(theStack, vector, planesStack.Addr, count)
 	return
 }
 func (b Joint) PrismaticJoint_EnableSpring(enableSpring uint8) {

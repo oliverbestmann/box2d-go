@@ -14,27 +14,27 @@ func b2ComputeManifold(tls *_Stack, shapeA uintptr, transformA Transform, shapeB
 	var fcn uintptr
 	var _ /* cache at bp+0 */ SimplexCache
 	_ = fcn
-	fcn = (*(*b2ContactRegister)(unsafe.Pointer(uintptr(unsafe.Pointer(&s_registers)) + uintptr((*b2Shape)(unsafe.Pointer(shapeA)).Type1)*80 + uintptr((*b2Shape)(unsafe.Pointer(shapeB)).Type1)*16))).Fcn
-	*(*SimplexCache)(unsafe.Pointer(bp)) = SimplexCache{}
+	fcn = (*(*b2ContactRegister)(unsafe.Add(nil, uintptr(unsafe.Pointer(&s_registers))+uintptr((*b2Shape)(unsafe.Pointer(shapeA)).Type1)*80+uintptr((*b2Shape)(unsafe.Pointer(shapeB)).Type1)*16))).Fcn
+	*(*SimplexCache)(unsafe.Add(nil, bp)) = SimplexCache{}
 	return (*(*func(*_Stack, uintptr, Transform, uintptr, Transform, uintptr) Manifold)(unsafe.Pointer(&struct{ uintptr }{fcn})))(tls, shapeA, transformA, shapeB, transformB, bp)
 }
 
 func b2ComputeSimplexWitnessPoints(tls *_Stack, a uintptr, b uintptr, s uintptr) {
 	switch (*Simplex)(unsafe.Pointer(s)).Count {
 	case int32(1):
-		*(*Vec2)(unsafe.Pointer(a)) = (*Simplex)(unsafe.Pointer(s)).V1.WA
-		*(*Vec2)(unsafe.Pointer(b)) = (*Simplex)(unsafe.Pointer(s)).V1.WB
+		*(*Vec2)(unsafe.Add(nil, a)) = (*Simplex)(unsafe.Pointer(s)).V1.WA
+		*(*Vec2)(unsafe.Add(nil, b)) = (*Simplex)(unsafe.Pointer(s)).V1.WB
 	case int32(2):
-		*(*Vec2)(unsafe.Pointer(a)) = b2Weight2(tls, (*Simplex)(unsafe.Pointer(s)).V1.A, (*Simplex)(unsafe.Pointer(s)).V1.WA, (*Simplex)(unsafe.Pointer(s)).V2.A, (*Simplex)(unsafe.Pointer(s)).V2.WA)
-		*(*Vec2)(unsafe.Pointer(b)) = b2Weight2(tls, (*Simplex)(unsafe.Pointer(s)).V1.A, (*Simplex)(unsafe.Pointer(s)).V1.WB, (*Simplex)(unsafe.Pointer(s)).V2.A, (*Simplex)(unsafe.Pointer(s)).V2.WB)
+		*(*Vec2)(unsafe.Add(nil, a)) = b2Weight2(tls, (*Simplex)(unsafe.Pointer(s)).V1.A, (*Simplex)(unsafe.Pointer(s)).V1.WA, (*Simplex)(unsafe.Pointer(s)).V2.A, (*Simplex)(unsafe.Pointer(s)).V2.WA)
+		*(*Vec2)(unsafe.Add(nil, b)) = b2Weight2(tls, (*Simplex)(unsafe.Pointer(s)).V1.A, (*Simplex)(unsafe.Pointer(s)).V1.WB, (*Simplex)(unsafe.Pointer(s)).V2.A, (*Simplex)(unsafe.Pointer(s)).V2.WB)
 	case int32(3):
-		*(*Vec2)(unsafe.Pointer(a)) = b2Weight3(tls, (*Simplex)(unsafe.Pointer(s)).V1.A, (*Simplex)(unsafe.Pointer(s)).V1.WA, (*Simplex)(unsafe.Pointer(s)).V2.A, (*Simplex)(unsafe.Pointer(s)).V2.WA, (*Simplex)(unsafe.Pointer(s)).V3.A, (*Simplex)(unsafe.Pointer(s)).V3.WA)
+		*(*Vec2)(unsafe.Add(nil, a)) = b2Weight3(tls, (*Simplex)(unsafe.Pointer(s)).V1.A, (*Simplex)(unsafe.Pointer(s)).V1.WA, (*Simplex)(unsafe.Pointer(s)).V2.A, (*Simplex)(unsafe.Pointer(s)).V2.WA, (*Simplex)(unsafe.Pointer(s)).V3.A, (*Simplex)(unsafe.Pointer(s)).V3.WA)
 		// todo why are these not equal?
 		//*b = b2Weight3(s->v1.a, s->v1.wB, s->v2.a, s->v2.wB, s->v3.a, s->v3.wB);
-		*(*Vec2)(unsafe.Pointer(b)) = *(*Vec2)(unsafe.Pointer(a))
+		*(*Vec2)(unsafe.Add(nil, b)) = *(*Vec2)(unsafe.Add(nil, a))
 	default:
-		*(*Vec2)(unsafe.Pointer(a)) = b2Vec2_zero
-		*(*Vec2)(unsafe.Pointer(b)) = b2Vec2_zero
+		*(*Vec2)(unsafe.Add(nil, a)) = b2Vec2_zero
+		*(*Vec2)(unsafe.Add(nil, b)) = b2Vec2_zero
 		if bool(!(int32FromInt32(false1) != 0)) && b2InternalAssertFcn(tls, __ccgo_ts+4123, __ccgo_ts+4097, int32FromInt32(241)) != 0 {
 			__builtin_trap(tls)
 		}
@@ -44,21 +44,21 @@ func b2ComputeSimplexWitnessPoints(tls *_Stack, a uintptr, b uintptr, s uintptr)
 
 func b2ComputePolygonCentroid(tls *_Stack, vertices uintptr, count int32) (r Vec2) {
 	var a4, area, inv3, invArea, v12, v19 float32
-	var center, e1, e2, origin, v10, v11, v14, v15, v16, v18, v2, v20, v21, v23, v24, v25, v3, v4, v6, v7, v8 Vec2
+	var center, e1, e2, origin, v10, v11, v14, v15, v16, v18, v2, v20, v21, v3, v4, v6, v7, v8 Vec2
 	var i int32
-	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = a4, area, center, e1, e2, i, inv3, invArea, origin, v10, v11, v12, v14, v15, v16, v18, v19, v2, v20, v21, v23, v24, v25, v3, v4, v6, v7, v8
+	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = a4, area, center, e1, e2, i, inv3, invArea, origin, v10, v11, v12, v14, v15, v16, v18, v19, v2, v20, v21, v3, v4, v6, v7, v8
 	center = Vec2{}
 	area = float32FromFloat32(0)
 	// Get a reference point for forming triangles.
 	// Use the first vertex to reduce round-off errors.
-	origin = *(*Vec2)(unsafe.Pointer(vertices))
+	origin = *(*Vec2)(unsafe.Add(nil, vertices))
 	inv3 = float32FromFloat32(1) / float32FromFloat32(3)
 	i = int32(1)
 	for {
 		if !(i < count-int32(1)) {
 			break
 		}
-		v2 = *(*Vec2)(unsafe.Pointer(vertices + uintptr(i)*8))
+		v2 = *(*Vec2)(unsafe.Add(nil, vertices+uintptr(i)*8))
 		v3 = origin
 		v4 = Vec2{
 			X: v2.X - v3.X,
@@ -68,7 +68,7 @@ func b2ComputePolygonCentroid(tls *_Stack, vertices uintptr, count int32) (r Vec
 	_5:
 		// Triangle edges
 		e1 = v4
-		v6 = *(*Vec2)(unsafe.Pointer(vertices + uintptr(i+int32(1))*8))
+		v6 = *(*Vec2)(unsafe.Add(nil, vertices+uintptr(i+int32(1))*8))
 		v7 = origin
 		v8 = Vec2{
 			X: v6.X - v7.X,
@@ -112,18 +112,18 @@ func b2ComputePolygonCentroid(tls *_Stack, vertices uintptr, count int32) (r Vec
 		__builtin_trap(tls)
 	}
 	invArea = float32FromFloat32(1) / area
-	center.X *= invArea
-	center.Y *= invArea
+	center.X = float32(center.X * invArea)
+	center.Y = float32(center.Y * invArea)
 	// Restore offset
-	v23 = origin
-	v24 = center
-	v25 = Vec2{
-		X: v23.X + v24.X,
-		Y: v23.Y + v24.Y,
+	v2 = origin
+	v3 = center
+	v4 = Vec2{
+		X: v2.X + v3.X,
+		Y: v2.Y + v3.Y,
 	}
 	goto _26
 _26:
-	center = v25
+	center = v4
 	return center
 }
 
@@ -146,10 +146,10 @@ _4:
 }
 
 func b2ComputeCapsuleMass(tls *_Stack, shape uintptr, density float32) (r MassData) {
-	var boxInertia, boxMass, circleInertia, circleMass, h, lc, length, ll, radius, rr, v10, v6 float32
+	var boxInertia, boxMass, circleInertia, circleMass, h, lc, length, ll, radius, rr, v6 float32
 	var massData MassData
-	var p1, p2, v1, v2, v3, v5, v8, v9 Vec2
-	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = boxInertia, boxMass, circleInertia, circleMass, h, lc, length, ll, massData, p1, p2, radius, rr, v1, v10, v2, v3, v5, v6, v8, v9
+	var p1, p2, v1, v2, v3, v5 Vec2
+	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = boxInertia, boxMass, circleInertia, circleMass, h, lc, length, ll, massData, p1, p2, radius, rr, v1, v2, v3, v5, v6
 	radius = (*Capsule)(unsafe.Pointer(shape)).Radius
 	rr = float32(radius * radius)
 	p1 = (*Capsule)(unsafe.Pointer(shape)).Center1
@@ -189,26 +189,26 @@ _7:
 	boxInertia = float32(boxMass*(float32(float32FromFloat32(4)*rr)+ll)) / float32FromFloat32(12)
 	massData.RotationalInertia = circleInertia + boxInertia
 	// inertia about the local origin
-	v8 = massData.Center
-	v9 = massData.Center
-	v10 = float32(v8.X*v9.X) + float32(v8.Y*v9.Y)
+	v1 = massData.Center
+	v2 = massData.Center
+	v6 = float32(v1.X*v2.X) + float32(v1.Y*v2.Y)
 	goto _11
 _11:
-	massData.RotationalInertia += float32(massData.Mass * v10)
+	massData.RotationalInertia += float32(massData.Mass * v6)
 	return massData
 }
 
 func b2ComputePolygonMass(tls *_Stack, shape uintptr, density float32) (r1 MassData) {
 	bp := tls.Alloc(32)
 	defer tls.Free(32)
-	var D, area, ex1, ex2, ey1, ey2, intx2, inty2, inv3, invArea, invLength, length, radius, rotationalInertia, sqrt2, triangleArea, v11, v27, v34, v44, v48 float32
-	var center, e1, e2, mid, n, n1, n2, r, v10, v12, v13, v17, v18, v19, v21, v22, v23, v25, v26, v29, v3, v30, v31, v33, v35, v36, v38, v39, v4, v40, v42, v43, v46, v47, v5, v7, v8 Vec2
+	var D, area, ex1, ex2, ey1, ey2, intx2, inty2, inv3, invArea, invLength, length, radius, rotationalInertia, sqrt2, triangleArea, v11, v27 float32
+	var center, e1, e2, mid, n, n1, n2, r, v10, v12, v13, v3, v4, v5, v7, v8 Vec2
 	var count, i, i1, i2, j, v2 int32
 	var massData MassData
 	var vertices [8]Vec2
 	var _ /* capsule at bp+12 */ Capsule
 	var _ /* circle at bp+0 */ Circle
-	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = D, area, center, count, e1, e2, ex1, ex2, ey1, ey2, i, i1, i2, intx2, inty2, inv3, invArea, invLength, j, length, massData, mid, n, n1, n2, r, radius, rotationalInertia, sqrt2, triangleArea, vertices, v10, v11, v12, v13, v17, v18, v19, v2, v21, v22, v23, v25, v26, v27, v29, v3, v30, v31, v33, v34, v35, v36, v38, v39, v4, v40, v42, v43, v44, v46, v47, v48, v5, v7, v8
+	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = D, area, center, count, e1, e2, ex1, ex2, ey1, ey2, i, i1, i2, intx2, inty2, inv3, invArea, invLength, j, length, massData, mid, n, n1, n2, r, radius, rotationalInertia, sqrt2, triangleArea, vertices, v10, v11, v12, v13, v2, v27, v3, v4, v5, v7, v8
 	// Polygon mass, centroid, and inertia.
 	// Let rho be the polygon density in mass per unit area.
 	// Then:
@@ -236,14 +236,14 @@ func b2ComputePolygonMass(tls *_Stack, shape uintptr, density float32) (r1 MassD
 		__builtin_trap(tls)
 	}
 	if (*Polygon)(unsafe.Pointer(shape)).Count == int32(1) {
-		(*(*Circle)(unsafe.Pointer(bp))).Center = *(*Vec2)(unsafe.Pointer(shape))
-		(*(*Circle)(unsafe.Pointer(bp))).Radius = (*Polygon)(unsafe.Pointer(shape)).Radius
+		(*(*Circle)(unsafe.Add(nil, bp))).Center = *(*Vec2)(unsafe.Add(nil, shape))
+		(*(*Circle)(unsafe.Add(nil, bp))).Radius = (*Polygon)(unsafe.Pointer(shape)).Radius
 		return b2ComputeCircleMass(tls, bp, density)
 	}
 	if (*Polygon)(unsafe.Pointer(shape)).Count == int32(2) {
-		(*(*Capsule)(unsafe.Pointer(bp + 12))).Center1 = *(*Vec2)(unsafe.Pointer(shape))
-		(*(*Capsule)(unsafe.Pointer(bp + 12))).Center2 = *(*Vec2)(unsafe.Pointer(shape + 1*8))
-		(*(*Capsule)(unsafe.Pointer(bp + 12))).Radius = (*Polygon)(unsafe.Pointer(shape)).Radius
+		(*(*Capsule)(unsafe.Add(nil, bp+12))).Center1 = *(*Vec2)(unsafe.Add(nil, shape))
+		(*(*Capsule)(unsafe.Add(nil, bp+12))).Center2 = *(*Vec2)(unsafe.Add(nil, shape+1*8))
+		(*(*Capsule)(unsafe.Add(nil, bp+12))).Radius = (*Polygon)(unsafe.Pointer(shape)).Radius
 		return b2ComputeCapsuleMass(tls, bp+12, density)
 	}
 	vertices = [8]Vec2{}
@@ -263,8 +263,8 @@ func b2ComputePolygonMass(tls *_Stack, shape uintptr, density float32) (r1 MassD
 				v2 = i - int32(1)
 			}
 			j = v2
-			n1 = *(*Vec2)(unsafe.Pointer(shape + 64 + uintptr(j)*8))
-			n2 = *(*Vec2)(unsafe.Pointer(shape + 64 + uintptr(i)*8))
+			n1 = *(*Vec2)(unsafe.Add(nil, shape+64+uintptr(j)*8))
+			n2 = *(*Vec2)(unsafe.Add(nil, shape+64+uintptr(i)*8))
 			v3 = n1
 			v4 = n2
 			v5 = Vec2{
@@ -288,7 +288,7 @@ func b2ComputePolygonMass(tls *_Stack, shape uintptr, density float32) (r1 MassD
 			goto _9
 		_9:
 			mid = v8
-			v10 = *(*Vec2)(unsafe.Pointer(shape + uintptr(i)*8))
+			v10 = *(*Vec2)(unsafe.Add(nil, shape+uintptr(i)*8))
 			v11 = float32(sqrt2 * radius)
 			v12 = mid
 			v13 = Vec2{
@@ -309,7 +309,7 @@ func b2ComputePolygonMass(tls *_Stack, shape uintptr, density float32) (r1 MassD
 			if !(i1 < count) {
 				break
 			}
-			vertices[i1] = *(*Vec2)(unsafe.Pointer(shape + uintptr(i1)*8))
+			vertices[i1] = *(*Vec2)(unsafe.Add(nil, shape+uintptr(i1)*8))
 			goto _15
 		_15:
 			;
@@ -328,52 +328,52 @@ func b2ComputePolygonMass(tls *_Stack, shape uintptr, density float32) (r1 MassD
 		if !(i2 < count-int32(1)) {
 			break
 		}
-		v17 = vertices[i2]
-		v18 = r
-		v19 = Vec2{
-			X: v17.X - v18.X,
-			Y: v17.Y - v18.Y,
+		v3 = vertices[i2]
+		v4 = r
+		v5 = Vec2{
+			X: v3.X - v4.X,
+			Y: v3.Y - v4.Y,
 		}
 		goto _20
 	_20:
 		// Triangle edges
-		e1 = v19
-		v21 = vertices[i2+int32(1)]
-		v22 = r
-		v23 = Vec2{
-			X: v21.X - v22.X,
-			Y: v21.Y - v22.Y,
+		e1 = v5
+		v7 = vertices[i2+int32(1)]
+		v8 = r
+		v10 = Vec2{
+			X: v7.X - v8.X,
+			Y: v7.Y - v8.Y,
 		}
 		goto _24
 	_24:
-		e2 = v23
-		v25 = e1
-		v26 = e2
-		v27 = float32(v25.X*v26.Y) - float32(v25.Y*v26.X)
+		e2 = v10
+		v12 = e1
+		v13 = e2
+		v11 = float32(v12.X*v13.Y) - float32(v12.Y*v13.X)
 		goto _28
 	_28:
-		D = v27
+		D = v11
 		triangleArea = float32(float32FromFloat32(0.5) * D)
 		area = area + triangleArea
 		// Area weighted centroid, r at origin
-		v29 = e1
-		v30 = e2
-		v31 = Vec2{
-			X: v29.X + v30.X,
-			Y: v29.Y + v30.Y,
+		v3 = e1
+		v4 = e2
+		v5 = Vec2{
+			X: v3.X + v4.X,
+			Y: v3.Y + v4.Y,
 		}
 		goto _32
 	_32:
-		v33 = center
-		v34 = float32(triangleArea * inv3)
-		v35 = v31
-		v36 = Vec2{
-			X: v33.X + float32(v34*v35.X),
-			Y: v33.Y + float32(v34*v35.Y),
+		v7 = center
+		v11 = float32(triangleArea * inv3)
+		v8 = v5
+		v10 = Vec2{
+			X: v7.X + float32(v11*v8.X),
+			Y: v7.Y + float32(v11*v8.Y),
 		}
 		goto _37
 	_37:
-		center = v36
+		center = v10
 		ex1 = e1.X
 		ey1 = e1.Y
 		ex2 = e2.X
@@ -393,31 +393,31 @@ func b2ComputePolygonMass(tls *_Stack, shape uintptr, density float32) (r1 MassD
 		__builtin_trap(tls)
 	}
 	invArea = float32FromFloat32(1) / area
-	center.X *= invArea
-	center.Y *= invArea
-	v38 = r
-	v39 = center
-	v40 = Vec2{
-		X: v38.X + v39.X,
-		Y: v38.Y + v39.Y,
+	center.X = float32(center.X * invArea)
+	center.Y = float32(center.Y * invArea)
+	v3 = r
+	v4 = center
+	v5 = Vec2{
+		X: v3.X + v4.X,
+		Y: v3.Y + v4.Y,
 	}
 	goto _41
 _41:
-	massData.Center = v40
+	massData.Center = v5
 	// Inertia tensor relative to the local origin (point s).
 	massData.RotationalInertia = float32(density * rotationalInertia)
 	// Shift to center of mass then to original body origin.
-	v42 = massData.Center
-	v43 = massData.Center
-	v44 = float32(v42.X*v43.X) + float32(v42.Y*v43.Y)
+	v3 = massData.Center
+	v4 = massData.Center
+	v11 = float32(v3.X*v4.X) + float32(v3.Y*v4.Y)
 	goto _45
 _45:
-	v46 = center
-	v47 = center
-	v48 = float32(v46.X*v47.X) + float32(v46.Y*v47.Y)
+	v5 = center
+	v7 = center
+	v27 = float32(v5.X*v7.X) + float32(v5.Y*v7.Y)
 	goto _49
 _49:
-	massData.RotationalInertia += float32(massData.Mass * (v44 - v48))
+	massData.RotationalInertia += float32(massData.Mass * (v11 - v27))
 	return massData
 }
 
@@ -565,16 +565,16 @@ _44:
 
 func b2ComputePolygonAABB(tls *_Stack, shape uintptr, xf Transform) (r1 AABB) {
 	var aabb AABB
-	var c, c1, lower, r, upper, v, v10, v11, v2, v22, v24, v25, v3, v36, v38, v39, v40, v42, v43, v44, v7, v8 Vec2
+	var c, c1, lower, r, upper, v, v10, v11, v2, v22, v3, v7, v8 Vec2
 	var i int32
-	var x, y, v12, v13, v14, v16, v17, v18, v19, v21, v26, v27, v28, v30, v31, v32, v33, v35 float32
+	var x, y, v12, v13, v14, v16, v17, v18, v19, v21 float32
 	var v1, v6 Transform
-	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = aabb, c, c1, i, lower, r, upper, v, x, y, v1, v10, v11, v12, v13, v14, v16, v17, v18, v19, v2, v21, v22, v24, v25, v26, v27, v28, v3, v30, v31, v32, v33, v35, v36, v38, v39, v40, v42, v43, v44, v6, v7, v8
+	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = aabb, c, c1, i, lower, r, upper, v, x, y, v1, v10, v11, v12, v13, v14, v16, v17, v18, v19, v2, v21, v22, v3, v6, v7, v8
 	if !((*Polygon)(unsafe.Pointer(shape)).Count > int32FromInt32(0)) && b2InternalAssertFcn(tls, __ccgo_ts+6762, __ccgo_ts+6524, int32FromInt32(425)) != 0 {
 		__builtin_trap(tls)
 	}
 	v1 = xf
-	v2 = *(*Vec2)(unsafe.Pointer(shape))
+	v2 = *(*Vec2)(unsafe.Add(nil, shape))
 	x = float32(v1.Q.C*v2.X) - float32(v1.Q.S*v2.Y) + v1.P.X
 	y = float32(v1.Q.S*v2.X) + float32(v1.Q.C*v2.Y) + v1.P.Y
 	v3 = Vec2{
@@ -591,7 +591,7 @@ _4:
 			break
 		}
 		v6 = xf
-		v7 = *(*Vec2)(unsafe.Pointer(shape + uintptr(i)*8))
+		v7 = *(*Vec2)(unsafe.Add(nil, shape+uintptr(i)*8))
 		x = float32(v6.Q.C*v7.X) - float32(v6.Q.S*v7.Y) + v6.P.X
 		y = float32(v6.Q.S*v7.X) + float32(v6.Q.C*v7.Y) + v6.P.Y
 		v8 = Vec2{
@@ -629,34 +629,34 @@ _4:
 		goto _23
 	_23:
 		lower = v22
-		v24 = upper
-		v25 = v
-		v26 = v24.X
-		v27 = v25.X
-		if v26 > v27 {
-			v30 = v26
+		v2 = upper
+		v3 = v
+		v12 = v2.X
+		v13 = v3.X
+		if v12 > v13 {
+			v16 = v12
 		} else {
-			v30 = v27
+			v16 = v13
 		}
-		v28 = v30
+		v14 = v16
 		goto _29
 	_29:
-		c1.X = v28
-		v31 = v24.Y
-		v32 = v25.Y
-		if v31 > v32 {
-			v35 = v31
+		c1.X = v14
+		v17 = v2.Y
+		v18 = v3.Y
+		if v17 > v18 {
+			v21 = v17
 		} else {
-			v35 = v32
+			v21 = v18
 		}
-		v33 = v35
+		v19 = v21
 		goto _34
 	_34:
-		c1.Y = v33
-		v36 = c1
+		c1.Y = v19
+		v7 = c1
 		goto _37
 	_37:
-		upper = v36
+		upper = v7
 		goto _5
 	_5:
 		;
@@ -666,24 +666,24 @@ _4:
 		X: (*Polygon)(unsafe.Pointer(shape)).Radius,
 		Y: (*Polygon)(unsafe.Pointer(shape)).Radius,
 	}
-	v38 = lower
-	v39 = r
-	v40 = Vec2{
-		X: v38.X - v39.X,
-		Y: v38.Y - v39.Y,
+	v2 = lower
+	v3 = r
+	v7 = Vec2{
+		X: v2.X - v3.X,
+		Y: v2.Y - v3.Y,
 	}
 	goto _41
 _41:
-	lower = v40
-	v42 = upper
-	v43 = r
-	v44 = Vec2{
-		X: v42.X + v43.X,
-		Y: v42.Y + v43.Y,
+	lower = v7
+	v2 = upper
+	v3 = r
+	v7 = Vec2{
+		X: v2.X + v3.X,
+		Y: v2.Y + v3.Y,
 	}
 	goto _45
 _45:
-	upper = v44
+	upper = v7
 	aabb = AABB{
 		LowerBound: lower,
 		UpperBound: upper,
@@ -792,22 +792,22 @@ func b2ComputeHull(tls *_Stack, points uintptr, count int32) (r1 Hull) {
 	bp := tls.Alloc(304)
 	defer tls.Free(304)
 	var aabb, v41 AABB
-	var b8, c, c1, c2, c3, e, n, p1, p2, r, s1, s2, s3, vi, vj, v100, v102, v103, v19, v21, v22, v33, v36, v37, v42, v44, v45, v49, v50, v53, v54, v58, v59, v62, v63, v64, v66, v67, v7, v70, v71, v72, v74, v75, v8, v91, v92, v93, v95, v96, v98, v99 Vec2
-	var d, distSqr, distance, dsq, dsq1, dsq11, dsq2, invLength, length, linearSlop, tolSqr, v10, v104, v11, v13, v14, v15, v16, v18, v23, v24, v25, v27, v28, v29, v30, v32, v38, v46, v51, v55, v60, v76, v9 float32
-	var f1, f2, i, i1, i11, i2, i21, i3, i31, i4, i5, i6, j, j1, leftCount, n1, rightCount, v1, v2, v3, v40, v5, v78, v79, v80, v83, v85, v88 int32
+	var b8, c, c1, c2, c3, e, n, p1, p2, r, s1, s2, s3, vi, vj, v19, v21, v22, v33, v36, v37, v42, v44, v7, v8 Vec2
+	var d, distSqr, distance, dsq, dsq1, dsq11, dsq2, invLength, length, linearSlop, tolSqr, v10, v11, v13, v14, v15, v16, v18, v9 float32
+	var f1, f2, i, i1, i11, i2, i21, i3, i31, i4, i5, i6, j, j1, leftCount, n1, rightCount, v1, v2, v3, v5 int32
 	var ps [8]Vec2
 	var searching, unique uint8
-	var v81, v84, v86, v89 uintptr
+	var v81 uintptr
 	var _ /* hull at bp+0 */ Hull
 	var _ /* hull1 at bp+164 */ Hull
 	var _ /* hull2 at bp+232 */ Hull
 	var _ /* leftPoints at bp+116 */ [6]Vec2
 	var _ /* rightPoints at bp+68 */ [6]Vec2
-	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = aabb, b8, c, c1, c2, c3, d, distSqr, distance, dsq, dsq1, dsq11, dsq2, e, f1, f2, i, i1, i11, i2, i21, i3, i31, i4, i5, i6, invLength, j, j1, leftCount, length, linearSlop, n, n1, p1, p2, ps, r, rightCount, s1, s2, s3, searching, tolSqr, unique, vi, vj, v1, v10, v100, v102, v103, v104, v11, v13, v14, v15, v16, v18, v19, v2, v21, v22, v23, v24, v25, v27, v28, v29, v3, v30, v32, v33, v36, v37, v38, v40, v41, v42, v44, v45, v46, v49, v5, v50, v51, v53, v54, v55, v58, v59, v60, v62, v63, v64, v66, v67, v7, v70, v71, v72, v74, v75, v76, v78, v79, v8, v80, v81, v83, v84, v85, v86, v88, v89, v9, v91, v92, v93, v95, v96, v98, v99
-	(*(*Hull)(unsafe.Pointer(bp))).Count = 0
+	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = aabb, b8, c, c1, c2, c3, d, distSqr, distance, dsq, dsq1, dsq11, dsq2, e, f1, f2, i, i1, i11, i2, i21, i3, i31, i4, i5, i6, invLength, j, j1, leftCount, length, linearSlop, n, n1, p1, p2, ps, r, rightCount, s1, s2, s3, searching, tolSqr, unique, vi, vj, v1, v10, v11, v13, v14, v15, v16, v18, v19, v2, v21, v22, v3, v33, v36, v37, v41, v42, v44, v5, v7, v8, v81, v9
+	(*(*Hull)(unsafe.Add(nil, bp))).Count = 0
 	if count < int32(3) || count > int32(_B2_MAX_POLYGON_VERTICES) {
 		// check your data
-		return *(*Hull)(unsafe.Pointer(bp))
+		return *(*Hull)(unsafe.Add(nil, bp))
 	}
 	v1 = count
 	v2 = int32(_B2_MAX_POLYGON_VERTICES)
@@ -839,7 +839,7 @@ _4:
 			break
 		}
 		v7 = aabb.LowerBound
-		v8 = *(*Vec2)(unsafe.Pointer(points + uintptr(i)*8))
+		v8 = *(*Vec2)(unsafe.Add(nil, points+uintptr(i)*8))
 		v9 = v7.X
 		v10 = v8.X
 		if v9 < v10 {
@@ -866,52 +866,52 @@ _4:
 		goto _20
 	_20:
 		aabb.LowerBound = v19
-		v21 = aabb.UpperBound
-		v22 = *(*Vec2)(unsafe.Pointer(points + uintptr(i)*8))
-		v23 = v21.X
-		v24 = v22.X
-		if v23 > v24 {
-			v27 = v23
+		v7 = aabb.UpperBound
+		v8 = *(*Vec2)(unsafe.Add(nil, points+uintptr(i)*8))
+		v9 = v7.X
+		v10 = v8.X
+		if v9 > v10 {
+			v13 = v9
 		} else {
-			v27 = v24
+			v13 = v10
 		}
-		v25 = v27
+		v11 = v13
 		goto _26
 	_26:
-		c1.X = v25
-		v28 = v21.Y
-		v29 = v22.Y
-		if v28 > v29 {
-			v32 = v28
+		c1.X = v11
+		v14 = v7.Y
+		v15 = v8.Y
+		if v14 > v15 {
+			v18 = v14
 		} else {
-			v32 = v29
+			v18 = v15
 		}
-		v30 = v32
+		v16 = v18
 		goto _31
 	_31:
-		c1.Y = v30
-		v33 = c1
+		c1.Y = v16
+		v19 = c1
 		goto _34
 	_34:
-		aabb.UpperBound = v33
-		vi = *(*Vec2)(unsafe.Pointer(points + uintptr(i)*8))
+		aabb.UpperBound = v19
+		vi = *(*Vec2)(unsafe.Add(nil, points+uintptr(i)*8))
 		unique = boolUint8(true1 != 0)
 		j = 0
 		for {
 			if !(j < i) {
 				break
 			}
-			vj = *(*Vec2)(unsafe.Pointer(points + uintptr(j)*8))
-			v36 = vi
-			v37 = vj
+			vj = *(*Vec2)(unsafe.Add(nil, points+uintptr(j)*8))
+			v7 = vi
+			v8 = vj
 			c2 = Vec2{
-				X: v37.X - v36.X,
-				Y: v37.Y - v36.Y,
+				X: v8.X - v7.X,
+				Y: v8.Y - v7.Y,
 			}
-			v38 = float32(c2.X*c2.X) + float32(c2.Y*c2.Y)
+			v9 = float32(c2.X*c2.X) + float32(c2.Y*c2.Y)
 			goto _39
 		_39:
-			distSqr = v38
+			distSqr = v9
 			if distSqr < tolSqr {
 				unique = boolUint8(false1 != 0)
 				break
@@ -922,9 +922,9 @@ _4:
 			j = j + 1
 		}
 		if unique != 0 {
-			v40 = n1
+			v1 = n1
 			n1 = n1 + 1
-			ps[v40] = vi
+			ps[v1] = vi
 		}
 		goto _6
 	_6:
@@ -933,44 +933,44 @@ _4:
 	}
 	if n1 < int32(3) {
 		// all points very close together, check your data and check your scale
-		return *(*Hull)(unsafe.Pointer(bp))
+		return *(*Hull)(unsafe.Add(nil, bp))
 	}
 	v41 = aabb
 	b8 = Vec2{
 		X: float32(float32FromFloat32(0.5) * (v41.LowerBound.X + v41.UpperBound.X)),
 		Y: float32(float32FromFloat32(0.5) * (v41.LowerBound.Y + v41.UpperBound.Y)),
 	}
-	v42 = b8
+	v7 = b8
 	goto _43
 _43:
 	// Find an extreme point as the first point on the hull
-	c3 = v42
+	c3 = v7
 	f1 = 0
-	v44 = c3
-	v45 = ps[f1]
+	v8 = c3
+	v19 = ps[f1]
 	c2 = Vec2{
-		X: v45.X - v44.X,
-		Y: v45.Y - v44.Y,
+		X: v19.X - v8.X,
+		Y: v19.Y - v8.Y,
 	}
-	v46 = float32(c2.X*c2.X) + float32(c2.Y*c2.Y)
+	v9 = float32(c2.X*c2.X) + float32(c2.Y*c2.Y)
 	goto _47
 _47:
-	dsq11 = v46
+	dsq11 = v9
 	i1 = int32(1)
 	for {
 		if !(i1 < n1) {
 			break
 		}
-		v49 = c3
-		v50 = ps[i1]
+		v21 = c3
+		v22 = ps[i1]
 		c2 = Vec2{
-			X: v50.X - v49.X,
-			Y: v50.Y - v49.Y,
+			X: v22.X - v21.X,
+			Y: v22.Y - v21.Y,
 		}
-		v51 = float32(c2.X*c2.X) + float32(c2.Y*c2.Y)
+		v10 = float32(c2.X*c2.X) + float32(c2.Y*c2.Y)
 		goto _52
 	_52:
-		dsq = v51
+		dsq = v10
 		if dsq > dsq11 {
 			f1 = i1
 			dsq11 = dsq
@@ -985,31 +985,31 @@ _47:
 	ps[f1] = ps[n1-int32(1)]
 	n1 = n1 - int32(1)
 	f2 = 0
-	v53 = p1
-	v54 = ps[f2]
+	v7 = p1
+	v8 = ps[f2]
 	c2 = Vec2{
-		X: v54.X - v53.X,
-		Y: v54.Y - v53.Y,
+		X: v8.X - v7.X,
+		Y: v8.Y - v7.Y,
 	}
-	v55 = float32(c2.X*c2.X) + float32(c2.Y*c2.Y)
+	v9 = float32(c2.X*c2.X) + float32(c2.Y*c2.Y)
 	goto _56
 _56:
-	dsq2 = v55
+	dsq2 = v9
 	i2 = int32(1)
 	for {
 		if !(i2 < n1) {
 			break
 		}
-		v58 = p1
-		v59 = ps[i2]
+		v19 = p1
+		v21 = ps[i2]
 		c2 = Vec2{
-			X: v59.X - v58.X,
-			Y: v59.Y - v58.Y,
+			X: v21.X - v19.X,
+			Y: v21.Y - v19.Y,
 		}
-		v60 = float32(c2.X*c2.X) + float32(c2.Y*c2.Y)
+		v10 = float32(c2.X*c2.X) + float32(c2.Y*c2.Y)
 		goto _61
 	_61:
-		dsq1 = v60
+		dsq1 = v10
 		if dsq1 > dsq2 {
 			f2 = i2
 			dsq2 = dsq1
@@ -1025,58 +1025,58 @@ _56:
 	n1 = n1 - int32(1)
 	rightCount = 0
 	leftCount = 0
-	v62 = p2
-	v63 = p1
-	v64 = Vec2{
-		X: v62.X - v63.X,
-		Y: v62.Y - v63.Y,
+	v7 = p2
+	v8 = p1
+	v19 = Vec2{
+		X: v7.X - v8.X,
+		Y: v7.Y - v8.Y,
 	}
 	goto _65
 _65:
-	v66 = v64
-	length = sqrtf(tls, float32(v66.X*v66.X)+float32(v66.Y*v66.Y))
+	v21 = v19
+	length = sqrtf(tls, float32(v21.X*v21.X)+float32(v21.Y*v21.Y))
 	if length < float32FromFloat32(1.1920928955078125e-07) {
-		v67 = Vec2{}
+		v22 = Vec2{}
 		goto _68
 	}
 	invLength = float32FromFloat32(1) / length
 	n = Vec2{
-		X: float32(invLength * v66.X),
-		Y: float32(invLength * v66.Y),
+		X: float32(invLength * v21.X),
+		Y: float32(invLength * v21.Y),
 	}
-	v67 = n
+	v22 = n
 	goto _68
 _68:
-	e = v67
+	e = v22
 	i3 = 0
 	for {
 		if !(i3 < n1) {
 			break
 		}
-		v70 = ps[i3]
-		v71 = p1
-		v72 = Vec2{
-			X: v70.X - v71.X,
-			Y: v70.Y - v71.Y,
+		v33 = ps[i3]
+		v36 = p1
+		v37 = Vec2{
+			X: v33.X - v36.X,
+			Y: v33.Y - v36.Y,
 		}
 		goto _73
 	_73:
-		v74 = v72
-		v75 = e
-		v76 = float32(v74.X*v75.Y) - float32(v74.Y*v75.X)
+		v42 = v37
+		v44 = e
+		v9 = float32(v42.X*v44.Y) - float32(v42.Y*v44.X)
 		goto _77
 	_77:
-		d = v76
+		d = v9
 		// slop used here to skip points that are very close to the line p1-p2
 		if d >= float32(float32FromFloat32(2)*linearSlop) {
-			v78 = rightCount
+			v1 = rightCount
 			rightCount = rightCount + 1
-			(*(*[6]Vec2)(unsafe.Pointer(bp + 68)))[v78] = ps[i3]
+			(*(*[6]Vec2)(unsafe.Add(nil, bp+68)))[v1] = ps[i3]
 		} else {
 			if d <= float32(-float32FromFloat32(2)*linearSlop) {
-				v79 = leftCount
+				v1 = leftCount
 				leftCount = leftCount + 1
-				(*(*[6]Vec2)(unsafe.Pointer(bp + 116)))[v79] = ps[i3]
+				(*(*[6]Vec2)(unsafe.Add(nil, bp+116)))[v1] = ps[i3]
 			}
 		}
 		goto _69
@@ -1085,119 +1085,119 @@ _68:
 		i3 = i3 + 1
 	}
 	// compute hulls on right and left
-	*(*Hull)(unsafe.Pointer(bp + 164)) = b2RecurseHull(tls, p1, p2, bp+68, rightCount)
-	*(*Hull)(unsafe.Pointer(bp + 232)) = b2RecurseHull(tls, p2, p1, bp+116, leftCount)
-	if (*(*Hull)(unsafe.Pointer(bp + 164))).Count == 0 && (*(*Hull)(unsafe.Pointer(bp + 232))).Count == 0 {
+	*(*Hull)(unsafe.Add(nil, bp+164)) = b2RecurseHull(tls, p1, p2, bp+68, rightCount)
+	*(*Hull)(unsafe.Add(nil, bp+232)) = b2RecurseHull(tls, p2, p1, bp+116, leftCount)
+	if (*(*Hull)(unsafe.Add(nil, bp+164))).Count == 0 && (*(*Hull)(unsafe.Add(nil, bp+232))).Count == 0 {
 		// all points collinear
-		return *(*Hull)(unsafe.Pointer(bp))
+		return *(*Hull)(unsafe.Add(nil, bp))
 	}
 	// stitch hulls together, preserving CCW winding order
 	v81 = bp + 64
-	v80 = *(*int32)(unsafe.Pointer(v81))
+	v1 = *(*int32)(unsafe.Pointer(v81))
 	*(*int32)(unsafe.Pointer(v81)) = *(*int32)(unsafe.Pointer(v81)) + 1
-	*(*Vec2)(unsafe.Pointer(bp + uintptr(v80)*8)) = p1
+	*(*Vec2)(unsafe.Add(nil, bp+uintptr(v1)*8)) = p1
 	i4 = 0
 	for {
-		if !(i4 < (*(*Hull)(unsafe.Pointer(bp + 164))).Count) {
+		if !(i4 < (*(*Hull)(unsafe.Add(nil, bp+164))).Count) {
 			break
 		}
-		v84 = bp + 64
-		v83 = *(*int32)(unsafe.Pointer(v84))
-		*(*int32)(unsafe.Pointer(v84)) = *(*int32)(unsafe.Pointer(v84)) + 1
-		*(*Vec2)(unsafe.Pointer(bp + uintptr(v83)*8)) = *(*Vec2)(unsafe.Pointer(bp + 164 + uintptr(i4)*8))
+		v81 = bp + 64
+		v1 = *(*int32)(unsafe.Pointer(v81))
+		*(*int32)(unsafe.Pointer(v81)) = *(*int32)(unsafe.Pointer(v81)) + 1
+		*(*Vec2)(unsafe.Add(nil, bp+uintptr(v1)*8)) = *(*Vec2)(unsafe.Add(nil, bp+164+uintptr(i4)*8))
 		goto _82
 	_82:
 		;
 		i4 = i4 + 1
 	}
-	v86 = bp + 64
-	v85 = *(*int32)(unsafe.Pointer(v86))
-	*(*int32)(unsafe.Pointer(v86)) = *(*int32)(unsafe.Pointer(v86)) + 1
-	*(*Vec2)(unsafe.Pointer(bp + uintptr(v85)*8)) = p2
+	v81 = bp + 64
+	v1 = *(*int32)(unsafe.Pointer(v81))
+	*(*int32)(unsafe.Pointer(v81)) = *(*int32)(unsafe.Pointer(v81)) + 1
+	*(*Vec2)(unsafe.Add(nil, bp+uintptr(v1)*8)) = p2
 	i5 = 0
 	for {
-		if !(i5 < (*(*Hull)(unsafe.Pointer(bp + 232))).Count) {
+		if !(i5 < (*(*Hull)(unsafe.Add(nil, bp+232))).Count) {
 			break
 		}
-		v89 = bp + 64
-		v88 = *(*int32)(unsafe.Pointer(v89))
-		*(*int32)(unsafe.Pointer(v89)) = *(*int32)(unsafe.Pointer(v89)) + 1
-		*(*Vec2)(unsafe.Pointer(bp + uintptr(v88)*8)) = *(*Vec2)(unsafe.Pointer(bp + 232 + uintptr(i5)*8))
+		v81 = bp + 64
+		v1 = *(*int32)(unsafe.Pointer(v81))
+		*(*int32)(unsafe.Pointer(v81)) = *(*int32)(unsafe.Pointer(v81)) + 1
+		*(*Vec2)(unsafe.Add(nil, bp+uintptr(v1)*8)) = *(*Vec2)(unsafe.Add(nil, bp+232+uintptr(i5)*8))
 		goto _87
 	_87:
 		;
 		i5 = i5 + 1
 	}
-	if !((*(*Hull)(unsafe.Pointer(bp))).Count <= int32FromInt32(_B2_MAX_POLYGON_VERTICES)) && b2InternalAssertFcn(tls, __ccgo_ts+6905, __ccgo_ts+6883, int32FromInt32(225)) != 0 {
+	if !((*(*Hull)(unsafe.Add(nil, bp))).Count <= int32FromInt32(_B2_MAX_POLYGON_VERTICES)) && b2InternalAssertFcn(tls, __ccgo_ts+6905, __ccgo_ts+6883, int32FromInt32(225)) != 0 {
 		__builtin_trap(tls)
 	}
 	// merge collinear
 	searching = boolUint8(true1 != 0)
-	for searching != 0 && (*(*Hull)(unsafe.Pointer(bp))).Count > int32(2) {
+	for searching != 0 && (*(*Hull)(unsafe.Add(nil, bp))).Count > int32(2) {
 		searching = boolUint8(false1 != 0)
 		i6 = 0
 		for {
-			if !(i6 < (*(*Hull)(unsafe.Pointer(bp))).Count) {
+			if !(i6 < (*(*Hull)(unsafe.Add(nil, bp))).Count) {
 				break
 			}
 			i11 = i6
-			i21 = (i6 + int32(1)) % (*(*Hull)(unsafe.Pointer(bp))).Count
-			i31 = (i6 + int32(2)) % (*(*Hull)(unsafe.Pointer(bp))).Count
-			s1 = *(*Vec2)(unsafe.Pointer(bp + uintptr(i11)*8))
-			s2 = *(*Vec2)(unsafe.Pointer(bp + uintptr(i21)*8))
-			s3 = *(*Vec2)(unsafe.Pointer(bp + uintptr(i31)*8))
-			v91 = s3
-			v92 = s1
-			v93 = Vec2{
-				X: v91.X - v92.X,
-				Y: v91.Y - v92.Y,
+			i21 = (i6 + int32(1)) % (*(*Hull)(unsafe.Add(nil, bp))).Count
+			i31 = (i6 + int32(2)) % (*(*Hull)(unsafe.Add(nil, bp))).Count
+			s1 = *(*Vec2)(unsafe.Add(nil, bp+uintptr(i11)*8))
+			s2 = *(*Vec2)(unsafe.Add(nil, bp+uintptr(i21)*8))
+			s3 = *(*Vec2)(unsafe.Add(nil, bp+uintptr(i31)*8))
+			v7 = s3
+			v8 = s1
+			v19 = Vec2{
+				X: v7.X - v8.X,
+				Y: v7.Y - v8.Y,
 			}
 			goto _94
 		_94:
-			v95 = v93
-			length = sqrtf(tls, float32(v95.X*v95.X)+float32(v95.Y*v95.Y))
+			v21 = v19
+			length = sqrtf(tls, float32(v21.X*v21.X)+float32(v21.Y*v21.Y))
 			if length < float32FromFloat32(1.1920928955078125e-07) {
-				v96 = Vec2{}
+				v22 = Vec2{}
 				goto _97
 			}
 			invLength = float32FromFloat32(1) / length
 			n = Vec2{
-				X: float32(invLength * v95.X),
-				Y: float32(invLength * v95.Y),
+				X: float32(invLength * v21.X),
+				Y: float32(invLength * v21.Y),
 			}
-			v96 = n
+			v22 = n
 			goto _97
 		_97:
 			// unit edge vector for s1-s3
-			r = v96
-			v98 = s2
-			v99 = s1
-			v100 = Vec2{
-				X: v98.X - v99.X,
-				Y: v98.Y - v99.Y,
+			r = v22
+			v33 = s2
+			v36 = s1
+			v37 = Vec2{
+				X: v33.X - v36.X,
+				Y: v33.Y - v36.Y,
 			}
 			goto _101
 		_101:
-			v102 = v100
-			v103 = r
-			v104 = float32(v102.X*v103.Y) - float32(v102.Y*v103.X)
+			v42 = v37
+			v44 = r
+			v9 = float32(v42.X*v44.Y) - float32(v42.Y*v44.X)
 			goto _105
 		_105:
-			distance = v104
+			distance = v9
 			if distance <= float32(float32FromFloat32(2)*linearSlop) {
 				// remove midpoint from hull
 				j1 = i21
 				for {
-					if !(j1 < (*(*Hull)(unsafe.Pointer(bp))).Count-int32(1)) {
+					if !(j1 < (*(*Hull)(unsafe.Add(nil, bp))).Count-int32(1)) {
 						break
 					}
-					*(*Vec2)(unsafe.Pointer(bp + uintptr(j1)*8)) = *(*Vec2)(unsafe.Pointer(bp + uintptr(j1+int32(1))*8))
+					*(*Vec2)(unsafe.Add(nil, bp+uintptr(j1)*8)) = *(*Vec2)(unsafe.Add(nil, bp+uintptr(j1+int32(1))*8))
 					goto _106
 				_106:
 					;
 					j1 = j1 + 1
 				}
-				(*(*Hull)(unsafe.Pointer(bp))).Count -= int32(1)
+				(*(*Hull)(unsafe.Add(nil, bp))).Count -= int32(1)
 				// continue searching for collinear points
 				searching = boolUint8(true1 != 0)
 				break
@@ -1208,11 +1208,11 @@ _68:
 			i6 = i6 + 1
 		}
 	}
-	if (*(*Hull)(unsafe.Pointer(bp))).Count < int32(3) {
+	if (*(*Hull)(unsafe.Add(nil, bp))).Count < int32(3) {
 		// all points collinear, shouldn't be reached since this was validated above
-		(*(*Hull)(unsafe.Pointer(bp))).Count = 0
+		(*(*Hull)(unsafe.Add(nil, bp))).Count = 0
 	}
-	return *(*Hull)(unsafe.Pointer(bp))
+	return *(*Hull)(unsafe.Add(nil, bp))
 }
 
 // C documentation
@@ -1222,10 +1222,10 @@ _68:
 //	// this result.
 //	// https://en.wikipedia.org/wiki/Bh%C4%81skara_I%27s_sine_approximation_formula
 func b2ComputeCosSin(tls *_Stack, radians1 float32) (r CosSin) {
-	var c, invMag, mag, pi2, s, x, y, y1, y2, y21, y22, y23, v1, v3 float32
+	var c, invMag, mag, pi2, s, x, y, y1, y2, y21, y22, y23, v1 float32
 	var cs CosSin
-	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = c, cs, invMag, mag, pi2, s, x, y, y1, y2, y21, y22, y23, v1, v3
-	v1 = __builtin_remainderf(tls, radians1, float32(float32FromFloat32(2)*float32FromFloat32(3.14159265359)))
+	_, _, _, _, _, _, _, _, _, _, _, _, _, _ = c, cs, invMag, mag, pi2, s, x, y, y1, y2, y21, y22, y23, v1
+	v1 = remainderf(tls, radians1, float32(float32FromFloat32(2)*float32FromFloat32(3.14159265359)))
 	goto _2
 _2:
 	x = v1
@@ -1252,11 +1252,11 @@ _2:
 	}
 	mag = sqrtf(tls, float32(s*s)+float32(c*c))
 	if float64(mag) > float64(0) {
-		v3 = float32FromFloat32(1) / mag
+		v1 = float32FromFloat32(1) / mag
 	} else {
-		v3 = float32FromFloat32(0)
+		v1 = float32FromFloat32(0)
 	}
-	invMag = v3
+	invMag = v1
 	cs = CosSin{
 		Cosine: float32(c * invMag),
 		Sine:   float32(s * invMag),
@@ -1265,10 +1265,10 @@ _2:
 }
 
 func b2ComputeRotationBetweenUnitVectors(tls *_Stack, v1 Vec2, v2 Vec2) (r Rot) {
-	var invMag, mag, v111, v12, v14, v17, v21, v211, v24, v4, v5, v7, v9 float32
+	var invMag, mag, v21, v4, v5, v7 float32
 	var qn, rot, v23, v25 Rot
-	var v11, v15, v16, v19, v20, v8 Vec2
-	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = invMag, mag, qn, rot, v11, v111, v12, v14, v15, v16, v17, v19, v21, v20, v211, v23, v24, v25, v4, v5, v7, v8, v9
+	var v11, v8 Vec2
+	_, _, _, _, _, _, _, _, _, _, _, _ = invMag, mag, qn, rot, v11, v21, v23, v25, v4, v5, v7, v8
 	v11 = v1
 	v21 = sqrtf(tls, float32(v11.X*v11.X)+float32(v11.Y*v11.Y))
 	goto _3
@@ -1286,43 +1286,43 @@ _6:
 	if !(v5 < float32(float32FromFloat32(100)*float32FromFloat32(1.1920928955078125e-07))) && b2InternalAssertFcn(tls, __ccgo_ts+10147, __ccgo_ts+10206, int32FromInt32(152)) != 0 {
 		__builtin_trap(tls)
 	}
-	v8 = v2
-	v9 = sqrtf(tls, float32(v8.X*v8.X)+float32(v8.Y*v8.Y))
+	v11 = v2
+	v21 = sqrtf(tls, float32(v11.X*v11.X)+float32(v11.Y*v11.Y))
 	goto _10
 _10:
-	v111 = float32FromFloat32(1) - v9
-	if v111 < float32FromInt32(0) {
-		v14 = -v111
+	v4 = float32FromFloat32(1) - v21
+	if v4 < float32FromInt32(0) {
+		v7 = -v4
 	} else {
-		v14 = v111
+		v7 = v4
 	}
-	v12 = v14
+	v5 = v7
 	goto _13
 _13:
 	;
-	if !(v12 < float32(float32FromFloat32(100)*float32FromFloat32(1.1920928955078125e-07))) && b2InternalAssertFcn(tls, __ccgo_ts+10238, __ccgo_ts+10206, int32FromInt32(153)) != 0 {
+	if !(v5 < float32(float32FromFloat32(100)*float32FromFloat32(1.1920928955078125e-07))) && b2InternalAssertFcn(tls, __ccgo_ts+10238, __ccgo_ts+10206, int32FromInt32(153)) != 0 {
 		__builtin_trap(tls)
 	}
-	v15 = v1
-	v16 = v2
-	v17 = float32(v15.X*v16.X) + float32(v15.Y*v16.Y)
+	v11 = v1
+	v8 = v2
+	v21 = float32(v11.X*v8.X) + float32(v11.Y*v8.Y)
 	goto _18
 _18:
-	rot.C = v17
-	v19 = v1
-	v20 = v2
-	v211 = float32(v19.X*v20.Y) - float32(v19.Y*v20.X)
+	rot.C = v21
+	v11 = v1
+	v8 = v2
+	v21 = float32(v11.X*v8.Y) - float32(v11.Y*v8.X)
 	goto _22
 _22:
-	rot.S = v211
+	rot.S = v21
 	v23 = rot
 	mag = sqrtf(tls, float32(v23.S*v23.S)+float32(v23.C*v23.C))
 	if float64(mag) > float64(0) {
-		v24 = float32FromFloat32(1) / mag
+		v21 = float32FromFloat32(1) / mag
 	} else {
-		v24 = float32FromFloat32(0)
+		v21 = float32FromFloat32(0)
 	}
-	invMag = v24
+	invMag = v21
 	qn = Rot{
 		C: float32(v23.C * invMag),
 		S: float32(v23.S * invMag),

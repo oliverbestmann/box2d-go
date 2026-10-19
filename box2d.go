@@ -2,6 +2,7 @@ package b2
 
 import (
 	"fmt"
+	"runtime"
 	"slices"
 	"unsafe"
 )
@@ -125,8 +126,7 @@ func (b Chain) GetSegments(reuse []Shape) []Shape {
 }
 
 func (b Shape) GetSensorOverlaps(reuse []Shape) []Shape {
-	// allow up to 1024 overlaps to be returned
-	itemsCap := int32(1024)
+	itemsCap := b.GetSensorCapacity()
 
 	// allocate memory on the stack to read the ids
 	n := int(itemsCap) * int(unsafe.Sizeof(ShapeId{}))
@@ -152,75 +152,137 @@ func (b Shape) GetSensorOverlaps(reuse []Shape) []Shape {
 	return items
 }
 
-// SetRestitutionCallback sets the worlds RestitutionCallback.
-// CAUTION: Callback must not be a closure
-func (b World) SetRestitutionCallback(callback RestitutionCallback) {
-	b2World_SetRestitutionCallback(theStack, b.Id, __ccgo_fp(callback))
+// worldCallbacks keeps the Go closures alive that box2d only stores as a uintptr.
+// Keyed by world slot, so there are at most B2_MAX_WORLDS entries per kind.
+var worldCallbacks = map[worldCallbackKey]any{}
+
+type worldCallbackKey struct {
+	world uint16
+	kind  string
 }
 
-// SetFrictionCallback sets the worlds FrictionCallback.
-// CAUTION: Callback must not be a closure
+// keepCallback stores fn for the lifetime of the world and returns the function pointer for box2d.
+// fn must have the signature that the transpiled code uses, including the leading *_Stack.
+func (b World) keepCallback(kind string, fn any) uintptr {
+	worldCallbacks[worldCallbackKey{world: b.Id.Index1, kind: kind}] = fn
+	return __ccgo_fp(fn)
+}
+
+// SetRestitutionCallback sets the worlds RestitutionCallback. Use nil to restore the default.
+// The callback may be called from multiple goroutines when concurrency is enabled.
+func (b World) SetRestitutionCallback(callback RestitutionCallback) {
+	var fn uintptr
+	if callback != nil {
+		fn = b.keepCallback("restitution", func(_ *_Stack, restitutionA float32, userMaterialIdA int32, restitutionB float32, userMaterialIdB int32) float32 {
+			return callback(restitutionA, userMaterialIdA, restitutionB, userMaterialIdB)
+		})
+	}
+
+	b2World_SetRestitutionCallback(theStack, b.Id, fn)
+}
+
+// SetFrictionCallback sets the worlds FrictionCallback. Use nil to restore the default.
+// The callback may be called from multiple goroutines when concurrency is enabled.
 func (b World) SetFrictionCallback(callback FrictionCallback) {
-	b2World_SetFrictionCallback(theStack, b.Id, __ccgo_fp(callback))
+	var fn uintptr
+	if callback != nil {
+		fn = b.keepCallback("friction", func(_ *_Stack, frictionA float32, userMaterialIdA int32, frictionB float32, userMaterialIdB int32) float32 {
+			return callback(frictionA, userMaterialIdA, frictionB, userMaterialIdB)
+		})
+	}
+
+	b2World_SetFrictionCallback(theStack, b.Id, fn)
 }
 
 type OverlapResult func(shapeId Shape) bool
 
-// OverlapAABB sets the worlds OverlapResultFcn
+// OverlapAABB calls fcn for every shape that overlaps the aabb. Return false to stop the query.
 func (b World) OverlapAABB(aabb AABB, filter QueryFilter, fcn OverlapResult) TreeStats {
-	fn := theStack.RegisterObject(fcn)
-	defer theStack.ForgetObject(fn)
+	fn := worldOverlapCallback(fcn)
+	defer runtime.KeepAlive(fn)
 
-	return b2World_OverlapAABB(theStack, b.Id, aabb, filter, __ccgo_fp(worldOverlapCallback), fn)
+	return b2World_OverlapAABB(theStack, b.Id, aabb, filter, __ccgo_fp(fn), 0)
 }
 
+// OverlapShape calls fcn for every shape that overlaps the proxy. Return false to stop the query.
 func (b World) OverlapShape(proxy ShapeProxy, filter QueryFilter, fcn OverlapResult) (r TreeStats) {
-	fn := theStack.RegisterObject(fcn)
-	defer theStack.ForgetObject(fn)
+	fn := worldOverlapCallback(fcn)
+	defer runtime.KeepAlive(fn)
 
 	proxyStack := copyToStack(theStack, proxy)
 	defer proxyStack.Free()
 
-	r = b2World_OverlapShape(theStack, b.Id, proxyStack.Addr, filter, __ccgo_fp(worldOverlapCallback), fn)
+	r = b2World_OverlapShape(theStack, b.Id, proxyStack.Addr, filter, __ccgo_fp(fn), 0)
 
 	return
 }
 
-func worldOverlapCallback(tls *_Stack, shapeId ShapeId, context uintptr) bool {
-	fn := tls.GetObject(context).(OverlapResult)
-	return fn(Shape{Id: shapeId})
+func worldOverlapCallback(fcn OverlapResult) func(*_Stack, ShapeId, uintptr) uint8 {
+	fn := func(_ *_Stack, shapeId ShapeId, _ uintptr) uint8 {
+		return boolUint8(fcn(Shape{Id: shapeId}))
+	}
+
+	// box2d only sees a uintptr, the closure must not live on the goroutine stack, which can move
+	escapes(fn)
+
+	return fn
 }
 
+// CustomFilter returns false to prevent the two shapes from colliding.
 type CustomFilter func(shapeIdA, shapeIdB Shape) bool
 
+// SetCustomFilterCallback sets the worlds CustomFilter. Use nil to remove it.
+// The callback may be called from multiple goroutines when concurrency is enabled.
 func (b World) SetCustomFilterCallback(fcn CustomFilter) {
-	fn := theStack.RegisterObject(fcn)
-	defer theStack.ForgetObject(fn)
+	var fn uintptr
+	if fcn != nil {
+		fn = b.keepCallback("customFilter", func(_ *_Stack, shapeIdA, shapeIdB ShapeId, _ uintptr) uint8 {
+			return boolUint8(fcn(Shape{Id: shapeIdA}, Shape{Id: shapeIdB}))
+		})
+	}
 
-	b2World_SetCustomFilterCallback(theStack, b.Id, __ccgo_fp(worldCustomFilterCallback), fn)
+	b2World_SetCustomFilterCallback(theStack, b.Id, fn, 0)
 }
 
-func worldCustomFilterCallback(tls *_Stack, shapeIdA, shapeIdB ShapeId, context uintptr) bool {
-	fn := tls.GetObject(context).(CustomFilter)
-	return fn(Shape{Id: shapeIdA}, Shape{Id: shapeIdB})
-}
+// PreSolve is called for touching shapes with pre-solve events enabled. Return false to disable the contact for this step.
+type PreSolve = func(shapeIdA, shapeIdB Shape, manifold Manifold) bool
 
-type PreSolve = func(shapeIdA, shapeIdB Shape, manifold Manifold)
-
+// SetPreSolveCallback sets the worlds PreSolve callback. Use nil to remove it.
+// The callback may be called from multiple goroutines when concurrency is enabled.
 func (b World) SetPreSolveCallback(fcn PreSolve) {
-	fn := theStack.RegisterObject(fcn)
-	defer theStack.ForgetObject(fn)
+	var fn uintptr
+	if fcn != nil {
+		fn = b.keepCallback("preSolve", func(_ *_Stack, shapeIdA, shapeIdB ShapeId, manifold uintptr, _ uintptr) uint8 {
+			return boolUint8(fcn(Shape{Id: shapeIdA}, Shape{Id: shapeIdB}, derefToValue[Manifold](manifold)))
+		})
+	}
 
-	b2World_SetPreSolveCallback(theStack, b.Id, __ccgo_fp(worldPreSolveCallback), fn)
+	b2World_SetPreSolveCallback(theStack, b.Id, fn, 0)
 }
 
-func worldPreSolveCallback(tls *_Stack, shapeIdA, shapeIdB ShapeId, manifold uintptr, context uintptr) {
-	shapeA := Shape{Id: shapeIdA}
-	shapeB := Shape{Id: shapeIdB}
-	manifoldValue := derefToValue[Manifold](manifold)
+// MakeProxy makes a proxy for use in overlap, shape cast, and related functions.
+// At most B2_MAX_POLYGON_VERTICES points are used.
+func MakeProxy(points []Vec2, radius float32) ShapeProxy {
+	pointsStack := sliceToStack(theStack, points)
+	defer pointsStack.Free()
 
-	fn := tls.GetObject(context).(PreSolve)
-	fn(shapeA, shapeB, manifoldValue)
+	return b2MakeProxy(theStack, pointsStack.Addr, int32(len(points)), radius)
+}
+
+// MakeOffsetProxy makes a proxy with a transform. At most B2_MAX_POLYGON_VERTICES points are used.
+func MakeOffsetProxy(points []Vec2, radius float32, position Vec2, rotation Rot) ShapeProxy {
+	pointsStack := sliceToStack(theStack, points)
+	defer pointsStack.Free()
+
+	return b2MakeOffsetProxy(theStack, pointsStack.Addr, int32(len(points)), radius, position, rotation)
+}
+
+// ClipVector clips the vector against the collision planes.
+func ClipVector(vector Vec2, planes []CollisionPlane) Vec2 {
+	planesStack := sliceToStack(theStack, planes)
+	defer planesStack.Free()
+
+	return b2ClipVector(theStack, vector, planesStack.Addr, int32(len(planes)))
 }
 
 type BodyEvents struct {

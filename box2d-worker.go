@@ -96,6 +96,11 @@ func enqueueTask(tls *_Stack, taskCallback uintptr, itemCount int32, minRange in
 	}
 
 	task.remainingSteps.Store(int64(len(steps)))
+	if len(steps) == 0 {
+		// nothing to do, finishTask must not block
+		close(task.doneSignal)
+	}
+
 	for _, step := range steps {
 		taskStepQueue <- step
 	}
