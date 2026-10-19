@@ -57,16 +57,10 @@ func (b World) CreateBody(def BodyDef) (r Body) {
 }
 func (b Body) DestroyBody()                  { b2DestroyBody(theStack, b.Id) }
 func (b Body) GetContactCapacity() (r int32) { r = b2Body_GetContactCapacity(theStack, b.Id); return }
-func (b Body) GetContactData(contactData *ContactData, capacity int32) (r int32) {
-	defer runtime.KeepAlive(contactData)
-	escapes(contactData)
-	r = b2Body_GetContactData(theStack, b.Id, uintptr(unsafe.Pointer(contactData)), capacity)
-	return
-}
-func (b Body) ComputeAABB() (r AABB)       { r = b2Body_ComputeAABB(theStack, b.Id); return }
-func (b Body) GetPosition() (r Vec2)       { r = b2Body_GetPosition(theStack, b.Id); return }
-func (b Body) GetRotation() (r Rot)        { r = b2Body_GetRotation(theStack, b.Id); return }
-func (b Body) GetTransform() (r Transform) { r = b2Body_GetTransform(theStack, b.Id); return }
+func (b Body) ComputeAABB() (r AABB)         { r = b2Body_ComputeAABB(theStack, b.Id); return }
+func (b Body) GetPosition() (r Vec2)         { r = b2Body_GetPosition(theStack, b.Id); return }
+func (b Body) GetRotation() (r Rot)          { r = b2Body_GetRotation(theStack, b.Id); return }
+func (b Body) GetTransform() (r Transform)   { r = b2Body_GetTransform(theStack, b.Id); return }
 func (b Body) GetLocalPoint(worldPoint Vec2) (r Vec2) {
 	r = b2Body_GetLocalPoint(theStack, b.Id, worldPoint)
 	return
@@ -732,12 +726,6 @@ func (b Joint) MouseJoint_GetMaxForce() (r float32) {
 	r = b2MouseJoint_GetMaxForce(theStack, b.Id)
 	return
 }
-func SolvePlanes(targetDelta Vec2, planes *CollisionPlane, count int32) (r PlaneSolverResult) {
-	defer runtime.KeepAlive(planes)
-	escapes(planes)
-	r = b2SolvePlanes(theStack, targetDelta, uintptr(unsafe.Pointer(planes)), count)
-	return
-}
 func (b Joint) PrismaticJoint_EnableSpring(enableSpring uint8) {
 	b2PrismaticJoint_EnableSpring(theStack, b.Id, enableSpring)
 }
@@ -1026,15 +1014,9 @@ func (b Chain) GetRestitution() (r float32)   { r = b2Chain_GetRestitution(theSt
 func (b Chain) SetMaterial(material int32)    { b2Chain_SetMaterial(theStack, b.Id, material) }
 func (b Chain) GetMaterial() (r int32)        { r = b2Chain_GetMaterial(theStack, b.Id); return }
 func (b Shape) GetContactCapacity() (r int32) { r = b2Shape_GetContactCapacity(theStack, b.Id); return }
-func (b Shape) GetContactData(contactData *ContactData, capacity int32) (r int32) {
-	defer runtime.KeepAlive(contactData)
-	escapes(contactData)
-	r = b2Shape_GetContactData(theStack, b.Id, uintptr(unsafe.Pointer(contactData)), capacity)
-	return
-}
-func (b Shape) GetSensorCapacity() (r int32) { r = b2Shape_GetSensorCapacity(theStack, b.Id); return }
-func (b Shape) GetAABB() (r AABB)            { r = b2Shape_GetAABB(theStack, b.Id); return }
-func (b Shape) GetMassData() (r MassData)    { r = b2Shape_GetMassData(theStack, b.Id); return }
+func (b Shape) GetSensorCapacity() (r int32)  { r = b2Shape_GetSensorCapacity(theStack, b.Id); return }
+func (b Shape) GetAABB() (r AABB)             { r = b2Shape_GetAABB(theStack, b.Id); return }
+func (b Shape) GetMassData() (r MassData)     { r = b2Shape_GetMassData(theStack, b.Id); return }
 func (b Shape) GetClosestPoint(_target Vec2) (r Vec2) {
 	r = b2Shape_GetClosestPoint(theStack, b.Id, _target)
 	return
@@ -1198,18 +1180,8 @@ func (b World) GetProfile() (r Profile)      { r = b2World_GetProfile(theStack, 
 func (b World) GetCounters() (r Counters)    { r = b2World_GetCounters(theStack, b.Id); return }
 func (b World) SetUserData(userData uintptr) { b2World_SetUserData(theStack, b.Id, userData) }
 func (b World) GetUserData() (r uintptr)     { r = b2World_GetUserData(theStack, b.Id); return }
-func (b World) CastRay(origin Vec2, translation Vec2, filter QueryFilter, __ccgo_fp_fcn uintptr, context uintptr) (r TreeStats) {
-	r = b2World_CastRay(theStack, b.Id, origin, translation, filter, __ccgo_fp_fcn, context)
-	return
-}
 func (b World) CastRayClosest(origin Vec2, translation Vec2, filter QueryFilter) (r RayResult) {
 	r = b2World_CastRayClosest(theStack, b.Id, origin, translation, filter)
-	return
-}
-func (b World) CastShape(proxy ShapeProxy, translation Vec2, filter QueryFilter, __ccgo_fp_fcn uintptr, context uintptr) (r TreeStats) {
-	proxyStack := copyToStack(theStack, proxy)
-	defer proxyStack.Free()
-	r = b2World_CastShape(theStack, b.Id, proxyStack.Addr, translation, filter, __ccgo_fp_fcn, context)
 	return
 }
 func (b World) CastMover(mover Capsule, translation Vec2, filter QueryFilter) (r float32) {

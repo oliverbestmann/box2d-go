@@ -3444,7 +3444,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v55), uintptr(16); g != e {
 		panic(g)
 	}
@@ -6931,7 +6931,7 @@ func init() {
 		PrevKey int32
 		NextKey int32
 	}
-	// struct "b2ContactEdge"
+	// struct "b2JointEdge"
 	if g, e := unsafe.Sizeof(v20), uintptr(12); g != e {
 		panic(g)
 	}
@@ -9836,7 +9836,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ShapeId"
+	// struct "b2BodyId"
 	if g, e := unsafe.Sizeof(v54), uintptr(8); g != e {
 		panic(g)
 	}
@@ -13371,7 +13371,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactBeginTouchEvent"
+	// struct "b2ContactData"
 	if g, e := unsafe.Sizeof(v100), uintptr(128); g != e {
 		panic(g)
 	}
@@ -18925,7 +18925,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2JointId"
+	// struct "b2ShapeId"
 	if g, e := unsafe.Sizeof(v48), uintptr(8); g != e {
 		panic(g)
 	}
@@ -20571,7 +20571,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v81), uintptr(16); g != e {
 		panic(g)
 	}
@@ -26115,7 +26115,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2JointId"
+	// struct "b2ChainId"
 	if g, e := unsafe.Sizeof(v51), uintptr(8); g != e {
 		panic(g)
 	}
@@ -35028,7 +35028,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2JointId"
+	// struct "b2ChainId"
 	if g, e := unsafe.Sizeof(v52), uintptr(8); g != e {
 		panic(g)
 	}
@@ -36674,7 +36674,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v85), uintptr(16); g != e {
 		panic(g)
 	}
@@ -44515,7 +44515,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v87), uintptr(16); g != e {
 		panic(g)
 	}
@@ -52127,7 +52127,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ShapeId"
+	// struct "b2JointId"
 	if g, e := unsafe.Sizeof(v50), uintptr(8); g != e {
 		panic(g)
 	}
@@ -55214,7 +55214,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v88), uintptr(16); g != e {
 		panic(g)
 	}
@@ -59405,7 +59405,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ChainId"
+	// struct "b2JointId"
 	if g, e := unsafe.Sizeof(v33), uintptr(8); g != e {
 		panic(g)
 	}
@@ -64475,7 +64475,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2JointId"
+	// struct "b2ShapeId"
 	if g, e := unsafe.Sizeof(v32), uintptr(8); g != e {
 		panic(g)
 	}
@@ -65721,7 +65721,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v60), uintptr(16); g != e {
 		panic(g)
 	}
@@ -72739,7 +72739,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2BodyId"
+	// struct "b2JointId"
 	if g, e := unsafe.Sizeof(v51), uintptr(8); g != e {
 		panic(g)
 	}
@@ -75796,7 +75796,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorBeginTouchEvent"
+	// struct "b2SensorEndTouchEvent"
 	if g, e := unsafe.Sizeof(v89), uintptr(16); g != e {
 		panic(g)
 	}
@@ -76171,7 +76171,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactData"
+	// struct "b2ContactBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v93), uintptr(128); g != e {
 		panic(g)
 	}
@@ -79225,7 +79225,7 @@ func init() {
 		PrevKey int32
 		NextKey int32
 	}
-	// struct "b2JointEdge"
+	// struct "b2ContactEdge"
 	if g, e := unsafe.Sizeof(v21), uintptr(12); g != e {
 		panic(g)
 	}
@@ -82114,7 +82114,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2JointId"
+	// struct "b2ShapeId"
 	if g, e := unsafe.Sizeof(v54), uintptr(8); g != e {
 		panic(g)
 	}
@@ -85613,7 +85613,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactBeginTouchEvent"
+	// struct "b2ContactData"
 	if g, e := unsafe.Sizeof(v99), uintptr(128); g != e {
 		panic(g)
 	}
@@ -96101,7 +96101,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorBeginTouchEvent"
+	// struct "b2SensorEndTouchEvent"
 	if g, e := unsafe.Sizeof(v86), uintptr(16); g != e {
 		panic(g)
 	}
@@ -96204,7 +96204,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactData"
+	// struct "b2ContactBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v88), uintptr(128); g != e {
 		panic(g)
 	}
@@ -101623,7 +101623,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2JointId"
+	// struct "b2ShapeId"
 	if g, e := unsafe.Sizeof(v49), uintptr(8); g != e {
 		panic(g)
 	}
@@ -104664,7 +104664,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v86), uintptr(16); g != e {
 		panic(g)
 	}
@@ -104767,7 +104767,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactBeginTouchEvent"
+	// struct "b2ContactData"
 	if g, e := unsafe.Sizeof(v88), uintptr(128); g != e {
 		panic(g)
 	}
@@ -115006,7 +115006,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactData"
+	// struct "b2ContactBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v90), uintptr(128); g != e {
 		panic(g)
 	}
@@ -120437,7 +120437,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2BodyId"
+	// struct "b2ChainId"
 	if g, e := unsafe.Sizeof(v50), uintptr(8); g != e {
 		panic(g)
 	}
@@ -123627,7 +123627,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactBeginTouchEvent"
+	// struct "b2ContactData"
 	if g, e := unsafe.Sizeof(v90), uintptr(128); g != e {
 		panic(g)
 	}
@@ -129194,7 +129194,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ShapeId"
+	// struct "b2JointId"
 	if g, e := unsafe.Sizeof(v49), uintptr(8); g != e {
 		panic(g)
 	}
@@ -130910,7 +130910,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorBeginTouchEvent"
+	// struct "b2SensorEndTouchEvent"
 	if g, e := unsafe.Sizeof(v84), uintptr(16); g != e {
 		panic(g)
 	}
@@ -131165,7 +131165,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactBeginTouchEvent"
+	// struct "b2ContactData"
 	if g, e := unsafe.Sizeof(v88), uintptr(128); g != e {
 		panic(g)
 	}
@@ -136404,7 +136404,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ChainId"
+	// struct "b2BodyId"
 	if g, e := unsafe.Sizeof(v49), uintptr(8); g != e {
 		panic(g)
 	}
@@ -138070,7 +138070,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v82), uintptr(16); g != e {
 		panic(g)
 	}
@@ -138325,7 +138325,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactData"
+	// struct "b2ContactBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v86), uintptr(128); g != e {
 		panic(g)
 	}
@@ -144032,7 +144032,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ShapeId"
+	// struct "b2BodyId"
 	if g, e := unsafe.Sizeof(v58), uintptr(8); g != e {
 		panic(g)
 	}
@@ -147296,7 +147296,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorBeginTouchEvent"
+	// struct "b2SensorEndTouchEvent"
 	if g, e := unsafe.Sizeof(v99), uintptr(16); g != e {
 		panic(g)
 	}
@@ -147671,7 +147671,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactData"
+	// struct "b2ContactBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v103), uintptr(128); g != e {
 		panic(g)
 	}
@@ -150808,7 +150808,7 @@ func init() {
 		PrevKey int32
 		NextKey int32
 	}
-	// struct "b2JointEdge"
+	// struct "b2ContactEdge"
 	if g, e := unsafe.Sizeof(v20), uintptr(12); g != e {
 		panic(g)
 	}
@@ -153347,7 +153347,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ChainId"
+	// struct "b2ShapeId"
 	if g, e := unsafe.Sizeof(v51), uintptr(8); g != e {
 		panic(g)
 	}
@@ -156779,7 +156779,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactBeginTouchEvent"
+	// struct "b2ContactData"
 	if g, e := unsafe.Sizeof(v93), uintptr(128); g != e {
 		panic(g)
 	}
@@ -158859,7 +158859,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ChainId"
+	// struct "b2JointId"
 	if g, e := unsafe.Sizeof(v12), uintptr(8); g != e {
 		panic(g)
 	}
@@ -164488,7 +164488,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactBeginTouchEvent"
+	// struct "b2ContactData"
 	if g, e := unsafe.Sizeof(v57), uintptr(128); g != e {
 		panic(g)
 	}
@@ -180978,7 +180978,7 @@ func init() {
 		ShapeIdB ShapeId
 		Manifold Manifold
 	}
-	// struct "b2ContactBeginTouchEvent"
+	// struct "b2ContactData"
 	if g, e := unsafe.Sizeof(v90), uintptr(128); g != e {
 		panic(g)
 	}
@@ -186957,7 +186957,7 @@ func init() {
 		World0     uint16
 		Generation uint16
 	}
-	// struct "b2ChainId"
+	// struct "b2ShapeId"
 	if g, e := unsafe.Sizeof(v58), uintptr(8); g != e {
 		panic(g)
 	}
@@ -190137,7 +190137,7 @@ func init() {
 		SensorShapeId  ShapeId
 		VisitorShapeId ShapeId
 	}
-	// struct "b2SensorEndTouchEvent"
+	// struct "b2SensorBeginTouchEvent"
 	if g, e := unsafe.Sizeof(v100), uintptr(16); g != e {
 		panic(g)
 	}

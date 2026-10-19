@@ -953,12 +953,17 @@ func readAPI() API {
 	api.Exposed["b2Body_GetShapes"] = false
 	api.Exposed["b2Chain_GetSegments"] = false
 	api.Exposed["b2Shape_GetSensorOverlaps"] = false
+	api.Exposed["b2Body_GetContactData"] = false
+	api.Exposed["b2Shape_GetContactData"] = false
+	api.Exposed["b2SolvePlanes"] = false
 
 	api.Exposed["b2World_CollideMover"] = false
 	api.Exposed["b2World_SetRestitutionCallback"] = false
 	api.Exposed["b2World_SetFrictionCallback"] = false
 	api.Exposed["b2World_OverlapAABB"] = false
 	api.Exposed["b2World_OverlapShape"] = false
+	api.Exposed["b2World_CastRay"] = false
+	api.Exposed["b2World_CastShape"] = false
 	api.Exposed["b2World_SetCustomFilterCallback"] = false
 	api.Exposed["b2World_SetPreSolveCallback"] = false
 	api.Exposed["b2World_DumpMemoryStats"] = false

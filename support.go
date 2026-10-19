@@ -33,10 +33,17 @@ func __builtin___atomic_compare_exchange_n(tls *_Stack, addr, expected uintptr, 
 	ptrValue := (*int32)(unsafe.Pointer(addr))
 	ptrExpected := (*int32)(unsafe.Pointer(expected))
 
-	if atomic.CompareAndSwapInt32(ptrValue, *ptrExpected, desired) {
-		return true1
-	} else {
-		return false1
+	exp := *ptrExpected
+	for {
+		if atomic.CompareAndSwapInt32(ptrValue, exp, desired) {
+			return true1
+		}
+
+		// like C, report the current value on failure. Retry if it changed back to exp in between.
+		if current := atomic.LoadInt32(ptrValue); current != exp {
+			*ptrExpected = current
+			return false1
+		}
 	}
 }
 

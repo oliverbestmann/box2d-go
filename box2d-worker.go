@@ -7,14 +7,18 @@ import (
 	"unsafe"
 )
 
+// EnableConcurrency lets the world run its solver on multiple goroutines.
+// It does nothing on wasm or with a single CPU, where workers would only add overhead.
 func EnableConcurrency(def *WorldDef) {
-	if runtime.GOARCH != "wasm" || runtime.NumCPU() == 1 {
-		startWorker()
-
-		def.WorkerCount = 8
-		def.EnqueueTask = __ccgo_fp(enqueueTask)
-		def.FinishTask = __ccgo_fp(finishTask)
+	if runtime.GOARCH == "wasm" || runtime.NumCPU() == 1 {
+		return
 	}
+
+	startWorker()
+
+	def.WorkerCount = 8
+	def.EnqueueTask = __ccgo_fp(enqueueTask)
+	def.FinishTask = __ccgo_fp(finishTask)
 }
 
 type task struct {

@@ -44,6 +44,11 @@ func (b Body) SetName(name string) {
 	b2Body_SetName(theStack, b.Id, nameC.Addr)
 }
 
+// GetName returns the name set with SetName, truncated to 31 bytes.
+func (b Body) GetName() string {
+	return toString(b2Body_GetName(theStack, b.Id))
+}
+
 func (b Body) GetShapes(reuse []Shape) []Shape {
 	itemCount := b.GetShapeCount()
 
@@ -152,6 +157,54 @@ func (b Shape) GetSensorOverlaps(reuse []Shape) []Shape {
 	return items
 }
 
+// GetContactData returns the touching contacts of the body, reusing the memory of reuse if it is large enough.
+func (b Body) GetContactData(reuse []ContactData) []ContactData {
+	return fillSlice(reuse, b.GetContactCapacity(), func(ptr uintptr, capacity int32) int32 {
+		return b2Body_GetContactData(theStack, b.Id, ptr, capacity)
+	})
+}
+
+// GetContactData returns the touching contacts of the shape, reusing the memory of reuse if it is large enough.
+func (b Shape) GetContactData(reuse []ContactData) []ContactData {
+	return fillSlice(reuse, b.GetContactCapacity(), func(ptr uintptr, capacity int32) int32 {
+		return b2Shape_GetContactData(theStack, b.Id, ptr, capacity)
+	})
+}
+
+// fillSlice lets fill write up to capacity items into reuse and returns the items written.
+func fillSlice[T any](reuse []T, capacity int32, fill func(ptr uintptr, capacity int32) int32) []T {
+	if capacity <= 0 {
+		return reuse[:0]
+	}
+
+	if cap(reuse) < int(capacity) {
+		reuse = make([]T, capacity)
+	}
+
+	// box2d writes into the slice via a uintptr, it must live on the heap
+	items := reuse[:capacity]
+	escapes(items)
+
+	count := fill(uintptr(unsafe.Pointer(&items[0])), capacity)
+	runtime.KeepAlive(items)
+
+	return items[:count]
+}
+
+// SolvePlanes solves the position of a mover that satisfies the given collision planes.
+// It updates the Push field of the planes.
+func SolvePlanes(targetDelta Vec2, planes []CollisionPlane) PlaneSolverResult {
+	if len(planes) == 0 {
+		return b2SolvePlanes(theStack, targetDelta, 0, 0)
+	}
+
+	// box2d writes into the slice via a uintptr, it must live on the heap
+	escapes(planes)
+	defer runtime.KeepAlive(planes)
+
+	return b2SolvePlanes(theStack, targetDelta, uintptr(unsafe.Pointer(&planes[0])), int32(len(planes)))
+}
+
 // worldCallbacks keeps the Go closures alive that box2d only stores as a uintptr.
 // Keyed by world slot, so there are at most B2_MAX_WORLDS entries per kind.
 var worldCallbacks = map[worldCallbackKey]any{}
@@ -220,6 +273,40 @@ func (b World) OverlapShape(proxy ShapeProxy, filter QueryFilter, fcn OverlapRes
 func worldOverlapCallback(fcn OverlapResult) func(*_Stack, ShapeId, uintptr) uint8 {
 	fn := func(_ *_Stack, shapeId ShapeId, _ uintptr) uint8 {
 		return boolUint8(fcn(Shape{Id: shapeId}))
+	}
+
+	// box2d only sees a uintptr, the closure must not live on the goroutine stack, which can move
+	escapes(fn)
+
+	return fn
+}
+
+// CastResult is called for every shape hit by a cast. Return -1 to ignore the shape,
+// 0 to stop, fraction to clip the cast at this hit, or 1 to continue without clipping.
+type CastResult func(shape Shape, point, normal Vec2, fraction float32) float32
+
+// CastRay calls fcn for every shape hit by the ray, in no particular order.
+func (b World) CastRay(origin, translation Vec2, filter QueryFilter, fcn CastResult) TreeStats {
+	fn := worldCastCallback(fcn)
+	defer runtime.KeepAlive(fn)
+
+	return b2World_CastRay(theStack, b.Id, origin, translation, filter, __ccgo_fp(fn), 0)
+}
+
+// CastShape calls fcn for every shape hit by the moving proxy, in no particular order.
+func (b World) CastShape(proxy ShapeProxy, translation Vec2, filter QueryFilter, fcn CastResult) TreeStats {
+	fn := worldCastCallback(fcn)
+	defer runtime.KeepAlive(fn)
+
+	proxyStack := copyToStack(theStack, proxy)
+	defer proxyStack.Free()
+
+	return b2World_CastShape(theStack, b.Id, proxyStack.Addr, translation, filter, __ccgo_fp(fn), 0)
+}
+
+func worldCastCallback(fcn CastResult) func(*_Stack, ShapeId, Vec2, Vec2, float32, uintptr) float32 {
+	fn := func(_ *_Stack, shapeId ShapeId, point, normal Vec2, fraction float32, _ uintptr) float32 {
+		return fcn(Shape{Id: shapeId}, point, normal, fraction)
 	}
 
 	// box2d only sees a uintptr, the closure must not live on the goroutine stack, which can move
