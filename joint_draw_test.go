@@ -135,7 +135,7 @@ func TestJoints(t *testing.T) {
 				// a pendulum around the origin, swinging down
 				p := body.GetPosition()
 				assert.InDelta(t, 1, math.Hypot(float64(p.X), float64(p.Y)), 0.01)
-				assert.Negative(t, joint.AsRevoluteJoint().RevoluteJoint_GetAngle())
+				assert.Negative(t, joint.AsRevoluteJoint().GetAngle())
 			},
 		},
 		{
@@ -148,7 +148,7 @@ func TestJoints(t *testing.T) {
 				return world.CreateDistanceJoint(def).Joint
 			},
 			check: func(t *testing.T, joint Joint, body Body) {
-				assert.InDelta(t, 1, joint.AsDistanceJoint().DistanceJoint_GetCurrentLength(), 0.01)
+				assert.InDelta(t, 1, joint.AsDistanceJoint().GetCurrentLength(), 0.01)
 				assert.Less(t, body.GetPosition().Y, float32(-0.1))
 			},
 		},
@@ -164,7 +164,7 @@ func TestJoints(t *testing.T) {
 			},
 			check: func(t *testing.T, joint Joint, body Body) {
 				// falls freely along the vertical axis, 0.5 * g * t^2
-				assert.InDelta(t, -1.25, joint.AsPrismaticJoint().PrismaticJoint_GetTranslation(), 0.1)
+				assert.InDelta(t, -1.25, joint.AsPrismaticJoint().GetTranslation(), 0.1)
 				assert.InDelta(t, 1, body.GetPosition().X, 0.01)
 			},
 		},
@@ -195,7 +195,7 @@ func TestJoints(t *testing.T) {
 			},
 			check: func(t *testing.T, joint Joint, body Body) {
 				// hangs on the suspension spring
-				assert.True(t, joint.AsWheelJoint().WheelJoint_IsSpringEnabled() != 0)
+				assert.True(t, joint.AsWheelJoint().IsSpringEnabled() != 0)
 				assert.InDelta(t, 1, body.GetPosition().X, 0.01)
 				assert.Less(t, body.GetPosition().Y, float32(-0.05))
 			},
@@ -212,7 +212,7 @@ func TestJoints(t *testing.T) {
 				return world.CreateMotorJoint(def).Joint
 			},
 			check: func(t *testing.T, joint Joint, body Body) {
-				assert.Equal(t, Vec2{X: 1}, joint.AsMotorJoint().MotorJoint_GetLinearOffset())
+				assert.Equal(t, Vec2{X: 1}, joint.AsMotorJoint().GetLinearOffset())
 				assert.InDelta(t, 1, body.GetPosition().X, 0.05)
 				assert.InDelta(t, 0, body.GetPosition().Y, 0.05)
 			},
@@ -228,11 +228,11 @@ func TestJoints(t *testing.T) {
 				def.Hertz = 5
 				def.MaxForce = 1000
 				joint := world.CreateMouseJoint(def)
-				joint.MouseJoint_SetTarget(Vec2{X: 1, Y: 1})
+				joint.SetTarget(Vec2{X: 1, Y: 1})
 				return joint.Joint
 			},
 			check: func(t *testing.T, joint Joint, body Body) {
-				assert.Equal(t, Vec2{X: 1, Y: 1}, joint.AsMouseJoint().MouseJoint_GetTarget())
+				assert.Equal(t, Vec2{X: 1, Y: 1}, joint.AsMouseJoint().GetTarget())
 				assert.InDelta(t, 1, body.GetPosition().Y, 0.1)
 			},
 		},

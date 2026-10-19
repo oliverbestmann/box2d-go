@@ -195,78 +195,73 @@ func TimeOfImpact(input TOIInput) (r TOIOutput) {
 	r = b2TimeOfImpact(theStack, inputStack.Addr)
 	return
 }
-func (b Joint) DistanceJoint_SetLength(length float32) {
-	b2DistanceJoint_SetLength(theStack, b.Id, length)
-}
-func (b Joint) DistanceJoint_GetLength() (r float32) {
-	r = b2DistanceJoint_GetLength(theStack, b.Id)
-	return
-}
-func (b Joint) DistanceJoint_EnableLimit(enableLimit uint8) {
+func (b DistanceJoint) SetLength(length float32) { b2DistanceJoint_SetLength(theStack, b.Id, length) }
+func (b DistanceJoint) GetLength() (r float32)   { r = b2DistanceJoint_GetLength(theStack, b.Id); return }
+func (b DistanceJoint) EnableLimit(enableLimit uint8) {
 	b2DistanceJoint_EnableLimit(theStack, b.Id, enableLimit)
 }
-func (b Joint) DistanceJoint_IsLimitEnabled() (r uint8) {
+func (b DistanceJoint) IsLimitEnabled() (r uint8) {
 	r = b2DistanceJoint_IsLimitEnabled(theStack, b.Id)
 	return
 }
-func (b Joint) DistanceJoint_SetLengthRange(minLength float32, maxLength float32) {
+func (b DistanceJoint) SetLengthRange(minLength float32, maxLength float32) {
 	b2DistanceJoint_SetLengthRange(theStack, b.Id, minLength, maxLength)
 }
-func (b Joint) DistanceJoint_GetMinLength() (r float32) {
+func (b DistanceJoint) GetMinLength() (r float32) {
 	r = b2DistanceJoint_GetMinLength(theStack, b.Id)
 	return
 }
-func (b Joint) DistanceJoint_GetMaxLength() (r float32) {
+func (b DistanceJoint) GetMaxLength() (r float32) {
 	r = b2DistanceJoint_GetMaxLength(theStack, b.Id)
 	return
 }
-func (b Joint) DistanceJoint_GetCurrentLength() (r float32) {
+func (b DistanceJoint) GetCurrentLength() (r float32) {
 	r = b2DistanceJoint_GetCurrentLength(theStack, b.Id)
 	return
 }
-func (b Joint) DistanceJoint_EnableSpring(enableSpring uint8) {
+func (b DistanceJoint) EnableSpring(enableSpring uint8) {
 	b2DistanceJoint_EnableSpring(theStack, b.Id, enableSpring)
 }
-func (b Joint) DistanceJoint_IsSpringEnabled() (r uint8) {
+func (b DistanceJoint) IsSpringEnabled() (r uint8) {
 	r = b2DistanceJoint_IsSpringEnabled(theStack, b.Id)
 	return
 }
-func (b Joint) DistanceJoint_SetSpringHertz(hertz float32) {
+func (b DistanceJoint) SetSpringHertz(hertz float32) {
 	b2DistanceJoint_SetSpringHertz(theStack, b.Id, hertz)
 }
-func (b Joint) DistanceJoint_SetSpringDampingRatio(dampingRatio float32) {
+func (b DistanceJoint) SetSpringDampingRatio(dampingRatio float32) {
 	b2DistanceJoint_SetSpringDampingRatio(theStack, b.Id, dampingRatio)
 }
-func (b Joint) DistanceJoint_GetSpringHertz() (r float32) {
+func (b DistanceJoint) GetSpringHertz() (r float32) {
 	r = b2DistanceJoint_GetSpringHertz(theStack, b.Id)
 	return
 }
-func (b Joint) DistanceJoint_GetSpringDampingRatio() (r float32) {
+func (b DistanceJoint) GetSpringDampingRatio() (r float32) {
 	r = b2DistanceJoint_GetSpringDampingRatio(theStack, b.Id)
 	return
 }
-func (b Joint) DistanceJoint_EnableMotor(enableMotor uint8) {
+func (b DistanceJoint) EnableMotor(enableMotor uint8) {
 	b2DistanceJoint_EnableMotor(theStack, b.Id, enableMotor)
 }
-func (b Joint) DistanceJoint_IsMotorEnabled() (r uint8) {
+func (b DistanceJoint) IsMotorEnabled() (r uint8) {
 	r = b2DistanceJoint_IsMotorEnabled(theStack, b.Id)
 	return
 }
-func (b Joint) DistanceJoint_SetMotorSpeed(motorSpeed float32) {
+func (b DistanceJoint) SetMotorSpeed(motorSpeed float32) {
 	b2DistanceJoint_SetMotorSpeed(theStack, b.Id, motorSpeed)
 }
-func (b Joint) DistanceJoint_GetMotorSpeed() (r float32) {
+func (b DistanceJoint) GetMotorSpeed() (r float32) {
 	r = b2DistanceJoint_GetMotorSpeed(theStack, b.Id)
 	return
 }
-func (b Joint) DistanceJoint_GetMotorForce() (r float32) {
+func (b DistanceJoint) GetMotorForce() (r float32) {
 	r = b2DistanceJoint_GetMotorForce(theStack, b.Id)
 	return
 }
-func (b Joint) DistanceJoint_SetMaxMotorForce(force float32) {
+func (b DistanceJoint) SetMaxMotorForce(force float32) {
 	b2DistanceJoint_SetMaxMotorForce(theStack, b.Id, force)
 }
-func (b Joint) DistanceJoint_GetMaxMotorForce() (r float32) {
+func (b DistanceJoint) GetMaxMotorForce() (r float32) {
 	r = b2DistanceJoint_GetMaxMotorForce(theStack, b.Id)
 	return
 }
@@ -658,215 +653,194 @@ func ComputeRotationBetweenUnitVectors(v1 Vec2, v2 Vec2) (r Rot) {
 	r = b2ComputeRotationBetweenUnitVectors(theStack, v1, v2)
 	return
 }
-func (b Joint) MotorJoint_SetLinearOffset(linearOffset Vec2) {
+func (b MotorJoint) SetLinearOffset(linearOffset Vec2) {
 	b2MotorJoint_SetLinearOffset(theStack, b.Id, linearOffset)
 }
-func (b Joint) MotorJoint_GetLinearOffset() (r Vec2) {
+func (b MotorJoint) GetLinearOffset() (r Vec2) {
 	r = b2MotorJoint_GetLinearOffset(theStack, b.Id)
 	return
 }
-func (b Joint) MotorJoint_SetAngularOffset(angularOffset float32) {
+func (b MotorJoint) SetAngularOffset(angularOffset float32) {
 	b2MotorJoint_SetAngularOffset(theStack, b.Id, angularOffset)
 }
-func (b Joint) MotorJoint_GetAngularOffset() (r float32) {
+func (b MotorJoint) GetAngularOffset() (r float32) {
 	r = b2MotorJoint_GetAngularOffset(theStack, b.Id)
 	return
 }
-func (b Joint) MotorJoint_SetMaxForce(maxForce float32) {
-	b2MotorJoint_SetMaxForce(theStack, b.Id, maxForce)
-}
-func (b Joint) MotorJoint_GetMaxForce() (r float32) {
-	r = b2MotorJoint_GetMaxForce(theStack, b.Id)
-	return
-}
-func (b Joint) MotorJoint_SetMaxTorque(maxTorque float32) {
+func (b MotorJoint) SetMaxForce(maxForce float32) { b2MotorJoint_SetMaxForce(theStack, b.Id, maxForce) }
+func (b MotorJoint) GetMaxForce() (r float32)     { r = b2MotorJoint_GetMaxForce(theStack, b.Id); return }
+func (b MotorJoint) SetMaxTorque(maxTorque float32) {
 	b2MotorJoint_SetMaxTorque(theStack, b.Id, maxTorque)
 }
-func (b Joint) MotorJoint_GetMaxTorque() (r float32) {
-	r = b2MotorJoint_GetMaxTorque(theStack, b.Id)
-	return
-}
-func (b Joint) MotorJoint_SetCorrectionFactor(correctionFactor float32) {
+func (b MotorJoint) GetMaxTorque() (r float32) { r = b2MotorJoint_GetMaxTorque(theStack, b.Id); return }
+func (b MotorJoint) SetCorrectionFactor(correctionFactor float32) {
 	b2MotorJoint_SetCorrectionFactor(theStack, b.Id, correctionFactor)
 }
-func (b Joint) MotorJoint_GetCorrectionFactor() (r float32) {
+func (b MotorJoint) GetCorrectionFactor() (r float32) {
 	r = b2MotorJoint_GetCorrectionFactor(theStack, b.Id)
 	return
 }
-func (b Joint) MouseJoint_SetTarget(target Vec2) { b2MouseJoint_SetTarget(theStack, b.Id, target) }
-func (b Joint) MouseJoint_GetTarget() (r Vec2)   { r = b2MouseJoint_GetTarget(theStack, b.Id); return }
-func (b Joint) MouseJoint_SetSpringHertz(hertz float32) {
-	b2MouseJoint_SetSpringHertz(theStack, b.Id, hertz)
-}
-func (b Joint) MouseJoint_GetSpringHertz() (r float32) {
+func (b MouseJoint) SetTarget(target Vec2)        { b2MouseJoint_SetTarget(theStack, b.Id, target) }
+func (b MouseJoint) GetTarget() (r Vec2)          { r = b2MouseJoint_GetTarget(theStack, b.Id); return }
+func (b MouseJoint) SetSpringHertz(hertz float32) { b2MouseJoint_SetSpringHertz(theStack, b.Id, hertz) }
+func (b MouseJoint) GetSpringHertz() (r float32) {
 	r = b2MouseJoint_GetSpringHertz(theStack, b.Id)
 	return
 }
-func (b Joint) MouseJoint_SetSpringDampingRatio(dampingRatio float32) {
+func (b MouseJoint) SetSpringDampingRatio(dampingRatio float32) {
 	b2MouseJoint_SetSpringDampingRatio(theStack, b.Id, dampingRatio)
 }
-func (b Joint) MouseJoint_GetSpringDampingRatio() (r float32) {
+func (b MouseJoint) GetSpringDampingRatio() (r float32) {
 	r = b2MouseJoint_GetSpringDampingRatio(theStack, b.Id)
 	return
 }
-func (b Joint) MouseJoint_SetMaxForce(maxForce float32) {
-	b2MouseJoint_SetMaxForce(theStack, b.Id, maxForce)
-}
-func (b Joint) MouseJoint_GetMaxForce() (r float32) {
-	r = b2MouseJoint_GetMaxForce(theStack, b.Id)
-	return
-}
-func (b Joint) PrismaticJoint_EnableSpring(enableSpring uint8) {
+func (b MouseJoint) SetMaxForce(maxForce float32) { b2MouseJoint_SetMaxForce(theStack, b.Id, maxForce) }
+func (b MouseJoint) GetMaxForce() (r float32)     { r = b2MouseJoint_GetMaxForce(theStack, b.Id); return }
+func (b PrismaticJoint) EnableSpring(enableSpring uint8) {
 	b2PrismaticJoint_EnableSpring(theStack, b.Id, enableSpring)
 }
-func (b Joint) PrismaticJoint_IsSpringEnabled() (r uint8) {
+func (b PrismaticJoint) IsSpringEnabled() (r uint8) {
 	r = b2PrismaticJoint_IsSpringEnabled(theStack, b.Id)
 	return
 }
-func (b Joint) PrismaticJoint_SetSpringHertz(hertz float32) {
+func (b PrismaticJoint) SetSpringHertz(hertz float32) {
 	b2PrismaticJoint_SetSpringHertz(theStack, b.Id, hertz)
 }
-func (b Joint) PrismaticJoint_GetSpringHertz() (r float32) {
+func (b PrismaticJoint) GetSpringHertz() (r float32) {
 	r = b2PrismaticJoint_GetSpringHertz(theStack, b.Id)
 	return
 }
-func (b Joint) PrismaticJoint_SetSpringDampingRatio(dampingRatio float32) {
+func (b PrismaticJoint) SetSpringDampingRatio(dampingRatio float32) {
 	b2PrismaticJoint_SetSpringDampingRatio(theStack, b.Id, dampingRatio)
 }
-func (b Joint) PrismaticJoint_GetSpringDampingRatio() (r float32) {
+func (b PrismaticJoint) GetSpringDampingRatio() (r float32) {
 	r = b2PrismaticJoint_GetSpringDampingRatio(theStack, b.Id)
 	return
 }
-func (b Joint) PrismaticJoint_SetTargetTranslation(translation float32) {
+func (b PrismaticJoint) SetTargetTranslation(translation float32) {
 	b2PrismaticJoint_SetTargetTranslation(theStack, b.Id, translation)
 }
-func (b Joint) PrismaticJoint_GetTargetTranslation() (r float32) {
+func (b PrismaticJoint) GetTargetTranslation() (r float32) {
 	r = b2PrismaticJoint_GetTargetTranslation(theStack, b.Id)
 	return
 }
-func (b Joint) PrismaticJoint_EnableLimit(enableLimit uint8) {
+func (b PrismaticJoint) EnableLimit(enableLimit uint8) {
 	b2PrismaticJoint_EnableLimit(theStack, b.Id, enableLimit)
 }
-func (b Joint) PrismaticJoint_IsLimitEnabled() (r uint8) {
+func (b PrismaticJoint) IsLimitEnabled() (r uint8) {
 	r = b2PrismaticJoint_IsLimitEnabled(theStack, b.Id)
 	return
 }
-func (b Joint) PrismaticJoint_GetLowerLimit() (r float32) {
+func (b PrismaticJoint) GetLowerLimit() (r float32) {
 	r = b2PrismaticJoint_GetLowerLimit(theStack, b.Id)
 	return
 }
-func (b Joint) PrismaticJoint_GetUpperLimit() (r float32) {
+func (b PrismaticJoint) GetUpperLimit() (r float32) {
 	r = b2PrismaticJoint_GetUpperLimit(theStack, b.Id)
 	return
 }
-func (b Joint) PrismaticJoint_SetLimits(lower float32, upper float32) {
+func (b PrismaticJoint) SetLimits(lower float32, upper float32) {
 	b2PrismaticJoint_SetLimits(theStack, b.Id, lower, upper)
 }
-func (b Joint) PrismaticJoint_EnableMotor(enableMotor uint8) {
+func (b PrismaticJoint) EnableMotor(enableMotor uint8) {
 	b2PrismaticJoint_EnableMotor(theStack, b.Id, enableMotor)
 }
-func (b Joint) PrismaticJoint_IsMotorEnabled() (r uint8) {
+func (b PrismaticJoint) IsMotorEnabled() (r uint8) {
 	r = b2PrismaticJoint_IsMotorEnabled(theStack, b.Id)
 	return
 }
-func (b Joint) PrismaticJoint_SetMotorSpeed(motorSpeed float32) {
+func (b PrismaticJoint) SetMotorSpeed(motorSpeed float32) {
 	b2PrismaticJoint_SetMotorSpeed(theStack, b.Id, motorSpeed)
 }
-func (b Joint) PrismaticJoint_GetMotorSpeed() (r float32) {
+func (b PrismaticJoint) GetMotorSpeed() (r float32) {
 	r = b2PrismaticJoint_GetMotorSpeed(theStack, b.Id)
 	return
 }
-func (b Joint) PrismaticJoint_GetMotorForce() (r float32) {
+func (b PrismaticJoint) GetMotorForce() (r float32) {
 	r = b2PrismaticJoint_GetMotorForce(theStack, b.Id)
 	return
 }
-func (b Joint) PrismaticJoint_SetMaxMotorForce(force float32) {
+func (b PrismaticJoint) SetMaxMotorForce(force float32) {
 	b2PrismaticJoint_SetMaxMotorForce(theStack, b.Id, force)
 }
-func (b Joint) PrismaticJoint_GetMaxMotorForce() (r float32) {
+func (b PrismaticJoint) GetMaxMotorForce() (r float32) {
 	r = b2PrismaticJoint_GetMaxMotorForce(theStack, b.Id)
 	return
 }
-func (b Joint) PrismaticJoint_GetTranslation() (r float32) {
+func (b PrismaticJoint) GetTranslation() (r float32) {
 	r = b2PrismaticJoint_GetTranslation(theStack, b.Id)
 	return
 }
-func (b Joint) PrismaticJoint_GetSpeed() (r float32) {
-	r = b2PrismaticJoint_GetSpeed(theStack, b.Id)
-	return
-}
-func (b Joint) RevoluteJoint_EnableSpring(enableSpring uint8) {
+func (b PrismaticJoint) GetSpeed() (r float32) { r = b2PrismaticJoint_GetSpeed(theStack, b.Id); return }
+func (b RevoluteJoint) EnableSpring(enableSpring uint8) {
 	b2RevoluteJoint_EnableSpring(theStack, b.Id, enableSpring)
 }
-func (b Joint) RevoluteJoint_IsSpringEnabled() (r uint8) {
+func (b RevoluteJoint) IsSpringEnabled() (r uint8) {
 	r = b2RevoluteJoint_IsSpringEnabled(theStack, b.Id)
 	return
 }
-func (b Joint) RevoluteJoint_SetSpringHertz(hertz float32) {
+func (b RevoluteJoint) SetSpringHertz(hertz float32) {
 	b2RevoluteJoint_SetSpringHertz(theStack, b.Id, hertz)
 }
-func (b Joint) RevoluteJoint_GetSpringHertz() (r float32) {
+func (b RevoluteJoint) GetSpringHertz() (r float32) {
 	r = b2RevoluteJoint_GetSpringHertz(theStack, b.Id)
 	return
 }
-func (b Joint) RevoluteJoint_SetSpringDampingRatio(dampingRatio float32) {
+func (b RevoluteJoint) SetSpringDampingRatio(dampingRatio float32) {
 	b2RevoluteJoint_SetSpringDampingRatio(theStack, b.Id, dampingRatio)
 }
-func (b Joint) RevoluteJoint_GetSpringDampingRatio() (r float32) {
+func (b RevoluteJoint) GetSpringDampingRatio() (r float32) {
 	r = b2RevoluteJoint_GetSpringDampingRatio(theStack, b.Id)
 	return
 }
-func (b Joint) RevoluteJoint_SetTargetAngle(angle float32) {
+func (b RevoluteJoint) SetTargetAngle(angle float32) {
 	b2RevoluteJoint_SetTargetAngle(theStack, b.Id, angle)
 }
-func (b Joint) RevoluteJoint_GetTargetAngle() (r float32) {
+func (b RevoluteJoint) GetTargetAngle() (r float32) {
 	r = b2RevoluteJoint_GetTargetAngle(theStack, b.Id)
 	return
 }
-func (b Joint) RevoluteJoint_GetAngle() (r float32) {
-	r = b2RevoluteJoint_GetAngle(theStack, b.Id)
-	return
-}
-func (b Joint) RevoluteJoint_EnableLimit(enableLimit uint8) {
+func (b RevoluteJoint) GetAngle() (r float32) { r = b2RevoluteJoint_GetAngle(theStack, b.Id); return }
+func (b RevoluteJoint) EnableLimit(enableLimit uint8) {
 	b2RevoluteJoint_EnableLimit(theStack, b.Id, enableLimit)
 }
-func (b Joint) RevoluteJoint_IsLimitEnabled() (r uint8) {
+func (b RevoluteJoint) IsLimitEnabled() (r uint8) {
 	r = b2RevoluteJoint_IsLimitEnabled(theStack, b.Id)
 	return
 }
-func (b Joint) RevoluteJoint_GetLowerLimit() (r float32) {
+func (b RevoluteJoint) GetLowerLimit() (r float32) {
 	r = b2RevoluteJoint_GetLowerLimit(theStack, b.Id)
 	return
 }
-func (b Joint) RevoluteJoint_GetUpperLimit() (r float32) {
+func (b RevoluteJoint) GetUpperLimit() (r float32) {
 	r = b2RevoluteJoint_GetUpperLimit(theStack, b.Id)
 	return
 }
-func (b Joint) RevoluteJoint_SetLimits(lower float32, upper float32) {
+func (b RevoluteJoint) SetLimits(lower float32, upper float32) {
 	b2RevoluteJoint_SetLimits(theStack, b.Id, lower, upper)
 }
-func (b Joint) RevoluteJoint_EnableMotor(enableMotor uint8) {
+func (b RevoluteJoint) EnableMotor(enableMotor uint8) {
 	b2RevoluteJoint_EnableMotor(theStack, b.Id, enableMotor)
 }
-func (b Joint) RevoluteJoint_IsMotorEnabled() (r uint8) {
+func (b RevoluteJoint) IsMotorEnabled() (r uint8) {
 	r = b2RevoluteJoint_IsMotorEnabled(theStack, b.Id)
 	return
 }
-func (b Joint) RevoluteJoint_SetMotorSpeed(motorSpeed float32) {
+func (b RevoluteJoint) SetMotorSpeed(motorSpeed float32) {
 	b2RevoluteJoint_SetMotorSpeed(theStack, b.Id, motorSpeed)
 }
-func (b Joint) RevoluteJoint_GetMotorSpeed() (r float32) {
+func (b RevoluteJoint) GetMotorSpeed() (r float32) {
 	r = b2RevoluteJoint_GetMotorSpeed(theStack, b.Id)
 	return
 }
-func (b Joint) RevoluteJoint_GetMotorTorque() (r float32) {
+func (b RevoluteJoint) GetMotorTorque() (r float32) {
 	r = b2RevoluteJoint_GetMotorTorque(theStack, b.Id)
 	return
 }
-func (b Joint) RevoluteJoint_SetMaxMotorTorque(torque float32) {
+func (b RevoluteJoint) SetMaxMotorTorque(torque float32) {
 	b2RevoluteJoint_SetMaxMotorTorque(theStack, b.Id, torque)
 }
-func (b Joint) RevoluteJoint_GetMaxMotorTorque() (r float32) {
+func (b RevoluteJoint) GetMaxMotorTorque() (r float32) {
 	r = b2RevoluteJoint_GetMaxMotorTorque(theStack, b.Id)
 	return
 }
@@ -1022,95 +996,89 @@ func DefaultShapeDef() (r ShapeDef)               { r = b2DefaultShapeDef(theSta
 func DefaultSurfaceMaterial() (r SurfaceMaterial) { r = b2DefaultSurfaceMaterial(theStack); return }
 func DefaultChainDef() (r ChainDef)               { r = b2DefaultChainDef(theStack); return }
 func DefaultDebugDraw() (r b2DebugDraw)           { r = b2DefaultDebugDraw(theStack); return }
-func (b Joint) WeldJoint_SetLinearHertz(hertz float32) {
-	b2WeldJoint_SetLinearHertz(theStack, b.Id, hertz)
-}
-func (b Joint) WeldJoint_GetLinearHertz() (r float32) {
+func (b WeldJoint) SetLinearHertz(hertz float32)  { b2WeldJoint_SetLinearHertz(theStack, b.Id, hertz) }
+func (b WeldJoint) GetLinearHertz() (r float32) {
 	r = b2WeldJoint_GetLinearHertz(theStack, b.Id)
 	return
 }
-func (b Joint) WeldJoint_SetLinearDampingRatio(dampingRatio float32) {
+func (b WeldJoint) SetLinearDampingRatio(dampingRatio float32) {
 	b2WeldJoint_SetLinearDampingRatio(theStack, b.Id, dampingRatio)
 }
-func (b Joint) WeldJoint_GetLinearDampingRatio() (r float32) {
+func (b WeldJoint) GetLinearDampingRatio() (r float32) {
 	r = b2WeldJoint_GetLinearDampingRatio(theStack, b.Id)
 	return
 }
-func (b Joint) WeldJoint_SetAngularHertz(hertz float32) {
-	b2WeldJoint_SetAngularHertz(theStack, b.Id, hertz)
-}
-func (b Joint) WeldJoint_GetAngularHertz() (r float32) {
+func (b WeldJoint) SetAngularHertz(hertz float32) { b2WeldJoint_SetAngularHertz(theStack, b.Id, hertz) }
+func (b WeldJoint) GetAngularHertz() (r float32) {
 	r = b2WeldJoint_GetAngularHertz(theStack, b.Id)
 	return
 }
-func (b Joint) WeldJoint_SetAngularDampingRatio(dampingRatio float32) {
+func (b WeldJoint) SetAngularDampingRatio(dampingRatio float32) {
 	b2WeldJoint_SetAngularDampingRatio(theStack, b.Id, dampingRatio)
 }
-func (b Joint) WeldJoint_GetAngularDampingRatio() (r float32) {
+func (b WeldJoint) GetAngularDampingRatio() (r float32) {
 	r = b2WeldJoint_GetAngularDampingRatio(theStack, b.Id)
 	return
 }
-func (b Joint) WheelJoint_EnableSpring(enableSpring uint8) {
+func (b WheelJoint) EnableSpring(enableSpring uint8) {
 	b2WheelJoint_EnableSpring(theStack, b.Id, enableSpring)
 }
-func (b Joint) WheelJoint_IsSpringEnabled() (r uint8) {
+func (b WheelJoint) IsSpringEnabled() (r uint8) {
 	r = b2WheelJoint_IsSpringEnabled(theStack, b.Id)
 	return
 }
-func (b Joint) WheelJoint_SetSpringHertz(hertz float32) {
-	b2WheelJoint_SetSpringHertz(theStack, b.Id, hertz)
-}
-func (b Joint) WheelJoint_GetSpringHertz() (r float32) {
+func (b WheelJoint) SetSpringHertz(hertz float32) { b2WheelJoint_SetSpringHertz(theStack, b.Id, hertz) }
+func (b WheelJoint) GetSpringHertz() (r float32) {
 	r = b2WheelJoint_GetSpringHertz(theStack, b.Id)
 	return
 }
-func (b Joint) WheelJoint_SetSpringDampingRatio(dampingRatio float32) {
+func (b WheelJoint) SetSpringDampingRatio(dampingRatio float32) {
 	b2WheelJoint_SetSpringDampingRatio(theStack, b.Id, dampingRatio)
 }
-func (b Joint) WheelJoint_GetSpringDampingRatio() (r float32) {
+func (b WheelJoint) GetSpringDampingRatio() (r float32) {
 	r = b2WheelJoint_GetSpringDampingRatio(theStack, b.Id)
 	return
 }
-func (b Joint) WheelJoint_EnableLimit(enableLimit uint8) {
+func (b WheelJoint) EnableLimit(enableLimit uint8) {
 	b2WheelJoint_EnableLimit(theStack, b.Id, enableLimit)
 }
-func (b Joint) WheelJoint_IsLimitEnabled() (r uint8) {
+func (b WheelJoint) IsLimitEnabled() (r uint8) {
 	r = b2WheelJoint_IsLimitEnabled(theStack, b.Id)
 	return
 }
-func (b Joint) WheelJoint_GetLowerLimit() (r float32) {
+func (b WheelJoint) GetLowerLimit() (r float32) {
 	r = b2WheelJoint_GetLowerLimit(theStack, b.Id)
 	return
 }
-func (b Joint) WheelJoint_GetUpperLimit() (r float32) {
+func (b WheelJoint) GetUpperLimit() (r float32) {
 	r = b2WheelJoint_GetUpperLimit(theStack, b.Id)
 	return
 }
-func (b Joint) WheelJoint_SetLimits(lower float32, upper float32) {
+func (b WheelJoint) SetLimits(lower float32, upper float32) {
 	b2WheelJoint_SetLimits(theStack, b.Id, lower, upper)
 }
-func (b Joint) WheelJoint_EnableMotor(enableMotor uint8) {
+func (b WheelJoint) EnableMotor(enableMotor uint8) {
 	b2WheelJoint_EnableMotor(theStack, b.Id, enableMotor)
 }
-func (b Joint) WheelJoint_IsMotorEnabled() (r uint8) {
+func (b WheelJoint) IsMotorEnabled() (r uint8) {
 	r = b2WheelJoint_IsMotorEnabled(theStack, b.Id)
 	return
 }
-func (b Joint) WheelJoint_SetMotorSpeed(motorSpeed float32) {
+func (b WheelJoint) SetMotorSpeed(motorSpeed float32) {
 	b2WheelJoint_SetMotorSpeed(theStack, b.Id, motorSpeed)
 }
-func (b Joint) WheelJoint_GetMotorSpeed() (r float32) {
+func (b WheelJoint) GetMotorSpeed() (r float32) {
 	r = b2WheelJoint_GetMotorSpeed(theStack, b.Id)
 	return
 }
-func (b Joint) WheelJoint_GetMotorTorque() (r float32) {
+func (b WheelJoint) GetMotorTorque() (r float32) {
 	r = b2WheelJoint_GetMotorTorque(theStack, b.Id)
 	return
 }
-func (b Joint) WheelJoint_SetMaxMotorTorque(torque float32) {
+func (b WheelJoint) SetMaxMotorTorque(torque float32) {
 	b2WheelJoint_SetMaxMotorTorque(theStack, b.Id, torque)
 }
-func (b Joint) WheelJoint_GetMaxMotorTorque() (r float32) {
+func (b WheelJoint) GetMaxMotorTorque() (r float32) {
 	r = b2WheelJoint_GetMaxMotorTorque(theStack, b.Id)
 	return
 }

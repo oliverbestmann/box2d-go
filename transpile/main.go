@@ -526,19 +526,28 @@ func createWrappers(decls *[]dst.Decl, api API) Visitor {
 			return true
 		}
 
+		// a function taking an id becomes a method, preferably of the type with the matching
+		// prefix: b2RevoluteJoint_GetAngle(jointId) is RevoluteJoint.GetAngle, not Joint.RevoluteJoint_GetAngle
 		var classType *ClassTypes
 
-		for idx := range classTypes {
-			ty := &classTypes[idx]
-			// if strings.HasPrefix(decl.Name.Name, ty.FnPrefix) {
-			if decl.Type.Params != nil && len(decl.Type.Params.List) >= 2 {
-				arg0, ok := decl.Type.Params.List[1].Type.(*dst.Ident)
-				if ok && arg0.Name == ty.IdType {
-					classType = ty
-					break
+		if decl.Type.Params != nil && len(decl.Type.Params.List) >= 2 {
+			if arg0, ok := decl.Type.Params.List[1].Type.(*dst.Ident); ok {
+				for idx := range classTypes {
+					ty := &classTypes[idx]
+					if arg0.Name != ty.IdType {
+						continue
+					}
+
+					if strings.HasPrefix(decl.Name.Name, ty.FnPrefix) {
+						classType = ty
+						break
+					}
+
+					if classType == nil {
+						classType = ty
+					}
 				}
 			}
-			//}
 		}
 
 		var args []dst.Expr
