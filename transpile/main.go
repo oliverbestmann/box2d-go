@@ -966,6 +966,7 @@ func readAPI() API {
 	api.Exposed["b2Body_GetContactData"] = false
 	api.Exposed["b2Shape_GetContactData"] = false
 	api.Exposed["b2SolvePlanes"] = false
+	api.Exposed["b2ShapeDistance"] = false
 
 	api.Exposed["b2World_CollideMover"] = false
 	api.Exposed["b2World_SetRestitutionCallback"] = false

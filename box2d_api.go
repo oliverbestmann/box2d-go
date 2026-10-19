@@ -183,16 +183,6 @@ func SegmentDistance(p1 Vec2, q1 Vec2, p2 Vec2, q2 Vec2) (r1 SegmentDistanceResu
 	r1 = b2SegmentDistance(theStack, p1, q1, p2, q2)
 	return
 }
-func ShapeDistance(input DistanceInput, cache *SimplexCache, simplexes *Simplex, simplexCapacity int32) (r DistanceOutput) {
-	defer runtime.KeepAlive(simplexes)
-	defer runtime.KeepAlive(cache)
-	inputStack := copyToStack(theStack, input)
-	defer inputStack.Free()
-	escapes(cache)
-	escapes(simplexes)
-	r = b2ShapeDistance(theStack, inputStack.Addr, uintptr(unsafe.Pointer(cache)), uintptr(unsafe.Pointer(simplexes)), simplexCapacity)
-	return
-}
 func ShapeCast(input ShapeCastPairInput) (r CastOutput) {
 	inputStack := copyToStack(theStack, input)
 	defer inputStack.Free()

@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 // Ported from box2d test/test_distance.c
@@ -36,9 +37,17 @@ func TestShapeDistance(t *testing.T) {
 	}
 
 	var cache SimplexCache
-	output := ShapeDistance(input, &cache, nil, 0)
+	output := ShapeDistance(input, &cache, nil)
 
 	assert.InDelta(t, 1, output.Distance, epsilon)
+	assert.NotZero(t, cache.Count, "cache is written")
+
+	// simplexes are written up to the length of the slice
+	simplexes := make([]Simplex, 8)
+	output = ShapeDistance(input, nil, simplexes)
+	assert.InDelta(t, 1, output.Distance, epsilon)
+	require.Positive(t, output.SimplexCount)
+	assert.NotZero(t, simplexes[0].Count)
 }
 
 func TestShapeCast(t *testing.T) {

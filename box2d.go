@@ -205,6 +205,31 @@ func SolvePlanes(targetDelta Vec2, planes []CollisionPlane) PlaneSolverResult {
 	return b2SolvePlanes(theStack, targetDelta, uintptr(unsafe.Pointer(&planes[0])), int32(len(planes)))
 }
 
+// ShapeDistance computes the closest points between two shapes. cache speeds up repeated
+// calls for the same shapes and may be nil. For debugging, the solver writes its simplexes
+// into simplexes, up to its length. DistanceOutput.SimplexCount tells how many it computed.
+func ShapeDistance(input DistanceInput, cache *SimplexCache, simplexes []Simplex) DistanceOutput {
+	if cache == nil {
+		cache = &SimplexCache{}
+	}
+
+	inputStack := copyToStack(theStack, input)
+	defer inputStack.Free()
+
+	// box2d writes into cache and simplexes via a uintptr, they must live on the heap
+	escapes(cache)
+	escapes(simplexes)
+	defer runtime.KeepAlive(cache)
+	defer runtime.KeepAlive(simplexes)
+
+	var simplexesPtr uintptr
+	if len(simplexes) > 0 {
+		simplexesPtr = uintptr(unsafe.Pointer(&simplexes[0]))
+	}
+
+	return b2ShapeDistance(theStack, inputStack.Addr, uintptr(unsafe.Pointer(cache)), simplexesPtr, int32(len(simplexes)))
+}
+
 // worldCallbacks keeps the Go closures alive that box2d only stores as a uintptr.
 // Keyed by world slot, so there are at most B2_MAX_WORLDS entries per kind.
 var worldCallbacks = map[worldCallbackKey]any{}
