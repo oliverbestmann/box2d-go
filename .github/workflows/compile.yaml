@@ -21,7 +21,7 @@ jobs:
          - name: Run tests
            run: go test -v ./...
 
-         # the transpiled code keeps memory as uintptr and has dead code after returns, see README
+         # the transpiled code keeps memory as uintptr, see README
          - name: Run go vet
            run: go vet -unsafeptr=false ./...
 
@@ -34,7 +34,7 @@ jobs:
          - name: Setup Go
            uses: actions/setup-go@v5
            with:
-              go-version: 1.25.x
+              go-version-file: transpile/go.mod
 
          - name: Fetch box2d sources
            run: |
