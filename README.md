@@ -1,9 +1,22 @@
-[![Go Reference](https://pkg.go.dev/badge/github.com/oliverbestmann/box2d-go?utm_source=godoc.svg)](https://pkg.go.dev/github.com/oliverbestmann/box2d-go?utm_source=godoc)
+[![Go Reference](https://pkg.go.dev/badge/github.com/oliverbestmann/box2d-go/v3?utm_source=godoc.svg)](https://pkg.go.dev/github.com/oliverbestmann/box2d-go/v3?utm_source=godoc)
 
 # box2d go
 
 This is a Go port of Box2D v3.2. Most of it is generated: [ccgo](https://gitlab.com/cznic/ccgo) translates the C code
 to Go, and a generator in `transpile/` adds a Go API on top that hides the translated C code.
+
+```sh
+go get github.com/oliverbestmann/box2d-go/v3
+```
+
+## Versions
+
+The major and minor version follow Box2D: `v3.2.x` is a port of Box2D v3.2. The patch version counts releases of this
+port and does not match the Box2D patch version. The table shows which Box2D version each release is built from.
+
+| box2d-go | Box2D  |
+|----------|--------|
+| v3.2.0   | v3.2.0 |
 
 ## API
 
