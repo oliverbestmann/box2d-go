@@ -2,7 +2,7 @@
 
 # box2d go
 
-This is a mainly automated Golang port of Box2D v3. The original C code is transpiled into Go using modernc.org/ccgo/v4.
+This is a mainly automated Golang port of Box2D v3.2. The original C code is transpiled into Go using modernc.org/ccgo/v4.
 Some post-processing creates a user-friendly Go API, concealing the low-level details of the transpiled C code.
 
 ## API
@@ -91,9 +91,8 @@ world.DestroyWorld()
 
 ## Multithreading
 
-box2d enables multithreading through a "bring your own task system" approach. Since Go provides the necessary
-concurrency primitives, an implementation is available for box2d multithreading. Use `b2.EnableConcurrency` to activate
-concurrent processing for a new `World`.
+box2d has a built-in task scheduler that runs on `WorldDef.WorkerCount` threads. In Go, these threads are
+goroutines. Use `b2.EnableConcurrency` to pick a worker count for a new `World`, or set `WorkerCount` yourself.
 
 **Caution**: The rest of the API is not thread safe. The `b2` package must not be
 accessed from multiple threads, even in read-only mode.
@@ -122,5 +121,5 @@ The tests use `-race` only with checkptr disabled for the same reason:
   `transpile/csrc/callbacks.c` repeats every callback signature the Go code implements, and `./transpile.sh`
   checks it against the box2d headers with the host C compiler. `callbacks.go` checks the Go closures against
   the transpiled result. Update both when the build fails there.
-- Determinism: take the expected hash and sleep step from box2d's `test/test_determinism.c` and update
+- Determinism: take the expected hash and sleep step from box2d's `shared/determinism.h` and update
   `determinism_test.go`.
