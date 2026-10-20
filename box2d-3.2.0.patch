@@ -1,0 +1,179 @@
+From e76482ab7cea3a0b818827ba067e562f257486ea Mon Sep 17 00:00:00 2001
+From: Oliver Bestmann <oliver.bestmann@googlemail.com>
+Date: Wed, 20 Aug 2025 21:55:07 +0200
+Subject: [PATCH] ensure compatibility with ccgo
+
+---
+ include/box2d/collision.h  |  2 +-
+ include/box2d/id.h         | 12 ++++++------
+ include/box2d/math_types.h | 15 +++++++--------
+ src/platform.h             | 20 ++++++++++++++++----
+ src/statics.c              | 22 ++++++++++++++++++++++
+ src/timer.c                |  6 ++++++
+ 6 files changed, 58 insertions(+), 19 deletions(-)
+ create mode 100644 src/statics.c
+
+diff --git a/include/box2d/collision.h b/include/box2d/collision.h
+index 1fe93d0..42240bb 100644
+--- a/include/box2d/collision.h
++++ b/include/box2d/collision.h
+@@ -384,7 +384,7 @@ typedef struct b2SimplexCache
+ 	uint8_t indexB[3];
+ } b2SimplexCache;
+ 
+-static const b2SimplexCache b2_emptySimplexCache = B2_ZERO_INIT;
++extern b2SimplexCache b2_emptySimplexCache;
+ 
+ /// Input for b2ComputeShapeDistance
+ typedef struct b2DistanceInput
+diff --git a/include/box2d/id.h b/include/box2d/id.h
+index 0f2dfb7..a6e525e 100644
+--- a/include/box2d/id.h
++++ b/include/box2d/id.h
+@@ -97,12 +97,12 @@ typedef struct b2ContactId
+ // clang-format on
+ 
+ /// Use these to make your identifiers null. You may also use zero initialization to get null.
+-static const b2WorldId b2_nullWorldId = B2_NULL_ID;
+-static const b2BodyId b2_nullBodyId = B2_NULL_ID;
+-static const b2ShapeId b2_nullShapeId = B2_NULL_ID;
+-static const b2ChainId b2_nullChainId = B2_NULL_ID;
+-static const b2JointId b2_nullJointId = B2_NULL_ID;
+-static const b2ContactId b2_nullContactId = B2_NULL_ID;
++extern b2WorldId b2_nullWorldId;
++extern b2BodyId b2_nullBodyId;
++extern b2ShapeId b2_nullShapeId;
++extern b2ChainId b2_nullChainId;
++extern b2JointId b2_nullJointId;
++extern b2ContactId b2_nullContactId;
+ 
+ /// Macro to determine if any id is null.
+ #define B2_IS_NULL( id ) ( ( id ).index1 == 0 )
+diff --git a/include/box2d/math_types.h b/include/box2d/math_types.h
+index ce5a2e6..a3dbb6e 100644
+--- a/include/box2d/math_types.h
++++ b/include/box2d/math_types.h
+@@ -89,13 +89,12 @@ typedef struct b2Plane
+ /// https://en.wikipedia.org/wiki/Pi
+ #define B2_PI 3.14159265359f
+ 
+-static const b2Vec2 b2Vec2_zero = { 0.0f, 0.0f };
+-static const b2Rot b2Rot_identity = { 1.0f, 0.0f };
+-static const b2Transform b2Transform_identity = { { 0.0f, 0.0f }, { 1.0f, 0.0f } };
+-static const b2Mat22 b2Mat22_zero = { { 0.0f, 0.0f }, { 0.0f, 0.0f } };
+-
+-// Initializers valid in both modes: 0.0f promotes to double, the identity rotation is float
+-static const b2Pos b2Pos_zero = { 0.0f, 0.0f };
+-static const b2WorldTransform b2WorldTransform_identity = { { 0.0f, 0.0f }, { 1.0f, 0.0f } };
++extern b2Vec2 b2Vec2_zero;
++extern b2Rot b2Rot_identity;
++extern b2Transform b2Transform_identity;
++extern b2Mat22 b2Mat22_zero;
++
++extern b2Pos b2Pos_zero;
++extern b2WorldTransform b2WorldTransform_identity;
+ 
+ /**@}*/
+diff --git a/src/platform.h b/src/platform.h
+index 2034726..80ad889 100644
+--- a/src/platform.h
++++ b/src/platform.h
+@@ -14,11 +14,13 @@
+ #include <intrin0.h>
+ #endif
+ 
+-#if defined( _M_X64 ) || defined( __x86_64__ ) || defined( _M_IX86 ) || defined( __i386__ )
++#if !defined( __CCGO__ ) && ( defined( _M_X64 ) || defined( __x86_64__ ) || defined( _M_IX86 ) || defined( __i386__ ) )
+ #include <xmmintrin.h>
+ #endif
+ 
+-#if defined( _MSC_VER )
++#if defined( __CCGO__ )
++#define b2Prefetch( addr ) ( (void)( addr ) )
++#elif defined( _MSC_VER )
+ #if defined( _M_X64 ) || defined( __x86_64__ ) || defined( _M_IX86 ) || defined( __i386__ )
+ #define b2Prefetch( addr ) _mm_prefetch( (const char*)( addr ), _MM_HINT_T0 )
+ #else
+@@ -30,7 +32,14 @@
+ #define b2Prefetch( addr ) ( (void)( addr ) )
+ #endif
+ 
+-#if ( defined( __GNUC__ ) || defined( __clang__ ) ) && ( defined( __i386__ ) || defined( __x86_64__ ) )
++#if defined( __CCGO__ )
++void __builtin_Gosched();
++
++static inline void b2Pause( void )
++{
++	__builtin_Gosched();
++}
++#elif ( defined( __GNUC__ ) || defined( __clang__ ) ) && ( defined( __i386__ ) || defined( __x86_64__ ) )
+ static inline void b2Pause( void )
+ {
+ 	__asm__ __volatile__( "pause\n" );
+@@ -215,7 +224,10 @@ static inline int64_t b2AtomicLoadI64( b2AtomicI64* a )
+ // built with fast math. This breaks determinism.
+ static inline bool b2IsDenormalFlushEnabled( void )
+ {
+-#if defined( _M_X64 ) || defined( __x86_64__ ) || defined( _M_IX86 ) || defined( __i386__ )
++#if defined( __CCGO__ )
++	// Go never enables denormal flushing
++	return false;
++#elif defined( _M_X64 ) || defined( __x86_64__ ) || defined( _M_IX86 ) || defined( __i386__ )
+ 	// FTZ is bit 15, DAZ is bit 6
+ 	uint32_t csr = _mm_getcsr();
+ 	return ( csr & 0x8040 ) != 0;
+diff --git a/src/statics.c b/src/statics.c
+new file mode 100644
+index 0000000..b2e26e0
+--- /dev/null
++++ b/src/statics.c
+@@ -0,0 +1,22 @@
++#include "box2d/collision.h"
++#include "box2d/id.h"
++
++#include <stdlib.h>
++#include <stddef.h>
++
++b2WorldId b2_nullWorldId = B2_ZERO_INIT;
++b2BodyId b2_nullBodyId = B2_ZERO_INIT;
++b2ShapeId b2_nullShapeId = B2_ZERO_INIT;
++b2ChainId b2_nullChainId = B2_ZERO_INIT;
++b2JointId b2_nullJointId = B2_ZERO_INIT;
++b2ContactId b2_nullContactId = B2_ZERO_INIT;
++
++b2Vec2 b2Vec2_zero = { 0.0f, 0.0f };
++b2Rot b2Rot_identity = { 1.0f, 0.0f };
++b2Transform b2Transform_identity = { { 0.0f, 0.0f }, { 1.0f, 0.0f } };
++b2Mat22 b2Mat22_zero = { { 0.0f, 0.0f }, { 0.0f, 0.0f } };
++
++b2Pos b2Pos_zero = { 0.0f, 0.0f };
++b2WorldTransform b2WorldTransform_identity = { { 0.0f, 0.0f }, { 1.0f, 0.0f } };
++
++b2SimplexCache b2_emptySimplexCache = B2_ZERO_INIT;
+diff --git a/src/timer.c b/src/timer.c
+index fff118c..a586730 100644
+--- a/src/timer.c
++++ b/src/timer.c
+@@ -276,6 +276,10 @@ void b2Yield( void )
+ 	sched_yield();
+ }
+ 
++#if defined( __CCGO__ )
++// Mutex, semaphore and thread are implemented in Go, see threads.go
++#else
++
+ #include <pthread.h>
+ typedef struct b2Mutex
+ {
+@@ -395,6 +399,8 @@ void b2JoinThread( b2Thread* t )
+ 	b2Free( t, sizeof( b2Thread ) );
+ }
+ 
++#endif
++
+ #elif defined( __APPLE__ )
+ 
+ #include <mach/mach_time.h>
+-- 
+2.55.0
+
