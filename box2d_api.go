@@ -795,7 +795,6 @@ func CreateWorld(def WorldDef) (r World) {
 	r.Id = b2CreateWorld(theStack, defStack.Addr)
 	return
 }
-func (b World) DestroyWorld() { b2DestroyWorld(theStack, b.Id) }
 func (b World) Step(timeStep float32, subStepCount int32) {
 	b2World_Step(theStack, b.Id, timeStep, subStepCount)
 }

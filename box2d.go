@@ -3,6 +3,7 @@ package b2
 import (
 	"fmt"
 	"log/slog"
+	"maps"
 	"runtime"
 	"slices"
 	"strings"
@@ -154,35 +155,52 @@ type worldCallbackKey struct {
 
 // keepCallback stores fn for the lifetime of the world and returns the function pointer for box2d.
 // fn must have the signature that the transpiled code uses, including the leading *_Stack.
+// A nil fn removes the callback and returns 0.
 func (b World) keepCallback(kind string, fn any) uintptr {
-	worldCallbacks[worldCallbackKey{world: b.Id.Index1, kind: kind}] = fn
+	key := worldCallbackKey{world: b.Id.Index1, kind: kind}
+	if fn == nil {
+		delete(worldCallbacks, key)
+		return 0
+	}
+
+	worldCallbacks[key] = fn
 	return __ccgo_fp(fn)
+}
+
+// DestroyWorld destroys the world and everything in it, and releases its callbacks.
+func (b World) DestroyWorld() {
+	// first, so an invalid id panics before the callbacks of another world are removed
+	b2DestroyWorld(theStack, b.Id)
+
+	maps.DeleteFunc(worldCallbacks, func(key worldCallbackKey, _ any) bool {
+		return key.world == b.Id.Index1
+	})
 }
 
 // SetRestitutionCallback sets the worlds RestitutionCallback. Use nil to restore the default.
 // The callback may be called from multiple goroutines when concurrency is enabled.
 func (b World) SetRestitutionCallback(callback RestitutionCallback) {
-	var fn uintptr
+	var fn any
 	if callback != nil {
-		fn = b.keepCallback("restitution", restitutionCallback(func(_ *_Stack, restitutionA float32, userMaterialIdA uint64, restitutionB float32, userMaterialIdB uint64) float32 {
+		fn = restitutionCallback(func(_ *_Stack, restitutionA float32, userMaterialIdA uint64, restitutionB float32, userMaterialIdB uint64) float32 {
 			return callback(restitutionA, userMaterialIdA, restitutionB, userMaterialIdB)
-		}))
+		})
 	}
 
-	b2World_SetRestitutionCallback(theStack, b.Id, fn)
+	b2World_SetRestitutionCallback(theStack, b.Id, b.keepCallback("restitution", fn))
 }
 
 // SetFrictionCallback sets the worlds FrictionCallback. Use nil to restore the default.
 // The callback may be called from multiple goroutines when concurrency is enabled.
 func (b World) SetFrictionCallback(callback FrictionCallback) {
-	var fn uintptr
+	var fn any
 	if callback != nil {
-		fn = b.keepCallback("friction", frictionCallback(func(_ *_Stack, frictionA float32, userMaterialIdA uint64, frictionB float32, userMaterialIdB uint64) float32 {
+		fn = frictionCallback(func(_ *_Stack, frictionA float32, userMaterialIdA uint64, frictionB float32, userMaterialIdB uint64) float32 {
 			return callback(frictionA, userMaterialIdA, frictionB, userMaterialIdB)
-		}))
+		})
 	}
 
-	b2World_SetFrictionCallback(theStack, b.Id, fn)
+	b2World_SetFrictionCallback(theStack, b.Id, b.keepCallback("friction", fn))
 }
 
 type OverlapResult func(shapeId Shape) bool
@@ -263,14 +281,14 @@ type CustomFilter func(shapeIdA, shapeIdB Shape) bool
 // SetCustomFilterCallback sets the worlds CustomFilter. Use nil to remove it.
 // The callback may be called from multiple goroutines when concurrency is enabled.
 func (b World) SetCustomFilterCallback(fcn CustomFilter) {
-	var fn uintptr
+	var fn any
 	if fcn != nil {
-		fn = b.keepCallback("customFilter", customFilterCallback(func(_ *_Stack, shapeIdA, shapeIdB ShapeId, _ uintptr) uint8 {
+		fn = customFilterCallback(func(_ *_Stack, shapeIdA, shapeIdB ShapeId, _ uintptr) uint8 {
 			return boolUint8(fcn(Shape{Id: shapeIdA}, Shape{Id: shapeIdB}))
-		}))
+		})
 	}
 
-	b2World_SetCustomFilterCallback(theStack, b.Id, fn, 0)
+	b2World_SetCustomFilterCallback(theStack, b.Id, b.keepCallback("customFilter", fn), 0)
 }
 
 // PreSolve is called for touching shapes with pre-solve events enabled, after the manifold
@@ -285,21 +303,21 @@ type PreContinuous = func(shapeA, shapeB Shape, point Pos, normal Vec2) bool
 // SetPreSolveCallback sets the worlds PreSolve and PreContinuous callbacks. Use nil to remove them.
 // The callbacks may be called from multiple goroutines when concurrency is enabled.
 func (b World) SetPreSolveCallback(preSolve PreSolve, preContinuous PreContinuous) {
-	var preSolveFn, preContinuousFn uintptr
+	var preSolveFn, preContinuousFn any
 
 	if preSolve != nil {
-		preSolveFn = b.keepCallback("preSolve", preSolveCallback(func(_ *_Stack, shapeIdA, shapeIdB ShapeId, manifold uintptr, _ uintptr) {
+		preSolveFn = preSolveCallback(func(_ *_Stack, shapeIdA, shapeIdB ShapeId, manifold uintptr, _ uintptr) {
 			preSolve(Shape{Id: shapeIdA}, Shape{Id: shapeIdB}, (*Manifold)(unsafe.Pointer(manifold)))
-		}))
+		})
 	}
 
 	if preContinuous != nil {
-		preContinuousFn = b.keepCallback("preContinuous", preContinuousCallback(func(_ *_Stack, shapeIdA, shapeIdB ShapeId, point Pos, normal Vec2, _ uintptr) uint8 {
+		preContinuousFn = preContinuousCallback(func(_ *_Stack, shapeIdA, shapeIdB ShapeId, point Pos, normal Vec2, _ uintptr) uint8 {
 			return boolUint8(preContinuous(Shape{Id: shapeIdA}, Shape{Id: shapeIdB}, point, normal))
-		}))
+		})
 	}
 
-	b2World_SetPreSolveCallback(theStack, b.Id, preSolveFn, preContinuousFn, 0)
+	b2World_SetPreSolveCallback(theStack, b.Id, b.keepCallback("preSolve", preSolveFn), b.keepCallback("preContinuous", preContinuousFn), 0)
 }
 
 // MakeProxy makes a proxy for use in overlap, shape cast, and related functions.

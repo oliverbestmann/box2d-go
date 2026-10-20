@@ -1028,6 +1028,9 @@ func readAPI() API {
 	api.Exposed["b2World_SetPreSolveCallback"] = false
 	api.Exposed["b2World_DumpMemoryStats"] = false
 
+	// releases the callbacks of the world in box2d.go
+	api.Exposed["b2DestroyWorld"] = false
+
 	api.ExposedTypes["b2DebugDraw"] = false
 	api.Exposed["b2World_Draw"] = false
 	api.Exposed["b2DefaultDebugDraw"] = false

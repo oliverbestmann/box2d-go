@@ -296,6 +296,22 @@ func TestWorld_MaterialCallbacks(t *testing.T) {
 	assert.Contains(t, []call{{0.5, 0, 7, 3}, {0, 0.5, 3, 7}}, restitutionCalls[0])
 }
 
+func TestWorld_CallbacksReleased(t *testing.T) {
+	world := CreateWorld(DefaultWorldDef())
+	key := func(kind string) worldCallbackKey { return worldCallbackKey{world: world.Id.Index1, kind: kind} }
+
+	world.SetFrictionCallback(func(float32, uint64, float32, uint64) float32 { return 0 })
+	world.SetCustomFilterCallback(func(_, _ Shape) bool { return true })
+	assert.Contains(t, worldCallbacks, key("friction"))
+
+	world.SetFrictionCallback(nil)
+	assert.NotContains(t, worldCallbacks, key("friction"))
+	assert.Contains(t, worldCallbacks, key("customFilter"))
+
+	world.DestroyWorld()
+	assert.NotContains(t, worldCallbacks, key("customFilter"))
+}
+
 func TestShape_GetSensorData(t *testing.T) {
 	world, _ := newTestWorld(t, DefaultWorldDef())
 
