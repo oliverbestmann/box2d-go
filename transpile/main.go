@@ -3,14 +3,17 @@ package main
 import (
 	"bufio"
 	"flag"
+	"fmt"
 	"go/parser"
 	"go/token"
 	"log/slog"
+	"maps"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"regexp"
 	"runtime"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -159,6 +162,16 @@ func main() {
 		root = dstutil.Apply(root, nil, extractInit(&extracted[idx].Decls, extracted[idx].Pattern))
 	}
 
+	// the scalar wide float math of the contact solver, simd*.go replaces it with archsimd
+	floatW := extractDecls(root, floatWDecls)
+	writeSource("../box2d_c-floatw.go", &dst.File{
+		Name:  dst.NewIdent(PKGNAME),
+		Decls: withImport(floatW, "unsafe"),
+		Decs: dst.FileDecorations{NodeDecs: dst.NodeDecs{
+			Start: dst.Decorations{"//go:build !(" + simdBuildTag + ")", "\n"},
+		}},
+	})
+
 	writeSource("../box2d_c.go", root.(*dst.File))
 
 	for _, ex := range extracted {
@@ -295,6 +308,60 @@ var extracted = []extract{
 		Pattern: regexp.MustCompile("^b2[^_]*Compute"),
 		Name:    "box2d_c-compute.go",
 	},
+}
+
+// simdBuildTag must match the build constraint in simd.go
+const simdBuildTag = "goexperiment.simd && go1.27 && (arm64 || (amd64 && amd64.v3) || wasm)"
+
+// floatWDecls are implemented in simd.go when building with simdBuildTag
+var floatWDecls = []string{
+	"b2FloatW4",
+	"b2ZeroW", "b2SplatW", "b2SetW", "b2NegW", "b2AddW", "b2SubW", "b2MulW", "b2DivW",
+	"b2MulAddW", "b2MulSubW", "b2MinW", "b2MaxW", "b2SymClampW", "b2AndW",
+	"b2GreaterThanW", "b2LessThanW", "b2AnyTrueW", "b2AllZeroW", "b2LoadU", "b2StoreW",
+	"b2BlendW", "b2UnpackLoW", "b2UnpackHiW", "b2SoftMaskW",
+	"b2GatherBodies", "b2ScatterBodies",
+}
+
+// extractDecls removes the top level functions and types with the given names from root.
+func extractDecls(root dst.Node, names []string) []dst.Decl {
+	pending := map[string]bool{}
+	for _, name := range names {
+		pending[name] = true
+	}
+
+	var decls []dst.Decl
+
+	file := root.(*dst.File)
+	file.Decls = slices.DeleteFunc(file.Decls, func(decl dst.Decl) bool {
+		var name string
+
+		switch decl := decl.(type) {
+		case *dst.FuncDecl:
+			name = decl.Name.Name
+
+		case *dst.GenDecl:
+			if decl.Tok == token.TYPE && len(decl.Specs) == 1 {
+				name = decl.Specs[0].(*dst.TypeSpec).Name.Name
+			}
+		}
+
+		if !pending[name] {
+			return false
+		}
+
+		delete(pending, name)
+		decls = append(decls, decl)
+
+		return true
+	})
+
+	// a box2d update renamed or removed something, simd.go needs an update too
+	if len(pending) > 0 {
+		panic(fmt.Sprintf("declarations not found: %v", slices.Sorted(maps.Keys(pending))))
+	}
+
+	return decls
 }
 
 func withImport(decls []dst.Decl, imports ...string) []dst.Decl {

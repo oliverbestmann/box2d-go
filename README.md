@@ -110,6 +110,23 @@ Box2D splits each step across `WorldDef.WorkerCount` threads. This port runs the
 The rest of the API is not thread safe. Don't call into the `b2` package from more than one goroutine at a time, not
 even for reads.
 
+## SIMD
+
+The contact solver can use SIMD through Go's experimental `simd/archsimd` package. This needs Go 1.27 and
+`GOEXPERIMENT=simd`, and works on arm64, wasm, and amd64 with `GOAMD64=v3` (AVX2):
+
+```sh
+GOEXPERIMENT=simd go build .
+GOEXPERIMENT=simd GOAMD64=v3 go build .
+```
+
+Other builds use the scalar version. Both give the same results. The SIMD build is about 2x faster on arm64
+and 3x faster on wasm when many bodies touch. The wasm build then needs a runtime with wasm SIMD support, which all
+current browsers have.
+
+ccgo can't translate C vector types, so the port uses Box2D's scalar code and the generator moves the scalar wide
+float math into `box2d_c-floatw.go`. `simd.go` and `simd_<arch>.go` implement the same functions with `archsimd`.
+
 ## Development
 
 Run `go vet` with the `unsafeptr` check disabled:
@@ -135,3 +152,5 @@ go test -race -gcflags=all=-d=checkptr=0 ./...
   the transpiled code. If the build fails there, update both files.
 - **Determinism:** Copy the expected hash and sleep step from Box2D's `shared/determinism.h` into
   `determinism_test.go`.
+- **SIMD:** If Box2D changes the scalar wide float math in `src/contact_solver_wide.inl`, update `simd.go`.
+  `./transpile.sh` fails if a function listed in `floatWDecls` in `transpile/main.go` no longer exists.
