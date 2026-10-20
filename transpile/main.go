@@ -56,6 +56,10 @@ var PREDEF_THREADS = `
 
 const PKGNAME = "b2"
 
+// rawOutput keeps the unprocessed ccgo output for -no-transpile.
+// The go tool ignores directories starting with an underscore.
+const rawOutput = "_build/box2d_c.go"
+
 func main() {
 	var noTranspile bool
 
@@ -80,7 +84,7 @@ func main() {
 		"--predef", PREDEF_ALLOC,
 		"--predef", PREDEF_THREADS,
 		"--prefix-field", PrefixField,
-		"-o", "../box2d_c.go",
+		"-o", rawOutput,
 		"-I", "../box2d-c/include/",
 	}
 
@@ -93,22 +97,23 @@ func main() {
 		check.Stdout, check.Stderr = os.Stdout, os.Stderr
 		must(check.Run())
 
-		// remove previous files
-		gofs, err := filepath.Glob("../box2d_c*.go")
-		must(err)
-		for _, gof := range gofs {
-			must(os.Remove(gof))
-		}
-
 		slog.Info("Transpile c to go")
+		must(os.MkdirAll(filepath.Dir(rawOutput), 0o755))
 		must(ccgo.NewTask(goos, goarch, args, os.Stdout, os.Stderr, nil).Main())
+	}
+
+	// remove previous files
+	gofs, err := filepath.Glob("../box2d_c*.go")
+	must(err)
+	for _, gof := range gofs {
+		must(os.Remove(gof))
 	}
 
 	slog.Info("Read public API from header files")
 	api := readAPI()
 
 	slog.Info("Read generated go file")
-	bytesSrc, err := os.ReadFile("../box2d_c.go")
+	bytesSrc, err := os.ReadFile(rawOutput)
 	must(err)
 
 	source := string(bytesSrc)

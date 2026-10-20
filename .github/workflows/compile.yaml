@@ -90,10 +90,7 @@ jobs:
               go-version-file: transpile/go.mod
 
          - name: Fetch box2d sources
-           run: |
-              git config --global user.email "you@example.com"
-              git config --global user.name "Your Name"
-              ./fetch.sh
+           run: ./fetch.sh
 
          - name: Transpile to go code
            run: ./transpile.sh

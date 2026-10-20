@@ -4,3 +4,4 @@
 /go.work
 /go.work.sum
 /example/example.wasm
+/transpile/_build
