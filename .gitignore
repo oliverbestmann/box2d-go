@@ -1,3 +1,6 @@
 /box2d-c
 /.idea
 /transpile/ccgo
+/go.work
+/go.work.sum
+/example/example.wasm
