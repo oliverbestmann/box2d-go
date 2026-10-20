@@ -448,6 +448,52 @@ func (b World) CollideMover(origin Pos, mover Capsule, filter QueryFilter, fcn P
 	b2World_CollideMover(theStack, b.Id, origin, moverStack.Addr, filter, __ccgo_fp(fn), 0)
 }
 
+// GetSnapshot returns the simulation state of the world, reusing the memory of reuse if it is
+// large enough. Call it between steps, it returns an empty slice during a step.
+func (b World) GetSnapshot(reuse []byte) []byte {
+	size := b2World_GetSnapshot(theStack, b.Id, 0, 0)
+
+	return fillSlice(reuse, size, func(ptr uintptr, capacity int32) int32 {
+		return b2World_GetSnapshot(theStack, b.Id, ptr, capacity)
+	})
+}
+
+// RestoreFromSnapshot resets the world to the state in image, taken with GetSnapshot. Ids of
+// objects that existed at the snapshot stay valid, callbacks and threading are kept. User data
+// of bodies, shapes and joints is cleared.
+//
+// It returns false if image is invalid. The world is unchanged if the header is invalid. If the
+// data turns out to be corrupt during the restore, the world is unusable and must be destroyed.
+func (b World) RestoreFromSnapshot(image []byte) bool {
+	ok := b2World_RestoreFromSnapshot(theStack, b.Id, bytesAddr(image), int32(len(image)))
+	runtime.KeepAlive(image)
+
+	return ok != 0
+}
+
+// CreateWorldFromSnapshot creates a new world from image, taken with GetSnapshot. Callbacks
+// are reset to the default. A workerCount of 0 runs the world on a single goroutine.
+// It returns false if image is invalid.
+func CreateWorldFromSnapshot(image []byte, workerCount int32) (World, bool) {
+	id := b2CreateWorldFromSnapshot(theStack, bytesAddr(image), int32(len(image)), workerCount)
+	runtime.KeepAlive(image)
+
+	return World{Id: id}, id != WorldId{}
+}
+
+// bytesAddr returns the address of the first byte for box2d to read, or 0 if buf is empty.
+// The caller must keep buf alive until box2d is done with it.
+func bytesAddr(buf []byte) uintptr {
+	if len(buf) == 0 {
+		return 0
+	}
+
+	// box2d reads the slice via a uintptr, it must live on the heap
+	escapes(buf)
+
+	return uintptr(unsafe.Pointer(&buf[0]))
+}
+
 type BodyEvents struct {
 	MoveEvents []BodyMoveEvent
 }
