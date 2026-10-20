@@ -1265,7 +1265,7 @@ func b2World_Draw(tls *_Stack, worldId WorldId, draw uintptr) {
 	var v39 uint8
 	var _ /* buffer at bp+16 */ [32]uint8
 	var _ /* buffer at bp+48 */ [32]uint8
-	var _ /* drawContext at bp+0 */ DrawContext
+	var _ /* drawContext at bp+0 */ _DrawContext
 	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = aabb, addColor, bits, blockIndex, blockIndex1, body1, bodyA, bodyB, bodyCapacity, bodyId, bodyIndex, bodySim, bodySim1, bodySim2, bodySimA, bodySimB, c, contact, contactCapacity, contactId, contactKey, contactSim, ctz, edgeIndex, edgeIndex1, force, force1, frictionColor, i, impulseColor, island, islandBody, islandBodyId, islandCapacity, islandId, j, joint, jointCapacity, jointId, jointKey, k, k_axisScale, linearSlop, mp, normal, normalColor, offset, offset1, p11, p12, p13, p2, p21, p22, p23, p3, p4, persistColor, pointCount, pointSize, rx, ry, set, shape, shapeCount, shapeId, speculativeColor, tangent, transform, transform1, word, wordCount, world1, v1, v111, v112, v113, v114, v115, v117, v118, v119, v120, v122, v123, v124, v125, v127, v13, v133, v15, v16, v17, v18, v19, v2, v20, v22, v23, v24, v26, v27, v28, v3, v30, v33, v34, v37, v39, v65, v69, v72, v73, v74, v81, v92
 	world1 = b2GetWorldFromId(tls, worldId)
 	if v1 = !!(int32FromUint8((*b2World)(unsafe.Pointer(world1)).Locked) == int32FromInt32(false1)); !v1 {
@@ -1306,7 +1306,7 @@ _8:
 _10:
 	islandCapacity = v3
 	b2SetBitCountAndClear(tls, world1+2456, uint32FromInt32(islandCapacity))
-	*(*DrawContext)(unsafe.Add(nil, bp)) = DrawContext{
+	*(*_DrawContext)(unsafe.Add(nil, bp)) = _DrawContext{
 		World: world1,
 		Draw:  draw,
 	}
@@ -1315,7 +1315,7 @@ _10:
 		if !(i < int32(b2_bodyTypeCount)) {
 			break
 		}
-		b2DynamicTree_OverlapAABBAll(tls, world1+40+uintptr(i)*104, (*b2DebugDraw)(unsafe.Pointer(draw)).DrawingBounds, __ccgo_fp(DrawQueryCallback), bp)
+		b2DynamicTree_OverlapAABBAll(tls, world1+40+uintptr(i)*104, (*b2DebugDraw)(unsafe.Pointer(draw)).DrawingBounds, __ccgo_fp(_DrawQueryCallback), bp)
 		goto _11
 	_11:
 		;
@@ -3105,7 +3105,7 @@ func b2World_OverlapAABB(tls *_Stack, worldId WorldId, origin1 Pos, aabb AABB, f
 	var v10, v12, v6, v8 float32
 	var v5 Pos
 	var _ /* recWriter at bp+0 */ b2RecQueryWriter
-	var _ /* worldContext at bp+48 */ WorldQueryContext
+	var _ /* worldContext at bp+48 */ _WorldQueryContext
 	_, _, _, _, _, _, _, _, _, _, _, _, _, _ = i, result, treeResult, treeStats, world, worldBox, v1, v10, v12, v14, v4, v5, v6, v8
 	treeStats = TreeStats{}
 	world = b2GetWorldFromId(tls, worldId)
@@ -3160,7 +3160,7 @@ _13:
 _15:
 	// Lift to a world float box with outward rounding so the conservative tree test never misses
 	worldBox = v14
-	*(*WorldQueryContext)(unsafe.Add(nil, bp+48)) = WorldQueryContext{
+	*(*_WorldQueryContext)(unsafe.Add(nil, bp+48)) = _WorldQueryContext{
 		World:       world,
 		Fcn:         __ccgo_fp_fcn,
 		Filter:      filter,
@@ -3171,7 +3171,7 @@ _15:
 		if !(i < int32(b2_bodyTypeCount)) {
 			break
 		}
-		treeResult = b2DynamicTree_OverlapAABB(tls, world+40+uintptr(i)*104, worldBox, filter.MaskBits, __ccgo_fp(TreeQueryCallback), bp+48)
+		treeResult = b2DynamicTree_OverlapAABB(tls, world+40+uintptr(i)*104, worldBox, filter.MaskBits, __ccgo_fp(_TreeQueryCallback), bp+48)
 		treeStats.NodeVisits += treeResult.NodeVisits
 		treeStats.LeafVisits += treeResult.LeafVisits
 		goto _16
@@ -3199,7 +3199,7 @@ func b2World_OverlapShape(tls *_Stack, worldId WorldId, origin1 Pos, proxy uintp
 	var v10, v11, v12, v14, v15, v16, v17, v19, v24, v25, v26, v28, v29, v30, v31, v33, v48, v5, v50, v52, v54 float32
 	var v47 Pos
 	var _ /* recWriter at bp+0 */ b2RecQueryWriter
-	var _ /* worldContext at bp+48 */ WorldOverlapContext
+	var _ /* worldContext at bp+48 */ _WorldOverlapContext
 	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = a6, aabb, c, c1, i, i1, r, result, treeResult, treeStats, world, v1, v10, v11, v12, v14, v15, v16, v17, v19, v20, v22, v23, v24, v25, v26, v28, v29, v3, v30, v31, v33, v34, v36, v37, v38, v4, v40, v41, v42, v44, v46, v47, v48, v5, v50, v52, v54, v56, v8, v9
 	treeStats = TreeStats{}
 	world = b2GetWorldFromId(tls, worldId)
@@ -3352,7 +3352,7 @@ _55:
 _57:
 	// Relative box lifted to world float with outward rounding, conservative for the tree
 	aabb = v56
-	*(*WorldOverlapContext)(unsafe.Add(nil, bp+48)) = WorldOverlapContext{
+	*(*_WorldOverlapContext)(unsafe.Add(nil, bp+48)) = _WorldOverlapContext{
 		World:       world,
 		Fcn:         __ccgo_fp_fcn,
 		Filter:      filter,
@@ -3365,7 +3365,7 @@ _57:
 		if !(i1 < int32(b2_bodyTypeCount)) {
 			break
 		}
-		treeResult = b2DynamicTree_OverlapAABB(tls, world+40+uintptr(i1)*104, aabb, filter.MaskBits, __ccgo_fp(TreeOverlapCallback), bp+48)
+		treeResult = b2DynamicTree_OverlapAABB(tls, world+40+uintptr(i1)*104, aabb, filter.MaskBits, __ccgo_fp(_TreeOverlapCallback), bp+48)
 		treeStats.NodeVisits += treeResult.NodeVisits
 		treeStats.LeafVisits += treeResult.LeafVisits
 		goto _58
@@ -3392,7 +3392,7 @@ func b2World_CastRay(tls *_Stack, worldId WorldId, origin Pos, translation Vec2,
 	var v5 Vec2
 	var _ /* input at bp+48 */ RayCastInput
 	var _ /* recWriter at bp+0 */ b2RecQueryWriter
-	var _ /* worldContext at bp+72 */ WorldRayCastContext
+	var _ /* worldContext at bp+72 */ _WorldRayCastContext
 	_, _, _, _, _, _, _ = i, treeResult, treeStats, world, v1, v4, v5
 	treeStats = TreeStats{}
 	world = b2GetWorldFromId(tls, worldId)
@@ -3439,7 +3439,7 @@ _6:
 		Translation: translation,
 		MaxFraction: float32FromFloat32(1),
 	}
-	*(*WorldRayCastContext)(unsafe.Add(nil, bp+72)) = WorldRayCastContext{
+	*(*_WorldRayCastContext)(unsafe.Add(nil, bp+72)) = _WorldRayCastContext{
 		World:       world,
 		Fcn:         __ccgo_fp_fcn,
 		Filter:      filter,
@@ -3452,13 +3452,13 @@ _6:
 		if !(i < int32(b2_bodyTypeCount)) {
 			break
 		}
-		treeResult = b2DynamicTree_CastRay(tls, world+40+uintptr(i)*104, bp+48, filter.MaskBits, __ccgo_fp(RayCastCallback), bp+72)
+		treeResult = b2DynamicTree_CastRay(tls, world+40+uintptr(i)*104, bp+48, filter.MaskBits, __ccgo_fp(_RayCastCallback), bp+72)
 		treeStats.NodeVisits += treeResult.NodeVisits
 		treeStats.LeafVisits += treeResult.LeafVisits
-		if (*(*WorldRayCastContext)(unsafe.Add(nil, bp+72))).Fraction == float32FromFloat32(0) {
+		if (*(*_WorldRayCastContext)(unsafe.Add(nil, bp+72))).Fraction == float32FromFloat32(0) {
 			break
 		}
-		(*(*RayCastInput)(unsafe.Add(nil, bp+48))).MaxFraction = (*(*WorldRayCastContext)(unsafe.Add(nil, bp+72))).Fraction
+		(*(*RayCastInput)(unsafe.Add(nil, bp+48))).MaxFraction = (*(*_WorldRayCastContext)(unsafe.Add(nil, bp+72))).Fraction
 		goto _7
 	_7:
 		;
@@ -3484,7 +3484,7 @@ func b2World_CastRayClosest(tls *_Stack, worldId WorldId, origin Pos, translatio
 	var _ /* input at bp+40 */ RayCastInput
 	var _ /* recBuf at bp+120 */ b2RecBuffer
 	var _ /* result at bp+0 */ RayResult
-	var _ /* worldContext at bp+64 */ WorldRayCastContext
+	var _ /* worldContext at bp+64 */ _WorldRayCastContext
 	_, _, _, _, _, _ = i, treeResult, world, v1, v4, v5
 	*(*RayResult)(unsafe.Add(nil, bp)) = RayResult{}
 	world = b2GetWorldFromId(tls, worldId)
@@ -3515,7 +3515,7 @@ _6:
 		Translation: translation,
 		MaxFraction: float32FromFloat32(1),
 	}
-	*(*WorldRayCastContext)(unsafe.Add(nil, bp+64)) = WorldRayCastContext{
+	*(*_WorldRayCastContext)(unsafe.Add(nil, bp+64)) = _WorldRayCastContext{
 		World:       world,
 		Fcn:         __ccgo_fp(b2RayCastClosestFcn),
 		Filter:      filter,
@@ -3528,13 +3528,13 @@ _6:
 		if !(i < int32(b2_bodyTypeCount)) {
 			break
 		}
-		treeResult = b2DynamicTree_CastRay(tls, world+40+uintptr(i)*104, bp+40, filter.MaskBits, __ccgo_fp(RayCastCallback), bp+64)
+		treeResult = b2DynamicTree_CastRay(tls, world+40+uintptr(i)*104, bp+40, filter.MaskBits, __ccgo_fp(_RayCastCallback), bp+64)
 		(*(*RayResult)(unsafe.Add(nil, bp))).NodeVisits += treeResult.NodeVisits
 		(*(*RayResult)(unsafe.Add(nil, bp))).LeafVisits += treeResult.LeafVisits
-		if (*(*WorldRayCastContext)(unsafe.Add(nil, bp+64))).Fraction == float32FromFloat32(0) {
+		if (*(*_WorldRayCastContext)(unsafe.Add(nil, bp+64))).Fraction == float32FromFloat32(0) {
 			break
 		}
-		(*(*RayCastInput)(unsafe.Add(nil, bp+40))).MaxFraction = (*(*WorldRayCastContext)(unsafe.Add(nil, bp+64))).Fraction
+		(*(*RayCastInput)(unsafe.Add(nil, bp+40))).MaxFraction = (*(*_WorldRayCastContext)(unsafe.Add(nil, bp+64))).Fraction
 		goto _7
 	_7:
 		;
@@ -3566,7 +3566,7 @@ func b2World_CastShape(tls *_Stack, worldId WorldId, origin1 Pos, proxy uintptr,
 	var v48 Pos
 	var _ /* recWriter at bp+0 */ b2RecQueryWriter
 	var _ /* treeInput at bp+192 */ BoxCastInput
-	var _ /* worldContext at bp+48 */ WorldShapeCastContext
+	var _ /* worldContext at bp+48 */ _WorldShapeCastContext
 	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = a6, box1, c, c1, i, i1, localBox, r, result, treeResult, treeStats, world, v1, v10, v11, v12, v13, v15, v16, v17, v18, v20, v21, v23, v24, v25, v26, v27, v29, v30, v31, v32, v34, v35, v37, v38, v39, v4, v41, v42, v43, v45, v47, v48, v49, v5, v51, v53, v55, v57, v6, v9
 	treeStats = TreeStats{}
 	world = b2GetWorldFromId(tls, worldId)
@@ -3599,16 +3599,16 @@ func b2World_CastShape(tls *_Stack, worldId WorldId, origin1 Pos, proxy uintptr,
 		__ccgo_fp_fcn = __ccgo_fp(b2RecCastTrampoline)
 		context = bp
 	}
-	*(*WorldShapeCastContext)(unsafe.Add(nil, bp+48)) = WorldShapeCastContext{}
-	(*(*WorldShapeCastContext)(unsafe.Add(nil, bp+48))).World = world
-	(*(*WorldShapeCastContext)(unsafe.Add(nil, bp+48))).Fcn = __ccgo_fp_fcn
-	(*(*WorldShapeCastContext)(unsafe.Add(nil, bp+48))).Filter = filter
-	(*(*WorldShapeCastContext)(unsafe.Add(nil, bp+48))).Fraction = float32FromFloat32(1)
-	(*(*WorldShapeCastContext)(unsafe.Add(nil, bp+48))).Origin = origin1
-	(*(*WorldShapeCastContext)(unsafe.Add(nil, bp+48))).Input.Proxy = *(*ShapeProxy)(unsafe.Add(nil, proxy))
-	(*(*WorldShapeCastContext)(unsafe.Add(nil, bp+48))).Input.Translation = translation
-	(*(*WorldShapeCastContext)(unsafe.Add(nil, bp+48))).Input.MaxFraction = float32FromFloat32(1)
-	(*(*WorldShapeCastContext)(unsafe.Add(nil, bp+48))).UserContext = context
+	*(*_WorldShapeCastContext)(unsafe.Add(nil, bp+48)) = _WorldShapeCastContext{}
+	(*(*_WorldShapeCastContext)(unsafe.Add(nil, bp+48))).World = world
+	(*(*_WorldShapeCastContext)(unsafe.Add(nil, bp+48))).Fcn = __ccgo_fp_fcn
+	(*(*_WorldShapeCastContext)(unsafe.Add(nil, bp+48))).Filter = filter
+	(*(*_WorldShapeCastContext)(unsafe.Add(nil, bp+48))).Fraction = float32FromFloat32(1)
+	(*(*_WorldShapeCastContext)(unsafe.Add(nil, bp+48))).Origin = origin1
+	(*(*_WorldShapeCastContext)(unsafe.Add(nil, bp+48))).Input.Proxy = *(*ShapeProxy)(unsafe.Add(nil, proxy))
+	(*(*_WorldShapeCastContext)(unsafe.Add(nil, bp+48))).Input.Translation = translation
+	(*(*_WorldShapeCastContext)(unsafe.Add(nil, bp+48))).Input.MaxFraction = float32FromFloat32(1)
+	(*(*_WorldShapeCastContext)(unsafe.Add(nil, bp+48))).UserContext = context
 	v4 = proxy
 	v5 = (*ShapeProxy)(unsafe.Pointer(proxy)).Count
 	v6 = (*ShapeProxy)(unsafe.Pointer(proxy)).Radius
@@ -3745,13 +3745,13 @@ _58:
 		if !(i1 < int32(b2_bodyTypeCount)) {
 			break
 		}
-		treeResult = b2DynamicTree_CastBox(tls, world+40+uintptr(i1)*104, bp+192, filter.MaskBits, __ccgo_fp(ShapeCastCallback), bp+48)
+		treeResult = b2DynamicTree_CastBox(tls, world+40+uintptr(i1)*104, bp+192, filter.MaskBits, __ccgo_fp(_ShapeCastCallback), bp+48)
 		treeStats.NodeVisits += treeResult.NodeVisits
 		treeStats.LeafVisits += treeResult.LeafVisits
-		if (*(*WorldShapeCastContext)(unsafe.Add(nil, bp+48))).Fraction == float32FromFloat32(0) {
+		if (*(*_WorldShapeCastContext)(unsafe.Add(nil, bp+48))).Fraction == float32FromFloat32(0) {
 			break
 		}
-		(*(*BoxCastInput)(unsafe.Add(nil, bp+192))).MaxFraction = (*(*WorldShapeCastContext)(unsafe.Add(nil, bp+48))).Fraction
+		(*(*BoxCastInput)(unsafe.Add(nil, bp+192))).MaxFraction = (*(*_WorldShapeCastContext)(unsafe.Add(nil, bp+48))).Fraction
 		goto _59
 	_59:
 		;
@@ -3778,7 +3778,7 @@ func b2World_CastMover(tls *_Stack, worldId WorldId, origin1 Pos, mover uintptr,
 	var _ /* centers at bp+128 */ [2]Vec2
 	var _ /* recBuf at bp+176 */ b2RecBuffer
 	var _ /* treeInput at bp+144 */ BoxCastInput
-	var _ /* worldContext at bp+0 */ WorldMoverCastContext
+	var _ /* worldContext at bp+0 */ _WorldMoverCastContext
 	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = a6, box1, c, c1, i, i1, r, result, world, v1, v10, v11, v12, v13, v14, v16, v17, v18, v19, v21, v22, v24, v25, v26, v27, v28, v30, v31, v32, v33, v35, v36, v38, v39, v40, v42, v43, v44, v46, v48, v49, v5, v50, v52, v54, v56, v58, v6, v7
 	if v1 = !!(b2IsValidPos(tls, origin1) != 0); !v1 {
 		b2InternalAssert(tls, __ccgo_ts+19491, __ccgo_ts+16660, int32FromInt32(2912))
@@ -3800,18 +3800,18 @@ func b2World_CastMover(tls *_Stack, worldId WorldId, origin1 Pos, mover uintptr,
 	if (*b2World)(unsafe.Pointer(world)).Locked != 0 {
 		return float32FromFloat32(1)
 	}
-	*(*WorldMoverCastContext)(unsafe.Add(nil, bp)) = WorldMoverCastContext{}
-	(*(*WorldMoverCastContext)(unsafe.Add(nil, bp))).World = world
-	(*(*WorldMoverCastContext)(unsafe.Add(nil, bp))).Filter = filter
-	(*(*WorldMoverCastContext)(unsafe.Add(nil, bp))).Fraction = float32FromFloat32(1)
-	(*(*WorldMoverCastContext)(unsafe.Add(nil, bp))).Origin = origin1
+	*(*_WorldMoverCastContext)(unsafe.Add(nil, bp)) = _WorldMoverCastContext{}
+	(*(*_WorldMoverCastContext)(unsafe.Add(nil, bp))).World = world
+	(*(*_WorldMoverCastContext)(unsafe.Add(nil, bp))).Filter = filter
+	(*(*_WorldMoverCastContext)(unsafe.Add(nil, bp))).Fraction = float32FromFloat32(1)
+	(*(*_WorldMoverCastContext)(unsafe.Add(nil, bp))).Origin = origin1
 	*(*Vec2)(unsafe.Add(nil, bp+36)) = (*Capsule)(unsafe.Pointer(mover)).Center1
 	*(*Vec2)(unsafe.Add(nil, bp+36+1*8)) = (*Capsule)(unsafe.Pointer(mover)).Center2
-	(*(*WorldMoverCastContext)(unsafe.Add(nil, bp))).Input.Proxy.Count = int32(2)
-	(*(*WorldMoverCastContext)(unsafe.Add(nil, bp))).Input.Proxy.Radius = (*Capsule)(unsafe.Pointer(mover)).Radius
-	(*(*WorldMoverCastContext)(unsafe.Add(nil, bp))).Input.Translation = translation
-	(*(*WorldMoverCastContext)(unsafe.Add(nil, bp))).Input.MaxFraction = float32FromFloat32(1)
-	(*(*WorldMoverCastContext)(unsafe.Add(nil, bp))).Input.CanEncroach = boolUint8(true1 != 0)
+	(*(*_WorldMoverCastContext)(unsafe.Add(nil, bp))).Input.Proxy.Count = int32(2)
+	(*(*_WorldMoverCastContext)(unsafe.Add(nil, bp))).Input.Proxy.Radius = (*Capsule)(unsafe.Pointer(mover)).Radius
+	(*(*_WorldMoverCastContext)(unsafe.Add(nil, bp))).Input.Translation = translation
+	(*(*_WorldMoverCastContext)(unsafe.Add(nil, bp))).Input.MaxFraction = float32FromFloat32(1)
+	(*(*_WorldMoverCastContext)(unsafe.Add(nil, bp))).Input.CanEncroach = boolUint8(true1 != 0)
 	// Bound the capsule in origin relative space then lift to a conservative world float box
 	*(*[2]Vec2)(unsafe.Add(nil, bp+128)) = [2]Vec2{
 		0: (*Capsule)(unsafe.Pointer(mover)).Center1,
@@ -3951,11 +3951,11 @@ _59:
 		if !(i1 < int32(b2_bodyTypeCount)) {
 			break
 		}
-		b2DynamicTree_CastBox(tls, world+40+uintptr(i1)*104, bp+144, filter.MaskBits, __ccgo_fp(MoverCastCallback), bp)
-		if (*(*WorldMoverCastContext)(unsafe.Add(nil, bp))).Fraction == float32FromFloat32(0) {
+		b2DynamicTree_CastBox(tls, world+40+uintptr(i1)*104, bp+144, filter.MaskBits, __ccgo_fp(_MoverCastCallback), bp)
+		if (*(*_WorldMoverCastContext)(unsafe.Add(nil, bp))).Fraction == float32FromFloat32(0) {
 			break
 		}
-		(*(*BoxCastInput)(unsafe.Add(nil, bp+144))).MaxFraction = (*(*WorldMoverCastContext)(unsafe.Add(nil, bp))).Fraction
+		(*(*BoxCastInput)(unsafe.Add(nil, bp+144))).MaxFraction = (*(*_WorldMoverCastContext)(unsafe.Add(nil, bp))).Fraction
 		goto _60
 	_60:
 		;
@@ -3968,11 +3968,11 @@ _59:
 		b2RecW_CAPSULE(tls, bp+176, *(*Capsule)(unsafe.Add(nil, mover)))
 		b2RecW_VEC2(tls, bp+176, translation)
 		b2RecW_QUERYFILTER(tls, bp+176, filter)
-		b2RecW_F32(tls, bp+176, (*(*WorldMoverCastContext)(unsafe.Add(nil, bp))).Fraction)
+		b2RecW_F32(tls, bp+176, (*(*_WorldMoverCastContext)(unsafe.Add(nil, bp))).Fraction)
 		b2RecCommitRecord(tls, (*b2World)(unsafe.Pointer(world)).Recording, uint8(0xE6), (*(*b2RecBuffer)(unsafe.Add(nil, bp+176))).Data, (*(*b2RecBuffer)(unsafe.Add(nil, bp+176))).Size)
 		b2RecBufFree(tls, bp+176)
 	}
-	return (*(*WorldMoverCastContext)(unsafe.Add(nil, bp))).Fraction
+	return (*(*_WorldMoverCastContext)(unsafe.Add(nil, bp))).Fraction
 }
 
 // C documentation
@@ -3990,7 +3990,7 @@ func b2World_CollideMover(tls *_Stack, worldId WorldId, origin1 Pos, mover uintp
 	var v10, v11, v12, v14, v5, v6, v7, v9 float32
 	var v40 Pos
 	var _ /* recWriter at bp+0 */ b2RecQueryWriter
-	var _ /* worldContext at bp+48 */ WorldMoverContext
+	var _ /* worldContext at bp+48 */ _WorldMoverContext
 	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = aabb, c, c1, i, r, relBox, result, world, v1, v10, v11, v12, v14, v15, v17, v18, v19, v3, v39, v4, v40, v49, v5, v6, v7, v9
 	world = b2GetWorldFromId(tls, worldId)
 	if v1 = !!(int32FromUint8((*b2World)(unsafe.Pointer(world)).Locked) == int32FromInt32(false1)); !v1 {
@@ -4115,7 +4115,7 @@ _48:
 	goto _50
 _50:
 	aabb = v49
-	*(*WorldMoverContext)(unsafe.Add(nil, bp+48)) = WorldMoverContext{
+	*(*_WorldMoverContext)(unsafe.Add(nil, bp+48)) = _WorldMoverContext{
 		World:       world,
 		Fcn:         __ccgo_fp_fcn,
 		Filter:      filter,
@@ -4128,7 +4128,7 @@ _50:
 		if !(i < int32(b2_bodyTypeCount)) {
 			break
 		}
-		b2DynamicTree_OverlapAABB(tls, world+40+uintptr(i)*104, aabb, filter.MaskBits, __ccgo_fp(TreeCollideCallback), bp+48)
+		b2DynamicTree_OverlapAABB(tls, world+40+uintptr(i)*104, aabb, filter.MaskBits, __ccgo_fp(_TreeCollideCallback), bp+48)
 		goto _51
 	_51:
 		;
@@ -4219,7 +4219,7 @@ func b2World_Explode(tls *_Stack, worldId WorldId, explosionDef uintptr) {
 	var world uintptr
 	var v1 bool
 	var _ /* _a at bp+0 */ b2RecArgs_WorldExplode
-	var _ /* explosionContext at bp+40 */ ExplosionContext
+	var _ /* explosionContext at bp+40 */ _ExplosionContext
 	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = aabb, extent, falloff, impulsePerLength, localBox, maskBits, position, radius, result, world, v1, v10, v12, v14, v16, v6, v7, v8
 	maskBits = (*ExplosionDef)(unsafe.Pointer(explosionDef)).MaskBits
 	position = (*ExplosionDef)(unsafe.Pointer(explosionDef)).Position
@@ -4273,7 +4273,7 @@ func b2World_Explode(tls *_Stack, worldId WorldId, explosionDef uintptr) {
 		}
 		b2RecWrite_WorldExplode(tls, (*b2World)(unsafe.Pointer(world)).Recording, bp)
 	}
-	*(*ExplosionContext)(unsafe.Add(nil, bp+40)) = ExplosionContext{
+	*(*_ExplosionContext)(unsafe.Add(nil, bp+40)) = _ExplosionContext{
 		World:            world,
 		Position:         position,
 		Radius:           radius,
@@ -4314,7 +4314,7 @@ _15:
 	goto _17
 _17:
 	aabb = v16
-	b2DynamicTree_OverlapAABB(tls, world+40+uintptr(b2_dynamicBody)*104, aabb, maskBits, __ccgo_fp(ExplosionCallback), bp+40)
+	b2DynamicTree_OverlapAABB(tls, world+40+uintptr(b2_dynamicBody)*104, aabb, maskBits, __ccgo_fp(_ExplosionCallback), bp+40)
 }
 
 // C documentation

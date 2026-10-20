@@ -143,6 +143,7 @@ func main() {
 	dst.Inspect(root, renameApiTypes(api.ExposedTypes))
 	dst.Inspect(root, removeTypeAliases(readTypedefAliases(api)))
 	hideConsts(root)
+	hideInternals(root.(*dst.File), api)
 	removeDeadCode(root)
 
 	var decls []dst.Decl

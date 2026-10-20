@@ -15405,12 +15405,12 @@ _8:
 
 var __func__48 = [13]uint8{'b', '2', 'W', 'o', 'r', 'l', 'd', '_', 'S', 't', 'e', 'p'}
 
-type DrawContext struct {
+type _DrawContext struct {
 	World uintptr
 	Draw  uintptr
 }
 
-func DrawQueryCallback(tls *_Stack, proxyId int32, userData uint64, context uintptr) (r uint8) {
+func _DrawQueryCallback(tls *_Stack, proxyId int32, userData uint64, context uintptr) (r uint8) {
 	var blockIndex, v11 uint32_t
 	var body1, bodySim, bodySim1, draw, drawContext, set, shape, world1, v10, v4, v5, v8 uintptr
 	var color b2HexColor1
@@ -15420,8 +15420,8 @@ func DrawQueryCallback(tls *_Stack, proxyId int32, userData uint64, context uint
 	_ = uint64FromInt64(4)
 	shapeId = int32FromUint64(userData)
 	drawContext = context
-	world1 = (*DrawContext)(unsafe.Pointer(drawContext)).World
-	draw = (*DrawContext)(unsafe.Pointer(drawContext)).Draw
+	world1 = (*_DrawContext)(unsafe.Pointer(drawContext)).World
+	draw = (*_DrawContext)(unsafe.Pointer(drawContext)).Draw
 	if v1 = !!(0 <= shapeId && shapeId < (*b2World)(unsafe.Pointer(world1)).Shapes.Count); !v1 {
 		b2InternalAssert(tls, __ccgo_ts+1908, __ccgo_ts+16660, int32FromInt32(1124))
 	}
@@ -15589,14 +15589,14 @@ type __ccgo_fp__Xb2World_SetFrictionCallback_1 = func(*_Stack, float32, uint64, 
 
 type __ccgo_fp__Xb2World_SetRestitutionCallback_1 = func(*_Stack, float32, uint64, float32, uint64) float32
 
-type WorldQueryContext struct {
+type _WorldQueryContext struct {
 	World       uintptr
 	Fcn         uintptr
 	Filter      QueryFilter
 	UserContext uintptr
 }
 
-func TreeQueryCallback(tls *_Stack, proxyId int32, userData uint64, context uintptr) (r uint8) {
+func _TreeQueryCallback(tls *_Stack, proxyId int32, userData uint64, context uintptr) (r uint8) {
 	var id ShapeId
 	var result, v4 uint8
 	var shape, world, worldContext uintptr
@@ -15608,14 +15608,14 @@ func TreeQueryCallback(tls *_Stack, proxyId int32, userData uint64, context uint
 	_ = uint64FromInt64(4)
 	shapeId = int32FromUint64(userData)
 	worldContext = context
-	world = (*WorldQueryContext)(unsafe.Pointer(worldContext)).World
+	world = (*_WorldQueryContext)(unsafe.Pointer(worldContext)).World
 	if v1 = !!(0 <= shapeId && shapeId < (*b2World)(unsafe.Pointer(world)).Shapes.Count); !v1 {
 		b2InternalAssert(tls, __ccgo_ts+1908, __ccgo_ts+16660, int32FromInt32(2391))
 	}
 	_ = v1 || bool(int32FromInt32(0) != 0)
 	shape = (*b2World)(unsafe.Pointer(world)).Shapes.Data + uintptr(shapeId)*280
 	v2 = (*b2Shape)(unsafe.Pointer(shape)).Filter
-	v3 = (*WorldQueryContext)(unsafe.Pointer(worldContext)).Filter
+	v3 = (*_WorldQueryContext)(unsafe.Pointer(worldContext)).Filter
 	v4 = boolUint8(v2.CategoryBits&v3.MaskBits != uint64(0) && v2.MaskBits&v3.CategoryBits != uint64(0))
 	goto _5
 _5:
@@ -15627,7 +15627,7 @@ _5:
 		World0:     (*b2World)(unsafe.Pointer(world)).WorldId,
 		Generation: (*b2Shape)(unsafe.Pointer(shape)).Generation,
 	}
-	result = (*(*func(*_Stack, ShapeId, uintptr) uint8)(unsafe.Pointer(&struct{ uintptr }{(*WorldQueryContext)(unsafe.Pointer(worldContext)).Fcn})))(tls, id, (*WorldQueryContext)(unsafe.Pointer(worldContext)).UserContext)
+	result = (*(*func(*_Stack, ShapeId, uintptr) uint8)(unsafe.Pointer(&struct{ uintptr }{(*_WorldQueryContext)(unsafe.Pointer(worldContext)).Fcn})))(tls, id, (*_WorldQueryContext)(unsafe.Pointer(worldContext)).UserContext)
 	return result
 }
 
@@ -15637,7 +15637,7 @@ type __ccgo_fp__Xb2World_OverlapAABB_4 = func(*_Stack, struct {
 	Generation uint16
 }, uintptr) uint8
 
-type WorldOverlapContext struct {
+type _WorldOverlapContext struct {
 	World       uintptr
 	Fcn         uintptr
 	Filter      QueryFilter
@@ -15646,7 +15646,7 @@ type WorldOverlapContext struct {
 	UserContext uintptr
 }
 
-func TreeOverlapCallback(tls *_Stack, proxyId int32, userData uint64, context uintptr) (r1 uint8) {
+func _TreeOverlapCallback(tls *_Stack, proxyId int32, userData uint64, context uintptr) (r1 uint8) {
 	bp := tls.Alloc(176)
 	defer tls.Free(176)
 	var body, shape, world, worldContext uintptr
@@ -15667,14 +15667,14 @@ func TreeOverlapCallback(tls *_Stack, proxyId int32, userData uint64, context ui
 	_ = uint64FromInt64(4)
 	shapeId = int32FromUint64(userData)
 	worldContext = context
-	world = (*WorldOverlapContext)(unsafe.Pointer(worldContext)).World
+	world = (*_WorldOverlapContext)(unsafe.Pointer(worldContext)).World
 	if v1 = !!(0 <= shapeId && shapeId < (*b2World)(unsafe.Pointer(world)).Shapes.Count); !v1 {
 		b2InternalAssert(tls, __ccgo_ts+1908, __ccgo_ts+16660, int32FromInt32(2475))
 	}
 	_ = v1 || bool(int32FromInt32(0) != 0)
 	shape = (*b2World)(unsafe.Pointer(world)).Shapes.Data + uintptr(shapeId)*280
 	v2 = (*b2Shape)(unsafe.Pointer(shape)).Filter
-	v3 = (*WorldOverlapContext)(unsafe.Pointer(worldContext)).Filter
+	v3 = (*_WorldOverlapContext)(unsafe.Pointer(worldContext)).Filter
 	v4 = boolUint8(v2.CategoryBits&v3.MaskBits != uint64(0) && v2.MaskBits&v3.CategoryBits != uint64(0))
 	goto _5
 _5:
@@ -15688,7 +15688,7 @@ _5:
 	// Re-center on the query origin so the distance test stays in float precision far from the world origin
 	body = (*b2World)(unsafe.Pointer(world)).Bodies.Data + uintptr((*b2Shape)(unsafe.Pointer(shape)).BodyId)*104
 	v7 = b2GetBodyTransformQuick(tls, world, body)
-	v8 = (*WorldOverlapContext)(unsafe.Pointer(worldContext)).Origin
+	v8 = (*_WorldOverlapContext)(unsafe.Pointer(worldContext)).Origin
 	r.Q = v7.Q
 	r.P = Vec2{
 		X: v7.P.X - v8.X,
@@ -15698,7 +15698,7 @@ _5:
 	goto _10
 _10:
 	transform = v9
-	(*(*DistanceInput)(unsafe.Add(nil, bp))).ProxyA = *(*ShapeProxy)(unsafe.Add(nil, (*WorldOverlapContext)(unsafe.Pointer(worldContext)).Proxy))
+	(*(*DistanceInput)(unsafe.Add(nil, bp))).ProxyA = *(*ShapeProxy)(unsafe.Add(nil, (*_WorldOverlapContext)(unsafe.Pointer(worldContext)).Proxy))
 	(*(*DistanceInput)(unsafe.Add(nil, bp))).ProxyB = b2MakeShapeDistanceProxy(tls, shape)
 	(*(*DistanceInput)(unsafe.Add(nil, bp))).Transform = transform
 	(*(*DistanceInput)(unsafe.Add(nil, bp))).UseRadii = boolUint8(true1 != 0)
@@ -15713,7 +15713,7 @@ _10:
 		World0:     (*b2World)(unsafe.Pointer(world)).WorldId,
 		Generation: (*b2Shape)(unsafe.Pointer(shape)).Generation,
 	}
-	result = (*(*func(*_Stack, ShapeId, uintptr) uint8)(unsafe.Pointer(&struct{ uintptr }{(*WorldOverlapContext)(unsafe.Pointer(worldContext)).Fcn})))(tls, id, (*WorldOverlapContext)(unsafe.Pointer(worldContext)).UserContext)
+	result = (*(*func(*_Stack, ShapeId, uintptr) uint8)(unsafe.Pointer(&struct{ uintptr }{(*_WorldOverlapContext)(unsafe.Pointer(worldContext)).Fcn})))(tls, id, (*_WorldOverlapContext)(unsafe.Pointer(worldContext)).UserContext)
 	return result
 }
 
@@ -15723,7 +15723,7 @@ type __ccgo_fp__Xb2World_OverlapShape_4 = func(*_Stack, struct {
 	Generation uint16
 }, uintptr) uint8
 
-type WorldRayCastContext struct {
+type _WorldRayCastContext struct {
 	World       uintptr
 	Fcn         uintptr
 	Filter      QueryFilter
@@ -15732,7 +15732,7 @@ type WorldRayCastContext struct {
 	UserContext uintptr
 }
 
-func RayCastCallback(tls *_Stack, input uintptr, proxyId int32, userData uint64, context uintptr) (r1 float32) {
+func _RayCastCallback(tls *_Stack, input uintptr, proxyId int32, userData uint64, context uintptr) (r1 float32) {
 	bp := tls.Alloc(32)
 	defer tls.Free(32)
 	var body, shape, world, worldContext uintptr
@@ -15753,14 +15753,14 @@ func RayCastCallback(tls *_Stack, input uintptr, proxyId int32, userData uint64,
 	_ = uint64FromInt64(4)
 	shapeId = int32FromUint64(userData)
 	worldContext = context
-	world = (*WorldRayCastContext)(unsafe.Pointer(worldContext)).World
+	world = (*_WorldRayCastContext)(unsafe.Pointer(worldContext)).World
 	if v1 = !!(0 <= shapeId && shapeId < (*b2World)(unsafe.Pointer(world)).Shapes.Count); !v1 {
 		b2InternalAssert(tls, __ccgo_ts+1908, __ccgo_ts+16660, int32FromInt32(2578))
 	}
 	_ = v1 || bool(int32FromInt32(0) != 0)
 	shape = (*b2World)(unsafe.Pointer(world)).Shapes.Data + uintptr(shapeId)*280
 	v2 = (*b2Shape)(unsafe.Pointer(shape)).Filter
-	v3 = (*WorldRayCastContext)(unsafe.Pointer(worldContext)).Filter
+	v3 = (*_WorldRayCastContext)(unsafe.Pointer(worldContext)).Filter
 	v4 = boolUint8(v2.CategoryBits&v3.MaskBits != uint64(0) && v2.MaskBits&v3.CategoryBits != uint64(0))
 	goto _5
 _5:
@@ -15774,7 +15774,7 @@ _5:
 	body = (*b2World)(unsafe.Pointer(world)).Bodies.Data + uintptr((*b2Shape)(unsafe.Pointer(shape)).BodyId)*104
 	bodyTransform = b2GetBodyTransformQuick(tls, world, body)
 	v7 = bodyTransform
-	v8 = (*WorldRayCastContext)(unsafe.Pointer(worldContext)).Origin
+	v8 = (*_WorldRayCastContext)(unsafe.Pointer(worldContext)).Origin
 	r.Q = v7.Q
 	r.P = Vec2{
 		X: v7.P.X - v8.X,
@@ -15793,7 +15793,7 @@ _10:
 			World0:     (*b2World)(unsafe.Pointer(world)).WorldId,
 			Generation: (*b2Shape)(unsafe.Pointer(shape)).Generation,
 		}
-		v8 = (*WorldRayCastContext)(unsafe.Pointer(worldContext)).Origin
+		v8 = (*_WorldRayCastContext)(unsafe.Pointer(worldContext)).Origin
 		v12 = output.Point
 		v11 = Pos{
 			X: v8.X + v12.X,
@@ -15802,10 +15802,10 @@ _10:
 		goto _14
 	_14:
 		point = v11
-		fraction = (*(*func(*_Stack, ShapeId, Pos, Vec2, float32, uintptr) float32)(unsafe.Pointer(&struct{ uintptr }{(*WorldRayCastContext)(unsafe.Pointer(worldContext)).Fcn})))(tls, id, point, output.Normal, output.Fraction, (*WorldRayCastContext)(unsafe.Pointer(worldContext)).UserContext)
+		fraction = (*(*func(*_Stack, ShapeId, Pos, Vec2, float32, uintptr) float32)(unsafe.Pointer(&struct{ uintptr }{(*_WorldRayCastContext)(unsafe.Pointer(worldContext)).Fcn})))(tls, id, point, output.Normal, output.Fraction, (*_WorldRayCastContext)(unsafe.Pointer(worldContext)).UserContext)
 		// The user may return -1 to skip this shape
 		if float32FromFloat32(0) <= fraction && fraction <= float32FromFloat32(1) {
-			(*WorldRayCastContext)(unsafe.Pointer(worldContext)).Fraction = fraction
+			(*_WorldRayCastContext)(unsafe.Pointer(worldContext)).Fraction = fraction
 		}
 		return fraction
 	}
@@ -15843,7 +15843,7 @@ func b2RayCastClosestFcn(tls *_Stack, shapeId ShapeId, point Pos, normal Vec2, f
 	return fraction
 }
 
-type WorldShapeCastContext struct {
+type _WorldShapeCastContext struct {
 	World       uintptr
 	Fcn         uintptr
 	Filter      QueryFilter
@@ -15853,7 +15853,7 @@ type WorldShapeCastContext struct {
 	UserContext uintptr
 }
 
-func ShapeCastCallback(tls *_Stack, input uintptr, proxyId int32, userData uint64, context uintptr) (r1 float32) {
+func _ShapeCastCallback(tls *_Stack, input uintptr, proxyId int32, userData uint64, context uintptr) (r1 float32) {
 	bp := tls.Alloc(96)
 	defer tls.Free(96)
 	var body, shape, world, worldContext uintptr
@@ -15874,14 +15874,14 @@ func ShapeCastCallback(tls *_Stack, input uintptr, proxyId int32, userData uint6
 	_ = uint64FromInt64(4)
 	shapeId = int32FromUint64(userData)
 	worldContext = context
-	world = (*WorldShapeCastContext)(unsafe.Pointer(worldContext)).World
+	world = (*_WorldShapeCastContext)(unsafe.Pointer(worldContext)).World
 	if v1 = !!(0 <= shapeId && shapeId < (*b2World)(unsafe.Pointer(world)).Shapes.Count); !v1 {
 		b2InternalAssert(tls, __ccgo_ts+1908, __ccgo_ts+16660, int32FromInt32(2758))
 	}
 	_ = v1 || bool(int32FromInt32(0) != 0)
 	shape = (*b2World)(unsafe.Pointer(world)).Shapes.Data + uintptr(shapeId)*280
 	v2 = (*b2Shape)(unsafe.Pointer(shape)).Filter
-	v3 = (*WorldShapeCastContext)(unsafe.Pointer(worldContext)).Filter
+	v3 = (*_WorldShapeCastContext)(unsafe.Pointer(worldContext)).Filter
 	v4 = boolUint8(v2.CategoryBits&v3.MaskBits != uint64(0) && v2.MaskBits&v3.CategoryBits != uint64(0))
 	goto _5
 _5:
@@ -15890,7 +15890,7 @@ _5:
 	}
 	// Rebuild from the origin relative input, taking only the advancing fraction from the tree.
 	// The tree input is world float and would lose the cast far from the origin.
-	*(*ShapeCastInput)(unsafe.Add(nil, bp)) = (*WorldShapeCastContext)(unsafe.Pointer(worldContext)).Input
+	*(*ShapeCastInput)(unsafe.Add(nil, bp)) = (*_WorldShapeCastContext)(unsafe.Pointer(worldContext)).Input
 	(*(*ShapeCastInput)(unsafe.Add(nil, bp))).MaxFraction = (*BoxCastInput)(unsafe.Pointer(input)).MaxFraction
 	if v1 = !!(0 <= (*b2Shape)(unsafe.Pointer(shape)).BodyId && (*b2Shape)(unsafe.Pointer(shape)).BodyId < (*b2World)(unsafe.Pointer(world)).Bodies.Count); !v1 {
 		b2InternalAssert(tls, __ccgo_ts+17975, __ccgo_ts+16660, int32FromInt32(2770))
@@ -15899,7 +15899,7 @@ _5:
 	body = (*b2World)(unsafe.Pointer(world)).Bodies.Data + uintptr((*b2Shape)(unsafe.Pointer(shape)).BodyId)*104
 	transform = b2GetBodyTransformQuick(tls, world, body)
 	v7 = transform
-	v8 = (*WorldShapeCastContext)(unsafe.Pointer(worldContext)).Origin
+	v8 = (*_WorldShapeCastContext)(unsafe.Pointer(worldContext)).Origin
 	r.Q = v7.Q
 	r.P = Vec2{
 		X: v7.P.X - v8.X,
@@ -15916,7 +15916,7 @@ _10:
 			World0:     (*b2World)(unsafe.Pointer(world)).WorldId,
 			Generation: (*b2Shape)(unsafe.Pointer(shape)).Generation,
 		}
-		v11 = (*WorldShapeCastContext)(unsafe.Pointer(worldContext)).Origin
+		v11 = (*_WorldShapeCastContext)(unsafe.Pointer(worldContext)).Origin
 		v12 = output.Point
 		v13 = Pos{
 			X: v11.X + v12.X,
@@ -15925,10 +15925,10 @@ _10:
 		goto _14
 	_14:
 		point = v13
-		fraction = (*(*func(*_Stack, ShapeId, Pos, Vec2, float32, uintptr) float32)(unsafe.Pointer(&struct{ uintptr }{(*WorldShapeCastContext)(unsafe.Pointer(worldContext)).Fcn})))(tls, id, point, output.Normal, output.Fraction, (*WorldShapeCastContext)(unsafe.Pointer(worldContext)).UserContext)
+		fraction = (*(*func(*_Stack, ShapeId, Pos, Vec2, float32, uintptr) float32)(unsafe.Pointer(&struct{ uintptr }{(*_WorldShapeCastContext)(unsafe.Pointer(worldContext)).Fcn})))(tls, id, point, output.Normal, output.Fraction, (*_WorldShapeCastContext)(unsafe.Pointer(worldContext)).UserContext)
 		// The user may return -1 to skip this shape
 		if float32FromFloat32(0) <= fraction && fraction <= float32FromFloat32(1) {
-			(*WorldShapeCastContext)(unsafe.Pointer(worldContext)).Fraction = fraction
+			(*_WorldShapeCastContext)(unsafe.Pointer(worldContext)).Fraction = fraction
 		}
 		return fraction
 	}
@@ -15947,7 +15947,7 @@ type __ccgo_fp__Xb2World_CastShape_5 = func(*_Stack, struct {
 	Y float32
 }, float32, uintptr) float32
 
-type WorldMoverCastContext struct {
+type _WorldMoverCastContext struct {
 	World    uintptr
 	Filter   QueryFilter
 	Fraction float32
@@ -15955,7 +15955,7 @@ type WorldMoverCastContext struct {
 	Input    ShapeCastInput
 }
 
-func MoverCastCallback(tls *_Stack, input uintptr, proxyId int32, userData uint64, context uintptr) (r1 float32) {
+func _MoverCastCallback(tls *_Stack, input uintptr, proxyId int32, userData uint64, context uintptr) (r1 float32) {
 	bp := tls.Alloc(96)
 	defer tls.Free(96)
 	var body, shape, world, worldContext uintptr
@@ -15973,22 +15973,22 @@ func MoverCastCallback(tls *_Stack, input uintptr, proxyId int32, userData uint6
 	_ = uint64FromInt64(4)
 	shapeId = int32FromUint64(userData)
 	worldContext = context
-	world = (*WorldMoverCastContext)(unsafe.Pointer(worldContext)).World
+	world = (*_WorldMoverCastContext)(unsafe.Pointer(worldContext)).World
 	if v1 = !!(0 <= shapeId && shapeId < (*b2World)(unsafe.Pointer(world)).Shapes.Count); !v1 {
 		b2InternalAssert(tls, __ccgo_ts+1908, __ccgo_ts+16660, int32FromInt32(2884))
 	}
 	_ = v1 || bool(int32FromInt32(0) != 0)
 	shape = (*b2World)(unsafe.Pointer(world)).Shapes.Data + uintptr(shapeId)*280
 	v2 = (*b2Shape)(unsafe.Pointer(shape)).Filter
-	v3 = (*WorldMoverCastContext)(unsafe.Pointer(worldContext)).Filter
+	v3 = (*_WorldMoverCastContext)(unsafe.Pointer(worldContext)).Filter
 	v4 = boolUint8(v2.CategoryBits&v3.MaskBits != uint64(0) && v2.MaskBits&v3.CategoryBits != uint64(0))
 	goto _5
 _5:
 	if int32FromUint8(v4) == false1 {
-		return (*WorldMoverCastContext)(unsafe.Pointer(worldContext)).Fraction
+		return (*_WorldMoverCastContext)(unsafe.Pointer(worldContext)).Fraction
 	}
 	// Rebuild from the origin relative input, taking only the advancing fraction from the tree
-	*(*ShapeCastInput)(unsafe.Add(nil, bp)) = (*WorldMoverCastContext)(unsafe.Pointer(worldContext)).Input
+	*(*ShapeCastInput)(unsafe.Add(nil, bp)) = (*_WorldMoverCastContext)(unsafe.Pointer(worldContext)).Input
 	(*(*ShapeCastInput)(unsafe.Add(nil, bp))).MaxFraction = (*BoxCastInput)(unsafe.Pointer(input)).MaxFraction
 	if v1 = !!(0 <= (*b2Shape)(unsafe.Pointer(shape)).BodyId && (*b2Shape)(unsafe.Pointer(shape)).BodyId < (*b2World)(unsafe.Pointer(world)).Bodies.Count); !v1 {
 		b2InternalAssert(tls, __ccgo_ts+17975, __ccgo_ts+16660, int32FromInt32(2895))
@@ -15997,7 +15997,7 @@ _5:
 	body = (*b2World)(unsafe.Pointer(world)).Bodies.Data + uintptr((*b2Shape)(unsafe.Pointer(shape)).BodyId)*104
 	bodyTransform = b2GetBodyTransformQuick(tls, world, body)
 	v7 = bodyTransform
-	v8 = (*WorldMoverCastContext)(unsafe.Pointer(worldContext)).Origin
+	v8 = (*_WorldMoverCastContext)(unsafe.Pointer(worldContext)).Origin
 	r.Q = v7.Q
 	r.P = Vec2{
 		X: v7.P.X - v8.X,
@@ -16010,13 +16010,13 @@ _10:
 	output = b2ShapeCastShape(tls, bp, shape, transform)
 	if output.Fraction == float32FromFloat32(0) {
 		// Ignore overlapping shapes
-		return (*WorldMoverCastContext)(unsafe.Pointer(worldContext)).Fraction
+		return (*_WorldMoverCastContext)(unsafe.Pointer(worldContext)).Fraction
 	}
-	(*WorldMoverCastContext)(unsafe.Pointer(worldContext)).Fraction = output.Fraction
+	(*_WorldMoverCastContext)(unsafe.Pointer(worldContext)).Fraction = output.Fraction
 	return output.Fraction
 }
 
-type WorldMoverContext struct {
+type _WorldMoverContext struct {
 	World       uintptr
 	Fcn         uintptr
 	Filter      QueryFilter
@@ -16025,7 +16025,7 @@ type WorldMoverContext struct {
 	UserContext uintptr
 }
 
-func TreeCollideCallback(tls *_Stack, proxyId int32, userData uint64, context uintptr) (r1 uint8) {
+func _TreeCollideCallback(tls *_Stack, proxyId int32, userData uint64, context uintptr) (r1 uint8) {
 	bp := tls.Alloc(32)
 	defer tls.Free(32)
 	var aa, v14, v18, v19, v21 float32
@@ -16045,14 +16045,14 @@ func TreeCollideCallback(tls *_Stack, proxyId int32, userData uint64, context ui
 	_ = uint64FromInt64(4)
 	shapeId = int32FromUint64(userData)
 	worldContext = context
-	world = (*WorldMoverContext)(unsafe.Pointer(worldContext)).World
+	world = (*_WorldMoverContext)(unsafe.Pointer(worldContext)).World
 	if v1 = !!(0 <= shapeId && shapeId < (*b2World)(unsafe.Pointer(world)).Shapes.Count); !v1 {
 		b2InternalAssert(tls, __ccgo_ts+1908, __ccgo_ts+16660, int32FromInt32(2987))
 	}
 	_ = v1 || bool(int32FromInt32(0) != 0)
 	shape = (*b2World)(unsafe.Pointer(world)).Shapes.Data + uintptr(shapeId)*280
 	v2 = (*b2Shape)(unsafe.Pointer(shape)).Filter
-	v3 = (*WorldMoverContext)(unsafe.Pointer(worldContext)).Filter
+	v3 = (*_WorldMoverContext)(unsafe.Pointer(worldContext)).Filter
 	v4 = boolUint8(v2.CategoryBits&v3.MaskBits != uint64(0) && v2.MaskBits&v3.CategoryBits != uint64(0))
 	goto _5
 _5:
@@ -16066,7 +16066,7 @@ _5:
 	// Re-center on the query origin, the mover and the resulting planes are origin relative
 	body = (*b2World)(unsafe.Pointer(world)).Bodies.Data + uintptr((*b2Shape)(unsafe.Pointer(shape)).BodyId)*104
 	v7 = b2GetBodyTransformQuick(tls, world, body)
-	v8 = (*WorldMoverContext)(unsafe.Pointer(worldContext)).Origin
+	v8 = (*_WorldMoverContext)(unsafe.Pointer(worldContext)).Origin
 	r.Q = v7.Q
 	r.P = Vec2{
 		X: v7.P.X - v8.X,
@@ -16105,7 +16105,7 @@ _10:
 			World0:     (*b2World)(unsafe.Pointer(world)).WorldId,
 			Generation: (*b2Shape)(unsafe.Pointer(shape)).Generation,
 		}
-		return (*(*func(*_Stack, ShapeId, uintptr, uintptr) uint8)(unsafe.Pointer(&struct{ uintptr }{(*WorldMoverContext)(unsafe.Pointer(worldContext)).Fcn})))(tls, id, bp, (*WorldMoverContext)(unsafe.Pointer(worldContext)).UserContext)
+		return (*(*func(*_Stack, ShapeId, uintptr, uintptr) uint8)(unsafe.Pointer(&struct{ uintptr }{(*_WorldMoverContext)(unsafe.Pointer(worldContext)).Fcn})))(tls, id, bp, (*_WorldMoverContext)(unsafe.Pointer(worldContext)).UserContext)
 	}
 	return boolUint8(true1 != 0)
 }
@@ -16154,7 +16154,7 @@ type __ccgo_fp__Xb2World_SetPreSolveCallback_2 = func(*_Stack, struct {
 
 var __func__50 = [19]uint8{'b', '2', 'W', 'o', 'r', 'l', 'd', '_', 'S', 'e', 't', 'G', 'r', 'a', 'v', 'i', 't', 'y'}
 
-type ExplosionContext struct {
+type _ExplosionContext struct {
 	World            uintptr
 	Position         Pos
 	Radius           float32
@@ -16162,7 +16162,7 @@ type ExplosionContext struct {
 	ImpulsePerLength float32
 }
 
-func ExplosionCallback(tls *_Stack, proxyId int32, userData uint64, context uintptr) (r1 uint8) {
+func _ExplosionCallback(tls *_Stack, proxyId int32, userData uint64, context uintptr) (r1 uint8) {
 	bp := tls.Alloc(192)
 	defer tls.Free(192)
 	var body, bodySim, explosionContext, set, shape, state, world uintptr
@@ -16181,7 +16181,7 @@ func ExplosionCallback(tls *_Stack, proxyId int32, userData uint64, context uint
 	_ = uint64FromInt64(4)
 	shapeId = int32FromUint64(userData)
 	explosionContext = context
-	world = (*ExplosionContext)(unsafe.Pointer(explosionContext)).World
+	world = (*_ExplosionContext)(unsafe.Pointer(explosionContext)).World
 	if v1 = !!(0 <= shapeId && shapeId < (*b2World)(unsafe.Pointer(world)).Shapes.Count); !v1 {
 		b2InternalAssert(tls, __ccgo_ts+1908, __ccgo_ts+16660, int32FromInt32(3125))
 	}
@@ -16198,7 +16198,7 @@ func ExplosionCallback(tls *_Stack, proxyId int32, userData uint64, context uint
 	_ = v3 || bool(int32FromInt32(0) != 0)
 	xf = b2GetBodyTransformQuick(tls, world, body)
 	v4 = xf
-	v5 = (*ExplosionContext)(unsafe.Pointer(explosionContext)).Position
+	v5 = (*_ExplosionContext)(unsafe.Pointer(explosionContext)).Position
 	vx = v5.X - v4.P.X
 	vy = v5.Y - v4.P.Y
 	v6 = Vec2{
@@ -16216,8 +16216,8 @@ _7:
 	(*(*DistanceInput)(unsafe.Add(nil, bp+8))).UseRadii = boolUint8(true1 != 0)
 	*(*SimplexCache)(unsafe.Add(nil, bp+176)) = SimplexCache{}
 	output = b2ComputeShapeDistance(tls, bp+8, bp+176, uintptrFromInt32(0), 0)
-	radius = (*ExplosionContext)(unsafe.Pointer(explosionContext)).Radius
-	falloff = (*ExplosionContext)(unsafe.Pointer(explosionContext)).Falloff
+	radius = (*_ExplosionContext)(unsafe.Pointer(explosionContext)).Radius
+	falloff = (*_ExplosionContext)(unsafe.Pointer(explosionContext)).Falloff
 	if output.Distance > radius+falloff {
 		return boolUint8(true1 != 0)
 	}
@@ -16292,7 +16292,7 @@ _20:
 	_25:
 		scale = v23
 	}
-	magnitude = float32(float32((*ExplosionContext)(unsafe.Pointer(explosionContext)).ImpulsePerLength*perimeter) * scale)
+	magnitude = float32(float32((*_ExplosionContext)(unsafe.Pointer(explosionContext)).ImpulsePerLength*perimeter) * scale)
 	v28 = xf.Q
 	v6 = direction
 	v8 = Vec2{
@@ -27585,7 +27585,7 @@ func b2ExecuteBlock(tls *_Stack, stage uintptr, context uintptr, block b2SolverB
 // C documentation
 //
 //	// This staggers the worker start indices so they avoid touching the same solver blocks
-func GetWorkerStartIndex(tls *_Stack, workerIndex int32, blockCount int32, workerCount int32) (r int32) {
+func _GetWorkerStartIndex(tls *_Stack, workerIndex int32, blockCount int32, workerCount int32) (r int32) {
 	var blocksPerWorker, remainder, v1, v2, v3, v4 int32
 	_, _, _, _, _, _ = blocksPerWorker, remainder, v1, v2, v3, v4
 	if blockCount <= workerCount {
@@ -27626,7 +27626,7 @@ func b2ExecuteStage(tls *_Stack, stage uintptr, context uintptr, previousSyncInd
 	completedCount = 0
 	blocks = (*b2SolverStage)(unsafe.Pointer(stage)).Blocks
 	blockCount = (*b2SolverStage)(unsafe.Pointer(stage)).BlockCount
-	startIndex = GetWorkerStartIndex(tls, workerIndex, blockCount, (*b2StepContext)(unsafe.Pointer(context)).WorkerCount)
+	startIndex = _GetWorkerStartIndex(tls, workerIndex, blockCount, (*b2StepContext)(unsafe.Pointer(context)).WorkerCount)
 	if startIndex == -int32(1) {
 		return
 	}
