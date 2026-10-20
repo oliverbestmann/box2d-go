@@ -36,11 +36,8 @@ func ComputeHull(points []Vec2) (Hull, bool) {
 		return Hull{}, false
 	}
 
-	// copy to array
 	var arr [_B2_MAX_POLYGON_VERTICES]Vec2
-	for idx := range min(len(points), len(arr)) {
-		arr[idx] = points[idx]
-	}
+	copy(arr[:], points)
 
 	pArr := copyToStack(theStack, arr)
 	defer pArr.Free()
@@ -61,113 +58,32 @@ func (b Body) GetName() string {
 	return toString(b2Body_GetName(theStack, b.Id))
 }
 
+// The wrapper types have the same memory layout as their ids, so box2d can write the ids
+// directly into the slices.
+
 func (b Body) GetShapes(reuse []Shape) []Shape {
-	itemCount := b.GetShapeCount()
-
-	// allocate memory on the stack to read the ids
-	n := int(itemCount) * int(unsafe.Sizeof(ShapeId{}))
-	ptr := theStack.Alloc(n)
-	defer theStack.Free(n)
-
-	// fill the data
-	_ = b2Body_GetShapes(theStack, b.Id, ptr, itemCount)
-
-	// allocate memory for the result
-	if cap(reuse) < int(itemCount) {
-		// need to allocate more space
-		reuse = make([]Shape, itemCount)
-	}
-
-	// ensure the data is on the heap
-	items := reuse[:0]
-
-	for _, itemId := range unsafe.Slice((*ShapeId)(unsafe.Pointer(ptr)), itemCount) {
-		items = append(items, Shape{Id: itemId})
-	}
-
-	return items
+	return fillSlice(reuse, b.GetShapeCount(), func(ptr uintptr, capacity int32) int32 {
+		return b2Body_GetShapes(theStack, b.Id, ptr, capacity)
+	})
 }
 
 func (b Body) GetJoints(reuse []Joint) []Joint {
-	itemCount := b.GetJointCount()
-
-	// allocate memory on the stack to read the ids
-	n := int(itemCount) * int(unsafe.Sizeof(JointId{}))
-	ptr := theStack.Alloc(n)
-	defer theStack.Free(n)
-
-	// fill the data
-	_ = b2Body_GetJoints(theStack, b.Id, ptr, itemCount)
-
-	// allocate memory for the result
-	if cap(reuse) < int(itemCount) {
-		// need to allocate more space
-		reuse = make([]Joint, itemCount)
-	}
-
-	items := reuse[:0]
-
-	// copy the items
-	for _, itemId := range unsafe.Slice((*JointId)(unsafe.Pointer(ptr)), itemCount) {
-		items = append(items, Joint{Id: itemId})
-	}
-
-	return items
+	return fillSlice(reuse, b.GetJointCount(), func(ptr uintptr, capacity int32) int32 {
+		return b2Body_GetJoints(theStack, b.Id, ptr, capacity)
+	})
 }
 
 func (b Chain) GetSegments(reuse []Shape) []Shape {
-	itemCount := b.GetSegmentCount()
-
-	// allocate memory on the stack to read the ids
-	n := int(itemCount) * int(unsafe.Sizeof(ShapeId{}))
-	ptr := theStack.Alloc(n)
-	defer theStack.Free(n)
-
-	// fill the data
-	_ = b2Chain_GetSegments(theStack, b.Id, ptr, itemCount)
-
-	// allocate memory for the result
-	if cap(reuse) < int(itemCount) {
-		// need to allocate more space
-		reuse = make([]Shape, itemCount)
-	}
-
-	items := reuse[:0]
-
-	// copy the items
-	for _, itemId := range unsafe.Slice((*ShapeId)(unsafe.Pointer(ptr)), itemCount) {
-		items = append(items, Shape{Id: itemId})
-	}
-
-	return items
+	return fillSlice(reuse, b.GetSegmentCount(), func(ptr uintptr, capacity int32) int32 {
+		return b2Chain_GetSegments(theStack, b.Id, ptr, capacity)
+	})
 }
 
 // GetSensorData returns the shapes that overlap the sensor shape.
 func (b Shape) GetSensorData(reuse []Shape) []Shape {
-	itemsCap := b.GetSensorCapacity()
-
-	// allocate memory on the stack to read the ids
-	n := int(itemsCap) * int(unsafe.Sizeof(ShapeId{}))
-	ptr := theStack.Alloc(n)
-	defer theStack.Free(n)
-
-	// fill the data
-	itemCount := b2Shape_GetSensorData(theStack, b.Id, ptr, itemsCap)
-
-	// allocate memory for the result
-	if cap(reuse) < int(itemCount) {
-		// need to allocate more space
-		reuse = make([]Shape, itemCount)
-	}
-
-	items := reuse[:0]
-
-	// copy the items
-	for _, itemId := range unsafe.Slice((*ShapeId)(unsafe.Pointer(ptr)), itemCount) {
-		items = append(items, Shape{Id: itemId})
-	}
-
-	return items
+	return fillSlice(reuse, b.GetSensorCapacity(), func(ptr uintptr, capacity int32) int32 {
+		return b2Shape_GetSensorData(theStack, b.Id, ptr, capacity)
+	})
 }
 
 // GetContactData returns the touching contacts of the body, reusing the memory of reuse if it is large enough.
@@ -194,11 +110,8 @@ func fillSlice[T any](reuse []T, capacity int32, fill func(ptr uintptr, capacity
 		reuse = make([]T, capacity)
 	}
 
-	// box2d writes into the slice via a uintptr, it must live on the heap
 	items := reuse[:capacity]
-	escapes(items)
-
-	count := fill(uintptr(unsafe.Pointer(&items[0])), capacity)
+	count := fill(sliceAddr(items), capacity)
 	runtime.KeepAlive(items)
 
 	return items[:count]
@@ -207,15 +120,8 @@ func fillSlice[T any](reuse []T, capacity int32, fill func(ptr uintptr, capacity
 // SolvePlanes solves the position of a mover that satisfies the given collision planes.
 // It updates the Push field of the planes.
 func SolvePlanes(targetDelta Vec2, planes []CollisionPlane) PlaneSolverResult {
-	if len(planes) == 0 {
-		return b2SolvePlanes(theStack, targetDelta, 0, 0)
-	}
-
-	// box2d writes into the slice via a uintptr, it must live on the heap
-	escapes(planes)
 	defer runtime.KeepAlive(planes)
-
-	return b2SolvePlanes(theStack, targetDelta, uintptr(unsafe.Pointer(&planes[0])), int32(len(planes)))
+	return b2SolvePlanes(theStack, targetDelta, sliceAddr(planes), int32(len(planes)))
 }
 
 // ComputeShapeDistance computes the closest points between two shapes. cache speeds up repeated
@@ -229,18 +135,12 @@ func ComputeShapeDistance(input DistanceInput, cache *SimplexCache, simplexes []
 	inputStack := copyToStack(theStack, input)
 	defer inputStack.Free()
 
-	// box2d writes into cache and simplexes via a uintptr, they must live on the heap
+	// box2d writes into cache via a uintptr, it must live on the heap
 	escapes(cache)
-	escapes(simplexes)
 	defer runtime.KeepAlive(cache)
 	defer runtime.KeepAlive(simplexes)
 
-	var simplexesPtr uintptr
-	if len(simplexes) > 0 {
-		simplexesPtr = uintptr(unsafe.Pointer(&simplexes[0]))
-	}
-
-	return b2ComputeShapeDistance(theStack, inputStack.Addr, uintptr(unsafe.Pointer(cache)), simplexesPtr, int32(len(simplexes)))
+	return b2ComputeShapeDistance(theStack, inputStack.Addr, uintptr(unsafe.Pointer(cache)), sliceAddr(simplexes), int32(len(simplexes)))
 }
 
 // worldCallbacks keeps the Go closures alive that box2d only stores as a uintptr.
@@ -465,7 +365,7 @@ func (b World) GetSnapshot(reuse []byte) []byte {
 // It returns false if image is invalid. The world is unchanged if the header is invalid. If the
 // data turns out to be corrupt during the restore, the world is unusable and must be destroyed.
 func (b World) RestoreFromSnapshot(image []byte) bool {
-	ok := b2World_RestoreFromSnapshot(theStack, b.Id, bytesAddr(image), int32(len(image)))
+	ok := b2World_RestoreFromSnapshot(theStack, b.Id, sliceAddr(image), int32(len(image)))
 	runtime.KeepAlive(image)
 
 	return ok != 0
@@ -475,23 +375,23 @@ func (b World) RestoreFromSnapshot(image []byte) bool {
 // are reset to the default. A workerCount of 0 runs the world on a single goroutine.
 // It returns false if image is invalid.
 func CreateWorldFromSnapshot(image []byte, workerCount int32) (World, bool) {
-	id := b2CreateWorldFromSnapshot(theStack, bytesAddr(image), int32(len(image)), workerCount)
+	id := b2CreateWorldFromSnapshot(theStack, sliceAddr(image), int32(len(image)), workerCount)
 	runtime.KeepAlive(image)
 
 	return World{Id: id}, id != WorldId{}
 }
 
-// bytesAddr returns the address of the first byte for box2d to read, or 0 if buf is empty.
-// The caller must keep buf alive until box2d is done with it.
-func bytesAddr(buf []byte) uintptr {
-	if len(buf) == 0 {
+// sliceAddr returns the address of the first element for box2d, or 0 if s is empty.
+// The caller must keep s alive until box2d is done with it.
+func sliceAddr[T any](s []T) uintptr {
+	if len(s) == 0 {
 		return 0
 	}
 
-	// box2d reads the slice via a uintptr, it must live on the heap
-	escapes(buf)
+	// box2d accesses the slice via a uintptr, it must live on the heap
+	escapes(s)
 
-	return uintptr(unsafe.Pointer(&buf[0]))
+	return uintptr(unsafe.Pointer(&s[0]))
 }
 
 type BodyEvents struct {
@@ -548,10 +448,9 @@ func (b World) GetJointEvents() JointEvents {
 	}
 }
 
+// copySlice copies n items at data, which box2d owns, onto the Go heap.
 func copySlice[T any](data uintptr, n int32) []T {
-	event := (*T)(unsafe.Pointer(data))
-	bodyMoveEvents := unsafe.Slice(event, n)
-	return slices.Clone(bodyMoveEvents)
+	return slices.Clone(unsafe.Slice((*T)(unsafe.Pointer(data)), n))
 }
 
 func b2DefaultAssertFcnGo(tls *_Stack, condition uintptr, fileName uintptr, lineNumber int32) (r int32) {
