@@ -14,19 +14,11 @@ import (
 )
 
 func sliceOf(p uintptr, n size_t) []byte {
-	arr := (*[math.MaxInt32]byte)(unsafe.Pointer(p))
-	return (*arr)[:n]
+	return unsafe.Slice((*byte)(unsafe.Pointer(p)), n)
 }
 
-func __atomic_fetch_addInt32(tls *_Stack, addr uintptr, inc int32, mode int32) int32 {
-	value := (*int32)(unsafe.Pointer(addr))
-
-	for {
-		old := atomic.LoadInt32(value)
-		if atomic.CompareAndSwapInt32(value, old, old+inc) {
-			return old
-		}
-	}
+func __atomic_fetch_addInt32(_ *_Stack, addr uintptr, inc int32, _ int32) int32 {
+	return atomic.AddInt32((*int32)(unsafe.Pointer(addr)), inc) - inc
 }
 
 func __atomic_fetch_addInt64(_ *_Stack, addr uintptr, inc int64, _ int32) int64 {
@@ -189,7 +181,7 @@ func clock_gettime(tls *_Stack, clk clockid_t, ts uintptr) (r int32) {
 	now := time.Now()
 
 	(*timespec)(unsafe.Pointer(ts)).Tv_sec = now.Unix()
-	(*timespec)(unsafe.Pointer(ts)).Tv_nsec = now.UnixNano() - now.Unix()*1_000_000_000
+	(*timespec)(unsafe.Pointer(ts)).Tv_nsec = int64(now.Nanosecond())
 
 	return 0
 }

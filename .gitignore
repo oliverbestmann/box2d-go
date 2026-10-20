@@ -1,7 +1,7 @@
+.idea/
 /box2d-c
-/.idea
 /transpile/ccgo
+/transpile/_build
 /go.work
 /go.work.sum
 /example/example.wasm
-/transpile/_build
