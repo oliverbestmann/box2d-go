@@ -29013,6 +29013,10 @@ func b2go_CastResultCallbackFcn(tls *_Stack, shapeId ShapeId, point Pos, normal 
 	return float32FromInt32(0)
 }
 
+func b2go_PlaneResultCallbackFcn(tls *_Stack, shapeId ShapeId, plane uintptr, context uintptr) (r uint8) {
+	return boolUint8(0 != 0)
+}
+
 func b2go_AssertCallbackFcn(tls *_Stack, condition uintptr, fileName uintptr, lineNumber int32) (r int32) {
 	return 0
 }
@@ -29051,9 +29055,9 @@ func b2go_DrawBoundsFcn(tls *_Stack, aabb AABB, color HexColor, context uintptr)
 }
 
 func b2go_check(tls *_Stack) {
-	var assert, castResult, customFilter, friction, log, overlapResult, preContinuous, preSolve, restitution, thread uintptr
+	var assert, castResult, customFilter, friction, log, overlapResult, planeResult, preContinuous, preSolve, restitution, thread uintptr
 	var draw b2DebugDraw
-	_, _, _, _, _, _, _, _, _, _, _ = assert, castResult, customFilter, draw, friction, log, overlapResult, preContinuous, preSolve, restitution, thread
+	_, _, _, _, _, _, _, _, _, _, _, _ = assert, castResult, customFilter, draw, friction, log, overlapResult, planeResult, preContinuous, preSolve, restitution, thread
 	thread = __ccgo_fp(b2go_ThreadFunction)
 	friction = __ccgo_fp(b2go_FrictionCallbackFcn)
 	restitution = __ccgo_fp(b2go_RestitutionCallbackFcn)
@@ -29062,6 +29066,7 @@ func b2go_check(tls *_Stack) {
 	preContinuous = __ccgo_fp(b2go_PreContinuousCallbackFcn)
 	overlapResult = __ccgo_fp(b2go_OverlapResultCallbackFcn)
 	castResult = __ccgo_fp(b2go_CastResultCallbackFcn)
+	planeResult = __ccgo_fp(b2go_PlaneResultCallbackFcn)
 	assert = __ccgo_fp(b2go_AssertCallbackFcn)
 	log = __ccgo_fp(b2go_LogCallbackFcn)
 	draw = b2DebugDraw{

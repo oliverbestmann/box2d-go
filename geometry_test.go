@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 // Ported from box2d test/test_shape.c and test/test_collision.c
@@ -154,6 +155,42 @@ func TestCastMover(t *testing.T) {
 	fraction := world.CastMover(Pos{}, mover, Vec2{Y: -2}, DefaultQueryFilter())
 
 	assert.InDelta(t, 0.5, fraction, 0.01)
+}
+
+// Ported from LargeWorldOriginQueryTest in box2d test/test_large_world.c
+func TestCollideMover(t *testing.T) {
+	for _, base := range []Pos{{}, {X: 1000, Y: -500}} {
+		world := CreateWorld(DefaultWorldDef())
+
+		bodyDef := DefaultBodyDef()
+		bodyDef.Position = base
+		box := world.CreateBody(bodyDef)
+		box.CreatePolygonShape(DefaultShapeDef(), MakeBox(0.5, 0.5))
+
+		// overlaps the left face of the box, relative to base
+		mover := Capsule{Center1: Vec2{X: -0.9, Y: -0.2}, Center2: Vec2{X: -0.9, Y: 0.2}, Radius: 0.5}
+
+		var planes []CollisionPlane
+		world.CollideMover(base, mover, DefaultQueryFilter(), func(shape Shape, plane PlaneResult) bool {
+			assert.Equal(t, box, shape.GetBody())
+
+			if plane.Hit != 0 {
+				planes = append(planes, CollisionPlane{Plane: plane.Plane, PushLimit: 1e30, ClipVelocity: 1})
+			}
+
+			return true
+		})
+
+		require.NotEmpty(t, planes)
+		assert.InDelta(t, -1, planes[0].Plane.Normal.X, 1e-3)
+		assert.InDelta(t, 0, planes[0].Plane.Normal.Y, 1e-3)
+
+		// the solver pushes the mover out of the box to the left
+		result := SolvePlanes(Vec2{}, planes)
+		assert.Less(t, result.Delta.X, float32(-0.05))
+
+		world.DestroyWorld()
+	}
 }
 
 func TestCastRayClosest(t *testing.T) {

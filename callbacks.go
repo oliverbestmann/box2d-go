@@ -12,6 +12,7 @@ type (
 	preContinuousCallback = func(*_Stack, ShapeId, ShapeId, Pos, Vec2, uintptr) uint8
 	overlapResultCallback = func(*_Stack, ShapeId, uintptr) uint8
 	castResultCallback    = func(*_Stack, ShapeId, Pos, Vec2, float32, uintptr) float32
+	planeResultCallback   = func(*_Stack, ShapeId, uintptr, uintptr) uint8
 	assertCallback        = func(*_Stack, uintptr, uintptr, int32) int32
 	logCallback           = func(*_Stack, uintptr)
 	drawPolygonFcn        = func(*_Stack, WorldTransform, uintptr, int32, HexColor, uintptr)
@@ -35,6 +36,7 @@ var (
 	_ preContinuousCallback = b2go_PreContinuousCallbackFcn
 	_ overlapResultCallback = b2go_OverlapResultCallbackFcn
 	_ castResultCallback    = b2go_CastResultCallbackFcn
+	_ planeResultCallback   = b2go_PlaneResultCallbackFcn
 	_ assertCallback        = b2go_AssertCallbackFcn
 	_ logCallback           = b2go_LogCallbackFcn
 	_ drawPolygonFcn        = b2go_DrawPolygonFcn

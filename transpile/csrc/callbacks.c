@@ -17,6 +17,7 @@ void b2go_PreSolveCallbackFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Manifol
 bool b2go_PreContinuousCallbackFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Pos point, b2Vec2 normal, void* context ) { return 0; }
 bool b2go_OverlapResultCallbackFcn( b2ShapeId shapeId, void* context ) { return 0; }
 float b2go_CastResultCallbackFcn( b2ShapeId shapeId, b2Pos point, b2Vec2 normal, float fraction, void* context ) { return 0; }
+bool b2go_PlaneResultCallbackFcn( b2ShapeId shapeId, const b2PlaneResult* plane, void* context ) { return 0; }
 int b2go_AssertCallbackFcn( const char* condition, const char* fileName, int lineNumber ) { return 0; }
 void b2go_LogCallbackFcn( const char* message ) {}
 
@@ -41,6 +42,7 @@ void b2go_check( void )
 	b2PreContinuousCallbackFcn* preContinuous = b2go_PreContinuousCallbackFcn;
 	b2OverlapResultCallbackFcn* overlapResult = b2go_OverlapResultCallbackFcn;
 	b2CastResultCallbackFcn* castResult = b2go_CastResultCallbackFcn;
+	b2PlaneResultCallbackFcn* planeResult = b2go_PlaneResultCallbackFcn;
 	b2AssertCallbackFcn* assert = b2go_AssertCallbackFcn;
 	b2LogCallbackFcn* log = b2go_LogCallbackFcn;
 

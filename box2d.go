@@ -427,6 +427,27 @@ func ClipVector(vector Vec2, planes []CollisionPlane) Vec2 {
 	return b2ClipVector(theStack, vector, planesStack.Addr, int32(len(planes)))
 }
 
+// PlaneResultFn is called for every shape that collides with the mover. Ignore the plane if
+// PlaneResult.Hit is false. Return false to stop the query.
+type PlaneResultFn func(shape Shape, plane PlaneResult) bool
+
+// CollideMover calls fcn with the collision planes between the mover capsule and the world,
+// for use with SolvePlanes. The mover and the planes are relative to origin.
+func (b World) CollideMover(origin Pos, mover Capsule, filter QueryFilter, fcn PlaneResultFn) {
+	fn := planeResultCallback(func(_ *_Stack, shapeId ShapeId, plane uintptr, _ uintptr) uint8 {
+		return boolUint8(fcn(Shape{Id: shapeId}, *(*PlaneResult)(unsafe.Pointer(plane))))
+	})
+
+	// box2d only sees a uintptr, the closure must not live on the goroutine stack, which can move
+	escapes(fn)
+	defer runtime.KeepAlive(fn)
+
+	moverStack := copyToStack(theStack, mover)
+	defer moverStack.Free()
+
+	b2World_CollideMover(theStack, b.Id, origin, moverStack.Addr, filter, __ccgo_fp(fn), 0)
+}
+
 type BodyEvents struct {
 	MoveEvents []BodyMoveEvent
 }
