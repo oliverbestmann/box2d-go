@@ -1,0 +1,67 @@
+name: Pages
+
+on:
+   push:
+      branches: [main]
+   workflow_dispatch:
+
+permissions:
+   contents: read
+   pages: write
+   id-token: write
+
+concurrency:
+   group: pages
+   cancel-in-progress: true
+
+jobs:
+   build:
+      runs-on: ubuntu-26.04-arm
+
+      env:
+         GOOS: js
+         GOARCH: wasm
+         GOEXPERIMENT: simd
+
+      steps:
+         - uses: actions/checkout@v7
+
+         # simd needs Go 1.27, example/go.mod only asks for 1.26
+         - name: Setup Go
+           uses: actions/setup-go@v7
+           with:
+              go-version: "1.27.x"
+
+         - name: Build examples
+           run: |
+              for example in pyramid jump-n-run; do
+                 mkdir -p "_site/$example"
+                 (cd example && go build -o "../_site/$example/$example.wasm" "./$example")
+                 cp "example/$example/index.html" "$(go env GOROOT)/lib/wasm/wasm_exec.js" "_site/$example/"
+              done
+
+              cat > _site/index.html <<'EOF'
+              <html>
+                  <head><meta charset="utf-8"/><title>box2d-go examples</title></head>
+                  <body>
+                      <ul>
+                          <li><a href="pyramid/">pyramid</a></li>
+                          <li><a href="jump-n-run/">jump-n-run</a></li>
+                      </ul>
+                  </body>
+              </html>
+              EOF
+
+         - uses: actions/upload-pages-artifact@v5
+
+   deploy:
+      needs: build
+      runs-on: ubuntu-26.04-arm
+
+      environment:
+         name: github-pages
+         url: ${{ steps.deployment.outputs.page_url }}
+
+      steps:
+         - id: deployment
+           uses: actions/deploy-pages@v5
