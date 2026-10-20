@@ -6,16 +6,18 @@ import (
 	"unsafe"
 )
 
-type DrawPolygon func(transform Transform, vertices []Vec2, color HexColor)
-type DrawSolidPolygon func(transform Transform, vertices []Vec2, radius float32, color HexColor)
-type DrawCircle func(center Vec2, radius float32, color HexColor)
-type DrawSolidCircle func(transform Transform, center Vec2, radius float32, color HexColor)
-type DrawSolidCapsule func(p1 Vec2, p2 Vec2, radius float32, color HexColor)
-type DrawLine func(p1 Vec2, p2 Vec2, color HexColor)
-type DrawTransform func(transform Transform)
-type DrawPoint func(p Vec2, size float32, color HexColor)
-type DrawString func(p Vec2, s string, color HexColor)
-type DrawBounds func(aabb AABB, color HexColor)
+type (
+	DrawPolygon      func(transform Transform, vertices []Vec2, color HexColor)
+	DrawSolidPolygon func(transform Transform, vertices []Vec2, radius float32, color HexColor)
+	DrawCircle       func(center Vec2, radius float32, color HexColor)
+	DrawSolidCircle  func(transform Transform, center Vec2, radius float32, color HexColor)
+	DrawSolidCapsule func(p1 Vec2, p2 Vec2, radius float32, color HexColor)
+	DrawLine         func(p1 Vec2, p2 Vec2, color HexColor)
+	DrawTransform    func(transform Transform)
+	DrawPoint        func(p Vec2, size float32, color HexColor)
+	DrawString       func(p Vec2, s string, color HexColor)
+	DrawBounds       func(aabb AABB, color HexColor)
+)
 
 // DebugDraw holds the callbacks to draw a world. Start with DefaultDebugDraw,
 // box2d draws nothing outside of DrawingBounds.

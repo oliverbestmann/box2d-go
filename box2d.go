@@ -9,13 +9,17 @@ import (
 	"unsafe"
 )
 
-type RestitutionCallback = func(restitutionA float32, userMaterialIdA uint64, restitutionB float32, userMaterialIdB uint64) float32
-type FrictionCallback = func(frictionA float32, userMaterialIdA uint64, frictionB float32, userMaterialIdB uint64) float32
+type (
+	RestitutionCallback = func(restitutionA float32, userMaterialIdA uint64, restitutionB float32, userMaterialIdB uint64) float32
+	FrictionCallback    = func(frictionA float32, userMaterialIdA uint64, frictionB float32, userMaterialIdB uint64) float32
+)
 
-var ZeroVec2 = Vec2{}
-var IdentityRot = Rot{C: 1.0, S: 0.0}
-var IdentityTransform = Transform{Q: IdentityRot}
-var ZeroMat = Mat22{}
+var (
+	ZeroVec2          = Vec2{}
+	IdentityRot       = Rot{C: 1.0, S: 0.0}
+	IdentityTransform = Transform{Q: IdentityRot}
+	ZeroMat           = Mat22{}
+)
 
 func init() {
 	b2SetAssertCallback(theStack, __ccgo_fp(assertCallback(b2DefaultAssertFcnGo)))
@@ -529,6 +533,7 @@ func (b Joint) AsPrismaticJoint() PrismaticJoint {
 
 	return PrismaticJoint{b}
 }
+
 func (b Joint) AsMotorJoint() MotorJoint {
 	if b.GetType() != JointTypeMotor {
 		panic("joint has wrong type")
@@ -536,6 +541,7 @@ func (b Joint) AsMotorJoint() MotorJoint {
 
 	return MotorJoint{b}
 }
+
 func (b Joint) AsRevoluteJoint() RevoluteJoint {
 	if b.GetType() != JointTypeRevolute {
 		panic("joint has wrong type")
@@ -543,6 +549,7 @@ func (b Joint) AsRevoluteJoint() RevoluteJoint {
 
 	return RevoluteJoint{b}
 }
+
 func (b Joint) AsDistanceJoint() DistanceJoint {
 	if b.GetType() != JointTypeDistance {
 		panic("joint has wrong type")
@@ -550,6 +557,7 @@ func (b Joint) AsDistanceJoint() DistanceJoint {
 
 	return DistanceJoint{b}
 }
+
 func (b Joint) AsWheelJoint() WheelJoint {
 	if b.GetType() != JointTypeWheel {
 		panic("joint has wrong type")
@@ -557,6 +565,7 @@ func (b Joint) AsWheelJoint() WheelJoint {
 
 	return WheelJoint{b}
 }
+
 func (b Joint) AsMoverJoint() MoverJoint {
 	if b.GetType() != JointTypeMover {
 		panic("joint has wrong type")
@@ -564,6 +573,7 @@ func (b Joint) AsMoverJoint() MoverJoint {
 
 	return MoverJoint{b}
 }
+
 func (b Joint) AsPogoJoint() PogoJoint {
 	if b.GetType() != JointTypePogo {
 		panic("joint has wrong type")
@@ -571,6 +581,7 @@ func (b Joint) AsPogoJoint() PogoJoint {
 
 	return PogoJoint{b}
 }
+
 func (b Joint) AsWeldJoint() WeldJoint {
 	if b.GetType() != JointTypeWeld {
 		panic("joint has wrong type")
@@ -578,6 +589,7 @@ func (b Joint) AsWeldJoint() WeldJoint {
 
 	return WeldJoint{b}
 }
+
 func (b Joint) AsFilterJoint() FilterJoint {
 	if b.GetType() != JointTypeFilter {
 		panic("joint has wrong type")
