@@ -1,10 +1,6 @@
 package b2
 
 import (
-	"errors"
-	"fmt"
-	"reflect"
-	"runtime"
 	"unsafe"
 )
 
@@ -15,8 +11,6 @@ type _Stack struct {
 	allocs []int
 	pos    int
 
-	objects map[uintptr]any
-
 	// yields counts the calls to sched_yield, each goroutine of box2d has its own stack
 	yields uint32
 }
@@ -24,8 +18,7 @@ type _Stack struct {
 //go:noinline
 func newStack(stackSize int) *_Stack {
 	stack := &_Stack{
-		Stack:   make([]byte, stackSize),
-		objects: make(map[uintptr]any),
+		Stack: make([]byte, stackSize),
 	}
 
 	escapes(stack)
@@ -73,44 +66,6 @@ func (s *_Stack) Free(n int) uintptr {
 	return 0
 }
 
-func (s *_Stack) RegisterObject(obj any) uintptr {
-	escapes(obj)
-
-	rObj := reflect.ValueOf(obj)
-	if rObj.Kind() != reflect.Pointer {
-		panic(errors.New("not a pointer"))
-	}
-
-	addr := rObj.Elem().UnsafeAddr()
-
-	for s.objects[addr] != nil {
-		addr += 8
-	}
-
-	s.objects[addr] = obj
-
-	return addr
-}
-
-func (s *_Stack) GetObject(addr uintptr) any {
-	obj, ok := s.objects[addr]
-	if !ok {
-		err := fmt.Errorf("no object at addr %#x", addr)
-		panic(err)
-	}
-
-	return obj
-}
-
-func (s *_Stack) ForgetObject(addr uintptr) {
-	if _, ok := s.objects[addr]; !ok {
-		err := fmt.Errorf("no object at addr %#x", addr)
-		panic(err)
-	}
-
-	delete(s.objects, addr)
-}
-
 func (s *_Stack) toCString(src string) alloc {
 	n := len(src) + 1
 	mem := s.Alloc(n)
@@ -133,13 +88,11 @@ func (a alloc) Free() {
 }
 
 func copyToStack[T any](tls *_Stack, value T) alloc {
-	n := unsafe.Sizeof(value)
-	stack := tls.Alloc(int(n))
-	memcpy(tls, stack, uintptr(unsafe.Pointer(&value)), size_t(n))
+	n := int(unsafe.Sizeof(value))
+	stack := tls.Alloc(n)
+	*(*T)(unsafe.Pointer(stack)) = value
 
-	runtime.KeepAlive(value)
-
-	return alloc{Addr: stack, tls: tls, size: int(n)}
+	return alloc{Addr: stack, tls: tls, size: n}
 }
 
 func sliceToStack[T any](tls *_Stack, values []T) alloc {

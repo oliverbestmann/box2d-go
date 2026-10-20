@@ -6,7 +6,6 @@ import (
 	"math/bits"
 	"regexp"
 	"sort"
-	"strings"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -73,11 +72,6 @@ func __builtin_aligned_alloc(tls *_Stack, align, size uint64) uintptr {
 
 	if addr%uintptr(align) != 0 {
 		addr += uintptr(align) - addr%uintptr(align)
-	}
-
-	// address is now aligned
-	if addr%uintptr(align) != 0 {
-		panic("not aligned")
 	}
 
 	heap.Store(addr, buf)
@@ -191,8 +185,10 @@ func __builtin_b2Pause(_ *_Stack) {
 	pause()
 }
 
-func printf(tls *_Stack, format uintptr, va uintptr) (r int32) {
-	panic("not required, only used in default assert function")
+// printf is only reached by the recording code of box2d, which is not exposed.
+func printf(_ *_Stack, format uintptr, va uintptr) int32 {
+	n, _ := fmt.Print(cFormat(format, va))
+	return int32(n)
 }
 
 var reFormatStr = regexp.MustCompile("%[^a-zA-Z]*([dfgs])")
@@ -275,9 +271,8 @@ func fclose(tls *_Stack, f uintptr) (r1 int32) {
 	panic("fclose: not implemented")
 }
 
-// Dummy annotation marking that the value x escapes,
-// for use in cases where the reflect code is so clever that
-// the compiler cannot follow.
+// escapes forces x onto the heap. box2d only sees memory as a uintptr, which the compiler does
+// not track, so memory handed to box2d must not live on a goroutine stack that can move.
 func escapes(x any) {
 	if dummy.b {
 		dummy.x = x
@@ -289,15 +284,12 @@ var dummy struct {
 	x any
 }
 
+// toString copies the null terminated C string at base.
 func toString(base uintptr) string {
-	var str strings.Builder
-
-	for n := 0; ; n += 1 {
-		ch := *(*byte)(unsafe.Pointer(base + uintptr(n)))
-		if ch == 0 {
-			return str.String()
-		}
-
-		str.WriteByte(ch)
+	n := 0
+	for *(*byte)(unsafe.Pointer(base + uintptr(n))) != 0 {
+		n++
 	}
+
+	return string(sliceOf(base, size_t(n)))
 }

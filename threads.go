@@ -9,7 +9,8 @@ import (
 // Threading primitives of box2d (src/core.h), used by its built-in task scheduler and the
 // recorder. A thread is a goroutine with its own stack. box2d only passes the handles around.
 
-// handles keeps the Go objects behind the handles that box2d holds.
+// handles keeps the Go objects behind the handles that box2d holds, for threads and for
+// callback contexts like the DebugDraw in World.Draw.
 var handles sync.Map
 
 var lastHandle atomic.Uintptr

@@ -2,8 +2,6 @@ package b2
 
 import (
 	"math"
-	"slices"
-	"unsafe"
 )
 
 type (
@@ -70,9 +68,9 @@ func DefaultDebugDraw() DebugDraw {
 }
 
 func (b World) Draw(draw DebugDraw) {
-	// move the DebugDraw object temporarily onto the heap
-	context := theStack.RegisterObject(&draw)
-	defer theStack.ForgetObject(context)
+	// box2d passes the context back to the callbacks
+	context := newHandle(&draw)
+	defer handles.Delete(context)
 
 	var dd b2DebugDraw
 	dd.DrawPolygonFcn = __ccgo_fp(drawPolygonFcn(cbDrawPolygon))
@@ -114,78 +112,74 @@ func (b World) Draw(draw DebugDraw) {
 	b2World_Draw(theStack, b.Id, ddStack.Addr)
 }
 
-func cbDrawPolygon(tls *_Stack, transform Transform, vertices uintptr, vertexCount int32, color HexColor, context uintptr) {
-	ctx := tls.GetObject(context).(*DebugDraw)
+func cbDrawPolygon(_ *_Stack, transform Transform, vertices uintptr, vertexCount int32, color HexColor, context uintptr) {
+	ctx := handleOf[*DebugDraw](context)
 	if ctx.DrawPolygon != nil {
-		vertices := toSlice[Vec2](vertices, vertexCount)
+		vertices := copySlice[Vec2](vertices, vertexCount)
 		ctx.DrawPolygon(transform, vertices, color)
 	}
 }
 
-func cbDrawSolidPolygon(tls *_Stack, transform Transform, vertices uintptr, vertexCount int32, radius float32, color HexColor, context uintptr) {
-	ctx := tls.GetObject(context).(*DebugDraw)
+func cbDrawSolidPolygon(_ *_Stack, transform Transform, vertices uintptr, vertexCount int32, radius float32, color HexColor, context uintptr) {
+	ctx := handleOf[*DebugDraw](context)
 	if ctx.DrawSolidPolygon != nil {
-		vertices := toSlice[Vec2](vertices, vertexCount)
+		vertices := copySlice[Vec2](vertices, vertexCount)
 		ctx.DrawSolidPolygon(transform, vertices, radius, color)
 	}
 }
 
-func cbDrawCircle(tls *_Stack, center Vec2, radius float32, color HexColor, context uintptr) {
-	ctx := tls.GetObject(context).(*DebugDraw)
+func cbDrawCircle(_ *_Stack, center Vec2, radius float32, color HexColor, context uintptr) {
+	ctx := handleOf[*DebugDraw](context)
 	if ctx.DrawCircle != nil {
 		ctx.DrawCircle(center, radius, color)
 	}
 }
 
-func cbDrawSolidCircle(tls *_Stack, transform Transform, center Vec2, radius float32, color HexColor, context uintptr) {
-	ctx := tls.GetObject(context).(*DebugDraw)
+func cbDrawSolidCircle(_ *_Stack, transform Transform, center Vec2, radius float32, color HexColor, context uintptr) {
+	ctx := handleOf[*DebugDraw](context)
 	if ctx.DrawSolidCircle != nil {
 		ctx.DrawSolidCircle(transform, center, radius, color)
 	}
 }
 
-func cbDrawSolidCapsule(tls *_Stack, p1 Vec2, p2 Vec2, radius float32, color HexColor, context uintptr) {
-	ctx := tls.GetObject(context).(*DebugDraw)
+func cbDrawSolidCapsule(_ *_Stack, p1 Vec2, p2 Vec2, radius float32, color HexColor, context uintptr) {
+	ctx := handleOf[*DebugDraw](context)
 	if ctx.DrawSolidCapsule != nil {
 		ctx.DrawSolidCapsule(p1, p2, radius, color)
 	}
 }
 
-func cbDrawLine(tls *_Stack, p1 Vec2, p2 Vec2, color HexColor, context uintptr) {
-	ctx := tls.GetObject(context).(*DebugDraw)
+func cbDrawLine(_ *_Stack, p1 Vec2, p2 Vec2, color HexColor, context uintptr) {
+	ctx := handleOf[*DebugDraw](context)
 	if ctx.DrawLine != nil {
 		ctx.DrawLine(p1, p2, color)
 	}
 }
 
-func cbDrawTransform(tls *_Stack, transform Transform, context uintptr) {
-	ctx := tls.GetObject(context).(*DebugDraw)
+func cbDrawTransform(_ *_Stack, transform Transform, context uintptr) {
+	ctx := handleOf[*DebugDraw](context)
 	if ctx.DrawTransform != nil {
 		ctx.DrawTransform(transform)
 	}
 }
 
-func cbDrawPoint(tls *_Stack, p Vec2, size float32, color HexColor, context uintptr) {
-	ctx := tls.GetObject(context).(*DebugDraw)
+func cbDrawPoint(_ *_Stack, p Vec2, size float32, color HexColor, context uintptr) {
+	ctx := handleOf[*DebugDraw](context)
 	if ctx.DrawPoint != nil {
 		ctx.DrawPoint(p, size, color)
 	}
 }
 
-func cbDrawString(tls *_Stack, p Vec2, s uintptr, color HexColor, context uintptr) {
-	ctx := tls.GetObject(context).(*DebugDraw)
+func cbDrawString(_ *_Stack, p Vec2, s uintptr, color HexColor, context uintptr) {
+	ctx := handleOf[*DebugDraw](context)
 	if ctx.DrawString != nil {
 		ctx.DrawString(p, toString(s), color)
 	}
 }
 
-func cbDrawBounds(tls *_Stack, aabb AABB, color HexColor, context uintptr) {
-	ctx := tls.GetObject(context).(*DebugDraw)
+func cbDrawBounds(_ *_Stack, aabb AABB, color HexColor, context uintptr) {
+	ctx := handleOf[*DebugDraw](context)
 	if ctx.DrawBounds != nil {
 		ctx.DrawBounds(aabb, color)
 	}
-}
-
-func toSlice[T any](ptr uintptr, count int32) []T {
-	return slices.Clone(unsafe.Slice((*T)(unsafe.Pointer(ptr)), count))
 }
