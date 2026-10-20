@@ -186,7 +186,8 @@ func clock_gettime(tls *_Stack, clk clockid_t, ts uintptr) (r int32) {
 	return 0
 }
 
-func __builtin_Gosched(tls *_Stack) {
+// __builtin_b2Pause is b2Pause, the CPU hint in box2d's spin loops.
+func __builtin_b2Pause(_ *_Stack) {
 	pause()
 }
 

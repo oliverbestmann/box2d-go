@@ -1989,8 +1989,8 @@ func b2SolverTask(tls *_Stack, taskContext uintptr) {
 				//}
 				// while ((__rdtsc() - prev) < maxSpinTime);
 				// maxSpinTime += 10;
-				__builtin_Gosched(tls)
-				__builtin_Gosched(tls)
+				__builtin_b2Pause(tls)
+				__builtin_b2Pause(tls)
 				spinCount = spinCount + int32(1)
 			}
 		}

@@ -100,11 +100,11 @@ index 2034726..80ad889 100644
  
 -#if ( defined( __GNUC__ ) || defined( __clang__ ) ) && ( defined( __i386__ ) || defined( __x86_64__ ) )
 +#if defined( __CCGO__ )
-+void __builtin_Gosched();
++void __builtin_b2Pause();
 +
 +static inline void b2Pause( void )
 +{
-+	__builtin_Gosched();
++	__builtin_b2Pause();
 +}
 +#elif ( defined( __GNUC__ ) || defined( __clang__ ) ) && ( defined( __i386__ ) || defined( __x86_64__ ) )
  static inline void b2Pause( void )

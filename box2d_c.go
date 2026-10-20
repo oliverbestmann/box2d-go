@@ -24506,7 +24506,7 @@ func b2SchedulerSpin(tls *_Stack, scheduler uintptr) (r uint8) {
 			if !(i < int32(8)) {
 				break
 			}
-			__builtin_Gosched(tls)
+			__builtin_b2Pause(tls)
 			goto _4
 		_4:
 			;
@@ -27711,7 +27711,7 @@ func b2ExecuteMainStage(tls *_Stack, stage uintptr, context uintptr, syncBits ui
 			if !(v2 != blockCount) {
 				break
 			}
-			__builtin_Gosched(tls)
+			__builtin_b2Pause(tls)
 		}
 		atomicStoreNInt32(stage+84, 0, int32FromInt32(__ATOMIC_SEQ_CST))
 	}
