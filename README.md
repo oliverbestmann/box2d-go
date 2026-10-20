@@ -111,6 +111,18 @@ for range 90 {
 world.DestroyWorld()
 ```
 
+## Demos
+
+The [`example`](example) directory has two [ebitengine](https://ebitengine.org) programs. They run in the browser
+as wasm with SIMD:
+
+| [Pyramid](https://oliverbestmann.github.io/box2d-go/pyramid/) | [Jump and run](https://oliverbestmann.github.io/box2d-go/jump-n-run/) |
+|---|---|
+| [![Pyramid](docs/pyramid.png)](https://oliverbestmann.github.io/box2d-go/pyramid/) | [![Jump and run](docs/jump-n-run.png)](https://oliverbestmann.github.io/box2d-go/jump-n-run/) |
+
+The pyramid compares box2d-go with [jakecoffman/cp](https://github.com/jakecoffman/cp), press `b` to start it. The
+jump and run is a character controller sandbox, see its [README](example/jump-n-run/README.md).
+
 ## Multithreading
 
 Box2D splits each step across `WorldDef.WorkerCount` threads. This port runs them as goroutines.
