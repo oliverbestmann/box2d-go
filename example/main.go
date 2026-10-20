@@ -29,7 +29,6 @@ func main() {
 type viz struct {
 	makePhysics func(gravity float64, concurrent bool) Physics
 	physics     Physics
-	bodies      []Body
 	physicsTime float64
 	paused      bool
 	slowmo      bool
@@ -156,15 +155,13 @@ func (v *viz) initialize() {
 	layers := int(math.Round(20 * math.Sqrt(sizes[v.size])))
 	L := float64(layers)
 
-	var bodies []Body
-
 	floor := BodyDef{Elasticity: 0.1, Friction: 0.9, Density: 1}
 	box := BodyDef{Elasticity: 0.25, Friction: 0.5, Density: 1}
 	big := BodyDef{Density: 10, Elasticity: 0.1, Friction: 0.9}
 
-	bodies = append(bodies, ph.CreateStaticLine(-2*L, 0, 2*L, 0, floor))
-	bodies = append(bodies, ph.CreateStaticLine(-2*L, 0, -2*L, 5*L, floor))
-	bodies = append(bodies, ph.CreateStaticLine(2*L, 0, 2*L, 5*L, floor))
+	ph.CreateStaticLine(-2*L, 0, 2*L, 0, floor)
+	ph.CreateStaticLine(-2*L, 0, -2*L, 5*L, floor)
+	ph.CreateStaticLine(2*L, 0, 2*L, 5*L, floor)
 
 	// create layers of boxes
 	for l := range layers {
@@ -172,17 +169,15 @@ func (v *viz) initialize() {
 			centerX := float64(i) + 0.5 - float64(l)/2
 			centerY := L - float64(l) - 0.5
 
-			bodies = append(bodies, ph.CreateSquare(0.5, centerX, centerY, box))
+			ph.CreateSquare(0.5, centerX, centerY, box)
 		}
 	}
 
 	// create a fast moving box
 	b := ph.CreateSquare(2, -1.8*L, 2.6*L, big)
 	b.SetVelocity(75, -100)
-	bodies = append(bodies, b)
 
 	v.physics = ph
-	v.bodies = bodies
 	v.layers = layers
 	v.physicsTime = 0
 	v.paused = false
@@ -196,8 +191,6 @@ func screenLength(toScreen ebiten.GeoM, length float64) float64 {
 }
 
 type Body interface {
-	Position() (float64, float64)
-	Rotation() float64
 	SetVelocity(x, y float64)
 }
 
@@ -212,5 +205,5 @@ type Physics interface {
 	Step(dt float64, subSteps int)
 	Destroy()
 	CreateSquare(halfSize, centerX, centerY float64, def BodyDef) Body
-	CreateStaticLine(x0, y0, x1, y1 float64, def BodyDef) Body
+	CreateStaticLine(x0, y0, x1, y1 float64, def BodyDef)
 }

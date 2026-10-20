@@ -48,7 +48,7 @@ func (ph Chipmunk) CreateSquare(halfSize, centerX, centerY float64, d BodyDef) B
 	}
 }
 
-func (ph Chipmunk) CreateStaticLine(x0, y0, x1, y1 float64, d BodyDef) Body {
+func (ph Chipmunk) CreateStaticLine(x0, y0, x1, y1 float64, d BodyDef) {
 	body := cp.NewStaticBody()
 
 	a := cp.Vector{X: x0, Y: y0}
@@ -61,24 +61,10 @@ func (ph Chipmunk) CreateStaticLine(x0, y0, x1, y1 float64, d BodyDef) Body {
 
 	ph.Space.AddShape(shape)
 	ph.Space.AddBody(body)
-
-	return &cpBody{
-		body: body,
-	}
 }
 
 type cpBody struct {
 	body *cp.Body
-}
-
-func (b *cpBody) Position() (float64, float64) {
-	pos := b.body.Position()
-	return pos.X, pos.Y
-}
-
-func (b *cpBody) Rotation() float64 {
-	rot := b.body.Rotation()
-	return math.Atan2(rot.Y, rot.X)
 }
 
 func (b *cpBody) SetVelocity(x, y float64) {

@@ -5,7 +5,7 @@ go 1.26.0
 require (
 	github.com/hajimehoshi/ebiten/v2 v2.10.5
 	github.com/jakecoffman/cp/v2 v2.4.0
-	github.com/oliverbestmann/box2d-go/v3 v3.2.0
+	github.com/oliverbestmann/box2d-go/v3 v3.2.1
 )
 
 require (

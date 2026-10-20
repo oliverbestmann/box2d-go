@@ -169,15 +169,10 @@ func toColorScale(h b2.HexColor) ebiten.ColorScale {
 }
 
 func (ph Box2D) CreateSquare(halfSize, centerX, centerY float64, d BodyDef) Body {
-	var tr b2.Transform
-	tr.P.X = float32(centerX)
-	tr.P.Y = float32(centerY)
-	tr.Q.C = 1
-
 	def := b2.DefaultBodyDef()
 	def.Type1 = b2.DynamicBody
+	def.Position = b2.Vec2{X: float32(centerX), Y: float32(centerY)}
 	body := ph.World.CreateBody(def)
-	body.SetTransform(tr.P, tr.Q)
 
 	shape := b2.DefaultShapeDef()
 	shape.Density = float32(d.Density)
@@ -188,7 +183,7 @@ func (ph Box2D) CreateSquare(halfSize, centerX, centerY float64, d BodyDef) Body
 	return &b2Body{body: body}
 }
 
-func (ph Box2D) CreateStaticLine(x0, y0, x1, y1 float64, d BodyDef) Body {
+func (ph Box2D) CreateStaticLine(x0, y0, x1, y1 float64, d BodyDef) {
 	def := b2.DefaultBodyDef()
 	def.Type1 = b2.StaticBody
 
@@ -202,24 +197,10 @@ func (ph Box2D) CreateStaticLine(x0, y0, x1, y1 float64, d BodyDef) Body {
 		Point1: b2.Vec2{X: float32(x0), Y: float32(y0)},
 		Point2: b2.Vec2{X: float32(x1), Y: float32(y1)},
 	})
-
-	return &b2Body{
-		body: body,
-	}
 }
 
 type b2Body struct {
 	body b2.Body
-}
-
-func (b *b2Body) Position() (float64, float64) {
-	pos := b.body.GetPosition()
-	return float64(pos.X), float64(pos.Y)
-}
-
-func (b *b2Body) Rotation() float64 {
-	rot := b.body.GetRotation()
-	return math.Atan2(float64(rot.S), float64(rot.C))
 }
 
 func (b *b2Body) SetVelocity(x, y float64) {
