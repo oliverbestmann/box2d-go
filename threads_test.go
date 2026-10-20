@@ -1,6 +1,7 @@
 package b2
 
 import (
+	"runtime"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -31,6 +32,10 @@ func TestThreadSignalAndJoin(t *testing.T) {
 		__builtin_b2SignalSemaphore(nil, sem)
 	})
 
+	// __ccgo_fp hides the closure from the compiler and GC: move it to the heap and keep it alive
+	escapes(worker)
+	defer runtime.KeepAlive(worker)
+
 	thread := __builtin_b2CreateThread(nil, __ccgo_fp(worker), 0, 0)
 	__builtin_b2WaitSemaphore(nil, sem)
 	assert.Equal(t, 99, value)
@@ -50,6 +55,10 @@ func TestThreadMutex(t *testing.T) {
 			__builtin_b2UnlockMutex(nil, mutex)
 		}
 	})
+
+	// __ccgo_fp hides the closure from the compiler and GC: move it to the heap and keep it alive
+	escapes(worker)
+	defer runtime.KeepAlive(worker)
 
 	var threads []uintptr
 	for range 4 {
