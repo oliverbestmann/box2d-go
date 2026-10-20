@@ -566,11 +566,6 @@ func createClassTypes(decls *[]dst.Decl) {
 				Names: []*dst.Ident{dst.NewIdent("Id")},
 				Type:  dst.NewIdent(ty.IdType),
 			})
-
-			// fields.List = append(fields.List, &dst.Field{
-			// 	Names: []*dst.Ident{dst.NewIdent("tls")},
-			// 	Type:  &dst.StarExpr{X: dst.NewIdent("_Stack")},
-			// })
 		} else {
 			fields.List = append(fields.List, &dst.Field{
 				Type: dst.NewIdent(ty.Extends),
@@ -777,23 +772,6 @@ func createWrappers(decls *[]dst.Decl, api API) Visitor {
 							X:   dst.NewIdent(name.Name),
 							Sel: dst.NewIdent("Id"),
 						})
-
-						//	// body.tls = b.tls
-						//	body = append(body, &dst.AssignStmt{
-						//		Tok: token.ASSIGN,
-						//		Lhs: []dst.Expr{
-						//			&dst.SelectorExpr{
-						//				X:   dst.NewIdent(name.Name),
-						//				Sel: dst.NewIdent("tls"),
-						//			},
-						//		},
-						//		Rhs: []dst.Expr{
-						//			&dst.SelectorExpr{
-						//				X:   dst.NewIdent("b"),
-						//				Sel: dst.NewIdent("tls"),
-						//			},
-						//		},
-						//	})
 					} else {
 						assign.Lhs = append(assign.Lhs, dst.NewIdent(name.Name))
 					}
@@ -980,9 +958,7 @@ func readAPI() API {
 	api.PointerTypes = map[string]map[string]ParamType{}
 
 	headers, err := filepath.Glob("../box2d-c/include/box2d/*.h")
-	if err != nil {
-		panic(err)
-	}
+	must(err)
 
 	reType := regexp.MustCompile(`typedef (?:struct|enum) (b2[A-Za-z0-9_]+)`)
 	reFunc := regexp.MustCompile(`B2_API \S+ (b2[A-Za-z0-9_]+)`)
@@ -1075,9 +1051,9 @@ func readAPI() API {
 	// we do not really need those, do we?
 	api.Exposed["b2GetMillisecondsAndReset"] = false
 	api.Exposed["b2Hash"] = false
-	api.Exposed["b2ComputeHull"] = false
 
 	// these take a pointer to an array, wrapped by hand to accept a slice
+	api.Exposed["b2ComputeHull"] = false
 	api.Exposed["b2MakeProxy"] = false
 	api.Exposed["b2MakeOffsetProxy"] = false
 	api.Exposed["b2ClipVector"] = false
