@@ -17,6 +17,7 @@ port and does not match the Box2D patch version. The table shows which Box2D ver
 | box2d-go | Box2D  |
 |----------|--------|
 | v3.2.0   | v3.2.0 |
+| v3.2.1   | v3.2.0 |
 
 ## API
 
@@ -114,10 +115,14 @@ world.DestroyWorld()
 
 Box2D splits each step across `WorldDef.WorkerCount` threads. This port runs them as goroutines.
 `b2.EnableConcurrency(&worldDef)` sets the worker count from the number of CPUs, up to 8. You can also set
-`WorkerCount` yourself.
+`WorkerCount` yourself. With a few hundred bodies, workers can make a step slower, mostly when steps run at a fixed
+frame rate with idle time in between. Measure your scene before you enable them.
 
 The rest of the API is not thread safe. Don't call into the `b2` package from more than one goroutine at a time, not
 even for reads.
+
+With workers, the friction, restitution, custom filter and pre-solve callbacks run on several goroutines at once.
+Don't call into the `b2` package from these callbacks.
 
 ## SIMD
 

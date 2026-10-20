@@ -58,10 +58,10 @@ func TestAPI(t *testing.T) {
 	subStepCount := int32(4)
 
 	// for (int i = 0; i < 90; ++i) {
-	// 	 2World_Step(worldId, timeStep, subStepCount);
-	// 	 2Vec2 position = b2Body_GetPosition(bodyId);
-	// 	 2Rot rotation = b2Body_GetRotation(bodyId);
-	// 	 rintf("%4.2f %4.2f %4.2f\n", position.x, position.y, b2Rot_GetAngle(rotation));
+	//     b2World_Step(worldId, timeStep, subStepCount);
+	//     b2Vec2 position = b2Body_GetPosition(bodyId);
+	//     b2Rot rotation = b2Body_GetRotation(bodyId);
+	//     printf("%4.2f %4.2f %4.2f\n", position.x, position.y, b2Rot_GetAngle(rotation));
 	// }
 	for range 90 {
 		world.Step(timeStep, subStepCount)
