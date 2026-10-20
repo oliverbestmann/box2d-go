@@ -4,10 +4,11 @@ on: [push]
 
 jobs:
    test-b2:
-      runs-on: ubuntu-latest
+      runs-on: ${{ matrix.os }}
       strategy:
          matrix:
-            go-version: ["1.22.x", "1.23.x", "1.24.x", "1.25.x"]
+            os: [ubuntu-26.04, ubuntu-26.04-arm]
+            go-version: ["1.22.x", "1.23.x", "1.24.x", "1.25.x", "1.26.x", "1.27.x"]
 
       steps:
          - uses: actions/checkout@v4
@@ -17,11 +18,63 @@ jobs:
            with:
               go-version: ${{ matrix.go-version }}
 
-         # You can test your matrix by printing the current Go version
          - name: Run tests
            run: go test -v ./...
 
          # the transpiled code keeps memory as uintptr, see README
+         - name: Run go vet
+           run: go vet -unsafeptr=false ./...
+
+   test-simd:
+      runs-on: ${{ matrix.os }}
+      strategy:
+         matrix:
+            os: [ubuntu-26.04, ubuntu-26.04-arm]
+
+      env:
+         GOEXPERIMENT: simd
+         # SIMD on amd64 needs AVX, arm64 ignores this
+         GOAMD64: v3
+
+      steps:
+         - uses: actions/checkout@v4
+
+         - name: Setup Go
+           uses: actions/setup-go@v5
+           with:
+              go-version: "1.27.x"
+
+         - name: Run tests
+           run: go test -v ./...
+
+         - name: Run go vet
+           run: go vet -unsafeptr=false ./...
+
+   # the determinism tests check that wasm gives the same hashes as the native builds
+   test-wasm:
+      runs-on: ubuntu-26.04-arm
+      strategy:
+         matrix:
+            goexperiment: ["", "simd"]
+
+      env:
+         GOOS: wasip1
+         GOARCH: wasm
+         GOEXPERIMENT: ${{ matrix.goexperiment }}
+
+      steps:
+         - uses: actions/checkout@v4
+
+         - name: Setup Go
+           uses: actions/setup-go@v5
+           with:
+              go-version: "1.27.x"
+
+         - uses: bytecodealliance/actions/wasmtime/setup@v1
+
+         - name: Run tests with wasmtime
+           run: PATH="$PATH:$(go env GOROOT)/lib/wasm" go test -v ./...
+
          - name: Run go vet
            run: go vet -unsafeptr=false ./...
 
