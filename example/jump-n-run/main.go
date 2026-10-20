@@ -30,14 +30,28 @@ func main() {
 	// shortcut: fixed 120 Hz, not the monitor's real rate, ebiten does not expose it.
 	ebiten.SetTPS(tps)
 
-	if err := ebiten.RunGame(&game{scene: NewScene()}); err != nil {
+	if err := ebiten.RunGame(&game{scene: NewScene(), sprites: map[spriteKey]sprite{}}); err != nil {
 		fmt.Printf("Error: %s\n", err)
 	}
 }
 
 type game struct {
-	scene  *Scene
-	shapes []b2.Shape
+	scene   *Scene
+	shapes  []b2.Shape
+	sprites map[spriteKey]sprite
+}
+
+// spriteKey identifies a shape by its geometry, so equal bodies share one sprite.
+type spriteKey struct {
+	color   color.RGBA
+	polygon b2.Polygon
+	circle  b2.Circle
+}
+
+// sprite is a shape drawn in body coordinates. ox, oy is the body origin in the image.
+type sprite struct {
+	image  *ebiten.Image
+	ox, oy float64
 }
 
 func (g *game) Update() error {
@@ -99,35 +113,90 @@ func (g *game) Layout(int, int) (int, int) {
 
 func (g *game) drawBody(screen *ebiten.Image, t thing) {
 	tf := t.body.GetTransform()
+	x, y := toScreen(tf.P)
+	// y is flipped on screen, so a counterclockwise world rotation is a negative screen rotation
+	angle := -math.Atan2(float64(tf.Q.S), float64(tf.Q.C))
 
 	g.shapes = t.body.GetShapes(g.shapes)
 	for _, shape := range g.shapes {
-		switch shape.GetType() {
-		case b2.PolygonShape:
-			poly := shape.GetPolygon()
-
-			var path vector.Path
-			for _, v := range poly.Vertices[:poly.Count] {
-				path.LineTo(toScreen(transform(tf, v)))
-			}
-			path.Close()
-
-			fillPath(screen, &path, t.color)
-			strokePath(screen, &path, darken(t.color))
-
-		case b2.CircleShape:
-			circle := shape.GetCircle()
-			cx, cy := toScreen(transform(tf, circle.Center))
-			r := circle.Radius * pixelsPerM
-
-			vector.FillCircle(screen, cx, cy, r, t.color, true)
-			vector.StrokeCircle(screen, cx, cy, r, 1.5, darken(t.color), true)
-
-			// a spoke to show the rotation
-			ex, ey := toScreen(transform(tf, b2.Vec2{X: circle.Center.X + circle.Radius, Y: circle.Center.Y}))
-			vector.StrokeLine(screen, cx, cy, ex, ey, 1.5, darken(t.color), true)
+		s, ok := g.sprite(shape, t.color)
+		if !ok {
+			continue
 		}
+
+		op := &ebiten.DrawImageOptions{Filter: ebiten.FilterLinear}
+		op.GeoM.Translate(-s.ox, -s.oy)
+		op.GeoM.Rotate(angle)
+		op.GeoM.Translate(float64(x), float64(y))
+		screen.DrawImage(s.image, op)
 	}
+}
+
+// sprite returns the cached image of a polygon or circle shape and draws it on first use.
+func (g *game) sprite(shape b2.Shape, c color.RGBA) (sprite, bool) {
+	key := spriteKey{color: c}
+
+	var lo, hi b2.Vec2
+	switch shape.GetType() {
+	case b2.PolygonShape:
+		key.polygon = shape.GetPolygon()
+		lo, hi = key.polygon.Vertices[0], key.polygon.Vertices[0]
+		for _, v := range key.polygon.Vertices[:key.polygon.Count] {
+			lo = b2.Vec2{X: min(lo.X, v.X), Y: min(lo.Y, v.Y)}
+			hi = b2.Vec2{X: max(hi.X, v.X), Y: max(hi.Y, v.Y)}
+		}
+
+	case b2.CircleShape:
+		key.circle = shape.GetCircle()
+		center, r := key.circle.Center, key.circle.Radius
+		lo = b2.Vec2{X: center.X - r, Y: center.Y - r}
+		hi = b2.Vec2{X: center.X + r, Y: center.Y + r}
+
+	default:
+		return sprite{}, false
+	}
+
+	if s, ok := g.sprites[key]; ok {
+		return s, true
+	}
+
+	// room for the outline and anti aliasing
+	const pad = 2
+
+	ox, oy := -lo.X*pixelsPerM+pad, hi.Y*pixelsPerM+pad
+	w := int(math.Ceil(float64((hi.X-lo.X)*pixelsPerM))) + 2*pad
+	h := int(math.Ceil(float64((hi.Y-lo.Y)*pixelsPerM))) + 2*pad
+	img := ebiten.NewImage(w, h)
+
+	toImage := func(v b2.Vec2) (float32, float32) {
+		return ox + v.X*pixelsPerM, oy - v.Y*pixelsPerM
+	}
+
+	if key.polygon.Count > 0 {
+		var path vector.Path
+		for _, v := range key.polygon.Vertices[:key.polygon.Count] {
+			path.LineTo(toImage(v))
+		}
+		path.Close()
+
+		fillPath(img, &path, c)
+		strokePath(img, &path, darken(c))
+	} else {
+		circle := key.circle
+		cx, cy := toImage(circle.Center)
+		r := circle.Radius * pixelsPerM
+
+		vector.FillCircle(img, cx, cy, r, c, true)
+		vector.StrokeCircle(img, cx, cy, r, 1.5, darken(c), true)
+
+		// a spoke to show the rotation
+		ex, ey := toImage(b2.Vec2{X: circle.Center.X + circle.Radius, Y: circle.Center.Y})
+		vector.StrokeLine(img, cx, cy, ex, ey, 1.5, darken(c), true)
+	}
+
+	s := sprite{image: img, ox: float64(ox), oy: float64(oy)}
+	g.sprites[key] = s
+	return s, true
 }
 
 func (g *game) drawPlayer(screen *ebiten.Image) {
@@ -193,13 +262,6 @@ func colorScale(c color.RGBA) ebiten.ColorScale {
 
 func darken(c color.RGBA) color.RGBA {
 	return color.RGBA{c.R / 2, c.G / 2, c.B / 2, c.A}
-}
-
-func transform(tf b2.Transform, v b2.Vec2) b2.Pos {
-	return b2.Pos{
-		X: tf.P.X + tf.Q.C*v.X - tf.Q.S*v.Y,
-		Y: tf.P.Y + tf.Q.S*v.X + tf.Q.C*v.Y,
-	}
 }
 
 func toScreen(p b2.Pos) (float32, float32) {
