@@ -23,6 +23,9 @@ type Joint struct {
 type Chain struct {
 	Id ChainId
 }
+type Contact struct {
+	Id ContactId
+}
 type PrismaticJoint struct {
 	Joint
 }
@@ -41,7 +44,10 @@ type WheelJoint struct {
 type WeldJoint struct {
 	Joint
 }
-type MouseJoint struct {
+type MoverJoint struct {
+	Joint
+}
+type PogoJoint struct {
 	Joint
 }
 type FilterJoint struct {
@@ -55,17 +61,17 @@ func (b World) CreateBody(def BodyDef) (r Body) {
 	r.Id = b2CreateBody(theStack, b.Id, defStack.Addr)
 	return
 }
-func (b Body) DestroyBody()                  { b2DestroyBody(theStack, b.Id) }
-func (b Body) GetContactCapacity() (r int32) { r = b2Body_GetContactCapacity(theStack, b.Id); return }
-func (b Body) ComputeAABB() (r AABB)         { r = b2Body_ComputeAABB(theStack, b.Id); return }
-func (b Body) GetPosition() (r Vec2)         { r = b2Body_GetPosition(theStack, b.Id); return }
-func (b Body) GetRotation() (r Rot)          { r = b2Body_GetRotation(theStack, b.Id); return }
-func (b Body) GetTransform() (r Transform)   { r = b2Body_GetTransform(theStack, b.Id); return }
-func (b Body) GetLocalPoint(worldPoint Vec2) (r Vec2) {
+func (b Body) DestroyBody()                     { b2DestroyBody(theStack, b.Id) }
+func (b Body) GetContactCapacity() (r int32)    { r = b2Body_GetContactCapacity(theStack, b.Id); return }
+func (b Body) ComputeBounds() (r AABB)          { r = b2Body_ComputeBounds(theStack, b.Id); return }
+func (b Body) GetPosition() (r Pos)             { r = b2Body_GetPosition(theStack, b.Id); return }
+func (b Body) GetRotation() (r Rot)             { r = b2Body_GetRotation(theStack, b.Id); return }
+func (b Body) GetTransform() (r WorldTransform) { r = b2Body_GetTransform(theStack, b.Id); return }
+func (b Body) GetLocalPoint(worldPoint Pos) (r Vec2) {
 	r = b2Body_GetLocalPoint(theStack, b.Id, worldPoint)
 	return
 }
-func (b Body) GetWorldPoint(localPoint Vec2) (r Vec2) {
+func (b Body) GetWorldPoint(localPoint Vec2) (r Pos) {
 	r = b2Body_GetWorldPoint(theStack, b.Id, localPoint)
 	return
 }
@@ -77,7 +83,7 @@ func (b Body) GetWorldVector(localVector Vec2) (r Vec2) {
 	r = b2Body_GetWorldVector(theStack, b.Id, localVector)
 	return
 }
-func (b Body) SetTransform(position Vec2, rotation Rot) {
+func (b Body) SetTransform(position Pos, rotation Rot) {
 	b2Body_SetTransform(theStack, b.Id, position, rotation)
 }
 func (b Body) GetLinearVelocity() (r Vec2)     { r = b2Body_GetLinearVelocity(theStack, b.Id); return }
@@ -88,18 +94,18 @@ func (b Body) SetLinearVelocity(linearVelocity Vec2) {
 func (b Body) SetAngularVelocity(angularVelocity float32) {
 	b2Body_SetAngularVelocity(theStack, b.Id, angularVelocity)
 }
-func (b Body) SetTargetTransform(target Transform, timeStep float32) {
-	b2Body_SetTargetTransform(theStack, b.Id, target, timeStep)
+func (b Body) SetTargetTransform(target WorldTransform, timeStep float32, wake uint8) {
+	b2Body_SetTargetTransform(theStack, b.Id, target, timeStep, wake)
 }
 func (b Body) GetLocalPointVelocity(localPoint Vec2) (r1 Vec2) {
 	r1 = b2Body_GetLocalPointVelocity(theStack, b.Id, localPoint)
 	return
 }
-func (b Body) GetWorldPointVelocity(worldPoint Vec2) (r1 Vec2) {
+func (b Body) GetWorldPointVelocity(worldPoint Pos) (r1 Vec2) {
 	r1 = b2Body_GetWorldPointVelocity(theStack, b.Id, worldPoint)
 	return
 }
-func (b Body) ApplyForce(force Vec2, point Vec2, wake uint8) {
+func (b Body) ApplyForce(force Vec2, point Pos, wake uint8) {
 	b2Body_ApplyForce(theStack, b.Id, force, point, wake)
 }
 func (b Body) ApplyForceToCenter(force Vec2, wake uint8) {
@@ -108,7 +114,8 @@ func (b Body) ApplyForceToCenter(force Vec2, wake uint8) {
 func (b Body) ApplyTorque(torque float32, wake uint8) {
 	b2Body_ApplyTorque(theStack, b.Id, torque, wake)
 }
-func (b Body) ApplyLinearImpulse(impulse Vec2, point Vec2, wake uint8) {
+func (b Body) ClearForces() { b2Body_ClearForces(theStack, b.Id) }
+func (b Body) ApplyLinearImpulse(impulse Vec2, point Pos, wake uint8) {
 	b2Body_ApplyLinearImpulse(theStack, b.Id, impulse, point, wake)
 }
 func (b Body) ApplyLinearImpulseToCenter(impulse Vec2, wake uint8) {
@@ -126,17 +133,11 @@ func (b Body) GetRotationalInertia() (r float32) {
 	r = b2Body_GetRotationalInertia(theStack, b.Id)
 	return
 }
-func (b Body) GetLocalCenterOfMass() (r Vec2) {
-	r = b2Body_GetLocalCenterOfMass(theStack, b.Id)
-	return
-}
-func (b Body) GetWorldCenterOfMass() (r Vec2) {
-	r = b2Body_GetWorldCenterOfMass(theStack, b.Id)
-	return
-}
+func (b Body) GetLocalCenter() (r Vec2)      { r = b2Body_GetLocalCenter(theStack, b.Id); return }
+func (b Body) GetWorldCenter() (r Pos)       { r = b2Body_GetWorldCenter(theStack, b.Id); return }
 func (b Body) SetMassData(massData MassData) { b2Body_SetMassData(theStack, b.Id, massData) }
 func (b Body) GetMassData() (r MassData)     { r = b2Body_GetMassData(theStack, b.Id); return }
-func (b Body) ApplyMassFromShapes()          { b2Body_ApplyMassFromShapes(theStack, b.Id) }
+func (b Body) UpdateMassFromShapes()         { b2Body_UpdateMassFromShapes(theStack, b.Id) }
 func (b Body) SetLinearDamping(linearDamping float32) {
 	b2Body_SetLinearDamping(theStack, b.Id, linearDamping)
 }
@@ -151,52 +152,76 @@ func (b Body) SetGravityScale(gravityScale float32) {
 func (b Body) GetGravityScale() (r float32) { r = b2Body_GetGravityScale(theStack, b.Id); return }
 func (b Body) IsAwake() (r uint8)           { r = b2Body_IsAwake(theStack, b.Id); return }
 func (b Body) SetAwake(awake uint8)         { b2Body_SetAwake(theStack, b.Id, awake) }
+func (b Body) WakeTouching()                { b2Body_WakeTouching(theStack, b.Id) }
 func (b Body) IsEnabled() (r uint8)         { r = b2Body_IsEnabled(theStack, b.Id); return }
-func (b Body) IsSleepEnabled() (r uint8)    { r = b2Body_IsSleepEnabled(theStack, b.Id); return }
+func (b Body) IsSleepingEnabled() (r uint8) { r = b2Body_IsSleepingEnabled(theStack, b.Id); return }
 func (b Body) SetSleepThreshold(sleepThreshold float32) {
 	b2Body_SetSleepThreshold(theStack, b.Id, sleepThreshold)
 }
-func (b Body) GetSleepThreshold() (r float32)    { r = b2Body_GetSleepThreshold(theStack, b.Id); return }
-func (b Body) EnableSleep(enableSleep uint8)     { b2Body_EnableSleep(theStack, b.Id, enableSleep) }
+func (b Body) GetSleepThreshold() (r float32) { r = b2Body_GetSleepThreshold(theStack, b.Id); return }
+func (b Body) SetSafetyFactor(safetyFactor float32) {
+	b2Body_SetSafetyFactor(theStack, b.Id, safetyFactor)
+}
+func (b Body) GetSafetyFactor() (r float32)      { r = b2Body_GetSafetyFactor(theStack, b.Id); return }
+func (b Body) EnableSleeping(enableSleep uint8)  { b2Body_EnableSleeping(theStack, b.Id, enableSleep) }
 func (b Body) Disable()                          { b2Body_Disable(theStack, b.Id) }
 func (b Body) Enable()                           { b2Body_Enable(theStack, b.Id) }
-func (b Body) SetFixedRotation(flag uint8)       { b2Body_SetFixedRotation(theStack, b.Id, flag) }
-func (b Body) IsFixedRotation() (r uint8)        { r = b2Body_IsFixedRotation(theStack, b.Id); return }
+func (b Body) SetMotionLocks(locks MotionLocks)  { b2Body_SetMotionLocks(theStack, b.Id, locks) }
+func (b Body) GetMotionLocks() (r MotionLocks)   { r = b2Body_GetMotionLocks(theStack, b.Id); return }
 func (b Body) SetBullet(flag uint8)              { b2Body_SetBullet(theStack, b.Id, flag) }
 func (b Body) IsBullet() (r uint8)               { r = b2Body_IsBullet(theStack, b.Id); return }
-func (b Body) EnableContactEvents(flag uint8)    { b2Body_EnableContactEvents(theStack, b.Id, flag) }
-func (b Body) EnableHitEvents(flag uint8)        { b2Body_EnableHitEvents(theStack, b.Id, flag) }
-func (b Body) GetWorld() (r World)               { r.Id = b2Body_GetWorld(theStack, b.Id); return }
-func (b Body) GetShapeCount() (r int32)          { r = b2Body_GetShapeCount(theStack, b.Id); return }
-func (b Body) GetJointCount() (r int32)          { r = b2Body_GetJointCount(theStack, b.Id); return }
+func (b Body) EnableContactRecycling(flag uint8) { b2Body_EnableContactRecycling(theStack, b.Id, flag) }
+func (b Body) IsContactRecyclingEnabled() (r uint8) {
+	r = b2Body_IsContactRecyclingEnabled(theStack, b.Id)
+	return
+}
+func (b Body) EnableContactEvents(flag uint8) { b2Body_EnableContactEvents(theStack, b.Id, flag) }
+func (b Body) EnableHitEvents(flag uint8)     { b2Body_EnableHitEvents(theStack, b.Id, flag) }
+func (b Body) GetWorld() (r World)            { r.Id = b2Body_GetWorld(theStack, b.Id); return }
+func (b Body) GetShapeCount() (r int32)       { r = b2Body_GetShapeCount(theStack, b.Id); return }
+func (b Body) GetJointCount() (r int32)       { r = b2Body_GetJointCount(theStack, b.Id); return }
+func (b Body) GetMinExtent() (r float32)      { r = b2Body_GetMinExtent(theStack, b.Id); return }
+func (b Body) GetMaxExtent() (r float32)      { r = b2Body_GetMaxExtent(theStack, b.Id); return }
+func (b Body) GetMaxExtentFromOrigin() (r float32) {
+	r = b2Body_GetMaxExtentFromOrigin(theStack, b.Id)
+	return
+}
+func GetGraphColor(index int32) (r HexColor)     { r = b2GetGraphColor(theStack, index); return }
+func (b Contact) GetData() (r ContactData)       { r = b2Contact_GetData(theStack, b.Id); return }
 func SetLengthUnitsPerMeter(lengthUnits float32) { b2SetLengthUnitsPerMeter(theStack, lengthUnits) }
 func GetLengthUnitsPerMeter() (r float32)        { r = b2GetLengthUnitsPerMeter(theStack); return }
 func GetVersion() (r Version)                    { r = b2GetVersion(theStack); return }
-func GetByteCount() (r int32)                    { r = b2GetByteCount(theStack); return }
+func IsDoublePrecision() (r uint8)               { r = b2IsDoublePrecision(theStack); return }
+func GetByteCount() (r size_t)                   { r = b2GetByteCount(theStack); return }
 func GetSweepTransform(sweep Sweep, time float32) (r Transform) {
 	sweepStack := copyToStack(theStack, sweep)
 	defer sweepStack.Free()
 	r = b2GetSweepTransform(theStack, sweepStack.Addr, time)
 	return
 }
-func SegmentDistance(p1 Vec2, q1 Vec2, p2 Vec2, q2 Vec2) (r1 SegmentDistanceResult) {
-	r1 = b2SegmentDistance(theStack, p1, q1, p2, q2)
+func ComputeSegmentDistance(p1 Vec2, q1 Vec2, p2 Vec2, q2 Vec2) (r1 SegmentDistanceResult) {
+	r1 = b2ComputeSegmentDistance(theStack, p1, q1, p2, q2)
 	return
 }
-func ShapeCast(input ShapeCastPairInput) (r CastOutput) {
+func CastShape(input ShapeCastPairInput) (r CastOutput) {
 	inputStack := copyToStack(theStack, input)
 	defer inputStack.Free()
-	r = b2ShapeCast(theStack, inputStack.Addr)
+	r = b2CastShape(theStack, inputStack.Addr)
 	return
 }
-func TimeOfImpact(input TOIInput) (r TOIOutput) {
+func ComputeTimeOfImpact(input TOIInput) (r1 TOIOutput) {
 	inputStack := copyToStack(theStack, input)
 	defer inputStack.Free()
-	r = b2TimeOfImpact(theStack, inputStack.Addr)
+	r1 = b2ComputeTimeOfImpact(theStack, inputStack.Addr)
 	return
 }
-func (b DistanceJoint) SetLength(length float32) { b2DistanceJoint_SetLength(theStack, b.Id, length) }
-func (b DistanceJoint) GetLength() (r float32)   { r = b2DistanceJoint_GetLength(theStack, b.Id); return }
+func (b DistanceJoint) SetRestLength(length float32) {
+	b2DistanceJoint_SetRestLength(theStack, b.Id, length)
+}
+func (b DistanceJoint) GetRestLength() (r float32) {
+	r = b2DistanceJoint_GetRestLength(theStack, b.Id)
+	return
+}
 func (b DistanceJoint) EnableLimit(enableLimit uint8) {
 	b2DistanceJoint_EnableLimit(theStack, b.Id, enableLimit)
 }
@@ -204,19 +229,19 @@ func (b DistanceJoint) IsLimitEnabled() (r uint8) {
 	r = b2DistanceJoint_IsLimitEnabled(theStack, b.Id)
 	return
 }
-func (b DistanceJoint) SetLengthRange(minLength float32, maxLength float32) {
-	b2DistanceJoint_SetLengthRange(theStack, b.Id, minLength, maxLength)
+func (b DistanceJoint) SetLimits(minLength float32, maxLength float32) {
+	b2DistanceJoint_SetLimits(theStack, b.Id, minLength, maxLength)
 }
-func (b DistanceJoint) GetMinLength() (r float32) {
-	r = b2DistanceJoint_GetMinLength(theStack, b.Id)
+func (b DistanceJoint) GetLowerLimit() (r float32) {
+	r = b2DistanceJoint_GetLowerLimit(theStack, b.Id)
 	return
 }
-func (b DistanceJoint) GetMaxLength() (r float32) {
-	r = b2DistanceJoint_GetMaxLength(theStack, b.Id)
+func (b DistanceJoint) GetUpperLimit() (r float32) {
+	r = b2DistanceJoint_GetUpperLimit(theStack, b.Id)
 	return
 }
-func (b DistanceJoint) GetCurrentLength() (r float32) {
-	r = b2DistanceJoint_GetCurrentLength(theStack, b.Id)
+func (b DistanceJoint) GetCurrentLength() (r1 float32) {
+	r1 = b2DistanceJoint_GetCurrentLength(theStack, b.Id)
 	return
 }
 func (b DistanceJoint) EnableSpring(enableSpring uint8) {
@@ -225,6 +250,9 @@ func (b DistanceJoint) EnableSpring(enableSpring uint8) {
 func (b DistanceJoint) IsSpringEnabled() (r uint8) {
 	r = b2DistanceJoint_IsSpringEnabled(theStack, b.Id)
 	return
+}
+func (b DistanceJoint) SetSpringForceRange(lowerForce float32, upperForce float32) {
+	b2DistanceJoint_SetSpringForceRange(theStack, b.Id, lowerForce, upperForce)
 }
 func (b DistanceJoint) SetSpringHertz(hertz float32) {
 	b2DistanceJoint_SetSpringHertz(theStack, b.Id, hertz)
@@ -240,6 +268,10 @@ func (b DistanceJoint) GetSpringDampingRatio() (r float32) {
 	r = b2DistanceJoint_GetSpringDampingRatio(theStack, b.Id)
 	return
 }
+func (b DistanceJoint) GetSpringForce() (r float32) {
+	r = b2DistanceJoint_GetSpringForce(theStack, b.Id)
+	return
+}
 func (b DistanceJoint) EnableMotor(enableMotor uint8) {
 	b2DistanceJoint_EnableMotor(theStack, b.Id, enableMotor)
 }
@@ -247,15 +279,15 @@ func (b DistanceJoint) IsMotorEnabled() (r uint8) {
 	r = b2DistanceJoint_IsMotorEnabled(theStack, b.Id)
 	return
 }
-func (b DistanceJoint) SetMotorSpeed(motorSpeed float32) {
-	b2DistanceJoint_SetMotorSpeed(theStack, b.Id, motorSpeed)
+func (b DistanceJoint) SetTargetMotorSpeed(motorSpeed float32) {
+	b2DistanceJoint_SetTargetMotorSpeed(theStack, b.Id, motorSpeed)
 }
-func (b DistanceJoint) GetMotorSpeed() (r float32) {
-	r = b2DistanceJoint_GetMotorSpeed(theStack, b.Id)
+func (b DistanceJoint) GetTargetMotorSpeed() (r float32) {
+	r = b2DistanceJoint_GetTargetMotorSpeed(theStack, b.Id)
 	return
 }
-func (b DistanceJoint) GetMotorForce() (r float32) {
-	r = b2DistanceJoint_GetMotorForce(theStack, b.Id)
+func (b DistanceJoint) GetCurrentMotorForce() (r float32) {
+	r = b2DistanceJoint_GetCurrentMotorForce(theStack, b.Id)
 	return
 }
 func (b DistanceJoint) SetMaxMotorForce(force float32) {
@@ -330,110 +362,110 @@ func ComputePolygonMass(shape Polygon, density float32) (r1 MassData) {
 	r1 = b2ComputePolygonMass(theStack, shapeStack.Addr, density)
 	return
 }
-func ComputeCircleAABB(shape Circle, xf Transform) (r1 AABB) {
+func ComputeCircleBounds(shape Circle, xf WorldTransform) (r AABB) {
 	shapeStack := copyToStack(theStack, shape)
 	defer shapeStack.Free()
-	r1 = b2ComputeCircleAABB(theStack, shapeStack.Addr, xf)
+	r = b2ComputeCircleBounds(theStack, shapeStack.Addr, xf)
 	return
 }
-func ComputeCapsuleAABB(shape Capsule, xf Transform) (r1 AABB) {
+func ComputeCapsuleBounds(shape Capsule, xf WorldTransform) (r AABB) {
 	shapeStack := copyToStack(theStack, shape)
 	defer shapeStack.Free()
-	r1 = b2ComputeCapsuleAABB(theStack, shapeStack.Addr, xf)
+	r = b2ComputeCapsuleBounds(theStack, shapeStack.Addr, xf)
 	return
 }
-func ComputePolygonAABB(shape Polygon, xf Transform) (r1 AABB) {
+func ComputePolygonBounds(shape Polygon, xf WorldTransform) (r AABB) {
 	shapeStack := copyToStack(theStack, shape)
 	defer shapeStack.Free()
-	r1 = b2ComputePolygonAABB(theStack, shapeStack.Addr, xf)
+	r = b2ComputePolygonBounds(theStack, shapeStack.Addr, xf)
 	return
 }
-func ComputeSegmentAABB(shape Segment, xf Transform) (r AABB) {
+func ComputeSegmentBounds(shape Segment, xf WorldTransform) (r AABB) {
 	shapeStack := copyToStack(theStack, shape)
 	defer shapeStack.Free()
-	r = b2ComputeSegmentAABB(theStack, shapeStack.Addr, xf)
+	r = b2ComputeSegmentBounds(theStack, shapeStack.Addr, xf)
 	return
 }
-func PointInCircle(point Vec2, shape Circle) (r uint8) {
+func PointInCircle(shape Circle, point Vec2) (r uint8) {
 	shapeStack := copyToStack(theStack, shape)
 	defer shapeStack.Free()
-	r = b2PointInCircle(theStack, point, shapeStack.Addr)
+	r = b2PointInCircle(theStack, shapeStack.Addr, point)
 	return
 }
-func PointInCapsule(point Vec2, shape Capsule) (r uint8) {
+func PointInCapsule(shape Capsule, point Vec2) (r uint8) {
 	shapeStack := copyToStack(theStack, shape)
 	defer shapeStack.Free()
-	r = b2PointInCapsule(theStack, point, shapeStack.Addr)
+	r = b2PointInCapsule(theStack, shapeStack.Addr, point)
 	return
 }
-func PointInPolygon(_point Vec2, shape Polygon) (r uint8) {
+func PointInPolygon(shape Polygon, _point Vec2) (r uint8) {
 	shapeStack := copyToStack(theStack, shape)
 	defer shapeStack.Free()
-	r = b2PointInPolygon(theStack, _point, shapeStack.Addr)
+	r = b2PointInPolygon(theStack, shapeStack.Addr, _point)
 	return
 }
-func RayCastCircle(input RayCastInput, shape Circle) (r1 CastOutput) {
+func CastRayCircle(shape Circle, input RayCastInput) (r1 CastOutput) {
+	shapeStack := copyToStack(theStack, shape)
+	defer shapeStack.Free()
 	inputStack := copyToStack(theStack, input)
 	defer inputStack.Free()
-	shapeStack := copyToStack(theStack, shape)
-	defer shapeStack.Free()
-	r1 = b2RayCastCircle(theStack, inputStack.Addr, shapeStack.Addr)
+	r1 = b2CastRayCircle(theStack, shapeStack.Addr, inputStack.Addr)
 	return
 }
-func RayCastCapsule(input RayCastInput, shape Capsule) (r CastOutput) {
-	inputStack := copyToStack(theStack, input)
-	defer inputStack.Free()
+func CastRayCapsule(shape Capsule, input RayCastInput) (r CastOutput) {
 	shapeStack := copyToStack(theStack, shape)
 	defer shapeStack.Free()
-	r = b2RayCastCapsule(theStack, inputStack.Addr, shapeStack.Addr)
+	inputStack := copyToStack(theStack, input)
+	defer inputStack.Free()
+	r = b2CastRayCapsule(theStack, shapeStack.Addr, inputStack.Addr)
 	return
 }
-func RayCastSegment(input RayCastInput, shape Segment, oneSided uint8) (r CastOutput) {
-	inputStack := copyToStack(theStack, input)
-	defer inputStack.Free()
+func CastRaySegment(shape Segment, input RayCastInput, oneSided uint8) (r CastOutput) {
 	shapeStack := copyToStack(theStack, shape)
 	defer shapeStack.Free()
-	r = b2RayCastSegment(theStack, inputStack.Addr, shapeStack.Addr, oneSided)
+	inputStack := copyToStack(theStack, input)
+	defer inputStack.Free()
+	r = b2CastRaySegment(theStack, shapeStack.Addr, inputStack.Addr, oneSided)
 	return
 }
-func RayCastPolygon(input RayCastInput, shape Polygon) (r CastOutput) {
-	inputStack := copyToStack(theStack, input)
-	defer inputStack.Free()
+func CastRayPolygon(shape Polygon, input RayCastInput) (r CastOutput) {
 	shapeStack := copyToStack(theStack, shape)
 	defer shapeStack.Free()
-	r = b2RayCastPolygon(theStack, inputStack.Addr, shapeStack.Addr)
+	inputStack := copyToStack(theStack, input)
+	defer inputStack.Free()
+	r = b2CastRayPolygon(theStack, shapeStack.Addr, inputStack.Addr)
 	return
 }
-func ShapeCastCircle(input ShapeCastInput, shape Circle) (r CastOutput) {
-	inputStack := copyToStack(theStack, input)
-	defer inputStack.Free()
+func CastShapeCircle(shape Circle, input ShapeCastInput) (r CastOutput) {
 	shapeStack := copyToStack(theStack, shape)
 	defer shapeStack.Free()
-	r = b2ShapeCastCircle(theStack, inputStack.Addr, shapeStack.Addr)
+	inputStack := copyToStack(theStack, input)
+	defer inputStack.Free()
+	r = b2CastShapeCircle(theStack, shapeStack.Addr, inputStack.Addr)
 	return
 }
-func ShapeCastCapsule(input ShapeCastInput, shape Capsule) (r CastOutput) {
-	inputStack := copyToStack(theStack, input)
-	defer inputStack.Free()
+func CastShapeCapsule(shape Capsule, input ShapeCastInput) (r CastOutput) {
 	shapeStack := copyToStack(theStack, shape)
 	defer shapeStack.Free()
-	r = b2ShapeCastCapsule(theStack, inputStack.Addr, shapeStack.Addr)
+	inputStack := copyToStack(theStack, input)
+	defer inputStack.Free()
+	r = b2CastShapeCapsule(theStack, shapeStack.Addr, inputStack.Addr)
 	return
 }
-func ShapeCastSegment(input ShapeCastInput, shape Segment) (r CastOutput) {
-	inputStack := copyToStack(theStack, input)
-	defer inputStack.Free()
+func CastShapeSegment(shape Segment, input ShapeCastInput) (r CastOutput) {
 	shapeStack := copyToStack(theStack, shape)
 	defer shapeStack.Free()
-	r = b2ShapeCastSegment(theStack, inputStack.Addr, shapeStack.Addr)
+	inputStack := copyToStack(theStack, input)
+	defer inputStack.Free()
+	r = b2CastShapeSegment(theStack, shapeStack.Addr, inputStack.Addr)
 	return
 }
-func ShapeCastPolygon(input ShapeCastInput, shape Polygon) (r CastOutput) {
-	inputStack := copyToStack(theStack, input)
-	defer inputStack.Free()
+func CastShapePolygon(shape Polygon, input ShapeCastInput) (r CastOutput) {
 	shapeStack := copyToStack(theStack, shape)
 	defer shapeStack.Free()
-	r = b2ShapeCastPolygon(theStack, inputStack.Addr, shapeStack.Addr)
+	inputStack := copyToStack(theStack, input)
+	defer inputStack.Free()
+	r = b2CastShapePolygon(theStack, shapeStack.Addr, inputStack.Addr)
 	return
 }
 func ValidateHull(hull Hull) (r uint8) {
@@ -443,9 +475,10 @@ func ValidateHull(hull Hull) (r uint8) {
 	return
 }
 func DefaultDistanceJointDef() (r DistanceJointDef) { r = b2DefaultDistanceJointDef(theStack); return }
-func DefaultMotorJointDef() (r MotorJointDef)       { r = b2DefaultMotorJointDef(theStack); return }
-func DefaultMouseJointDef() (r MouseJointDef)       { r = b2DefaultMouseJointDef(theStack); return }
 func DefaultFilterJointDef() (r FilterJointDef)     { r = b2DefaultFilterJointDef(theStack); return }
+func DefaultMotorJointDef() (r MotorJointDef)       { r = b2DefaultMotorJointDef(theStack); return }
+func DefaultMoverJointDef() (r MoverJointDef)       { r = b2DefaultMoverJointDef(theStack); return }
+func DefaultPogoJointDef() (r PogoJointDef)         { r = b2DefaultPogoJointDef(theStack); return }
 func DefaultPrismaticJointDef() (r PrismaticJointDef) {
 	r = b2DefaultPrismaticJointDef(theStack)
 	return
@@ -460,34 +493,40 @@ func (b World) CreateDistanceJoint(def DistanceJointDef) (r DistanceJoint) {
 	r.Id = b2CreateDistanceJoint(theStack, b.Id, defStack.Addr)
 	return
 }
-func (b World) CreateMotorJoint(def MotorJointDef) (r MotorJoint) {
-	defStack := copyToStack(theStack, def)
-	defer defStack.Free()
-	r.Id = b2CreateMotorJoint(theStack, b.Id, defStack.Addr)
-	return
-}
-func (b World) CreateMouseJoint(def MouseJointDef) (r MouseJoint) {
-	defStack := copyToStack(theStack, def)
-	defer defStack.Free()
-	r.Id = b2CreateMouseJoint(theStack, b.Id, defStack.Addr)
-	return
-}
 func (b World) CreateFilterJoint(def FilterJointDef) (r FilterJoint) {
 	defStack := copyToStack(theStack, def)
 	defer defStack.Free()
 	r.Id = b2CreateFilterJoint(theStack, b.Id, defStack.Addr)
 	return
 }
-func (b World) CreateRevoluteJoint(def RevoluteJointDef) (r RevoluteJoint) {
+func (b World) CreateMotorJoint(def MotorJointDef) (r MotorJoint) {
 	defStack := copyToStack(theStack, def)
 	defer defStack.Free()
-	r.Id = b2CreateRevoluteJoint(theStack, b.Id, defStack.Addr)
+	r.Id = b2CreateMotorJoint(theStack, b.Id, defStack.Addr)
+	return
+}
+func (b World) CreateMoverJoint(def MoverJointDef) (r MoverJoint) {
+	defStack := copyToStack(theStack, def)
+	defer defStack.Free()
+	r.Id = b2CreateMoverJoint(theStack, b.Id, defStack.Addr)
+	return
+}
+func (b World) CreatePogoJoint(def PogoJointDef) (r PogoJoint) {
+	defStack := copyToStack(theStack, def)
+	defer defStack.Free()
+	r.Id = b2CreatePogoJoint(theStack, b.Id, defStack.Addr)
 	return
 }
 func (b World) CreatePrismaticJoint(def PrismaticJointDef) (r PrismaticJoint) {
 	defStack := copyToStack(theStack, def)
 	defer defStack.Free()
 	r.Id = b2CreatePrismaticJoint(theStack, b.Id, defStack.Addr)
+	return
+}
+func (b World) CreateRevoluteJoint(def RevoluteJointDef) (r RevoluteJoint) {
+	defStack := copyToStack(theStack, def)
+	defer defStack.Free()
+	r.Id = b2CreateRevoluteJoint(theStack, b.Id, defStack.Addr)
 	return
 }
 func (b World) CreateWeldJoint(def WeldJointDef) (r WeldJoint) {
@@ -507,20 +546,14 @@ func (b Joint) GetType() (r JointType) { r = b2Joint_GetType(theStack, b.Id); re
 func (b Joint) GetBodyA() (r Body)     { r.Id = b2Joint_GetBodyA(theStack, b.Id); return }
 func (b Joint) GetBodyB() (r Body)     { r.Id = b2Joint_GetBodyB(theStack, b.Id); return }
 func (b Joint) GetWorld() (r World)    { r.Id = b2Joint_GetWorld(theStack, b.Id); return }
-func (b Joint) SetLocalAnchorA(localAnchor Vec2) {
-	b2Joint_SetLocalAnchorA(theStack, b.Id, localAnchor)
+func (b Joint) SetLocalFrameA(localFrame Transform) {
+	b2Joint_SetLocalFrameA(theStack, b.Id, localFrame)
 }
-func (b Joint) GetLocalAnchorA() (r Vec2) { r = b2Joint_GetLocalAnchorA(theStack, b.Id); return }
-func (b Joint) SetLocalAnchorB(localAnchor Vec2) {
-	b2Joint_SetLocalAnchorB(theStack, b.Id, localAnchor)
+func (b Joint) GetLocalFrameA() (r Transform) { r = b2Joint_GetLocalFrameA(theStack, b.Id); return }
+func (b Joint) SetLocalFrameB(localFrame Transform) {
+	b2Joint_SetLocalFrameB(theStack, b.Id, localFrame)
 }
-func (b Joint) GetLocalAnchorB() (r Vec2) { r = b2Joint_GetLocalAnchorB(theStack, b.Id); return }
-func (b Joint) SetReferenceAngle(angleInRadians float32) {
-	b2Joint_SetReferenceAngle(theStack, b.Id, angleInRadians)
-}
-func (b Joint) GetReferenceAngle() (r float32) { r = b2Joint_GetReferenceAngle(theStack, b.Id); return }
-func (b Joint) SetLocalAxisA(localAxis Vec2)   { b2Joint_SetLocalAxisA(theStack, b.Id, localAxis) }
-func (b Joint) GetLocalAxisA() (r Vec2)        { r = b2Joint_GetLocalAxisA(theStack, b.Id); return }
+func (b Joint) GetLocalFrameB() (r Transform) { r = b2Joint_GetLocalFrameB(theStack, b.Id); return }
 func (b Joint) SetCollideConnected(shouldCollide uint8) {
 	b2Joint_SetCollideConnected(theStack, b.Id, shouldCollide)
 }
@@ -536,8 +569,8 @@ func (b Joint) GetConstraintTorque() (r float32) {
 	r = b2Joint_GetConstraintTorque(theStack, b.Id)
 	return
 }
-func (b Joint) GetLinearSeparation() (r float32) {
-	r = b2Joint_GetLinearSeparation(theStack, b.Id)
+func (b Joint) GetLinearSeparation() (r1 float32) {
+	r1 = b2Joint_GetLinearSeparation(theStack, b.Id)
 	return
 }
 func (b Joint) GetAngularSeparation() (r float32) {
@@ -547,155 +580,336 @@ func (b Joint) GetAngularSeparation() (r float32) {
 func (b Joint) SetConstraintTuning(hertz float32, dampingRatio float32) {
 	b2Joint_SetConstraintTuning(theStack, b.Id, hertz, dampingRatio)
 }
-func CollideCircles(circleA Circle, xfA Transform, circleB Circle, xfB Transform) (r Manifold) {
+func (b Joint) SetForceThreshold(threshold float32) {
+	b2Joint_SetForceThreshold(theStack, b.Id, threshold)
+}
+func (b Joint) GetForceThreshold() (r float32) { r = b2Joint_GetForceThreshold(theStack, b.Id); return }
+func (b Joint) SetTorqueThreshold(threshold float32) {
+	b2Joint_SetTorqueThreshold(theStack, b.Id, threshold)
+}
+func (b Joint) GetTorqueThreshold() (r float32) {
+	r = b2Joint_GetTorqueThreshold(theStack, b.Id)
+	return
+}
+func CollideCircles(circleA Circle, circleB Circle, xf Transform) (r LocalManifold) {
 	circleAStack := copyToStack(theStack, circleA)
 	defer circleAStack.Free()
 	circleBStack := copyToStack(theStack, circleB)
 	defer circleBStack.Free()
-	r = b2CollideCircles(theStack, circleAStack.Addr, xfA, circleBStack.Addr, xfB)
+	r = b2CollideCircles(theStack, circleAStack.Addr, circleBStack.Addr, xf)
 	return
 }
-func CollideCapsuleAndCircle(capsuleA Capsule, xfA Transform, circleB Circle, xfB Transform) (r Manifold) {
+func CollideCapsuleAndCircle(capsuleA Capsule, circleB Circle, xf Transform) (r LocalManifold) {
 	capsuleAStack := copyToStack(theStack, capsuleA)
 	defer capsuleAStack.Free()
 	circleBStack := copyToStack(theStack, circleB)
 	defer circleBStack.Free()
-	r = b2CollideCapsuleAndCircle(theStack, capsuleAStack.Addr, xfA, circleBStack.Addr, xfB)
+	r = b2CollideCapsuleAndCircle(theStack, capsuleAStack.Addr, circleBStack.Addr, xf)
 	return
 }
-func CollidePolygonAndCircle(polygonA Polygon, xfA Transform, circleB Circle, xfB Transform) (r Manifold) {
+func CollidePolygonAndCircle(polygonA Polygon, circleB Circle, xf Transform) (r LocalManifold) {
 	polygonAStack := copyToStack(theStack, polygonA)
 	defer polygonAStack.Free()
 	circleBStack := copyToStack(theStack, circleB)
 	defer circleBStack.Free()
-	r = b2CollidePolygonAndCircle(theStack, polygonAStack.Addr, xfA, circleBStack.Addr, xfB)
+	r = b2CollidePolygonAndCircle(theStack, polygonAStack.Addr, circleBStack.Addr, xf)
 	return
 }
-func CollideCapsules(capsuleA Capsule, xfA Transform, capsuleB Capsule, xfB Transform) (r Manifold) {
+func CollideCapsules(capsuleA Capsule, capsuleB Capsule, xf Transform) (r1 LocalManifold) {
 	capsuleAStack := copyToStack(theStack, capsuleA)
 	defer capsuleAStack.Free()
 	capsuleBStack := copyToStack(theStack, capsuleB)
 	defer capsuleBStack.Free()
-	r = b2CollideCapsules(theStack, capsuleAStack.Addr, xfA, capsuleBStack.Addr, xfB)
+	r1 = b2CollideCapsules(theStack, capsuleAStack.Addr, capsuleBStack.Addr, xf)
 	return
 }
-func CollideSegmentAndCapsule(segmentA Segment, xfA Transform, capsuleB Capsule, xfB Transform) (r Manifold) {
+func CollideSegmentAndCapsule(segmentA Segment, capsuleB Capsule, xf Transform) (r LocalManifold) {
 	segmentAStack := copyToStack(theStack, segmentA)
 	defer segmentAStack.Free()
 	capsuleBStack := copyToStack(theStack, capsuleB)
 	defer capsuleBStack.Free()
-	r = b2CollideSegmentAndCapsule(theStack, segmentAStack.Addr, xfA, capsuleBStack.Addr, xfB)
+	r = b2CollideSegmentAndCapsule(theStack, segmentAStack.Addr, capsuleBStack.Addr, xf)
 	return
 }
-func CollidePolygonAndCapsule(polygonA Polygon, xfA Transform, capsuleB Capsule, xfB Transform) (r Manifold) {
+func CollidePolygonAndCapsule(polygonA Polygon, capsuleB Capsule, xf Transform) (r LocalManifold) {
 	polygonAStack := copyToStack(theStack, polygonA)
 	defer polygonAStack.Free()
 	capsuleBStack := copyToStack(theStack, capsuleB)
 	defer capsuleBStack.Free()
-	r = b2CollidePolygonAndCapsule(theStack, polygonAStack.Addr, xfA, capsuleBStack.Addr, xfB)
+	r = b2CollidePolygonAndCapsule(theStack, polygonAStack.Addr, capsuleBStack.Addr, xf)
 	return
 }
-func CollidePolygons(polygonA Polygon, xfA Transform, polygonB Polygon, xfB Transform) (r Manifold) {
+func CollidePolygons(polygonA Polygon, polygonB Polygon, xf Transform) (r LocalManifold) {
 	polygonAStack := copyToStack(theStack, polygonA)
 	defer polygonAStack.Free()
 	polygonBStack := copyToStack(theStack, polygonB)
 	defer polygonBStack.Free()
-	r = b2CollidePolygons(theStack, polygonAStack.Addr, xfA, polygonBStack.Addr, xfB)
+	r = b2CollidePolygons(theStack, polygonAStack.Addr, polygonBStack.Addr, xf)
 	return
 }
-func CollideSegmentAndCircle(segmentA Segment, xfA Transform, circleB Circle, xfB Transform) (r Manifold) {
+func CollideSegmentAndCircle(segmentA Segment, circleB Circle, xf Transform) (r LocalManifold) {
 	segmentAStack := copyToStack(theStack, segmentA)
 	defer segmentAStack.Free()
 	circleBStack := copyToStack(theStack, circleB)
 	defer circleBStack.Free()
-	r = b2CollideSegmentAndCircle(theStack, segmentAStack.Addr, xfA, circleBStack.Addr, xfB)
+	r = b2CollideSegmentAndCircle(theStack, segmentAStack.Addr, circleBStack.Addr, xf)
 	return
 }
-func CollideSegmentAndPolygon(segmentA Segment, xfA Transform, polygonB Polygon, xfB Transform) (r Manifold) {
+func CollideSegmentAndPolygon(segmentA Segment, polygonB Polygon, xf Transform) (r LocalManifold) {
 	segmentAStack := copyToStack(theStack, segmentA)
 	defer segmentAStack.Free()
 	polygonBStack := copyToStack(theStack, polygonB)
 	defer polygonBStack.Free()
-	r = b2CollideSegmentAndPolygon(theStack, segmentAStack.Addr, xfA, polygonBStack.Addr, xfB)
+	r = b2CollideSegmentAndPolygon(theStack, segmentAStack.Addr, polygonBStack.Addr, xf)
 	return
 }
-func CollideChainSegmentAndCircle(segmentA ChainSegment, xfA Transform, circleB Circle, xfB Transform) (r Manifold) {
+func CollideChainSegmentAndCircle(segmentA ChainSegment, circleB Circle, xf Transform) (r LocalManifold) {
 	segmentAStack := copyToStack(theStack, segmentA)
 	defer segmentAStack.Free()
 	circleBStack := copyToStack(theStack, circleB)
 	defer circleBStack.Free()
-	r = b2CollideChainSegmentAndCircle(theStack, segmentAStack.Addr, xfA, circleBStack.Addr, xfB)
+	r = b2CollideChainSegmentAndCircle(theStack, segmentAStack.Addr, circleBStack.Addr, xf)
 	return
 }
-func CollideChainSegmentAndCapsule(segmentA ChainSegment, xfA Transform, capsuleB Capsule, xfB Transform, cache uintptr) (r Manifold) {
+func CollideChainSegmentAndCapsule(segmentA ChainSegment, capsuleB Capsule, xf Transform, cache *SimplexCache) (r LocalManifold) {
+	defer runtime.KeepAlive(cache)
 	segmentAStack := copyToStack(theStack, segmentA)
 	defer segmentAStack.Free()
 	capsuleBStack := copyToStack(theStack, capsuleB)
 	defer capsuleBStack.Free()
-	r = b2CollideChainSegmentAndCapsule(theStack, segmentAStack.Addr, xfA, capsuleBStack.Addr, xfB, cache)
+	escapes(cache)
+	r = b2CollideChainSegmentAndCapsule(theStack, segmentAStack.Addr, capsuleBStack.Addr, xf, uintptr(unsafe.Pointer(cache)))
 	return
 }
-func CollideChainSegmentAndPolygon(segmentA ChainSegment, xfA Transform, polygonB Polygon, xfB Transform, cache uintptr) (r Manifold) {
+func CollideChainSegmentAndPolygon(segmentA ChainSegment, polygonB Polygon, xf Transform, cache *SimplexCache) (r LocalManifold) {
+	defer runtime.KeepAlive(cache)
 	segmentAStack := copyToStack(theStack, segmentA)
 	defer segmentAStack.Free()
 	polygonBStack := copyToStack(theStack, polygonB)
 	defer polygonBStack.Free()
-	r = b2CollideChainSegmentAndPolygon(theStack, segmentAStack.Addr, xfA, polygonBStack.Addr, xfB, cache)
+	escapes(cache)
+	r = b2CollideChainSegmentAndPolygon(theStack, segmentAStack.Addr, polygonBStack.Addr, xf, uintptr(unsafe.Pointer(cache)))
 	return
 }
-func IsValidFloat(a float32) (r uint8)          { r = b2IsValidFloat(theStack, a); return }
-func IsValidVec2(v Vec2) (r uint8)              { r = b2IsValidVec2(theStack, v); return }
-func IsValidRotation(q1 Rot) (r uint8)          { r = b2IsValidRotation(theStack, q1); return }
-func IsValidPlane(a3 Plane) (r uint8)           { r = b2IsValidPlane(theStack, a3); return }
+func IsValidFloat(a float32) (r uint8)       { r = b2IsValidFloat(theStack, a); return }
+func IsValidVec2(v Vec2) (r uint8)           { r = b2IsValidVec2(theStack, v); return }
+func IsValidRot(q1 Rot) (r uint8)            { r = b2IsValidRot(theStack, q1); return }
+func IsValidTransform(t Transform) (r uint8) { r = b2IsValidTransform(theStack, t); return }
+func IsValidPlane(a3 Plane) (r uint8)        { r = b2IsValidPlane(theStack, a3); return }
+func IsValidPos(p Pos) (r uint8)             { r = b2IsValidPos(theStack, p); return }
+func IsValidWorldTransform(t WorldTransform) (r uint8) {
+	r = b2IsValidWorldTransform(theStack, t)
+	return
+}
 func Atan2(y float32, x float32) (r1 float32)   { r1 = b2Atan2(theStack, y, x); return }
 func ComputeCosSin(radians1 float32) (r CosSin) { r = b2ComputeCosSin(theStack, radians1); return }
 func ComputeRotationBetweenUnitVectors(v1 Vec2, v2 Vec2) (r Rot) {
 	r = b2ComputeRotationBetweenUnitVectors(theStack, v1, v2)
 	return
 }
-func (b MotorJoint) SetLinearOffset(linearOffset Vec2) {
-	b2MotorJoint_SetLinearOffset(theStack, b.Id, linearOffset)
+func (b MotorJoint) SetLinearVelocity(velocity Vec2) {
+	b2MotorJoint_SetLinearVelocity(theStack, b.Id, velocity)
 }
-func (b MotorJoint) GetLinearOffset() (r Vec2) {
-	r = b2MotorJoint_GetLinearOffset(theStack, b.Id)
+func (b MotorJoint) GetLinearVelocity() (r Vec2) {
+	r = b2MotorJoint_GetLinearVelocity(theStack, b.Id)
 	return
 }
-func (b MotorJoint) SetAngularOffset(angularOffset float32) {
-	b2MotorJoint_SetAngularOffset(theStack, b.Id, angularOffset)
+func (b MotorJoint) SetAngularVelocity(velocity float32) {
+	b2MotorJoint_SetAngularVelocity(theStack, b.Id, velocity)
 }
-func (b MotorJoint) GetAngularOffset() (r float32) {
-	r = b2MotorJoint_GetAngularOffset(theStack, b.Id)
+func (b MotorJoint) GetAngularVelocity() (r float32) {
+	r = b2MotorJoint_GetAngularVelocity(theStack, b.Id)
 	return
 }
-func (b MotorJoint) SetMaxForce(maxForce float32) { b2MotorJoint_SetMaxForce(theStack, b.Id, maxForce) }
-func (b MotorJoint) GetMaxForce() (r float32)     { r = b2MotorJoint_GetMaxForce(theStack, b.Id); return }
-func (b MotorJoint) SetMaxTorque(maxTorque float32) {
-	b2MotorJoint_SetMaxTorque(theStack, b.Id, maxTorque)
+func (b MotorJoint) SetMaxVelocityTorque(maxTorque float32) {
+	b2MotorJoint_SetMaxVelocityTorque(theStack, b.Id, maxTorque)
 }
-func (b MotorJoint) GetMaxTorque() (r float32) { r = b2MotorJoint_GetMaxTorque(theStack, b.Id); return }
-func (b MotorJoint) SetCorrectionFactor(correctionFactor float32) {
-	b2MotorJoint_SetCorrectionFactor(theStack, b.Id, correctionFactor)
-}
-func (b MotorJoint) GetCorrectionFactor() (r float32) {
-	r = b2MotorJoint_GetCorrectionFactor(theStack, b.Id)
+func (b MotorJoint) GetMaxVelocityTorque() (r float32) {
+	r = b2MotorJoint_GetMaxVelocityTorque(theStack, b.Id)
 	return
 }
-func (b MouseJoint) SetTarget(target Vec2)        { b2MouseJoint_SetTarget(theStack, b.Id, target) }
-func (b MouseJoint) GetTarget() (r Vec2)          { r = b2MouseJoint_GetTarget(theStack, b.Id); return }
-func (b MouseJoint) SetSpringHertz(hertz float32) { b2MouseJoint_SetSpringHertz(theStack, b.Id, hertz) }
-func (b MouseJoint) GetSpringHertz() (r float32) {
-	r = b2MouseJoint_GetSpringHertz(theStack, b.Id)
+func (b MotorJoint) SetMaxVelocityForce(maxForce float32) {
+	b2MotorJoint_SetMaxVelocityForce(theStack, b.Id, maxForce)
+}
+func (b MotorJoint) GetMaxVelocityForce() (r float32) {
+	r = b2MotorJoint_GetMaxVelocityForce(theStack, b.Id)
 	return
 }
-func (b MouseJoint) SetSpringDampingRatio(dampingRatio float32) {
-	b2MouseJoint_SetSpringDampingRatio(theStack, b.Id, dampingRatio)
-}
-func (b MouseJoint) GetSpringDampingRatio() (r float32) {
-	r = b2MouseJoint_GetSpringDampingRatio(theStack, b.Id)
+func (b MotorJoint) SetLinearHertz(hertz float32) { b2MotorJoint_SetLinearHertz(theStack, b.Id, hertz) }
+func (b MotorJoint) GetLinearHertz() (r float32) {
+	r = b2MotorJoint_GetLinearHertz(theStack, b.Id)
 	return
 }
-func (b MouseJoint) SetMaxForce(maxForce float32) { b2MouseJoint_SetMaxForce(theStack, b.Id, maxForce) }
-func (b MouseJoint) GetMaxForce() (r float32)     { r = b2MouseJoint_GetMaxForce(theStack, b.Id); return }
+func (b MotorJoint) SetLinearDampingRatio(damping float32) {
+	b2MotorJoint_SetLinearDampingRatio(theStack, b.Id, damping)
+}
+func (b MotorJoint) GetLinearDampingRatio() (r float32) {
+	r = b2MotorJoint_GetLinearDampingRatio(theStack, b.Id)
+	return
+}
+func (b MotorJoint) SetAngularHertz(hertz float32) {
+	b2MotorJoint_SetAngularHertz(theStack, b.Id, hertz)
+}
+func (b MotorJoint) GetAngularHertz() (r float32) {
+	r = b2MotorJoint_GetAngularHertz(theStack, b.Id)
+	return
+}
+func (b MotorJoint) SetAngularDampingRatio(damping float32) {
+	b2MotorJoint_SetAngularDampingRatio(theStack, b.Id, damping)
+}
+func (b MotorJoint) GetAngularDampingRatio() (r float32) {
+	r = b2MotorJoint_GetAngularDampingRatio(theStack, b.Id)
+	return
+}
+func (b MotorJoint) SetMaxSpringForce(maxForce float32) {
+	b2MotorJoint_SetMaxSpringForce(theStack, b.Id, maxForce)
+}
+func (b MotorJoint) GetMaxSpringForce() (r float32) {
+	r = b2MotorJoint_GetMaxSpringForce(theStack, b.Id)
+	return
+}
+func (b MotorJoint) SetMaxSpringTorque(maxTorque float32) {
+	b2MotorJoint_SetMaxSpringTorque(theStack, b.Id, maxTorque)
+}
+func (b MotorJoint) GetMaxSpringTorque() (r float32) {
+	r = b2MotorJoint_GetMaxSpringTorque(theStack, b.Id)
+	return
+}
+func (b MoverJoint) SetLinearVelocity(velocity Vec2) {
+	b2MoverJoint_SetLinearVelocity(theStack, b.Id, velocity)
+}
+func (b MoverJoint) GetLinearVelocity() (r Vec2) {
+	r = b2MoverJoint_GetLinearVelocity(theStack, b.Id)
+	return
+}
+func (b MoverJoint) SetMaxVelocityForce(maxForce Vec2) {
+	b2MoverJoint_SetMaxVelocityForce(theStack, b.Id, maxForce)
+}
+func (b MoverJoint) GetMaxVelocityForce() (r Vec2) {
+	r = b2MoverJoint_GetMaxVelocityForce(theStack, b.Id)
+	return
+}
+func CreateWorld(def WorldDef) (r World) {
+	defStack := copyToStack(theStack, def)
+	defer defStack.Free()
+	r.Id = b2CreateWorld(theStack, defStack.Addr)
+	return
+}
+func (b World) DestroyWorld() { b2DestroyWorld(theStack, b.Id) }
+func (b World) Step(timeStep float32, subStepCount int32) {
+	b2World_Step(theStack, b.Id, timeStep, subStepCount)
+}
+func (b World) GetBounds() (r AABB)           { r = b2World_GetBounds(theStack, b.Id); return }
+func (b World) IsValid() (r uint8)            { r = b2World_IsValid(theStack, b.Id); return }
+func (b Body) IsValid() (r uint8)             { r = b2Body_IsValid(theStack, b.Id); return }
+func (b Shape) IsValid() (r uint8)            { r = b2Shape_IsValid(theStack, b.Id); return }
+func (b Chain) IsValid() (r uint8)            { r = b2Chain_IsValid(theStack, b.Id); return }
+func (b Joint) IsValid() (r uint8)            { r = b2Joint_IsValid(theStack, b.Id); return }
+func (b Contact) IsValid() (r uint8)          { r = b2Contact_IsValid(theStack, b.Id); return }
+func (b World) EnableSleeping(flag uint8)     { b2World_EnableSleeping(theStack, b.Id, flag) }
+func (b World) IsSleepingEnabled() (r uint8)  { r = b2World_IsSleepingEnabled(theStack, b.Id); return }
+func (b World) EnableWarmStarting(flag uint8) { b2World_EnableWarmStarting(theStack, b.Id, flag) }
+func (b World) IsWarmStartingEnabled() (r uint8) {
+	r = b2World_IsWarmStartingEnabled(theStack, b.Id)
+	return
+}
+func (b World) EnableSSE2Fallback(flag uint8) { b2World_EnableSSE2Fallback(theStack, b.Id, flag) }
+func (b World) GetAwakeBodyCount() (r int32)  { r = b2World_GetAwakeBodyCount(theStack, b.Id); return }
+func (b World) EnableContinuous(flag uint8)   { b2World_EnableContinuous(theStack, b.Id, flag) }
+func (b World) IsContinuousEnabled() (r uint8) {
+	r = b2World_IsContinuousEnabled(theStack, b.Id)
+	return
+}
+func (b World) SetRestitutionThreshold(value float32) {
+	b2World_SetRestitutionThreshold(theStack, b.Id, value)
+}
+func (b World) GetRestitutionThreshold() (r float32) {
+	r = b2World_GetRestitutionThreshold(theStack, b.Id)
+	return
+}
+func (b World) SetRestitutionIterations(iterations int32) {
+	b2World_SetRestitutionIterations(theStack, b.Id, iterations)
+}
+func (b World) GetRestitutionIterations() (r int32) {
+	r = b2World_GetRestitutionIterations(theStack, b.Id)
+	return
+}
+func (b World) EnableRestitutionPropagation(flag uint8) {
+	b2World_EnableRestitutionPropagation(theStack, b.Id, flag)
+}
+func (b World) IsRestitutionPropagationEnabled() (r uint8) {
+	r = b2World_IsRestitutionPropagationEnabled(theStack, b.Id)
+	return
+}
+func (b World) SetHitEventThreshold(value float32) {
+	b2World_SetHitEventThreshold(theStack, b.Id, value)
+}
+func (b World) GetHitEventThreshold() (r float32) {
+	r = b2World_GetHitEventThreshold(theStack, b.Id)
+	return
+}
+func (b World) SetContactTuning(hertz float32, dampingRatio float32, pushSpeed float32) {
+	b2World_SetContactTuning(theStack, b.Id, hertz, dampingRatio, pushSpeed)
+}
+func (b World) SetContactRecycleDistance(recycleDistance float32) {
+	b2World_SetContactRecycleDistance(theStack, b.Id, recycleDistance)
+}
+func (b World) GetContactRecycleDistance() (r float32) {
+	r = b2World_GetContactRecycleDistance(theStack, b.Id)
+	return
+}
+func (b World) SetMaxLinearSpeed(maximumLinearSpeed float32) {
+	b2World_SetMaxLinearSpeed(theStack, b.Id, maximumLinearSpeed)
+}
+func (b World) GetMaxLinearSpeed() (r float32) { r = b2World_GetMaxLinearSpeed(theStack, b.Id); return }
+func (b World) GetProfile() (r Profile)        { r = b2World_GetProfile(theStack, b.Id); return }
+func (b World) GetCounters() (r Counters)      { r = b2World_GetCounters(theStack, b.Id); return }
+func (b World) GetMaxCapacity() (r Capacity)   { r = b2World_GetMaxCapacity(theStack, b.Id); return }
+func (b World) SetUserData(userData uintptr)   { b2World_SetUserData(theStack, b.Id, userData) }
+func (b World) GetUserData() (r uintptr)       { r = b2World_GetUserData(theStack, b.Id); return }
+func (b World) SetWorkerCount(count int32)     { b2World_SetWorkerCount(theStack, b.Id, count) }
+func (b World) GetWorkerCount() (r int32)      { r = b2World_GetWorkerCount(theStack, b.Id); return }
+func (b World) CastRayClosest(origin Pos, translation Vec2, filter QueryFilter) (r RayResult) {
+	r = b2World_CastRayClosest(theStack, b.Id, origin, translation, filter)
+	return
+}
+func (b World) CastMover(origin1 Pos, mover Capsule, translation Vec2, filter QueryFilter) (r1 float32) {
+	moverStack := copyToStack(theStack, mover)
+	defer moverStack.Free()
+	r1 = b2World_CastMover(theStack, b.Id, origin1, moverStack.Addr, translation, filter)
+	return
+}
+func (b World) SetGravity(gravity Vec2) { b2World_SetGravity(theStack, b.Id, gravity) }
+func (b World) GetGravity() (r Vec2)    { r = b2World_GetGravity(theStack, b.Id); return }
+func (b World) Explode(explosionDef ExplosionDef) {
+	explosionDefStack := copyToStack(theStack, explosionDef)
+	defer explosionDefStack.Free()
+	b2World_Explode(theStack, b.Id, explosionDefStack.Addr)
+}
+func (b World) RebuildStaticTree()               { b2World_RebuildStaticTree(theStack, b.Id) }
+func (b PogoJoint) SetRestLength(length float32) { b2PogoJoint_SetRestLength(theStack, b.Id, length) }
+func (b PogoJoint) GetRestLength() (r float32)   { r = b2PogoJoint_GetRestLength(theStack, b.Id); return }
+func (b PogoJoint) GetSpringHertz() (r float32) {
+	r = b2PogoJoint_GetSpringHertz(theStack, b.Id)
+	return
+}
+func (b PogoJoint) SetSpringHertz(hertz float32) { b2PogoJoint_SetSpringHertz(theStack, b.Id, hertz) }
+func (b PogoJoint) SetSpringDampingRatio(dampingRatio float32) {
+	b2PogoJoint_SetSpringDampingRatio(theStack, b.Id, dampingRatio)
+}
+func (b PogoJoint) GetSpringDampingRatio() (r float32) {
+	r = b2PogoJoint_GetSpringDampingRatio(theStack, b.Id)
+	return
+}
+func (b PogoJoint) GetCurrentLength() (r1 float32) {
+	r1 = b2PogoJoint_GetCurrentLength(theStack, b.Id)
+	return
+}
+func (b PogoJoint) GetImpulse() (r float32) { r = b2PogoJoint_GetImpulse(theStack, b.Id); return }
+func (b PogoJoint) GetCurrentSpeed() (r float32) {
+	r = b2PogoJoint_GetCurrentSpeed(theStack, b.Id)
+	return
+}
 func (b PrismaticJoint) EnableSpring(enableSpring uint8) {
 	b2PrismaticJoint_EnableSpring(theStack, b.Id, enableSpring)
 }
@@ -749,15 +963,15 @@ func (b PrismaticJoint) IsMotorEnabled() (r uint8) {
 	r = b2PrismaticJoint_IsMotorEnabled(theStack, b.Id)
 	return
 }
-func (b PrismaticJoint) SetMotorSpeed(motorSpeed float32) {
-	b2PrismaticJoint_SetMotorSpeed(theStack, b.Id, motorSpeed)
+func (b PrismaticJoint) SetTargetMotorSpeed(motorSpeed float32) {
+	b2PrismaticJoint_SetTargetMotorSpeed(theStack, b.Id, motorSpeed)
 }
-func (b PrismaticJoint) GetMotorSpeed() (r float32) {
-	r = b2PrismaticJoint_GetMotorSpeed(theStack, b.Id)
+func (b PrismaticJoint) GetTargetMotorSpeed() (r float32) {
+	r = b2PrismaticJoint_GetTargetMotorSpeed(theStack, b.Id)
 	return
 }
-func (b PrismaticJoint) GetMotorForce() (r float32) {
-	r = b2PrismaticJoint_GetMotorForce(theStack, b.Id)
+func (b PrismaticJoint) GetCurrentMotorForce() (r float32) {
+	r = b2PrismaticJoint_GetCurrentMotorForce(theStack, b.Id)
 	return
 }
 func (b PrismaticJoint) SetMaxMotorForce(force float32) {
@@ -767,11 +981,14 @@ func (b PrismaticJoint) GetMaxMotorForce() (r float32) {
 	r = b2PrismaticJoint_GetMaxMotorForce(theStack, b.Id)
 	return
 }
-func (b PrismaticJoint) GetTranslation() (r float32) {
-	r = b2PrismaticJoint_GetTranslation(theStack, b.Id)
+func (b PrismaticJoint) GetCurrentTranslation() (r1 float32) {
+	r1 = b2PrismaticJoint_GetCurrentTranslation(theStack, b.Id)
 	return
 }
-func (b PrismaticJoint) GetSpeed() (r float32) { r = b2PrismaticJoint_GetSpeed(theStack, b.Id); return }
+func (b PrismaticJoint) GetCurrentSpeed() (r float32) {
+	r = b2PrismaticJoint_GetCurrentSpeed(theStack, b.Id)
+	return
+}
 func (b RevoluteJoint) EnableSpring(enableSpring uint8) {
 	b2RevoluteJoint_EnableSpring(theStack, b.Id, enableSpring)
 }
@@ -800,7 +1017,6 @@ func (b RevoluteJoint) GetTargetAngle() (r float32) {
 	r = b2RevoluteJoint_GetTargetAngle(theStack, b.Id)
 	return
 }
-func (b RevoluteJoint) GetAngle() (r float32) { r = b2RevoluteJoint_GetAngle(theStack, b.Id); return }
 func (b RevoluteJoint) EnableLimit(enableLimit uint8) {
 	b2RevoluteJoint_EnableLimit(theStack, b.Id, enableLimit)
 }
@@ -816,8 +1032,8 @@ func (b RevoluteJoint) GetUpperLimit() (r float32) {
 	r = b2RevoluteJoint_GetUpperLimit(theStack, b.Id)
 	return
 }
-func (b RevoluteJoint) SetLimits(lower float32, upper float32) {
-	b2RevoluteJoint_SetLimits(theStack, b.Id, lower, upper)
+func (b RevoluteJoint) SetLimits(lower1 float32, upper1 float32) {
+	b2RevoluteJoint_SetLimits(theStack, b.Id, lower1, upper1)
 }
 func (b RevoluteJoint) EnableMotor(enableMotor uint8) {
 	b2RevoluteJoint_EnableMotor(theStack, b.Id, enableMotor)
@@ -826,15 +1042,11 @@ func (b RevoluteJoint) IsMotorEnabled() (r uint8) {
 	r = b2RevoluteJoint_IsMotorEnabled(theStack, b.Id)
 	return
 }
-func (b RevoluteJoint) SetMotorSpeed(motorSpeed float32) {
-	b2RevoluteJoint_SetMotorSpeed(theStack, b.Id, motorSpeed)
+func (b RevoluteJoint) SetTargetMotorSpeed(motorSpeed float32) {
+	b2RevoluteJoint_SetTargetMotorSpeed(theStack, b.Id, motorSpeed)
 }
-func (b RevoluteJoint) GetMotorSpeed() (r float32) {
-	r = b2RevoluteJoint_GetMotorSpeed(theStack, b.Id)
-	return
-}
-func (b RevoluteJoint) GetMotorTorque() (r float32) {
-	r = b2RevoluteJoint_GetMotorTorque(theStack, b.Id)
+func (b RevoluteJoint) GetTargetMotorSpeed() (r float32) {
+	r = b2RevoluteJoint_GetTargetMotorSpeed(theStack, b.Id)
 	return
 }
 func (b RevoluteJoint) SetMaxMotorTorque(torque float32) {
@@ -842,6 +1054,18 @@ func (b RevoluteJoint) SetMaxMotorTorque(torque float32) {
 }
 func (b RevoluteJoint) GetMaxMotorTorque() (r float32) {
 	r = b2RevoluteJoint_GetMaxMotorTorque(theStack, b.Id)
+	return
+}
+func (b RevoluteJoint) GetCurrentAngle() (r float32) {
+	r = b2RevoluteJoint_GetCurrentAngle(theStack, b.Id)
+	return
+}
+func (b RevoluteJoint) GetCurrentSpeed() (r float32) {
+	r = b2RevoluteJoint_GetCurrentSpeed(theStack, b.Id)
+	return
+}
+func (b RevoluteJoint) GetCurrentMotorTorque() (r float32) {
+	r = b2RevoluteJoint_GetCurrentMotorTorque(theStack, b.Id)
 	return
 }
 func (b Body) CreateCircleShape(def ShapeDef, circle Circle) (r Shape) {
@@ -876,6 +1100,14 @@ func (b Body) CreateSegmentShape(def ShapeDef, segment Segment) (r Shape) {
 	r.Id = b2CreateSegmentShape(theStack, b.Id, defStack.Addr, segmentStack.Addr)
 	return
 }
+func (b Body) CreateChainSegmentShape(def ShapeDef, chainSegment ChainSegment) (r Shape) {
+	defStack := copyToStack(theStack, def)
+	defer defStack.Free()
+	chainSegmentStack := copyToStack(theStack, chainSegment)
+	defer chainSegmentStack.Free()
+	r.Id = b2CreateChainSegmentShape(theStack, b.Id, defStack.Addr, chainSegmentStack.Addr)
+	return
+}
 func (b Shape) DestroyShape(updateBodyMass uint8) { b2DestroyShape(theStack, b.Id, updateBodyMass) }
 func (b Body) CreateChain(def ChainDef) (r Chain) {
 	defStack := copyToStack(theStack, def)
@@ -883,19 +1115,31 @@ func (b Body) CreateChain(def ChainDef) (r Chain) {
 	r.Id = b2CreateChain(theStack, b.Id, defStack.Addr)
 	return
 }
-func (b Chain) DestroyChain()                  { b2DestroyChain(theStack, b.Id) }
-func (b Chain) GetWorld() (r World)            { r.Id = b2Chain_GetWorld(theStack, b.Id); return }
-func (b Chain) GetSegmentCount() (r int32)     { r = b2Chain_GetSegmentCount(theStack, b.Id); return }
-func (b Shape) GetBody() (r Body)              { r.Id = b2Shape_GetBody(theStack, b.Id); return }
-func (b Shape) GetWorld() (r World)            { r.Id = b2Shape_GetWorld(theStack, b.Id); return }
-func (b Shape) SetUserData(userData uintptr)   { b2Shape_SetUserData(theStack, b.Id, userData) }
-func (b Shape) GetUserData() (r uintptr)       { r = b2Shape_GetUserData(theStack, b.Id); return }
-func (b Shape) IsSensor() (r uint8)            { r = b2Shape_IsSensor(theStack, b.Id); return }
-func (b Shape) TestPoint(point Vec2) (r uint8) { r = b2Shape_TestPoint(theStack, b.Id, point); return }
-func (b Shape) RayCast(input RayCastInput) (r CastOutput) {
-	inputStack := copyToStack(theStack, input)
-	defer inputStack.Free()
-	r = b2Shape_RayCast(theStack, b.Id, inputStack.Addr)
+func (b Chain) DestroyChain()              { b2DestroyChain(theStack, b.Id) }
+func (b Chain) GetWorld() (r World)        { r.Id = b2Chain_GetWorld(theStack, b.Id); return }
+func (b Chain) GetSegmentCount() (r int32) { r = b2Chain_GetSegmentCount(theStack, b.Id); return }
+func (b Chain) SetSurfaceMaterial(material SurfaceMaterial, segmentIndex int32) {
+	materialStack := copyToStack(theStack, material)
+	defer materialStack.Free()
+	b2Chain_SetSurfaceMaterial(theStack, b.Id, materialStack.Addr, segmentIndex)
+}
+func (b Chain) SetAllSurfaceMaterials(material SurfaceMaterial) {
+	materialStack := copyToStack(theStack, material)
+	defer materialStack.Free()
+	b2Chain_SetAllSurfaceMaterials(theStack, b.Id, materialStack.Addr)
+}
+func (b Chain) GetSurfaceMaterial(segmentIndex int32) (r SurfaceMaterial) {
+	r = b2Chain_GetSurfaceMaterial(theStack, b.Id, segmentIndex)
+	return
+}
+func (b Shape) GetBody() (r Body)             { r.Id = b2Shape_GetBody(theStack, b.Id); return }
+func (b Shape) GetWorld() (r World)           { r.Id = b2Shape_GetWorld(theStack, b.Id); return }
+func (b Shape) SetUserData(userData uintptr)  { b2Shape_SetUserData(theStack, b.Id, userData) }
+func (b Shape) GetUserData() (r uintptr)      { r = b2Shape_GetUserData(theStack, b.Id); return }
+func (b Shape) IsSensor() (r uint8)           { r = b2Shape_IsSensor(theStack, b.Id); return }
+func (b Shape) TestPoint(point Pos) (r uint8) { r = b2Shape_TestPoint(theStack, b.Id, point); return }
+func (b Shape) CastRay(origin Pos, translation Vec2) (r1 WorldCastOutput) {
+	r1 = b2Shape_CastRay(theStack, b.Id, origin, translation)
 	return
 }
 func (b Shape) SetDensity(density float32, updateBodyMass uint8) {
@@ -907,15 +1151,17 @@ func (b Shape) GetFriction() (r float32)     { r = b2Shape_GetFriction(theStack,
 func (b Shape) SetRestitution(restitution float32) {
 	b2Shape_SetRestitution(theStack, b.Id, restitution)
 }
-func (b Shape) GetRestitution() (r float32) { r = b2Shape_GetRestitution(theStack, b.Id); return }
-func (b Shape) SetMaterial(material int32)  { b2Shape_SetMaterial(theStack, b.Id, material) }
-func (b Shape) GetMaterial() (r int32)      { r = b2Shape_GetMaterial(theStack, b.Id); return }
+func (b Shape) GetRestitution() (r float32)     { r = b2Shape_GetRestitution(theStack, b.Id); return }
+func (b Shape) SetUserMaterial(material uint64) { b2Shape_SetUserMaterial(theStack, b.Id, material) }
+func (b Shape) GetUserMaterial() (r uint64)     { r = b2Shape_GetUserMaterial(theStack, b.Id); return }
 func (b Shape) GetSurfaceMaterial() (r SurfaceMaterial) {
 	r = b2Shape_GetSurfaceMaterial(theStack, b.Id)
 	return
 }
 func (b Shape) SetSurfaceMaterial(surfaceMaterial SurfaceMaterial) {
-	b2Shape_SetSurfaceMaterial(theStack, b.Id, surfaceMaterial)
+	surfaceMaterialStack := copyToStack(theStack, surfaceMaterial)
+	defer surfaceMaterialStack.Free()
+	b2Shape_SetSurfaceMaterial(theStack, b.Id, surfaceMaterialStack.Addr)
 }
 func (b Shape) GetFilter() (r Filter)         { r = b2Shape_GetFilter(theStack, b.Id); return }
 func (b Shape) SetFilter(filter Filter)       { b2Shape_SetFilter(theStack, b.Id, filter) }
@@ -968,23 +1214,25 @@ func (b Shape) SetPolygon(polygon Polygon) {
 	defer polygonStack.Free()
 	b2Shape_SetPolygon(theStack, b.Id, polygonStack.Addr)
 }
-func (b Shape) GetParentChain() (r Chain)    { r.Id = b2Shape_GetParentChain(theStack, b.Id); return }
-func (b Chain) SetFriction(friction float32) { b2Chain_SetFriction(theStack, b.Id, friction) }
-func (b Chain) GetFriction() (r float32)     { r = b2Chain_GetFriction(theStack, b.Id); return }
-func (b Chain) SetRestitution(restitution float32) {
-	b2Chain_SetRestitution(theStack, b.Id, restitution)
+func (b Shape) SetChainSegment(chainSegment ChainSegment) {
+	chainSegmentStack := copyToStack(theStack, chainSegment)
+	defer chainSegmentStack.Free()
+	b2Shape_SetChainSegment(theStack, b.Id, chainSegmentStack.Addr)
 }
-func (b Chain) GetRestitution() (r float32)   { r = b2Chain_GetRestitution(theStack, b.Id); return }
-func (b Chain) SetMaterial(material int32)    { b2Chain_SetMaterial(theStack, b.Id, material) }
-func (b Chain) GetMaterial() (r int32)        { r = b2Chain_GetMaterial(theStack, b.Id); return }
+func (b Shape) GetParentChain() (r Chain)     { r.Id = b2Shape_GetParentChain(theStack, b.Id); return }
 func (b Shape) GetContactCapacity() (r int32) { r = b2Shape_GetContactCapacity(theStack, b.Id); return }
 func (b Shape) GetSensorCapacity() (r int32)  { r = b2Shape_GetSensorCapacity(theStack, b.Id); return }
-func (b Shape) GetAABB() (r AABB)             { r = b2Shape_GetAABB(theStack, b.Id); return }
-func (b Shape) GetMassData() (r MassData)     { r = b2Shape_GetMassData(theStack, b.Id); return }
-func (b Shape) GetClosestPoint(_target Vec2) (r Vec2) {
-	r = b2Shape_GetClosestPoint(theStack, b.Id, _target)
+func (b Shape) GetBounds() (r AABB)           { r = b2Shape_GetBounds(theStack, b.Id); return }
+func (b Shape) ComputeMassData() (r MassData) { r = b2Shape_ComputeMassData(theStack, b.Id); return }
+func (b Shape) GetClosestPoint(target Pos) (r1 Pos) {
+	r1 = b2Shape_GetClosestPoint(theStack, b.Id, target)
 	return
 }
+func (b Shape) ApplyWind(wind Vec2, drag float32, lift float32, wake uint8) {
+	b2Shape_ApplyWind(theStack, b.Id, wind, drag, lift, wake)
+}
+func IsAVX2Available() (r uint8)                  { r = b2IsAVX2Available(theStack); return }
+func (b World) GetStateHash() (r uint64)          { r = b2World_GetStateHash(theStack, b.Id); return }
 func GetTicks() (r uint64)                        { r = b2GetTicks(theStack); return }
 func GetMilliseconds(ticks uint64) (r float32)    { r = b2GetMilliseconds(theStack, ticks); return }
 func Yield()                                      { b2Yield(theStack) }
@@ -995,7 +1243,6 @@ func DefaultQueryFilter() (r QueryFilter)         { r = b2DefaultQueryFilter(the
 func DefaultShapeDef() (r ShapeDef)               { r = b2DefaultShapeDef(theStack); return }
 func DefaultSurfaceMaterial() (r SurfaceMaterial) { r = b2DefaultSurfaceMaterial(theStack); return }
 func DefaultChainDef() (r ChainDef)               { r = b2DefaultChainDef(theStack); return }
-func DefaultDebugDraw() (r b2DebugDraw)           { r = b2DefaultDebugDraw(theStack); return }
 func (b WeldJoint) SetLinearHertz(hertz float32)  { b2WeldJoint_SetLinearHertz(theStack, b.Id, hertz) }
 func (b WeldJoint) GetLinearHertz() (r float32) {
 	r = b2WeldJoint_GetLinearHertz(theStack, b.Id)
@@ -1064,15 +1311,15 @@ func (b WheelJoint) IsMotorEnabled() (r uint8) {
 	r = b2WheelJoint_IsMotorEnabled(theStack, b.Id)
 	return
 }
-func (b WheelJoint) SetMotorSpeed(motorSpeed float32) {
-	b2WheelJoint_SetMotorSpeed(theStack, b.Id, motorSpeed)
+func (b WheelJoint) SetTargetMotorSpeed(motorSpeed float32) {
+	b2WheelJoint_SetTargetMotorSpeed(theStack, b.Id, motorSpeed)
 }
-func (b WheelJoint) GetMotorSpeed() (r float32) {
-	r = b2WheelJoint_GetMotorSpeed(theStack, b.Id)
+func (b WheelJoint) GetTargetMotorSpeed() (r float32) {
+	r = b2WheelJoint_GetTargetMotorSpeed(theStack, b.Id)
 	return
 }
-func (b WheelJoint) GetMotorTorque() (r float32) {
-	r = b2WheelJoint_GetMotorTorque(theStack, b.Id)
+func (b WheelJoint) GetCurrentMotorTorque() (r float32) {
+	r = b2WheelJoint_GetCurrentMotorTorque(theStack, b.Id)
 	return
 }
 func (b WheelJoint) SetMaxMotorTorque(torque float32) {
@@ -1082,81 +1329,6 @@ func (b WheelJoint) GetMaxMotorTorque() (r float32) {
 	r = b2WheelJoint_GetMaxMotorTorque(theStack, b.Id)
 	return
 }
-func CreateWorld(def WorldDef) (r World) {
-	defStack := copyToStack(theStack, def)
-	defer defStack.Free()
-	r.Id = b2CreateWorld(theStack, defStack.Addr)
-	return
-}
-func (b World) DestroyWorld() { b2DestroyWorld(theStack, b.Id) }
-func (b World) Step(timeStep float32, subStepCount int32) {
-	b2World_Step(theStack, b.Id, timeStep, subStepCount)
-}
-func (b World) IsValid() (r uint8)            { r = b2World_IsValid(theStack, b.Id); return }
-func (b Body) IsValid() (r uint8)             { r = b2Body_IsValid(theStack, b.Id); return }
-func (b Shape) IsValid() (r uint8)            { r = b2Shape_IsValid(theStack, b.Id); return }
-func (b Chain) IsValid() (r uint8)            { r = b2Chain_IsValid(theStack, b.Id); return }
-func (b Joint) IsValid() (r uint8)            { r = b2Joint_IsValid(theStack, b.Id); return }
-func (b World) EnableSleeping(flag uint8)     { b2World_EnableSleeping(theStack, b.Id, flag) }
-func (b World) IsSleepingEnabled() (r uint8)  { r = b2World_IsSleepingEnabled(theStack, b.Id); return }
-func (b World) EnableWarmStarting(flag uint8) { b2World_EnableWarmStarting(theStack, b.Id, flag) }
-func (b World) IsWarmStartingEnabled() (r uint8) {
-	r = b2World_IsWarmStartingEnabled(theStack, b.Id)
-	return
-}
-func (b World) GetAwakeBodyCount() (r int32) { r = b2World_GetAwakeBodyCount(theStack, b.Id); return }
-func (b World) EnableContinuous(flag uint8)  { b2World_EnableContinuous(theStack, b.Id, flag) }
-func (b World) IsContinuousEnabled() (r uint8) {
-	r = b2World_IsContinuousEnabled(theStack, b.Id)
-	return
-}
-func (b World) SetRestitutionThreshold(value float32) {
-	b2World_SetRestitutionThreshold(theStack, b.Id, value)
-}
-func (b World) GetRestitutionThreshold() (r float32) {
-	r = b2World_GetRestitutionThreshold(theStack, b.Id)
-	return
-}
-func (b World) SetHitEventThreshold(value float32) {
-	b2World_SetHitEventThreshold(theStack, b.Id, value)
-}
-func (b World) GetHitEventThreshold() (r float32) {
-	r = b2World_GetHitEventThreshold(theStack, b.Id)
-	return
-}
-func (b World) SetContactTuning(hertz float32, dampingRatio float32, pushSpeed float32) {
-	b2World_SetContactTuning(theStack, b.Id, hertz, dampingRatio, pushSpeed)
-}
-func (b World) SetMaximumLinearSpeed(maximumLinearSpeed float32) {
-	b2World_SetMaximumLinearSpeed(theStack, b.Id, maximumLinearSpeed)
-}
-func (b World) GetMaximumLinearSpeed() (r float32) {
-	r = b2World_GetMaximumLinearSpeed(theStack, b.Id)
-	return
-}
-func (b World) GetProfile() (r Profile)      { r = b2World_GetProfile(theStack, b.Id); return }
-func (b World) GetCounters() (r Counters)    { r = b2World_GetCounters(theStack, b.Id); return }
-func (b World) SetUserData(userData uintptr) { b2World_SetUserData(theStack, b.Id, userData) }
-func (b World) GetUserData() (r uintptr)     { r = b2World_GetUserData(theStack, b.Id); return }
-func (b World) CastRayClosest(origin Vec2, translation Vec2, filter QueryFilter) (r RayResult) {
-	r = b2World_CastRayClosest(theStack, b.Id, origin, translation, filter)
-	return
-}
-func (b World) CastMover(mover Capsule, translation Vec2, filter QueryFilter) (r float32) {
-	moverStack := copyToStack(theStack, mover)
-	defer moverStack.Free()
-	r = b2World_CastMover(theStack, b.Id, moverStack.Addr, translation, filter)
-	return
-}
-func (b World) SetGravity(gravity Vec2) { b2World_SetGravity(theStack, b.Id, gravity) }
-func (b World) GetGravity() (r Vec2)    { r = b2World_GetGravity(theStack, b.Id); return }
-func (b World) Explode(explosionDef ExplosionDef) {
-	explosionDefStack := copyToStack(theStack, explosionDef)
-	defer explosionDefStack.Free()
-	b2World_Explode(theStack, b.Id, explosionDefStack.Addr)
-}
-func (b World) RebuildStaticTree()           { b2World_RebuildStaticTree(theStack, b.Id) }
-func (b World) EnableSpeculative(flag uint8) { b2World_EnableSpeculative(theStack, b.Id, flag) }
 
 const ToiStateUnknown TOIState = b2_toiStateUnknown
 const ToiStateFailed TOIState = b2_toiStateFailed
@@ -1174,7 +1346,8 @@ const ChainSegmentShape ShapeType = b2_chainSegmentShape
 const JointTypeDistance JointType = b2_distanceJoint
 const JointTypeFilter JointType = b2_filterJoint
 const JointTypeMotor JointType = b2_motorJoint
-const JointTypeMouse JointType = b2_mouseJoint
+const JointTypeMover JointType = b2_moverJoint
+const JointTypePogo JointType = b2_pogoJoint
 const JointTypePrismatic JointType = b2_prismaticJoint
 const JointTypeRevolute JointType = b2_revoluteJoint
 const JointTypeWeld JointType = b2_weldJoint

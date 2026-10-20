@@ -12,8 +12,8 @@ import (
 // The expected values are the same as in the C test, so this checks that the
 // transpiled solver produces bit-identical results.
 const (
-	expectedSleepStep = 288
-	expectedHash      = 0x35467e1e
+	expectedSleepStep = 299
+	expectedHash      = 0x465f3df4
 )
 
 func TestDeterminismCrossPlatform(t *testing.T) {
@@ -36,51 +36,58 @@ func runFallingHinges(t *testing.T, def WorldDef) (sleepStep int, hash uint32) {
 	defer world.DestroyWorld()
 
 	groundDef := DefaultBodyDef()
-	groundDef.Position = Vec2{X: 0, Y: -1}
+	groundDef.Position = Pos{X: 0, Y: -1}
 	ground := world.CreateBody(groundDef)
-	ground.CreatePolygonShape(DefaultShapeDef(), MakeBox(20, 1))
+	ground.CreatePolygonShape(DefaultShapeDef(), MakeBox(40, 1))
 
 	const columnCount = 4
-	const rowCount = 30
+	const rowCount = 20
 
 	h := float32(0.25)
-	r := 0.1 * h
-	box := MakeRoundedBox(h-r, h-r, r)
+	box := MakeSquare(h)
 
 	shapeDef := DefaultShapeDef()
-	shapeDef.Material.Friction = 0.3
-
-	offset := 0.4 * h
-	dx := 10.0 * h
-	xroot := -0.5 * dx * (columnCount - 1.0)
 
 	jointDef := DefaultRevoluteJointDef()
 	jointDef.EnableLimit = 1
 	jointDef.LowerAngle = -0.1 * _B2_PI
 	jointDef.UpperAngle = 0.2 * _B2_PI
 	jointDef.EnableSpring = 1
-	jointDef.Hertz = 0.5
-	jointDef.DampingRatio = 0.5
-	jointDef.LocalAnchorA = Vec2{X: h, Y: h}
-	jointDef.LocalAnchorB = Vec2{X: offset, Y: -h}
-	jointDef.DrawSize = 0.1
+	jointDef.Hertz = 1
+	jointDef.DampingRatio = 1
+	jointDef.EnableMotor = 1
+	jointDef.MaxMotorTorque = 0.25
+	jointDef.Base.LocalFrameA.P = Vec2{X: -h, Y: h}
+	jointDef.Base.LocalFrameB.P = Vec2{X: -h, Y: -h}
+	jointDef.Base.ConstraintHertz = 60
+	jointDef.Base.ConstraintDampingRatio = 0
+	jointDef.Base.DrawScale = 0.5
+
+	offset := 0.4 * h
+	dx := 10.0 * h
+	xBase := -0.5 * dx * (columnCount - 1.0)
 
 	var bodies []Body
 
 	for j := range columnCount {
-		x := xroot + float32(float32(j)*dx)
+		// explicit float32 conversions prevent fused multiply-add, which C does not use
+		x := xBase + float32(float32(j)*dx)
 
 		var prevBody BodyId
 
 		for i := range rowCount {
 			bodyDef := DefaultBodyDef()
 			bodyDef.Type1 = DynamicBody
-			// explicit float32 conversions prevent fused multiply-add, which C does not use
 			bodyDef.Position.X = x + float32(offset*float32(i))
 			bodyDef.Position.Y = h + float32(2.0*h*float32(i))
 
 			// this tests the deterministic cosine and sine functions
-			cs := ComputeCosSin(float32(0.1*float32(i)) - 1.0)
+			angle := float32(-0.1)
+			if i&1 == 1 {
+				angle = 0.1
+			}
+
+			cs := ComputeCosSin(angle)
 			bodyDef.Rotation = Rot{C: cs.Cosine, S: cs.Sine}
 
 			body := world.CreateBody(bodyDef)
@@ -88,8 +95,8 @@ func runFallingHinges(t *testing.T, def WorldDef) (sleepStep int, hash uint32) {
 			if i&1 == 0 {
 				prevBody = body.Id
 			} else {
-				jointDef.BodyIdA = prevBody
-				jointDef.BodyIdB = body.Id
+				jointDef.Base.BodyIdA = prevBody
+				jointDef.Base.BodyIdB = body.Id
 				world.CreateRevoluteJoint(jointDef)
 				prevBody = BodyId{}
 			}
@@ -100,7 +107,7 @@ func runFallingHinges(t *testing.T, def WorldDef) (sleepStep int, hash uint32) {
 	}
 
 	for step := 0; ; step++ {
-		require.Less(t, step, 1000, "world never fell asleep")
+		require.Less(t, step, 500, "world never fell asleep")
 
 		world.Step(1.0/60.0, 4)
 

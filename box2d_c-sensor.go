@@ -8,62 +8,6 @@ import (
 var _ unsafe.Pointer
 var _ reflect.Type
 
-func b2SensorArray_Create(tls *_Stack, capacity int32) (r b2SensorArray) {
-	var a b2SensorArray
-	_ = a
-	a = b2SensorArray{}
-	if capacity > 0 {
-		a.Data = b2Alloc(tls, int32FromUint64(uint64FromInt32(capacity)*uint64(40)))
-		a.Capacity = capacity
-	}
-	return a
-}
-
-/* Reserve */
-func b2SensorArray_Reserve(tls *_Stack, a uintptr, newCapacity int32) {
-	if newCapacity <= (*b2SensorArray)(unsafe.Pointer(a)).Capacity {
-		return
-	}
-	(*b2SensorArray)(unsafe.Pointer(a)).Data = b2GrowAlloc(tls, (*b2SensorArray)(unsafe.Pointer(a)).Data, int32FromUint64(uint64FromInt32((*b2SensorArray)(unsafe.Pointer(a)).Capacity)*uint64(40)), int32FromUint64(uint64FromInt32(newCapacity)*uint64(40)))
-	(*b2SensorArray)(unsafe.Pointer(a)).Capacity = newCapacity
-}
-
-/* Destroy */
-func b2SensorArray_Destroy(tls *_Stack, a uintptr) {
-	b2Free(tls, (*b2SensorArray)(unsafe.Pointer(a)).Data, int32FromUint64(uint64FromInt32((*b2SensorArray)(unsafe.Pointer(a)).Capacity)*uint64(40)))
-	(*b2SensorArray)(unsafe.Pointer(a)).Data = uintptrFromInt32(0)
-	(*b2SensorArray)(unsafe.Pointer(a)).Count = 0
-	(*b2SensorArray)(unsafe.Pointer(a)).Capacity = 0
-}
-
-func b2SensorTaskContextArray_Create(tls *_Stack, capacity int32) (r b2SensorTaskContextArray) {
-	var a b2SensorTaskContextArray
-	_ = a
-	a = b2SensorTaskContextArray{}
-	if capacity > 0 {
-		a.Data = b2Alloc(tls, int32FromUint64(uint64FromInt32(capacity)*uint64(16)))
-		a.Capacity = capacity
-	}
-	return a
-}
-
-/* Reserve */
-func b2SensorTaskContextArray_Reserve(tls *_Stack, a uintptr, newCapacity int32) {
-	if newCapacity <= (*b2SensorTaskContextArray)(unsafe.Pointer(a)).Capacity {
-		return
-	}
-	(*b2SensorTaskContextArray)(unsafe.Pointer(a)).Data = b2GrowAlloc(tls, (*b2SensorTaskContextArray)(unsafe.Pointer(a)).Data, int32FromUint64(uint64FromInt32((*b2SensorTaskContextArray)(unsafe.Pointer(a)).Capacity)*uint64(16)), int32FromUint64(uint64FromInt32(newCapacity)*uint64(16)))
-	(*b2SensorTaskContextArray)(unsafe.Pointer(a)).Capacity = newCapacity
-}
-
-/* Destroy */
-func b2SensorTaskContextArray_Destroy(tls *_Stack, a uintptr) {
-	b2Free(tls, (*b2SensorTaskContextArray)(unsafe.Pointer(a)).Data, int32FromUint64(uint64FromInt32((*b2SensorTaskContextArray)(unsafe.Pointer(a)).Capacity)*uint64(16)))
-	(*b2SensorTaskContextArray)(unsafe.Pointer(a)).Data = uintptrFromInt32(0)
-	(*b2SensorTaskContextArray)(unsafe.Pointer(a)).Count = 0
-	(*b2SensorTaskContextArray)(unsafe.Pointer(a)).Capacity = 0
-}
-
 // Sensor shapes need to
 // - detect begin and end overlap events
 // - events must be reported in deterministic order
@@ -80,18 +24,23 @@ func b2SensorTaskContextArray_Destroy(tls *_Stack, a uintptr) {
 // Each sensor has an double buffered array of overlaps
 // These overlaps use a shape reference with index and generation
 
-func b2SensorQueryCallback(tls *_Stack, proxyId int32, userData uint64, context uintptr) (r uint8) {
-	bp := tls.Alloc(192)
-	defer tls.Free(192)
-	var newCapacity, sensorShapeId, shapeId, v2 int32
-	var otherShape, queryContext, sensor, sensorShape, shapeRef, world, v1, v3 uintptr
-	var otherTransform Transform
+func b2SensorQueryCallback(tls *_Stack, proxyId int32, userData uint64, context uintptr) (r1 uint8) {
+	bp := tls.Alloc(176)
+	defer tls.Free(176)
+	var C, v16 Transform
+	var customFilterFcn, otherShape, queryContext, sensor, sensorShape, shapeRef, world, v18, v19, v20, v23, v26 uintptr
+	var d, v13, v14 Vec2
+	var idA, idB ShapeId
+	var newCapacity, newSize, oldCapacity, oldSize, sensorShapeId, shapeId, v21, v22, v25 int32
+	var otherTransform, v6, v7 WorldTransform
 	var output DistanceOutput
-	var overlaps, v7 uint8
-	var v5, v6 Filter
-	var _ /* cache at bp+184 */ SimplexCache
+	var overlaps, shouldCollide, v4 uint8
+	var r, v10, v12, v8, v9 Rot
+	var v1 bool
+	var v2, v3 Filter
+	var _ /* cache at bp+168 */ SimplexCache
 	var _ /* input at bp+0 */ DistanceInput
-	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = newCapacity, otherShape, otherTransform, output, overlaps, queryContext, sensor, sensorShape, sensorShapeId, shapeId, shapeRef, world, v1, v2, v3, v5, v6, v7
+	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = C, customFilterFcn, d, idA, idB, newCapacity, newSize, oldCapacity, oldSize, otherShape, otherTransform, output, overlaps, queryContext, r, sensor, sensorShape, sensorShapeId, shapeId, shapeRef, shouldCollide, world, v1, v10, v12, v13, v14, v16, v18, v19, v2, v20, v21, v22, v23, v25, v26, v3, v4, v6, v7, v8, v9
 	_ = uint64FromInt64(4)
 	shapeId = int32FromUint64(userData)
 	queryContext = context
@@ -101,15 +50,11 @@ func b2SensorQueryCallback(tls *_Stack, proxyId int32, userData uint64, context 
 		return boolUint8(true1 != 0)
 	}
 	world = (*b2SensorQueryContext)(unsafe.Pointer(queryContext)).World
-	v1 = world + 1248
-	v2 = shapeId
-	if !(0 <= v2 && v2 < (*b2ShapeArray)(unsafe.Pointer(v1)).Count) && b2InternalAssertFcn(tls, __ccgo_ts+349, __ccgo_ts+1384, int32FromInt32(138)) != 0 {
-		__builtin_trap(tls)
+	if v1 = !!(0 <= shapeId && shapeId < (*b2World)(unsafe.Pointer(world)).Shapes.Count); !v1 {
+		b2InternalAssert(tls, __ccgo_ts+1908, __ccgo_ts+21483, int32FromInt32(60))
 	}
-	v3 = (*b2ShapeArray)(unsafe.Pointer(v1)).Data + uintptr(v2)*288
-	goto _4
-_4:
-	otherShape = v3
+	_ = v1 || bool(int32FromInt32(0) != 0)
+	otherShape = (*b2World)(unsafe.Pointer(world)).Shapes.Data + uintptr(shapeId)*280
 	// Are sensor events enabled on the other shape?
 	if int32FromUint8((*b2Shape)(unsafe.Pointer(otherShape)).EnableSensorEvents) == false1 {
 		return boolUint8(true1 != 0)
@@ -119,120 +64,193 @@ _4:
 		return boolUint8(true1 != 0)
 	}
 	// Check filter
-	v5 = (*b2Shape)(unsafe.Pointer(sensorShape)).Filter
-	v6 = (*b2Shape)(unsafe.Pointer(otherShape)).Filter
-	if v5.GroupIndex == v6.GroupIndex && v5.GroupIndex != 0 {
-		v7 = boolUint8(v5.GroupIndex > 0)
-		goto _8
+	v2 = (*b2Shape)(unsafe.Pointer(sensorShape)).Filter
+	v3 = (*b2Shape)(unsafe.Pointer(otherShape)).Filter
+	if v2.GroupIndex == v3.GroupIndex && v2.GroupIndex != 0 {
+		v4 = boolUint8(v2.GroupIndex > 0)
+		goto _5
 	}
-	v7 = boolUint8(v5.MaskBits&v6.CategoryBits != uint64(0) && v5.CategoryBits&v6.MaskBits != uint64(0))
-	goto _8
-_8:
-	if int32FromUint8(v7) == false1 {
+	v4 = boolUint8(v2.MaskBits&v3.CategoryBits != uint64(0) && v2.CategoryBits&v3.MaskBits != uint64(0))
+	goto _5
+_5:
+	if int32FromUint8(v4) == false1 {
 		return boolUint8(true1 != 0)
 	}
+	// Custom user filter
+	if (*b2Shape)(unsafe.Pointer(sensorShape)).EnableCustomFiltering != 0 || (*b2Shape)(unsafe.Pointer(otherShape)).EnableCustomFiltering != 0 {
+		customFilterFcn = (*b2World)(unsafe.Pointer((*b2SensorQueryContext)(unsafe.Pointer(queryContext)).World)).CustomFilterFcn
+		if customFilterFcn != uintptrFromInt32(0) {
+			idA = ShapeId{
+				Index1:     sensorShapeId + int32(1),
+				World0:     (*b2World)(unsafe.Pointer(world)).WorldId,
+				Generation: (*b2Shape)(unsafe.Pointer(sensorShape)).Generation,
+			}
+			idB = ShapeId{
+				Index1:     shapeId + int32(1),
+				World0:     (*b2World)(unsafe.Pointer(world)).WorldId,
+				Generation: (*b2Shape)(unsafe.Pointer(otherShape)).Generation,
+			}
+			shouldCollide = (*(*func(*_Stack, ShapeId, ShapeId, uintptr) uint8)(unsafe.Pointer(&struct{ uintptr }{customFilterFcn})))(tls, idA, idB, (*b2World)(unsafe.Pointer((*b2SensorQueryContext)(unsafe.Pointer(queryContext)).World)).CustomFilterContext)
+			if int32FromUint8(shouldCollide) == false1 {
+				return boolUint8(true1 != 0)
+			}
+		}
+	}
+	// The relative pose is differenced in double so sensor overlap stays exact far from the origin
 	otherTransform = b2GetBodyTransform(tls, world, (*b2Shape)(unsafe.Pointer(otherShape)).BodyId)
 	(*(*DistanceInput)(unsafe.Add(nil, bp))).ProxyA = b2MakeShapeDistanceProxy(tls, sensorShape)
 	(*(*DistanceInput)(unsafe.Add(nil, bp))).ProxyB = b2MakeShapeDistanceProxy(tls, otherShape)
-	(*(*DistanceInput)(unsafe.Add(nil, bp))).TransformA = (*b2SensorQueryContext)(unsafe.Pointer(queryContext)).Transform
-	(*(*DistanceInput)(unsafe.Add(nil, bp))).TransformB = otherTransform
+	v6 = (*b2SensorQueryContext)(unsafe.Pointer(queryContext)).Transform
+	v7 = otherTransform
+	v8 = v6.Q
+	v9 = v7.Q
+	r.S = float32(v8.C*v9.S) - float32(v8.S*v9.C)
+	r.C = float32(v8.C*v9.C) + float32(v8.S*v9.S)
+	v10 = r
+	goto _11
+_11:
+	C.Q = v10
+	d = Vec2{
+		X: v7.P.X - v6.P.X,
+		Y: v7.P.Y - v6.P.Y,
+	}
+	v12 = v6.Q
+	v13 = d
+	v14 = Vec2{
+		X: float32(v12.C*v13.X) + float32(v12.S*v13.Y),
+		Y: float32(-v12.S*v13.X) + float32(v12.C*v13.Y),
+	}
+	goto _15
+_15:
+	C.P = v14
+	v16 = C
+	goto _17
+_17:
+	(*(*DistanceInput)(unsafe.Add(nil, bp))).Transform = v16
 	(*(*DistanceInput)(unsafe.Add(nil, bp))).UseRadii = boolUint8(true1 != 0)
-	*(*SimplexCache)(unsafe.Add(nil, bp+184)) = SimplexCache{}
-	output = b2ShapeDistance(tls, bp, bp+184, uintptrFromInt32(0), 0)
+	*(*SimplexCache)(unsafe.Add(nil, bp+168)) = SimplexCache{}
+	output = b2ComputeShapeDistance(tls, bp, bp+168, uintptrFromInt32(0), 0)
 	overlaps = boolUint8(output.Distance < float32(float32FromFloat32(10)*float32FromFloat32(1.1920928955078125e-07)))
 	if int32FromUint8(overlaps) == false1 {
 		return boolUint8(true1 != 0)
 	}
 	// Record the overlap
 	sensor = (*b2SensorQueryContext)(unsafe.Pointer(queryContext)).Sensor
-	v1 = sensor + 16
-	if (*b2ShapeRefArray)(unsafe.Pointer(v1)).Count == (*b2ShapeRefArray)(unsafe.Pointer(v1)).Capacity {
-		if (*b2ShapeRefArray)(unsafe.Pointer(v1)).Capacity < int32(2) {
-			v2 = int32(2)
+	v18 = sensor + 32
+	v19 = sensor + 32 + 8
+	v20 = sensor + 32 + 12
+	v21 = int32(8)
+	if *(*int32)(unsafe.Add(nil, v19)) >= *(*int32)(unsafe.Add(nil, v20)) {
+		oldCapacity = *(*int32)(unsafe.Add(nil, v20))
+		oldSize = oldCapacity * v21
+		if oldCapacity == 0 {
+			v22 = int32(8)
 		} else {
-			v2 = (*b2ShapeRefArray)(unsafe.Pointer(v1)).Capacity + (*b2ShapeRefArray)(unsafe.Pointer(v1)).Capacity>>int32(1)
+			v22 = int32(2) * oldCapacity
 		}
-		newCapacity = v2
-		b2ShapeRefArray_Reserve(tls, v1, newCapacity)
+		newCapacity = v22
+		newSize = newCapacity * v21
+		*(*uintptr)(unsafe.Add(nil, v18)) = b2GrowAlloc(tls, *(*uintptr)(unsafe.Add(nil, v18)), uint64FromInt32(oldSize), uint64FromInt32(newSize))
+		*(*int32)(unsafe.Add(nil, v20)) = newCapacity
 	}
-	*(*int32)(unsafe.Add(nil, v1+8)) += int32(1)
-	v3 = (*b2ShapeRefArray)(unsafe.Pointer(v1)).Data + uintptr((*b2ShapeRefArray)(unsafe.Pointer(v1)).Count-int32FromInt32(1))*8
-	goto _12
-_12:
-	shapeRef = v3
-	(*b2ShapeRef)(unsafe.Pointer(shapeRef)).ShapeId = shapeId
-	(*b2ShapeRef)(unsafe.Pointer(shapeRef)).Generation = (*b2Shape)(unsafe.Pointer(otherShape)).Generation
+	v26 = v19
+	v25 = *(*int32)(unsafe.Pointer(v26))
+	*(*int32)(unsafe.Pointer(v26)) = *(*int32)(unsafe.Pointer(v26)) + 1
+	v23 = *(*uintptr)(unsafe.Add(nil, v18)) + uintptr(v25*v21)
+	goto _24
+_24:
+	shapeRef = v23
+	(*b2Visitor)(unsafe.Pointer(shapeRef)).ShapeId = shapeId
+	(*b2Visitor)(unsafe.Pointer(shapeRef)).Generation = (*b2Shape)(unsafe.Pointer(otherShape)).Generation
 	return boolUint8(true1 != 0)
 }
 
-func b2SensorTask(tls *_Stack, startIndex int32, endIndex int32, threadIndex uint32, context uintptr) {
+func b2SensorTask(tls *_Stack, startIndex int32, endIndex int32, threadIndex int32, context uintptr) {
 	bp := tls.Alloc(48)
 	defer tls.Free(48)
-	var blockIndex, v15 uint32_t
-	var body, s1, s2, sensor, sensorShape, taskContext, trees, world, v2, v4, v6, v8 uintptr
-	var count1, count2, i, sensorIndex, v3, v7 int32
+	var blockIndex, v9 uint32_t
+	var body, overlapData, s1, s2, sensor, sensorShape, taskContext, trees, world, v8 uintptr
+	var count1, count2, elementSize, hitCount, i, i1, i2, newCapacity, newSize, oldSize, overlapCount, sensorIndex, uniqueCount, v6 int32
 	var queryBounds AABB
-	var temp b2ShapeRefArray
-	var transform Transform
+	var temp b2DynamicArray_b2Visitor
+	var transform WorldTransform
+	var v1, v3 bool
 	var _ /* queryContext at bp+0 */ b2SensorQueryContext
-	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = blockIndex, body, count1, count2, i, queryBounds, s1, s2, sensor, sensorIndex, sensorShape, taskContext, temp, transform, trees, world, v15, v2, v3, v4, v6, v7, v8
+	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = blockIndex, body, count1, count2, elementSize, hitCount, i, i1, i2, newCapacity, newSize, oldSize, overlapCount, overlapData, queryBounds, s1, s2, sensor, sensorIndex, sensorShape, taskContext, temp, transform, trees, uniqueCount, world, v1, v3, v6, v8, v9
 	world = context
-	if !(int32FromUint32(threadIndex) < (*b2World)(unsafe.Pointer(world)).WorkerCount) && b2InternalAssertFcn(tls, __ccgo_ts+10751, __ccgo_ts+10789, int32FromInt32(140)) != 0 {
-		__builtin_trap(tls)
-	}
 	taskContext = (*b2World)(unsafe.Pointer(world)).SensorTaskContexts.Data + uintptr(threadIndex)*16
-	if !(startIndex < endIndex) && b2InternalAssertFcn(tls, __ccgo_ts+10813, __ccgo_ts+10789, int32FromInt32(143)) != 0 {
-		__builtin_trap(tls)
+	if v1 = !!(startIndex < endIndex); !v1 {
+		b2InternalAssert(tls, __ccgo_ts+17428, __ccgo_ts+21483, int32FromInt32(142))
 	}
+	_ = v1 || bool(int32FromInt32(0) != 0)
 	trees = world + 40
 	sensorIndex = startIndex
 	for {
 		if !(sensorIndex < endIndex) {
 			break
 		}
-		v2 = world + 1280
-		v3 = sensorIndex
-		if !(0 <= v3 && v3 < (*b2SensorArray)(unsafe.Pointer(v2)).Count) && b2InternalAssertFcn(tls, __ccgo_ts+349, __ccgo_ts+10835, int32FromInt32(35)) != 0 {
-			__builtin_trap(tls)
+		if v1 = !!(0 <= sensorIndex && sensorIndex < (*b2World)(unsafe.Pointer(world)).Sensors.Count); !v1 {
+			b2InternalAssert(tls, __ccgo_ts+21507, __ccgo_ts+21483, int32FromInt32(147))
 		}
-		v4 = (*b2SensorArray)(unsafe.Pointer(v2)).Data + uintptr(v3)*40
-		goto _5
-	_5:
-		sensor = v4
-		v6 = world + 1248
-		v7 = (*b2Sensor)(unsafe.Pointer(sensor)).ShapeId
-		if !(0 <= v7 && v7 < (*b2ShapeArray)(unsafe.Pointer(v6)).Count) && b2InternalAssertFcn(tls, __ccgo_ts+349, __ccgo_ts+1384, int32FromInt32(138)) != 0 {
-			__builtin_trap(tls)
+		_ = v1 || bool(int32FromInt32(0) != 0)
+		sensor = (*b2World)(unsafe.Pointer(world)).Sensors.Data + uintptr(sensorIndex)*56
+		if v3 = !!(0 <= (*b2Sensor)(unsafe.Pointer(sensor)).ShapeId && (*b2Sensor)(unsafe.Pointer(sensor)).ShapeId < (*b2World)(unsafe.Pointer(world)).Shapes.Count); !v3 {
+			b2InternalAssert(tls, __ccgo_ts+21574, __ccgo_ts+21483, int32FromInt32(148))
 		}
-		v8 = (*b2ShapeArray)(unsafe.Pointer(v6)).Data + uintptr(v7)*288
-		goto _9
-	_9:
-		sensorShape = v8
-		// swap overlap arrays
+		_ = v3 || bool(int32FromInt32(0) != 0)
+		sensorShape = (*b2World)(unsafe.Pointer(world)).Shapes.Data + uintptr((*b2Sensor)(unsafe.Pointer(sensor)).ShapeId)*280
+		// Swap overlap arrays
 		temp = (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps1
 		(*b2Sensor)(unsafe.Pointer(sensor)).Overlaps1 = (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2
 		(*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2 = temp
-		(*b2ShapeRefArray)(unsafe.Pointer(sensor + 16)).Count = 0
-		v2 = world + 1024
-		v3 = (*b2Shape)(unsafe.Pointer(sensorShape)).BodyId
-		if !(0 <= v3 && v3 < (*b2BodyArray)(unsafe.Pointer(v2)).Count) && b2InternalAssertFcn(tls, __ccgo_ts+349, __ccgo_ts+380, int32FromInt32(192)) != 0 {
-			__builtin_trap(tls)
+		(*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Count = 0
+		// Append sensor hits
+		hitCount = (*b2Sensor)(unsafe.Pointer(sensor)).Hits.Count
+		i = 0
+		for {
+			if !(i < hitCount) {
+				break
+			}
+			elementSize = int32(8)
+			if (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Count >= (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Capacity {
+				oldSize = (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Capacity * elementSize
+				if (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Capacity == 0 {
+					v6 = int32(8)
+				} else {
+					v6 = int32(2) * (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Capacity
+				}
+				newCapacity = v6
+				newSize = newCapacity * elementSize
+				(*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Data = b2GrowAlloc(tls, (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Data, uint64FromInt32(oldSize), uint64FromInt32(newSize))
+				(*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Capacity = newCapacity
+			}
+			*(*b2Visitor)(unsafe.Add(nil, (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Data+uintptr((*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Count)*8)) = *(*b2Visitor)(unsafe.Add(nil, (*b2Sensor)(unsafe.Pointer(sensor)).Hits.Data+uintptr(i)*8))
+			(*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Count += int32(1)
+			goto _5
+		_5:
+			;
+			i = i + 1
 		}
-		v4 = (*b2BodyArray)(unsafe.Pointer(v2)).Data + uintptr(v3)*128
-		goto _13
-	_13:
-		body = v4
+		// Clear the hits
+		(*b2Sensor)(unsafe.Pointer(sensor)).Hits.Count = 0
+		if v1 = !!(0 <= (*b2Shape)(unsafe.Pointer(sensorShape)).BodyId && (*b2Shape)(unsafe.Pointer(sensorShape)).BodyId < (*b2World)(unsafe.Pointer(world)).Bodies.Count); !v1 {
+			b2InternalAssert(tls, __ccgo_ts+21648, __ccgo_ts+21483, int32FromInt32(166))
+		}
+		_ = v1 || bool(int32FromInt32(0) != 0)
+		body = (*b2World)(unsafe.Pointer(world)).Bodies.Data + uintptr((*b2Shape)(unsafe.Pointer(sensorShape)).BodyId)*104
 		if (*b2Body)(unsafe.Pointer(body)).SetIndex == int32(b2_disabledSet) || int32FromUint8((*b2Shape)(unsafe.Pointer(sensorShape)).EnableSensorEvents) == false1 {
 			if (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps1.Count != 0 {
-				v6 = taskContext
-				v15 = uint32FromInt32(sensorIndex)
-				blockIndex = v15 / uint32(64)
-				if !(blockIndex < (*b2BitSet)(unsafe.Pointer(v6)).BlockCount) && b2InternalAssertFcn(tls, __ccgo_ts+10859, __ccgo_ts+10891, int32FromInt32(28)) != 0 {
-					__builtin_trap(tls)
+				// This sensor is dropping all overlaps because it has been disabled.
+				v8 = taskContext
+				v9 = uint32FromInt32(sensorIndex)
+				blockIndex = v9 / uint32(64)
+				if v3 = !!(blockIndex < (*b2BitSet)(unsafe.Pointer(v8)).BlockCount); !v3 {
+					b2InternalAssert(tls, __ccgo_ts+7356, __ccgo_ts+7388, int32FromInt32(29))
 				}
-				*(*uint64_t)(unsafe.Add(nil, (*b2BitSet)(unsafe.Pointer(v6)).Bits+uintptr(blockIndex)*8)) |= uint64FromInt32(1) << (v15 % uint32FromInt32(64))
+				_ = v3 || bool(int32FromInt32(0) != 0)
+				*(*uint64_t)(unsafe.Add(nil, (*b2BitSet)(unsafe.Pointer(v8)).Bits+uintptr(blockIndex)*8)) |= uint64FromInt32(1) << (v9 % uint32FromInt32(64))
 			}
-			goto _1
+			goto _2
 		}
 		transform = b2GetBodyTransformQuick(tls, world, body)
 		*(*b2SensorQueryContext)(unsafe.Add(nil, bp)) = b2SensorQueryContext{
@@ -242,93 +260,113 @@ func b2SensorTask(tls *_Stack, startIndex int32, endIndex int32, threadIndex uin
 			SensorShape: sensorShape,
 			Transform:   transform,
 		}
-		if !((*b2Shape)(unsafe.Pointer(sensorShape)).SensorIndex == sensorIndex) && b2InternalAssertFcn(tls, __ccgo_ts+10915, __ccgo_ts+10789, int32FromInt32(177)) != 0 {
-			__builtin_trap(tls)
+		if v1 = !!((*b2Shape)(unsafe.Pointer(sensorShape)).SensorIndex == sensorIndex); !v1 {
+			b2InternalAssert(tls, __ccgo_ts+21730, __ccgo_ts+21483, int32FromInt32(187))
 		}
+		_ = v1 || bool(int32FromInt32(0) != 0)
 		queryBounds = (*b2Shape)(unsafe.Pointer(sensorShape)).Aabb
 		// Query all trees
-		b2DynamicTree_Query(tls, trees+uintptr(0)*72, queryBounds, (*b2Shape)(unsafe.Pointer(sensorShape)).Filter.MaskBits, __ccgo_fp(b2SensorQueryCallback), bp)
-		b2DynamicTree_Query(tls, trees+uintptr(1)*72, queryBounds, (*b2Shape)(unsafe.Pointer(sensorShape)).Filter.MaskBits, __ccgo_fp(b2SensorQueryCallback), bp)
-		b2DynamicTree_Query(tls, trees+uintptr(2)*72, queryBounds, (*b2Shape)(unsafe.Pointer(sensorShape)).Filter.MaskBits, __ccgo_fp(b2SensorQueryCallback), bp)
+		b2DynamicTree_OverlapAABB(tls, trees+uintptr(0)*104, queryBounds, (*b2Shape)(unsafe.Pointer(sensorShape)).Filter.MaskBits, __ccgo_fp(b2SensorQueryCallback), bp)
+		b2DynamicTree_OverlapAABB(tls, trees+uintptr(1)*104, queryBounds, (*b2Shape)(unsafe.Pointer(sensorShape)).Filter.MaskBits, __ccgo_fp(b2SensorQueryCallback), bp)
+		b2DynamicTree_OverlapAABB(tls, trees+uintptr(2)*104, queryBounds, (*b2Shape)(unsafe.Pointer(sensorShape)).Filter.MaskBits, __ccgo_fp(b2SensorQueryCallback), bp)
 		// Sort the overlaps to enable finding begin and end events.
-		qsort(tls, (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Data, uint64FromInt32((*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Count), uint64(8), b2CompareShapeRefs)
+		qsort(tls, (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Data, uint64FromInt32((*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Count), uint64(8), b2CompareVisitors)
+		// Remove duplicates from overlaps2 (sorted). Duplicates are possible due to the hit events appended earlier.
+		uniqueCount = 0
+		overlapCount = (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Count
+		overlapData = (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Data
+		i1 = 0
+		for {
+			if !(i1 < overlapCount) {
+				break
+			}
+			if uniqueCount == 0 || (*(*b2Visitor)(unsafe.Add(nil, overlapData+uintptr(i1)*8))).ShapeId != (*(*b2Visitor)(unsafe.Add(nil, overlapData+uintptr(uniqueCount-int32(1))*8))).ShapeId {
+				*(*b2Visitor)(unsafe.Add(nil, overlapData+uintptr(uniqueCount)*8)) = *(*b2Visitor)(unsafe.Add(nil, overlapData+uintptr(i1)*8))
+				uniqueCount = uniqueCount + int32(1)
+			}
+			goto _12
+		_12:
+			;
+			i1 = i1 + 1
+		}
+		(*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Count = uniqueCount
 		count1 = (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps1.Count
 		count2 = (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Count
 		if count1 != count2 {
 			// something changed
-			v2 = taskContext
-			v15 = uint32FromInt32(sensorIndex)
-			blockIndex = v15 / uint32(64)
-			if !(blockIndex < (*b2BitSet)(unsafe.Pointer(v2)).BlockCount) && b2InternalAssertFcn(tls, __ccgo_ts+10859, __ccgo_ts+10891, int32FromInt32(28)) != 0 {
-				__builtin_trap(tls)
+			v8 = taskContext
+			v9 = uint32FromInt32(sensorIndex)
+			blockIndex = v9 / uint32(64)
+			if v1 = !!(blockIndex < (*b2BitSet)(unsafe.Pointer(v8)).BlockCount); !v1 {
+				b2InternalAssert(tls, __ccgo_ts+7356, __ccgo_ts+7388, int32FromInt32(29))
 			}
-			*(*uint64_t)(unsafe.Add(nil, (*b2BitSet)(unsafe.Pointer(v2)).Bits+uintptr(blockIndex)*8)) |= uint64FromInt32(1) << (v15 % uint32FromInt32(64))
+			_ = v1 || bool(int32FromInt32(0) != 0)
+			*(*uint64_t)(unsafe.Add(nil, (*b2BitSet)(unsafe.Pointer(v8)).Bits+uintptr(blockIndex)*8)) |= uint64FromInt32(1) << (v9 % uint32FromInt32(64))
 		} else {
-			i = 0
+			i2 = 0
 			for {
-				if !(i < count1) {
+				if !(i2 < count1) {
 					break
 				}
-				s1 = (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps1.Data + uintptr(i)*8
-				s2 = (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Data + uintptr(i)*8
-				if (*b2ShapeRef)(unsafe.Pointer(s1)).ShapeId != (*b2ShapeRef)(unsafe.Pointer(s2)).ShapeId || int32FromUint16((*b2ShapeRef)(unsafe.Pointer(s1)).Generation) != int32FromUint16((*b2ShapeRef)(unsafe.Pointer(s2)).Generation) {
+				s1 = (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps1.Data + uintptr(i2)*8
+				s2 = (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Data + uintptr(i2)*8
+				if (*b2Visitor)(unsafe.Pointer(s1)).ShapeId != (*b2Visitor)(unsafe.Pointer(s2)).ShapeId || int32FromUint16((*b2Visitor)(unsafe.Pointer(s1)).Generation) != int32FromUint16((*b2Visitor)(unsafe.Pointer(s2)).Generation) {
 					// something changed
-					v2 = taskContext
-					v15 = uint32FromInt32(sensorIndex)
-					blockIndex = v15 / uint32(64)
-					if !(blockIndex < (*b2BitSet)(unsafe.Pointer(v2)).BlockCount) && b2InternalAssertFcn(tls, __ccgo_ts+10859, __ccgo_ts+10891, int32FromInt32(28)) != 0 {
-						__builtin_trap(tls)
+					v8 = taskContext
+					v9 = uint32FromInt32(sensorIndex)
+					blockIndex = v9 / uint32(64)
+					if v1 = !!(blockIndex < (*b2BitSet)(unsafe.Pointer(v8)).BlockCount); !v1 {
+						b2InternalAssert(tls, __ccgo_ts+7356, __ccgo_ts+7388, int32FromInt32(29))
 					}
-					*(*uint64_t)(unsafe.Add(nil, (*b2BitSet)(unsafe.Pointer(v2)).Bits+uintptr(blockIndex)*8)) |= uint64FromInt32(1) << (v15 % uint32FromInt32(64))
+					_ = v1 || bool(int32FromInt32(0) != 0)
+					*(*uint64_t)(unsafe.Add(nil, (*b2BitSet)(unsafe.Pointer(v8)).Bits+uintptr(blockIndex)*8)) |= uint64FromInt32(1) << (v9 % uint32FromInt32(64))
 					break
 				}
-				goto _18
-			_18:
+				goto _16
+			_16:
 				;
-				i = i + 1
+				i2 = i2 + 1
 			}
 		}
-		goto _1
-	_1:
+		goto _2
+	_2:
 		;
 		sensorIndex = sensorIndex + 1
 	}
 }
 
 func b2OverlapSensors(tls *_Stack, world uintptr) {
-	var bitSet, bits, r1, r11, r2, r21, refs1, refs2, sensor, sensorShape, userSensorTask, v10, v12, v14, v6, v8 uintptr
-	var blockCount, ctz, k, v4 uint32_t
-	var count1, count2, i, i1, index11, index2, minRange, newCapacity, newCapacity1, sensorCount, sensorIndex, v11, v15, v7 int32
+	var bitSet, bits, r1, r11, r2, r21, refs1, refs2, sensor, sensorShape uintptr
+	var blockCount, ctz, k, v5 uint32_t
+	var count1, count2, elementSize, elementSize1, elementSize2, elementSize3, elementSize4, elementSize5, i, i1, index1, index2, minRange, newCapacity, newCapacity1, newCapacity2, newCapacity3, newCapacity4, newCapacity5, newSize, newSize1, newSize2, newSize3, newSize4, newSize5, oldSize, oldSize1, oldSize2, oldSize3, oldSize4, oldSize5, sensorCount, sensorIndex, v9 int32
 	var event, event2, event4 SensorEndTouchEvent
 	var event1, event3, event5 SensorBeginTouchEvent
 	var sensorId, visitorId, visitorId1, visitorId2, visitorId3, visitorId4, visitorId5 ShapeId
 	var word uint64_t
-	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = bitSet, bits, blockCount, count1, count2, ctz, event, event1, event2, event3, event4, event5, i, i1, index11, index2, k, minRange, newCapacity, newCapacity1, r1, r11, r2, r21, refs1, refs2, sensor, sensorCount, sensorId, sensorIndex, sensorShape, userSensorTask, visitorId, visitorId1, visitorId2, visitorId3, visitorId4, visitorId5, word, v10, v11, v12, v14, v15, v4, v6, v7, v8
+	var v1, v7 bool
+	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = bitSet, bits, blockCount, count1, count2, ctz, elementSize, elementSize1, elementSize2, elementSize3, elementSize4, elementSize5, event, event1, event2, event3, event4, event5, i, i1, index1, index2, k, minRange, newCapacity, newCapacity1, newCapacity2, newCapacity3, newCapacity4, newCapacity5, newSize, newSize1, newSize2, newSize3, newSize4, newSize5, oldSize, oldSize1, oldSize2, oldSize3, oldSize4, oldSize5, r1, r11, r2, r21, refs1, refs2, sensor, sensorCount, sensorId, sensorIndex, sensorShape, visitorId, visitorId1, visitorId2, visitorId3, visitorId4, visitorId5, word, v1, v5, v7, v9
 	sensorCount = (*b2World)(unsafe.Pointer(world)).Sensors.Count
 	if sensorCount == 0 {
 		return
 	}
-	if !((*b2World)(unsafe.Pointer(world)).WorkerCount > int32FromInt32(0)) && b2InternalAssertFcn(tls, __ccgo_ts+10955, __ccgo_ts+10789, int32FromInt32(223)) != 0 {
-		__builtin_trap(tls)
+	if v1 = !!((*b2World)(unsafe.Pointer(world)).WorkerCount > int32FromInt32(0)); !v1 {
+		b2InternalAssert(tls, __ccgo_ts+17527, __ccgo_ts+21483, int32FromInt32(247))
 	}
+	_ = v1 || bool(int32FromInt32(0) != 0)
 	i = 0
 	for {
 		if !(i < (*b2World)(unsafe.Pointer(world)).WorkerCount) {
 			break
 		}
 		b2SetBitCountAndClear(tls, (*b2World)(unsafe.Pointer(world)).SensorTaskContexts.Data+uintptr(i)*16, uint32FromInt32(sensorCount))
-		goto _1
-	_1:
+		goto _2
+	_2:
 		;
 		i = i + 1
 	}
 	// Parallel-for sensors overlaps
 	minRange = int32(16)
-	userSensorTask = (*(*func(*_Stack, uintptr, int32, int32, uintptr, uintptr) uintptr)(unsafe.Pointer(&struct{ uintptr }{(*b2World)(unsafe.Pointer(world)).EnqueueTaskFcn})))(tls, __ccgo_fp(b2SensorTask), sensorCount, minRange, world, (*b2World)(unsafe.Pointer(world)).UserTaskContext)
-	*(*int32)(unsafe.Add(nil, world+1776)) += int32(1)
-	if userSensorTask != uintptrFromInt32(0) {
-		(*(*func(*_Stack, uintptr, uintptr))(unsafe.Pointer(&struct{ uintptr }{(*b2World)(unsafe.Pointer(world)).FinishTaskFcn})))(tls, userSensorTask, (*b2World)(unsafe.Pointer(world)).UserTaskContext)
-	}
+	b2ParallelFor(tls, world, __ccgo_fp(b2SensorTask), sensorCount, minRange, world)
 	bitSet = (*b2World)(unsafe.Pointer(world)).SensorTaskContexts.Data
 	i1 = int32(1)
 	for {
@@ -336,13 +374,13 @@ func b2OverlapSensors(tls *_Stack, world uintptr) {
 			break
 		}
 		b2InPlaceUnion(tls, bitSet, (*b2World)(unsafe.Pointer(world)).SensorTaskContexts.Data+uintptr(i1)*16)
-		goto _2
-	_2:
+		goto _3
+	_3:
 		;
 		i1 = i1 + 1
 	}
 	// Iterate sensors bits and publish events
-	// Process contact state changes. Iterate over set bits
+	// Process sensor state changes. Iterate over set bits
 	bits = (*b2BitSet)(unsafe.Pointer(bitSet)).Bits
 	blockCount = (*b2BitSet)(unsafe.Pointer(bitSet)).BlockCount
 	k = uint32(0)
@@ -352,29 +390,21 @@ func b2OverlapSensors(tls *_Stack, world uintptr) {
 		}
 		word = *(*uint64_t)(unsafe.Add(nil, bits+uintptr(k)*8))
 		for word != uint64(0) {
-			v4 = uint32FromInt32(__builtin_ctzll(tls, word))
-			goto _5
-		_5:
-			ctz = v4
+			v5 = uint32FromInt32(__builtin_ctzll(tls, word))
+			goto _6
+		_6:
+			ctz = v5
 			sensorIndex = int32FromUint32(uint32FromInt32(64)*k + ctz)
-			v6 = world + 1280
-			v7 = sensorIndex
-			if !(0 <= v7 && v7 < (*b2SensorArray)(unsafe.Pointer(v6)).Count) && b2InternalAssertFcn(tls, __ccgo_ts+349, __ccgo_ts+10835, int32FromInt32(35)) != 0 {
-				__builtin_trap(tls)
+			if v1 = !!(0 <= sensorIndex && sensorIndex < (*b2World)(unsafe.Pointer(world)).Sensors.Count); !v1 {
+				b2InternalAssert(tls, __ccgo_ts+21507, __ccgo_ts+21483, int32FromInt32(281))
 			}
-			v8 = (*b2SensorArray)(unsafe.Pointer(v6)).Data + uintptr(v7)*40
-			goto _9
-		_9:
-			sensor = v8
-			v10 = world + 1248
-			v11 = (*b2Sensor)(unsafe.Pointer(sensor)).ShapeId
-			if !(0 <= v11 && v11 < (*b2ShapeArray)(unsafe.Pointer(v10)).Count) && b2InternalAssertFcn(tls, __ccgo_ts+349, __ccgo_ts+1384, int32FromInt32(138)) != 0 {
-				__builtin_trap(tls)
+			_ = v1 || bool(int32FromInt32(0) != 0)
+			sensor = (*b2World)(unsafe.Pointer(world)).Sensors.Data + uintptr(sensorIndex)*56
+			if v7 = !!(0 <= (*b2Sensor)(unsafe.Pointer(sensor)).ShapeId && (*b2Sensor)(unsafe.Pointer(sensor)).ShapeId < (*b2World)(unsafe.Pointer(world)).Shapes.Count); !v7 {
+				b2InternalAssert(tls, __ccgo_ts+21574, __ccgo_ts+21483, int32FromInt32(282))
 			}
-			v12 = (*b2ShapeArray)(unsafe.Pointer(v10)).Data + uintptr(v11)*288
-			goto _13
-		_13:
-			sensorShape = v12
+			_ = v7 || bool(int32FromInt32(0) != 0)
+			sensorShape = (*b2World)(unsafe.Pointer(world)).Shapes.Data + uintptr((*b2Sensor)(unsafe.Pointer(sensor)).ShapeId)*280
 			sensorId = ShapeId{
 				Index1:     (*b2Sensor)(unsafe.Pointer(sensor)).ShapeId + int32(1),
 				World0:     (*b2World)(unsafe.Pointer(world)).WorldId,
@@ -386,195 +416,210 @@ func b2OverlapSensors(tls *_Stack, world uintptr) {
 			refs2 = (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Data
 			// overlaps1 can have overlaps that end
 			// overlaps2 can have overlaps that begin
-			index11 = 0
+			index1 = 0
 			index2 = 0
-			for index11 < count1 && index2 < count2 {
-				r1 = refs1 + uintptr(index11)*8
+			for index1 < count1 && index2 < count2 {
+				r1 = refs1 + uintptr(index1)*8
 				r2 = refs2 + uintptr(index2)*8
-				if (*b2ShapeRef)(unsafe.Pointer(r1)).ShapeId == (*b2ShapeRef)(unsafe.Pointer(r2)).ShapeId {
-					if int32FromUint16((*b2ShapeRef)(unsafe.Pointer(r1)).Generation) < int32FromUint16((*b2ShapeRef)(unsafe.Pointer(r2)).Generation) {
+				if (*b2Visitor)(unsafe.Pointer(r1)).ShapeId == (*b2Visitor)(unsafe.Pointer(r2)).ShapeId {
+					if int32FromUint16((*b2Visitor)(unsafe.Pointer(r1)).Generation) < int32FromUint16((*b2Visitor)(unsafe.Pointer(r2)).Generation) {
 						// end
 						visitorId = ShapeId{
-							Index1:     (*b2ShapeRef)(unsafe.Pointer(r1)).ShapeId + int32(1),
+							Index1:     (*b2Visitor)(unsafe.Pointer(r1)).ShapeId + int32(1),
 							World0:     (*b2World)(unsafe.Pointer(world)).WorldId,
-							Generation: (*b2ShapeRef)(unsafe.Pointer(r1)).Generation,
+							Generation: (*b2Visitor)(unsafe.Pointer(r1)).Generation,
 						}
 						event = SensorEndTouchEvent{
 							SensorShapeId:  sensorId,
 							VisitorShapeId: visitorId,
 						}
-						v14 = world + 1376 + uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16
-						if (*b2SensorEndTouchEventArray)(unsafe.Pointer(v14)).Count == (*b2SensorEndTouchEventArray)(unsafe.Pointer(v14)).Capacity {
-							if (*b2SensorEndTouchEventArray)(unsafe.Pointer(v14)).Capacity < int32(2) {
-								v15 = int32(2)
+						elementSize = int32(16)
+						if (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Count >= (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity {
+							oldSize = (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity * elementSize
+							if (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity == 0 {
+								v9 = int32(8)
 							} else {
-								v15 = (*b2SensorEndTouchEventArray)(unsafe.Pointer(v14)).Capacity + (*b2SensorEndTouchEventArray)(unsafe.Pointer(v14)).Capacity>>int32(1)
+								v9 = int32(2) * (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity
 							}
-							newCapacity1 = v15
-							b2SensorEndTouchEventArray_Reserve(tls, v14, newCapacity1)
+							newCapacity = v9
+							newSize = newCapacity * elementSize
+							(*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Data = b2GrowAlloc(tls, (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Data, uint64FromInt32(oldSize), uint64FromInt32(newSize))
+							(*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity = newCapacity
 						}
-						*(*SensorEndTouchEvent)(unsafe.Add(nil, (*b2SensorEndTouchEventArray)(unsafe.Pointer(v14)).Data+uintptr((*b2SensorEndTouchEventArray)(unsafe.Pointer(v14)).Count)*16)) = event
-						*(*int32)(unsafe.Add(nil, v14+8)) += int32(1)
-						index11 = index11 + int32(1)
+						*(*SensorEndTouchEvent)(unsafe.Add(nil, (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Data+uintptr((*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Count)*16)) = event
+						(*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Count += int32(1)
+						index1 = index1 + int32(1)
 					} else {
-						if int32FromUint16((*b2ShapeRef)(unsafe.Pointer(r1)).Generation) > int32FromUint16((*b2ShapeRef)(unsafe.Pointer(r2)).Generation) {
+						if int32FromUint16((*b2Visitor)(unsafe.Pointer(r1)).Generation) > int32FromUint16((*b2Visitor)(unsafe.Pointer(r2)).Generation) {
 							// begin
 							visitorId1 = ShapeId{
-								Index1:     (*b2ShapeRef)(unsafe.Pointer(r2)).ShapeId + int32(1),
+								Index1:     (*b2Visitor)(unsafe.Pointer(r2)).ShapeId + int32(1),
 								World0:     (*b2World)(unsafe.Pointer(world)).WorldId,
-								Generation: (*b2ShapeRef)(unsafe.Pointer(r2)).Generation,
+								Generation: (*b2Visitor)(unsafe.Pointer(r2)).Generation,
 							}
 							event1 = SensorBeginTouchEvent{
 								SensorShapeId:  sensorId,
 								VisitorShapeId: visitorId1,
 							}
-							v6 = world + 1344
-							if (*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Count == (*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Capacity {
-								if (*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Capacity < int32(2) {
-									v7 = int32(2)
+							elementSize1 = int32(16)
+							if (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Count >= (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Capacity {
+								oldSize1 = (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Capacity * elementSize1
+								if (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Capacity == 0 {
+									v9 = int32(8)
 								} else {
-									v7 = (*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Capacity + (*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Capacity>>int32(1)
+									v9 = int32(2) * (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Capacity
 								}
-								newCapacity = v7
-								b2SensorBeginTouchEventArray_Reserve(tls, v6, newCapacity)
+								newCapacity1 = v9
+								newSize1 = newCapacity1 * elementSize1
+								(*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Data = b2GrowAlloc(tls, (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Data, uint64FromInt32(oldSize1), uint64FromInt32(newSize1))
+								(*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Capacity = newCapacity1
 							}
-							*(*SensorBeginTouchEvent)(unsafe.Add(nil, (*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Data+uintptr((*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Count)*16)) = event1
-							*(*int32)(unsafe.Add(nil, v6+8)) += int32(1)
+							*(*SensorBeginTouchEvent)(unsafe.Add(nil, (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Data+uintptr((*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Count)*16)) = event1
+							(*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Count += int32(1)
 							index2 = index2 + int32(1)
 						} else {
 							// persisted
-							index11 = index11 + int32(1)
+							index1 = index1 + int32(1)
 							index2 = index2 + int32(1)
 						}
 					}
 				} else {
-					if (*b2ShapeRef)(unsafe.Pointer(r1)).ShapeId < (*b2ShapeRef)(unsafe.Pointer(r2)).ShapeId {
+					if (*b2Visitor)(unsafe.Pointer(r1)).ShapeId < (*b2Visitor)(unsafe.Pointer(r2)).ShapeId {
 						// end
 						visitorId2 = ShapeId{
-							Index1:     (*b2ShapeRef)(unsafe.Pointer(r1)).ShapeId + int32(1),
+							Index1:     (*b2Visitor)(unsafe.Pointer(r1)).ShapeId + int32(1),
 							World0:     (*b2World)(unsafe.Pointer(world)).WorldId,
-							Generation: (*b2ShapeRef)(unsafe.Pointer(r1)).Generation,
+							Generation: (*b2Visitor)(unsafe.Pointer(r1)).Generation,
 						}
 						event2 = SensorEndTouchEvent{
 							SensorShapeId:  sensorId,
 							VisitorShapeId: visitorId2,
 						}
-						v6 = world + 1376 + uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16
-						if (*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Count == (*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Capacity {
-							if (*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Capacity < int32(2) {
-								v7 = int32(2)
+						elementSize2 = int32(16)
+						if (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Count >= (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity {
+							oldSize2 = (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity * elementSize2
+							if (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity == 0 {
+								v9 = int32(8)
 							} else {
-								v7 = (*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Capacity + (*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Capacity>>int32(1)
+								v9 = int32(2) * (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity
 							}
-							newCapacity1 = v7
-							b2SensorEndTouchEventArray_Reserve(tls, v6, newCapacity1)
+							newCapacity2 = v9
+							newSize2 = newCapacity2 * elementSize2
+							(*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Data = b2GrowAlloc(tls, (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Data, uint64FromInt32(oldSize2), uint64FromInt32(newSize2))
+							(*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity = newCapacity2
 						}
-						*(*SensorEndTouchEvent)(unsafe.Add(nil, (*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Data+uintptr((*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Count)*16)) = event2
-						*(*int32)(unsafe.Add(nil, v6+8)) += int32(1)
-						index11 = index11 + int32(1)
+						*(*SensorEndTouchEvent)(unsafe.Add(nil, (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Data+uintptr((*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Count)*16)) = event2
+						(*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Count += int32(1)
+						index1 = index1 + int32(1)
 					} else {
 						// begin
 						visitorId3 = ShapeId{
-							Index1:     (*b2ShapeRef)(unsafe.Pointer(r2)).ShapeId + int32(1),
+							Index1:     (*b2Visitor)(unsafe.Pointer(r2)).ShapeId + int32(1),
 							World0:     (*b2World)(unsafe.Pointer(world)).WorldId,
-							Generation: (*b2ShapeRef)(unsafe.Pointer(r2)).Generation,
+							Generation: (*b2Visitor)(unsafe.Pointer(r2)).Generation,
 						}
 						event3 = SensorBeginTouchEvent{
 							SensorShapeId:  sensorId,
 							VisitorShapeId: visitorId3,
 						}
-						v6 = world + 1344
-						if (*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Count == (*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Capacity {
-							if (*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Capacity < int32(2) {
-								v7 = int32(2)
+						elementSize3 = int32(16)
+						if (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Count >= (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Capacity {
+							oldSize3 = (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Capacity * elementSize3
+							if (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Capacity == 0 {
+								v9 = int32(8)
 							} else {
-								v7 = (*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Capacity + (*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Capacity>>int32(1)
+								v9 = int32(2) * (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Capacity
 							}
-							newCapacity = v7
-							b2SensorBeginTouchEventArray_Reserve(tls, v6, newCapacity)
+							newCapacity3 = v9
+							newSize3 = newCapacity3 * elementSize3
+							(*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Data = b2GrowAlloc(tls, (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Data, uint64FromInt32(oldSize3), uint64FromInt32(newSize3))
+							(*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Capacity = newCapacity3
 						}
-						*(*SensorBeginTouchEvent)(unsafe.Add(nil, (*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Data+uintptr((*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Count)*16)) = event3
-						*(*int32)(unsafe.Add(nil, v6+8)) += int32(1)
+						*(*SensorBeginTouchEvent)(unsafe.Add(nil, (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Data+uintptr((*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Count)*16)) = event3
+						(*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Count += int32(1)
 						index2 = index2 + int32(1)
 					}
 				}
 			}
-			for index11 < count1 {
+			for index1 < count1 {
 				// end
-				r11 = refs1 + uintptr(index11)*8
+				r11 = refs1 + uintptr(index1)*8
 				visitorId4 = ShapeId{
-					Index1:     (*b2ShapeRef)(unsafe.Pointer(r11)).ShapeId + int32(1),
+					Index1:     (*b2Visitor)(unsafe.Pointer(r11)).ShapeId + int32(1),
 					World0:     (*b2World)(unsafe.Pointer(world)).WorldId,
-					Generation: (*b2ShapeRef)(unsafe.Pointer(r11)).Generation,
+					Generation: (*b2Visitor)(unsafe.Pointer(r11)).Generation,
 				}
 				event4 = SensorEndTouchEvent{
 					SensorShapeId:  sensorId,
 					VisitorShapeId: visitorId4,
 				}
-				v6 = world + 1376 + uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16
-				if (*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Count == (*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Capacity {
-					if (*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Capacity < int32(2) {
-						v7 = int32(2)
+				elementSize4 = int32(16)
+				if (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Count >= (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity {
+					oldSize4 = (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity * elementSize4
+					if (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity == 0 {
+						v9 = int32(8)
 					} else {
-						v7 = (*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Capacity + (*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Capacity>>int32(1)
+						v9 = int32(2) * (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity
 					}
-					newCapacity1 = v7
-					b2SensorEndTouchEventArray_Reserve(tls, v6, newCapacity1)
+					newCapacity4 = v9
+					newSize4 = newCapacity4 * elementSize4
+					(*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Data = b2GrowAlloc(tls, (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Data, uint64FromInt32(oldSize4), uint64FromInt32(newSize4))
+					(*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity = newCapacity4
 				}
-				*(*SensorEndTouchEvent)(unsafe.Add(nil, (*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Data+uintptr((*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Count)*16)) = event4
-				*(*int32)(unsafe.Add(nil, v6+8)) += int32(1)
-				index11 = index11 + int32(1)
+				*(*SensorEndTouchEvent)(unsafe.Add(nil, (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Data+uintptr((*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Count)*16)) = event4
+				(*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Count += int32(1)
+				index1 = index1 + int32(1)
 			}
 			for index2 < count2 {
 				// begin
 				r21 = refs2 + uintptr(index2)*8
 				visitorId5 = ShapeId{
-					Index1:     (*b2ShapeRef)(unsafe.Pointer(r21)).ShapeId + int32(1),
+					Index1:     (*b2Visitor)(unsafe.Pointer(r21)).ShapeId + int32(1),
 					World0:     (*b2World)(unsafe.Pointer(world)).WorldId,
-					Generation: (*b2ShapeRef)(unsafe.Pointer(r21)).Generation,
+					Generation: (*b2Visitor)(unsafe.Pointer(r21)).Generation,
 				}
 				event5 = SensorBeginTouchEvent{
 					SensorShapeId:  sensorId,
 					VisitorShapeId: visitorId5,
 				}
-				v6 = world + 1344
-				if (*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Count == (*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Capacity {
-					if (*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Capacity < int32(2) {
-						v7 = int32(2)
+				elementSize5 = int32(16)
+				if (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Count >= (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Capacity {
+					oldSize5 = (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Capacity * elementSize5
+					if (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Capacity == 0 {
+						v9 = int32(8)
 					} else {
-						v7 = (*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Capacity + (*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Capacity>>int32(1)
+						v9 = int32(2) * (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Capacity
 					}
-					newCapacity = v7
-					b2SensorBeginTouchEventArray_Reserve(tls, v6, newCapacity)
+					newCapacity5 = v9
+					newSize5 = newCapacity5 * elementSize5
+					(*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Data = b2GrowAlloc(tls, (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Data, uint64FromInt32(oldSize5), uint64FromInt32(newSize5))
+					(*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Capacity = newCapacity5
 				}
-				*(*SensorBeginTouchEvent)(unsafe.Add(nil, (*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Data+uintptr((*b2SensorBeginTouchEventArray)(unsafe.Pointer(v6)).Count)*16)) = event5
-				*(*int32)(unsafe.Add(nil, v6+8)) += int32(1)
+				*(*SensorBeginTouchEvent)(unsafe.Add(nil, (*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Data+uintptr((*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Count)*16)) = event5
+				(*b2World)(unsafe.Pointer(world)).SensorBeginEvents.Count += int32(1)
 				index2 = index2 + int32(1)
 			}
 			// Clear the smallest set bit
 			word = word & (word - uint64(1))
 		}
-		goto _3
-	_3:
+		goto _4
+	_4:
 		;
 		k = k + 1
 	}
 }
 
 func b2DestroySensor(tls *_Stack, world uintptr, sensorShape uintptr) {
+	var elementSize1, i, movedIndex, newCapacity, newSize, oldSize, v3, v6, v7 int32
 	var event SensorEndTouchEvent
-	var i, movedIndex, movedIndex1, newCapacity, v10, v2, v7, v9 int32
-	var movedSensor, otherSensorShape, ref, sensor, v1, v12, v3, v6, v8 uintptr
-	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = event, i, movedIndex, movedIndex1, movedSensor, newCapacity, otherSensorShape, ref, sensor, v1, v10, v12, v2, v3, v6, v7, v8, v9
-	v1 = world + 1280
-	v2 = (*b2Shape)(unsafe.Pointer(sensorShape)).SensorIndex
-	if !(0 <= v2 && v2 < (*b2SensorArray)(unsafe.Pointer(v1)).Count) && b2InternalAssertFcn(tls, __ccgo_ts+349, __ccgo_ts+10835, int32FromInt32(35)) != 0 {
-		__builtin_trap(tls)
+	var movedSensor, otherSensorShape, ref, sensor, v4, v5 uintptr
+	var v1, v11, v8 bool
+	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = elementSize1, event, i, movedIndex, movedSensor, newCapacity, newSize, oldSize, otherSensorShape, ref, sensor, v1, v11, v3, v4, v5, v6, v7, v8
+	if v1 = !!(0 <= (*b2Shape)(unsafe.Pointer(sensorShape)).SensorIndex && (*b2Shape)(unsafe.Pointer(sensorShape)).SensorIndex < (*b2World)(unsafe.Pointer(world)).Sensors.Count); !v1 {
+		b2InternalAssert(tls, __ccgo_ts+21770, __ccgo_ts+21483, int32FromInt32(374))
 	}
-	v3 = (*b2SensorArray)(unsafe.Pointer(v1)).Data + uintptr(v2)*40
-	goto _4
-_4:
-	sensor = v3
+	_ = v1 || bool(int32FromInt32(0) != 0)
+	sensor = (*b2World)(unsafe.Pointer(world)).Sensors.Data + uintptr((*b2Shape)(unsafe.Pointer(sensorShape)).SensorIndex)*56
 	i = 0
 	for {
 		if !(i < (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Count) {
@@ -588,122 +633,74 @@ _4:
 				Generation: (*b2Shape)(unsafe.Pointer(sensorShape)).Generation,
 			},
 			VisitorShapeId: ShapeId{
-				Index1:     (*b2ShapeRef)(unsafe.Pointer(ref)).ShapeId + int32(1),
+				Index1:     (*b2Visitor)(unsafe.Pointer(ref)).ShapeId + int32(1),
 				World0:     (*b2World)(unsafe.Pointer(world)).WorldId,
-				Generation: (*b2ShapeRef)(unsafe.Pointer(ref)).Generation,
+				Generation: (*b2Visitor)(unsafe.Pointer(ref)).Generation,
 			},
 		}
-		v6 = world + 1376 + uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16
-		if (*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Count == (*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Capacity {
-			if (*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Capacity < int32(2) {
-				v7 = int32(2)
+		elementSize1 = int32(16)
+		if (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Count >= (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity {
+			oldSize = (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity * elementSize1
+			if (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity == 0 {
+				v3 = int32(8)
 			} else {
-				v7 = (*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Capacity + (*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Capacity>>int32(1)
+				v3 = int32(2) * (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity
 			}
-			newCapacity = v7
-			b2SensorEndTouchEventArray_Reserve(tls, v6, newCapacity)
+			newCapacity = v3
+			newSize = newCapacity * elementSize1
+			(*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Data = b2GrowAlloc(tls, (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Data, uint64FromInt32(oldSize), uint64FromInt32(newSize))
+			(*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Capacity = newCapacity
 		}
-		*(*SensorEndTouchEvent)(unsafe.Add(nil, (*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Data+uintptr((*b2SensorEndTouchEventArray)(unsafe.Pointer(v6)).Count)*16)) = event
-		*(*int32)(unsafe.Add(nil, v6+8)) += int32(1)
-		goto _5
-	_5:
+		*(*SensorEndTouchEvent)(unsafe.Add(nil, (*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Data+uintptr((*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Count)*16)) = event
+		(*(*b2DynamicArray_b2SensorEndTouchEvent)(unsafe.Add(nil, world+2304+uintptr((*b2World)(unsafe.Pointer(world)).EndEventArrayIndex)*16))).Count += int32(1)
+		goto _2
+	_2:
 		;
 		i = i + 1
 	}
 	// Destroy sensor
-	b2ShapeRefArray_Destroy(tls, sensor)
-	b2ShapeRefArray_Destroy(tls, sensor+16)
-	v1 = world + 1280
-	v2 = (*b2Shape)(unsafe.Pointer(sensorShape)).SensorIndex
-	if !(0 <= v2 && v2 < (*b2SensorArray)(unsafe.Pointer(v1)).Count) && b2InternalAssertFcn(tls, __ccgo_ts+349, __ccgo_ts+10835, int32FromInt32(35)) != 0 {
-		__builtin_trap(tls)
+	b2Free(tls, (*b2Sensor)(unsafe.Pointer(sensor)).Hits.Data, uint64FromInt32((*b2Sensor)(unsafe.Pointer(sensor)).Hits.Capacity)*uint64(8))
+	(*b2Sensor)(unsafe.Pointer(sensor)).Hits.Data = uintptrFromInt32(0)
+	(*b2Sensor)(unsafe.Pointer(sensor)).Hits.Count = 0
+	(*b2Sensor)(unsafe.Pointer(sensor)).Hits.Capacity = 0
+	b2Free(tls, (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps1.Data, uint64FromInt32((*b2Sensor)(unsafe.Pointer(sensor)).Overlaps1.Capacity)*uint64(8))
+	(*b2Sensor)(unsafe.Pointer(sensor)).Overlaps1.Data = uintptrFromInt32(0)
+	(*b2Sensor)(unsafe.Pointer(sensor)).Overlaps1.Count = 0
+	(*b2Sensor)(unsafe.Pointer(sensor)).Overlaps1.Capacity = 0
+	b2Free(tls, (*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Data, uint64FromInt32((*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Capacity)*uint64(8))
+	(*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Data = uintptrFromInt32(0)
+	(*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Count = 0
+	(*b2Sensor)(unsafe.Pointer(sensor)).Overlaps2.Capacity = 0
+	v4 = (*b2World)(unsafe.Pointer(world)).Sensors.Data
+	v5 = world + 2208 + 8
+	v3 = (*b2Shape)(unsafe.Pointer(sensorShape)).SensorIndex
+	v6 = int32(56)
+	if v1 = !!(0 <= v3 && v3 < *(*int32)(unsafe.Add(nil, v5)) && bool(__ccgo_ts+2029 != 0)); !v1 {
+		b2InternalAssert(tls, __ccgo_ts+2055, __ccgo_ts+2115, int32FromInt32(153))
 	}
-	movedIndex = -int32(1)
-	if v2 != (*b2SensorArray)(unsafe.Pointer(v1)).Count-int32FromInt32(1) {
-		movedIndex = (*b2SensorArray)(unsafe.Pointer(v1)).Count - int32(1)
-		*(*b2Sensor)(unsafe.Add(nil, (*b2SensorArray)(unsafe.Pointer(v1)).Data+uintptr(v2)*40)) = *(*b2Sensor)(unsafe.Add(nil, (*b2SensorArray)(unsafe.Pointer(v1)).Data+uintptr(movedIndex)*40))
+	_ = v1 || bool(int32FromInt32(0) != 0)
+	*(*int32)(unsafe.Add(nil, v5)) = *(*int32)(unsafe.Add(nil, v5)) - 1
+	if v3 != *(*int32)(unsafe.Add(nil, v5)) {
+		memcpy(tls, v4+uintptr(v3*v6), v4+uintptr(*(*int32)(unsafe.Add(nil, v5))*v6), uint64FromInt32(v6))
+		v7 = *(*int32)(unsafe.Add(nil, v5))
+		goto _10
 	}
-	*(*int32)(unsafe.Add(nil, v1+8)) -= int32(1)
-	v7 = movedIndex
-	goto _11
-_11:
-	movedIndex1 = v7
-	if movedIndex1 != -int32(1) {
-		v3 = world + 1280
-		v9 = (*b2Shape)(unsafe.Pointer(sensorShape)).SensorIndex
-		if !(0 <= v9 && v9 < (*b2SensorArray)(unsafe.Pointer(v3)).Count) && b2InternalAssertFcn(tls, __ccgo_ts+349, __ccgo_ts+10835, int32FromInt32(35)) != 0 {
-			__builtin_trap(tls)
+	v7 = -int32(1)
+	goto _10
+_10:
+	movedIndex = v7
+	if movedIndex != -int32(1) {
+		if v8 = !!(0 <= (*b2Shape)(unsafe.Pointer(sensorShape)).SensorIndex && (*b2Shape)(unsafe.Pointer(sensorShape)).SensorIndex < (*b2World)(unsafe.Pointer(world)).Sensors.Count); !v8 {
+			b2InternalAssert(tls, __ccgo_ts+21770, __ccgo_ts+21483, int32FromInt32(405))
 		}
-		v6 = (*b2SensorArray)(unsafe.Pointer(v3)).Data + uintptr(v9)*40
-		goto _15
-	_15:
+		_ = v8 || bool(int32FromInt32(0) != 0)
 		// Fixup moved sensor
-		movedSensor = v6
-		v8 = world + 1248
-		v10 = (*b2Sensor)(unsafe.Pointer(movedSensor)).ShapeId
-		if !(0 <= v10 && v10 < (*b2ShapeArray)(unsafe.Pointer(v8)).Count) && b2InternalAssertFcn(tls, __ccgo_ts+349, __ccgo_ts+1384, int32FromInt32(138)) != 0 {
-			__builtin_trap(tls)
+		movedSensor = (*b2World)(unsafe.Pointer(world)).Sensors.Data + uintptr((*b2Shape)(unsafe.Pointer(sensorShape)).SensorIndex)*56
+		if v11 = !!(0 <= (*b2Sensor)(unsafe.Pointer(movedSensor)).ShapeId && (*b2Sensor)(unsafe.Pointer(movedSensor)).ShapeId < (*b2World)(unsafe.Pointer(world)).Shapes.Count); !v11 {
+			b2InternalAssert(tls, __ccgo_ts+21863, __ccgo_ts+21483, int32FromInt32(406))
 		}
-		v12 = (*b2ShapeArray)(unsafe.Pointer(v8)).Data + uintptr(v10)*288
-		goto _19
-	_19:
-		otherSensorShape = v12
+		_ = v11 || bool(int32FromInt32(0) != 0)
+		otherSensorShape = (*b2World)(unsafe.Pointer(world)).Shapes.Data + uintptr((*b2Sensor)(unsafe.Pointer(movedSensor)).ShapeId)*280
 		(*b2Shape)(unsafe.Pointer(otherSensorShape)).SensorIndex = (*b2Shape)(unsafe.Pointer(sensorShape)).SensorIndex
 	}
-}
-
-func b2SensorBeginTouchEventArray_Create(tls *_Stack, capacity int32) (r b2SensorBeginTouchEventArray) {
-	var a b2SensorBeginTouchEventArray
-	_ = a
-	a = b2SensorBeginTouchEventArray{}
-	if capacity > 0 {
-		a.Data = b2Alloc(tls, int32FromUint64(uint64FromInt32(capacity)*uint64(16)))
-		a.Capacity = capacity
-	}
-	return a
-}
-
-/* Reserve */
-func b2SensorBeginTouchEventArray_Reserve(tls *_Stack, a uintptr, newCapacity int32) {
-	if newCapacity <= (*b2SensorBeginTouchEventArray)(unsafe.Pointer(a)).Capacity {
-		return
-	}
-	(*b2SensorBeginTouchEventArray)(unsafe.Pointer(a)).Data = b2GrowAlloc(tls, (*b2SensorBeginTouchEventArray)(unsafe.Pointer(a)).Data, int32FromUint64(uint64FromInt32((*b2SensorBeginTouchEventArray)(unsafe.Pointer(a)).Capacity)*uint64(16)), int32FromUint64(uint64FromInt32(newCapacity)*uint64(16)))
-	(*b2SensorBeginTouchEventArray)(unsafe.Pointer(a)).Capacity = newCapacity
-}
-
-/* Destroy */
-func b2SensorBeginTouchEventArray_Destroy(tls *_Stack, a uintptr) {
-	b2Free(tls, (*b2SensorBeginTouchEventArray)(unsafe.Pointer(a)).Data, int32FromUint64(uint64FromInt32((*b2SensorBeginTouchEventArray)(unsafe.Pointer(a)).Capacity)*uint64(16)))
-	(*b2SensorBeginTouchEventArray)(unsafe.Pointer(a)).Data = uintptrFromInt32(0)
-	(*b2SensorBeginTouchEventArray)(unsafe.Pointer(a)).Count = 0
-	(*b2SensorBeginTouchEventArray)(unsafe.Pointer(a)).Capacity = 0
-}
-
-func b2SensorEndTouchEventArray_Create(tls *_Stack, capacity int32) (r b2SensorEndTouchEventArray) {
-	var a b2SensorEndTouchEventArray
-	_ = a
-	a = b2SensorEndTouchEventArray{}
-	if capacity > 0 {
-		a.Data = b2Alloc(tls, int32FromUint64(uint64FromInt32(capacity)*uint64(16)))
-		a.Capacity = capacity
-	}
-	return a
-}
-
-/* Reserve */
-func b2SensorEndTouchEventArray_Reserve(tls *_Stack, a uintptr, newCapacity int32) {
-	if newCapacity <= (*b2SensorEndTouchEventArray)(unsafe.Pointer(a)).Capacity {
-		return
-	}
-	(*b2SensorEndTouchEventArray)(unsafe.Pointer(a)).Data = b2GrowAlloc(tls, (*b2SensorEndTouchEventArray)(unsafe.Pointer(a)).Data, int32FromUint64(uint64FromInt32((*b2SensorEndTouchEventArray)(unsafe.Pointer(a)).Capacity)*uint64(16)), int32FromUint64(uint64FromInt32(newCapacity)*uint64(16)))
-	(*b2SensorEndTouchEventArray)(unsafe.Pointer(a)).Capacity = newCapacity
-}
-
-/* Destroy */
-func b2SensorEndTouchEventArray_Destroy(tls *_Stack, a uintptr) {
-	b2Free(tls, (*b2SensorEndTouchEventArray)(unsafe.Pointer(a)).Data, int32FromUint64(uint64FromInt32((*b2SensorEndTouchEventArray)(unsafe.Pointer(a)).Capacity)*uint64(16)))
-	(*b2SensorEndTouchEventArray)(unsafe.Pointer(a)).Data = uintptrFromInt32(0)
-	(*b2SensorEndTouchEventArray)(unsafe.Pointer(a)).Count = 0
-	(*b2SensorEndTouchEventArray)(unsafe.Pointer(a)).Capacity = 0
 }

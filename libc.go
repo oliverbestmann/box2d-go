@@ -73,6 +73,10 @@ func atomicLoadNInt32(ptr uintptr, memorder int32) int32 {
 	return atomic.LoadInt32((*int32)(unsafe.Pointer(ptr)))
 }
 
+func atomicLoadNInt64(ptr uintptr, memorder int32) int64 {
+	return atomic.LoadInt64((*int64)(unsafe.Pointer(ptr)))
+}
+
 func atomicLoadNUint32(ptr uintptr, memorder int32) uint32 {
 	return atomic.LoadUint32((*uint32)(unsafe.Pointer(ptr)))
 }
@@ -84,6 +88,12 @@ func int32FromUint16(n uint16) int32       { return int32(n) }
 func int32FromUint32(n uint32) int32       { return int32(n) }
 func int32FromUint64(n uint64) int32       { return int32(n) }
 func uint8FromInt32(n int32) uint8         { return uint8(n) }
+func uint8FromInt64(n int64) uint8         { return uint8(n) }
+func uint32FromInt64(n int64) uint32       { return uint32(n) }
+func uint32FromUint32(n uint32) uint32     { return n }
+func uint64FromUint32(n uint32) uint64     { return uint64(n) }
+func int64FromInt64(n int64) int64         { return n }
+func int64FromUint64(n uint64) int64       { return int64(n) }
 func uint16FromInt32(n int32) uint16       { return uint16(n) }
 func uint32FromInt32(n int32) uint32       { return uint32(n) }
 func uint64FromInt32(n int32) uint64       { return uint64(n) }

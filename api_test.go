@@ -19,7 +19,7 @@ func stackedBoxes(t *testing.T) (World, Shape, Body, Shape) {
 
 	bodyDef := DefaultBodyDef()
 	bodyDef.Type1 = DynamicBody
-	bodyDef.Position = Vec2{Y: 1}
+	bodyDef.Position = Pos{Y: 1}
 	body := world.CreateBody(bodyDef)
 	bodyShape := body.CreatePolygonShape(DefaultShapeDef(), MakeBox(0.5, 0.5))
 
@@ -35,14 +35,14 @@ func TestBodyName(t *testing.T) {
 	assert.Equal(t, "crate", body.GetName())
 
 	body.SetName(strings.Repeat("x", 40))
-	assert.Equal(t, strings.Repeat("x", 31), body.GetName())
+	assert.Equal(t, strings.Repeat("x", 10), body.GetName())
 }
 
 func TestCastRay(t *testing.T) {
 	world, groundShape, _, bodyShape := stackedBoxes(t)
 
 	var hits []Shape
-	world.CastRay(Vec2{Y: 10}, Vec2{Y: -20}, DefaultQueryFilter(), func(shape Shape, point, normal Vec2, fraction float32) float32 {
+	world.CastRay(Pos{Y: 10}, Vec2{Y: -20}, DefaultQueryFilter(), func(shape Shape, point Pos, normal Vec2, fraction float32) float32 {
 		hits = append(hits, shape)
 		assert.InDelta(t, 1, normal.Y, 1e-5)
 		return 1
@@ -50,7 +50,7 @@ func TestCastRay(t *testing.T) {
 	assert.ElementsMatch(t, []Shape{groundShape, bodyShape}, hits)
 
 	hits = nil
-	world.CastRay(Vec2{Y: 10}, Vec2{Y: -20}, DefaultQueryFilter(), func(shape Shape, point, normal Vec2, fraction float32) float32 {
+	world.CastRay(Pos{Y: 10}, Vec2{Y: -20}, DefaultQueryFilter(), func(shape Shape, point Pos, normal Vec2, fraction float32) float32 {
 		hits = append(hits, shape)
 		return 0
 	})
@@ -63,7 +63,7 @@ func TestCastShape(t *testing.T) {
 	proxy := MakeProxy([]Vec2{{X: 0, Y: 10}}, 0.25)
 
 	var hits []Shape
-	world.CastShape(proxy, Vec2{Y: -9}, DefaultQueryFilter(), func(shape Shape, point, normal Vec2, fraction float32) float32 {
+	world.CastShape(Pos{}, proxy, Vec2{Y: -9}, DefaultQueryFilter(), func(shape Shape, point Pos, normal Vec2, fraction float32) float32 {
 		hits = append(hits, shape)
 		return 1
 	})
@@ -100,12 +100,12 @@ func TestSolvePlanes(t *testing.T) {
 
 	// moving into the ground is clipped to the linear slop
 	result := SolvePlanes(Vec2{X: 1, Y: -1}, planes)
-	assert.InDelta(t, 1, result.Translation.X, 1e-5)
-	assert.InDelta(t, -0.005, result.Translation.Y, 1e-5)
+	assert.InDelta(t, 1, result.Delta.X, 1e-5)
+	assert.InDelta(t, -0.005, result.Delta.Y, 1e-5)
 	assert.InDelta(t, 0.995, planes[0].Push, 1e-5)
 
 	result = SolvePlanes(Vec2{X: 1, Y: 2}, nil)
-	assert.Equal(t, Vec2{X: 1, Y: 2}, result.Translation)
+	assert.Equal(t, Vec2{X: 1, Y: 2}, result.Delta)
 }
 
 func TestAtomicCompareExchange(t *testing.T) {

@@ -41,25 +41,27 @@ func TestWorld_Draw(t *testing.T) {
 	body.SetName("Foobar")
 	body.CreateSegmentShape(DefaultShapeDef(), seg)
 
+	// the mass is only drawn for dynamic bodies
+	createBox(world, Vec2{X: 5}, DefaultShapeDef())
+
 	var segments [][2]Vec2
 	var strings []string
 
-	world.Draw(DebugDraw{
-		DrawSegment: func(p1 Vec2, p2 Vec2, color HexColor) {
-			segments = append(segments, [2]Vec2{p1, p2})
-		},
-		DrawString: func(p Vec2, s string, color HexColor) {
-			strings = append(strings, s)
-		},
+	draw := DefaultDebugDraw()
+	draw.DrawLine = func(p1 Vec2, p2 Vec2, color HexColor) {
+		segments = append(segments, [2]Vec2{p1, p2})
+	}
+	draw.DrawString = func(p Vec2, s string, color HexColor) {
+		strings = append(strings, s)
+	}
+	draw.DrawBodyNames = true
+	draw.DrawMass = true
 
-		DrawBodyNames: true,
-		DrawMass:      true,
-		DrawShapes:    true,
-	})
+	world.Draw(draw)
 
-	assert.Equal(t, [][2]Vec2{{seg.Point1, seg.Point2}}, segments)
+	assert.Contains(t, segments, [2]Vec2{seg.Point1, seg.Point2})
 	assert.Contains(t, strings, "Foobar")
-	assert.Contains(t, strings, "  0.00", "mass is printed via snprintf")
+	assert.Contains(t, strings, "  1.00", "mass is printed via snprintf")
 }
 
 func TestComputeHull(t *testing.T) {
@@ -97,8 +99,8 @@ func TestBody_GetShapesAndJoints(t *testing.T) {
 	bodyB, _ := createBox(world, Vec2{X: 2}, DefaultShapeDef())
 
 	jointDef := DefaultWeldJointDef()
-	jointDef.BodyIdA = bodyA.Id
-	jointDef.BodyIdB = bodyB.Id
+	jointDef.Base.BodyIdA = bodyA.Id
+	jointDef.Base.BodyIdB = bodyB.Id
 	joint := world.CreateWeldJoint(jointDef)
 
 	assert.ElementsMatch(t, []Shape{shapeA, shapeB}, bodyA.GetShapes(nil))
@@ -130,15 +132,17 @@ func TestChain_GetSegments(t *testing.T) {
 
 	chainDef := DefaultChainDef()
 	chainDef.Points = uintptr(unsafe.Pointer(&points[0]))
-	chainDef.Count = int32(len(points))
+	chainDef.PointCount = int32(len(points))
+	chainDef.Ghost1 = Vec2{X: -3}
+	chainDef.Ghost2 = Vec2{X: 3}
 	chainDef.Materials = uintptr(unsafe.Pointer(&material))
 	chainDef.MaterialCount = 1
 
 	chain := world.CreateBody(DefaultBodyDef()).CreateChain(chainDef)
 
-	// open chains drop the first and last ghost vertex
+	// every segment of an open chain collides, the ghost vertices are extra
 	segments := chain.GetSegments(nil)
-	assert.Len(t, segments, len(points)-3)
+	assert.Len(t, segments, len(points)-1)
 	for _, segment := range segments {
 		assert.Equal(t, ChainSegmentShape, segment.GetType())
 	}
@@ -150,7 +154,7 @@ func TestWorld_OverlapAABB(t *testing.T) {
 	_, boxB := createBox(world, Vec2{X: 10, Y: 5}, DefaultShapeDef())
 
 	var found []Shape
-	world.OverlapAABB(AABB{LowerBound: Vec2{X: -1, Y: 4}, UpperBound: Vec2{X: 1, Y: 6}}, DefaultQueryFilter(), func(shape Shape) bool {
+	world.OverlapAABB(Pos{}, AABB{LowerBound: Vec2{X: -1, Y: 4}, UpperBound: Vec2{X: 1, Y: 6}}, DefaultQueryFilter(), func(shape Shape) bool {
 		found = append(found, shape)
 		return true
 	})
@@ -158,7 +162,7 @@ func TestWorld_OverlapAABB(t *testing.T) {
 	assert.Equal(t, []Shape{boxA}, found)
 
 	found = nil
-	world.OverlapAABB(AABB{LowerBound: Vec2{X: -20, Y: -2}, UpperBound: Vec2{X: 20, Y: 6}}, DefaultQueryFilter(), func(shape Shape) bool {
+	world.OverlapAABB(Pos{}, AABB{LowerBound: Vec2{X: -20, Y: -2}, UpperBound: Vec2{X: 20, Y: 6}}, DefaultQueryFilter(), func(shape Shape) bool {
 		found = append(found, shape)
 		return true
 	})
@@ -167,7 +171,7 @@ func TestWorld_OverlapAABB(t *testing.T) {
 
 	// returning false stops the query of the current tree, the static ground lives in another tree
 	found = nil
-	world.OverlapAABB(AABB{LowerBound: Vec2{X: -20, Y: -2}, UpperBound: Vec2{X: 20, Y: 6}}, DefaultQueryFilter(), func(shape Shape) bool {
+	world.OverlapAABB(Pos{}, AABB{LowerBound: Vec2{X: -20, Y: -2}, UpperBound: Vec2{X: 20, Y: 6}}, DefaultQueryFilter(), func(shape Shape) bool {
 		found = append(found, shape)
 		return false
 	})
@@ -186,7 +190,7 @@ func TestWorld_OverlapShape(t *testing.T) {
 	proxy := MakeProxy([]Vec2{{X: -1, Y: 4}, {X: 1, Y: 4}, {X: 0, Y: 6}}, 0)
 
 	var found []Shape
-	world.OverlapShape(proxy, DefaultQueryFilter(), func(shape Shape) bool {
+	world.OverlapShape(Pos{}, proxy, DefaultQueryFilter(), func(shape Shape) bool {
 		found = append(found, shape)
 		return true
 	})
@@ -202,7 +206,11 @@ func TestWorld_SetCustomFilterCallback(t *testing.T) {
 		}
 
 		world, ground := newTestWorld(t, def)
-		body, box := createBox(world, Vec2{Y: 2}, DefaultShapeDef())
+
+		// custom filtering is opt-in per shape
+		shapeDef := DefaultShapeDef()
+		shapeDef.EnableCustomFiltering = 1
+		body, box := createBox(world, Vec2{Y: 2}, shapeDef)
 
 		var calls int
 		world.SetCustomFilterCallback(func(shapeA, shapeB Shape) bool {
@@ -228,14 +236,14 @@ func TestWorld_SetPreSolveCallback(t *testing.T) {
 	body, box := createBox(world, Vec2{Y: 2}, shapeDef)
 
 	var calls int
-	world.SetPreSolveCallback(func(shapeA, shapeB Shape, manifold Manifold) bool {
+	world.SetPreSolveCallback(func(shapeA, shapeB Shape, manifold *Manifold) {
 		calls++
 		assert.ElementsMatch(t, []Shape{ground, box}, []Shape{shapeA, shapeB})
 		assert.Positive(t, manifold.PointCount)
 
 		// disable the contact
-		return false
-	})
+		manifold.PointCount = 0
+	}, nil)
 
 	for range 120 {
 		world.Step(1.0/60.0, 4)
@@ -263,17 +271,17 @@ func TestWorld_MaterialCallbacks(t *testing.T) {
 
 	type call struct {
 		ValueA, ValueB float32
-		IdA, IdB       int32
+		IdA, IdB       uint64
 	}
 
 	var frictionCalls, restitutionCalls []call
 
-	world.SetFrictionCallback(func(frictionA float32, idA int32, frictionB float32, idB int32) float32 {
+	world.SetFrictionCallback(func(frictionA float32, idA uint64, frictionB float32, idB uint64) float32 {
 		frictionCalls = append(frictionCalls, call{frictionA, frictionB, idA, idB})
 		return 0.1
 	})
 
-	world.SetRestitutionCallback(func(restitutionA float32, idA int32, restitutionB float32, idB int32) float32 {
+	world.SetRestitutionCallback(func(restitutionA float32, idA uint64, restitutionB float32, idB uint64) float32 {
 		restitutionCalls = append(restitutionCalls, call{restitutionA, restitutionB, idA, idB})
 		return 0
 	})
@@ -288,7 +296,7 @@ func TestWorld_MaterialCallbacks(t *testing.T) {
 	assert.Contains(t, []call{{0.5, 0, 7, 3}, {0, 0.5, 3, 7}}, restitutionCalls[0])
 }
 
-func TestShape_GetSensorOverlaps(t *testing.T) {
+func TestShape_GetSensorData(t *testing.T) {
 	world, _ := newTestWorld(t, DefaultWorldDef())
 
 	sensorDef := DefaultShapeDef()
@@ -307,7 +315,7 @@ func TestShape_GetSensorOverlaps(t *testing.T) {
 
 	world.Step(1.0/60.0, 4)
 
-	assert.ElementsMatch(t, visitors, sensor.GetSensorOverlaps(nil))
+	assert.ElementsMatch(t, visitors, sensor.GetSensorData(nil))
 
 	events := world.GetSensorEvents()
 	assert.Len(t, events.BeginEvents, len(visitors))
@@ -318,7 +326,7 @@ func TestShape_GetSensorOverlaps(t *testing.T) {
 
 func TestGoAssert(t *testing.T) {
 	// box2d asserts are turned into Go panics
-	assert.PanicsWithError(t, "../box2d-c/src/geometry.c:140: b2IsValidFloat( halfWidth ) && halfWidth > 0.0f", func() {
+	assert.PanicsWithError(t, "../box2d-c/src/geometry.c:141: b2IsValidFloat( halfWidth ) && halfWidth > 0.0f", func() {
 		MakeBox(0, 1)
 	})
 

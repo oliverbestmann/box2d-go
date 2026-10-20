@@ -162,8 +162,8 @@ func TestWorldCoverage(t *testing.T) {
 	world.Explode(DefaultExplosionDef())
 	world.SetContactTuning(10, 2, 4)
 
-	world.SetMaximumLinearSpeed(10)
-	assert.Equal(t, float32(10), world.GetMaximumLinearSpeed())
+	world.SetMaxLinearSpeed(10)
+	assert.Equal(t, float32(10), world.GetMaxLinearSpeed())
 
 	world.EnableWarmStarting(1)
 	assert.EqualValues(t, 1, world.IsWarmStartingEnabled())

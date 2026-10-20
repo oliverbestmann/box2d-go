@@ -29,6 +29,22 @@ func __atomic_fetch_addInt32(tls *_Stack, addr uintptr, inc int32, mode int32) i
 	}
 }
 
+func __atomic_fetch_addInt64(_ *_Stack, addr uintptr, inc int64, _ int32) int64 {
+	return atomic.AddInt64((*int64)(unsafe.Pointer(addr)), inc) - inc
+}
+
+func __atomic_fetch_orUint32(_ *_Stack, addr uintptr, mask uint32, _ int32) uint32 {
+	value := (*uint32)(unsafe.Pointer(addr))
+
+	// atomic.OrUint32 needs go 1.23
+	for {
+		old := atomic.LoadUint32(value)
+		if atomic.CompareAndSwapUint32(value, old, old|mask) {
+			return old
+		}
+	}
+}
+
 func __builtin___atomic_compare_exchange_n(tls *_Stack, addr, expected uintptr, desired int32, weak uint8, success_memorder, failure_memorder int32) uint8 {
 	ptrValue := (*int32)(unsafe.Pointer(addr))
 	ptrExpected := (*int32)(unsafe.Pointer(expected))
@@ -112,6 +128,13 @@ func free(tls *_Stack, ptr uintptr) {
 	}
 }
 
+// strncpy copies src up to n bytes and pads dest with zeros, like C.
+func strncpy(_ *_Stack, dest, src uintptr, n size_t) uintptr {
+	target := sliceOf(dest, n)
+	clear(target[copy(target, toString(src)):])
+	return dest
+}
+
 func sqrtf(_ *_Stack, f float32) float32 {
 	return float32(math.Sqrt(float64(f)))
 }
@@ -188,9 +211,11 @@ func printf(tls *_Stack, format uintptr, va uintptr) (r int32) {
 	panic("not required, only used in default assert function")
 }
 
-var reFormatStr = regexp.MustCompile("%[^a-zA-Z]*([df])")
+var reFormatStr = regexp.MustCompile("%[^a-zA-Z]*([dfgs])")
 
-func __builtin_snprintf(t *_Stack, str uintptr, size size_t, format, args uintptr) int32 {
+// cFormat formats like C printf, for the patterns that box2d uses.
+// Like the varargs of ccgo, every argument takes 8 bytes at args.
+func cFormat(format, args uintptr) string {
 	formatStr := toString(format)
 
 	var values []any
@@ -198,17 +223,24 @@ func __builtin_snprintf(t *_Stack, str uintptr, size size_t, format, args uintpt
 		switch match[1] {
 		case "d":
 			values = append(values, *(*int64)(unsafe.Pointer(args)))
-			args += 8
-		case "f":
+		case "f", "g":
 			values = append(values, *(*float64)(unsafe.Pointer(args)))
-			args += 8
-		default:
-			err := fmt.Errorf("unsupported format string pattern: %q", match[0])
-			panic(err)
+		case "s":
+			values = append(values, toString(*(*uintptr)(unsafe.Pointer(args))))
 		}
+
+		args += 8
 	}
 
-	result := fmt.Sprintf(formatStr, values...)
+	return fmt.Sprintf(formatStr, values...)
+}
+
+func __builtin_snprintf(_ *_Stack, str uintptr, size size_t, format, args uintptr) int32 {
+	return __builtin_vsnprintf(nil, str, size, format, args)
+}
+
+func __builtin_vsnprintf(_ *_Stack, str uintptr, size size_t, format, args uintptr) int32 {
+	result := cFormat(format, args)
 
 	if size > 0 {
 		target := sliceOf(str, size)
@@ -219,12 +251,40 @@ func __builtin_snprintf(t *_Stack, str uintptr, size size_t, format, args uintpt
 	return int32(len(result))
 }
 
+func __builtin_inff(_ *_Stack) float32 {
+	return float32(math.Inf(1))
+}
+
+func __builtin_ctz(_ *_Stack, value uint32) int32 {
+	return int32(bits.TrailingZeros32(value))
+}
+
+func __builtin_popcountll(_ *_Stack, value uint64) int32 {
+	return int32(bits.OnesCount64(value))
+}
+
 func fprintf(tls *_Stack, f uintptr, fmt uintptr, va uintptr) (r int32) {
 	panic("fprintf: not implemented")
 }
 
 func fopen(tls *_Stack, filename uintptr, mode uintptr) (r uintptr) {
 	panic("fopen: not implemented")
+}
+
+func fwrite(tls *_Stack, ptr uintptr, size, n size_t, f uintptr) size_t {
+	panic("fwrite: not implemented")
+}
+
+func fread(tls *_Stack, ptr uintptr, size, n size_t, f uintptr) size_t {
+	panic("fread: not implemented")
+}
+
+func fseek(tls *_Stack, f uintptr, offset int64, whence int32) int32 {
+	panic("fseek: not implemented")
+}
+
+func ftell(tls *_Stack, f uintptr) int64 {
+	panic("ftell: not implemented")
 }
 
 func fclose(tls *_Stack, f uintptr) (r1 int32) {

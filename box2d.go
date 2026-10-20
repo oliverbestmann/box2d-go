@@ -2,13 +2,15 @@ package b2
 
 import (
 	"fmt"
+	"log/slog"
 	"runtime"
 	"slices"
+	"strings"
 	"unsafe"
 )
 
-type RestitutionCallback = func(restitutionA float32, userMaterialIdA int32, restitutionB float32, userMaterialIdB int32) float32
-type FrictionCallback = func(frictionA float32, userMaterialIdA int32, frictionB float32, userMaterialIdB int32) float32
+type RestitutionCallback = func(restitutionA float32, userMaterialIdA uint64, restitutionB float32, userMaterialIdB uint64) float32
+type FrictionCallback = func(frictionA float32, userMaterialIdA uint64, frictionB float32, userMaterialIdB uint64) float32
 
 var ZeroVec2 = Vec2{}
 var IdentityRot = Rot{C: 1.0, S: 0.0}
@@ -16,7 +18,13 @@ var IdentityTransform = Transform{Q: IdentityRot}
 var ZeroMat = Mat22{}
 
 func init() {
-	b2SetAssertFcn(theStack, __ccgo_fp(assertFcn(b2DefaultAssertFcnGo)))
+	b2SetAssertCallback(theStack, __ccgo_fp(assertCallback(b2DefaultAssertFcnGo)))
+	b2SetLogCallback(theStack, __ccgo_fp(logCallback(b2LogGo)))
+}
+
+// b2LogGo logs messages of box2d, for example about invalid input.
+func b2LogGo(_ *_Stack, message uintptr) {
+	slog.Warn("box2d", slog.String("message", strings.TrimSpace(toString(message))))
 }
 
 func ComputeHull(points []Vec2) (Hull, bool) {
@@ -44,7 +52,7 @@ func (b Body) SetName(name string) {
 	b2Body_SetName(theStack, b.Id, nameC.Addr)
 }
 
-// GetName returns the name set with SetName, truncated to 31 bytes.
+// GetName returns the name set with SetName, truncated to 10 bytes.
 func (b Body) GetName() string {
 	return toString(b2Body_GetName(theStack, b.Id))
 }
@@ -130,7 +138,8 @@ func (b Chain) GetSegments(reuse []Shape) []Shape {
 	return items
 }
 
-func (b Shape) GetSensorOverlaps(reuse []Shape) []Shape {
+// GetSensorData returns the shapes that overlap the sensor shape.
+func (b Shape) GetSensorData(reuse []Shape) []Shape {
 	itemsCap := b.GetSensorCapacity()
 
 	// allocate memory on the stack to read the ids
@@ -139,7 +148,7 @@ func (b Shape) GetSensorOverlaps(reuse []Shape) []Shape {
 	defer theStack.Free(n)
 
 	// fill the data
-	itemCount := b2Shape_GetSensorOverlaps(theStack, b.Id, ptr, itemsCap)
+	itemCount := b2Shape_GetSensorData(theStack, b.Id, ptr, itemsCap)
 
 	// allocate memory for the result
 	if cap(reuse) < int(itemCount) {
@@ -205,10 +214,10 @@ func SolvePlanes(targetDelta Vec2, planes []CollisionPlane) PlaneSolverResult {
 	return b2SolvePlanes(theStack, targetDelta, uintptr(unsafe.Pointer(&planes[0])), int32(len(planes)))
 }
 
-// ShapeDistance computes the closest points between two shapes. cache speeds up repeated
+// ComputeShapeDistance computes the closest points between two shapes. cache speeds up repeated
 // calls for the same shapes and may be nil. For debugging, the solver writes its simplexes
 // into simplexes, up to its length. DistanceOutput.SimplexCount tells how many it computed.
-func ShapeDistance(input DistanceInput, cache *SimplexCache, simplexes []Simplex) DistanceOutput {
+func ComputeShapeDistance(input DistanceInput, cache *SimplexCache, simplexes []Simplex) DistanceOutput {
 	if cache == nil {
 		cache = &SimplexCache{}
 	}
@@ -227,7 +236,7 @@ func ShapeDistance(input DistanceInput, cache *SimplexCache, simplexes []Simplex
 		simplexesPtr = uintptr(unsafe.Pointer(&simplexes[0]))
 	}
 
-	return b2ShapeDistance(theStack, inputStack.Addr, uintptr(unsafe.Pointer(cache)), simplexesPtr, int32(len(simplexes)))
+	return b2ComputeShapeDistance(theStack, inputStack.Addr, uintptr(unsafe.Pointer(cache)), simplexesPtr, int32(len(simplexes)))
 }
 
 // worldCallbacks keeps the Go closures alive that box2d only stores as a uintptr.
@@ -251,7 +260,7 @@ func (b World) keepCallback(kind string, fn any) uintptr {
 func (b World) SetRestitutionCallback(callback RestitutionCallback) {
 	var fn uintptr
 	if callback != nil {
-		fn = b.keepCallback("restitution", restitutionCallback(func(_ *_Stack, restitutionA float32, userMaterialIdA int32, restitutionB float32, userMaterialIdB int32) float32 {
+		fn = b.keepCallback("restitution", restitutionCallback(func(_ *_Stack, restitutionA float32, userMaterialIdA uint64, restitutionB float32, userMaterialIdB uint64) float32 {
 			return callback(restitutionA, userMaterialIdA, restitutionB, userMaterialIdB)
 		}))
 	}
@@ -264,7 +273,7 @@ func (b World) SetRestitutionCallback(callback RestitutionCallback) {
 func (b World) SetFrictionCallback(callback FrictionCallback) {
 	var fn uintptr
 	if callback != nil {
-		fn = b.keepCallback("friction", frictionCallback(func(_ *_Stack, frictionA float32, userMaterialIdA int32, frictionB float32, userMaterialIdB int32) float32 {
+		fn = b.keepCallback("friction", frictionCallback(func(_ *_Stack, frictionA float32, userMaterialIdA uint64, frictionB float32, userMaterialIdB uint64) float32 {
 			return callback(frictionA, userMaterialIdA, frictionB, userMaterialIdB)
 		}))
 	}
@@ -274,28 +283,30 @@ func (b World) SetFrictionCallback(callback FrictionCallback) {
 
 type OverlapResult func(shapeId Shape) bool
 
-// OverlapAABB calls fcn for every shape that overlaps the aabb. Return false to stop the query.
-func (b World) OverlapAABB(aabb AABB, filter QueryFilter, fcn OverlapResult) TreeStats {
+// OverlapAABB calls fcn for every shape that overlaps the aabb. The aabb is relative to origin.
+// Return false to stop the query.
+func (b World) OverlapAABB(origin Pos, aabb AABB, filter QueryFilter, fcn OverlapResult) TreeStats {
 	fn := worldOverlapCallback(fcn)
 	defer runtime.KeepAlive(fn)
 
-	return b2World_OverlapAABB(theStack, b.Id, aabb, filter, __ccgo_fp(fn), 0)
+	return b2World_OverlapAABB(theStack, b.Id, origin, aabb, filter, __ccgo_fp(fn), 0)
 }
 
-// OverlapShape calls fcn for every shape that overlaps the proxy. Return false to stop the query.
-func (b World) OverlapShape(proxy ShapeProxy, filter QueryFilter, fcn OverlapResult) (r TreeStats) {
+// OverlapShape calls fcn for every shape that overlaps the proxy. The proxy is relative to origin.
+// Return false to stop the query.
+func (b World) OverlapShape(origin Pos, proxy ShapeProxy, filter QueryFilter, fcn OverlapResult) (r TreeStats) {
 	fn := worldOverlapCallback(fcn)
 	defer runtime.KeepAlive(fn)
 
 	proxyStack := copyToStack(theStack, proxy)
 	defer proxyStack.Free()
 
-	r = b2World_OverlapShape(theStack, b.Id, proxyStack.Addr, filter, __ccgo_fp(fn), 0)
+	r = b2World_OverlapShape(theStack, b.Id, origin, proxyStack.Addr, filter, __ccgo_fp(fn), 0)
 
 	return
 }
 
-func worldOverlapCallback(fcn OverlapResult) overlapResultFcn {
+func worldOverlapCallback(fcn OverlapResult) overlapResultCallback {
 	fn := func(_ *_Stack, shapeId ShapeId, _ uintptr) uint8 {
 		return boolUint8(fcn(Shape{Id: shapeId}))
 	}
@@ -308,10 +319,10 @@ func worldOverlapCallback(fcn OverlapResult) overlapResultFcn {
 
 // CastResult is called for every shape hit by a cast. Return -1 to ignore the shape,
 // 0 to stop, fraction to clip the cast at this hit, or 1 to continue without clipping.
-type CastResult func(shape Shape, point, normal Vec2, fraction float32) float32
+type CastResult func(shape Shape, point Pos, normal Vec2, fraction float32) float32
 
 // CastRay calls fcn for every shape hit by the ray, in no particular order.
-func (b World) CastRay(origin, translation Vec2, filter QueryFilter, fcn CastResult) TreeStats {
+func (b World) CastRay(origin Pos, translation Vec2, filter QueryFilter, fcn CastResult) TreeStats {
 	fn := worldCastCallback(fcn)
 	defer runtime.KeepAlive(fn)
 
@@ -319,18 +330,19 @@ func (b World) CastRay(origin, translation Vec2, filter QueryFilter, fcn CastRes
 }
 
 // CastShape calls fcn for every shape hit by the moving proxy, in no particular order.
-func (b World) CastShape(proxy ShapeProxy, translation Vec2, filter QueryFilter, fcn CastResult) TreeStats {
+// The proxy is relative to origin.
+func (b World) CastShape(origin Pos, proxy ShapeProxy, translation Vec2, filter QueryFilter, fcn CastResult) TreeStats {
 	fn := worldCastCallback(fcn)
 	defer runtime.KeepAlive(fn)
 
 	proxyStack := copyToStack(theStack, proxy)
 	defer proxyStack.Free()
 
-	return b2World_CastShape(theStack, b.Id, proxyStack.Addr, translation, filter, __ccgo_fp(fn), 0)
+	return b2World_CastShape(theStack, b.Id, origin, proxyStack.Addr, translation, filter, __ccgo_fp(fn), 0)
 }
 
-func worldCastCallback(fcn CastResult) castResultFcn {
-	fn := func(_ *_Stack, shapeId ShapeId, point, normal Vec2, fraction float32, _ uintptr) float32 {
+func worldCastCallback(fcn CastResult) castResultCallback {
+	fn := func(_ *_Stack, shapeId ShapeId, point Pos, normal Vec2, fraction float32, _ uintptr) float32 {
 		return fcn(Shape{Id: shapeId}, point, normal, fraction)
 	}
 
@@ -340,7 +352,8 @@ func worldCastCallback(fcn CastResult) castResultFcn {
 	return fn
 }
 
-// CustomFilter returns false to prevent the two shapes from colliding.
+// CustomFilter returns false to prevent the two shapes from colliding. It is only called
+// if one of the shapes has ShapeDef.EnableCustomFiltering set.
 type CustomFilter func(shapeIdA, shapeIdB Shape) bool
 
 // SetCustomFilterCallback sets the worlds CustomFilter. Use nil to remove it.
@@ -348,7 +361,7 @@ type CustomFilter func(shapeIdA, shapeIdB Shape) bool
 func (b World) SetCustomFilterCallback(fcn CustomFilter) {
 	var fn uintptr
 	if fcn != nil {
-		fn = b.keepCallback("customFilter", customFilterFcn(func(_ *_Stack, shapeIdA, shapeIdB ShapeId, _ uintptr) uint8 {
+		fn = b.keepCallback("customFilter", customFilterCallback(func(_ *_Stack, shapeIdA, shapeIdB ShapeId, _ uintptr) uint8 {
 			return boolUint8(fcn(Shape{Id: shapeIdA}, Shape{Id: shapeIdB}))
 		}))
 	}
@@ -356,20 +369,33 @@ func (b World) SetCustomFilterCallback(fcn CustomFilter) {
 	b2World_SetCustomFilterCallback(theStack, b.Id, fn, 0)
 }
 
-// PreSolve is called for touching shapes with pre-solve events enabled. Return false to disable the contact for this step.
-type PreSolve = func(shapeIdA, shapeIdB Shape, manifold Manifold) bool
+// PreSolve is called for touching shapes with pre-solve events enabled, after the manifold
+// is updated. The manifold may be modified, set its PointCount to zero to disable the contact.
+// The manifold is only valid during the call.
+type PreSolve = func(shapeA, shapeB Shape, manifold *Manifold)
 
-// SetPreSolveCallback sets the worlds PreSolve callback. Use nil to remove it.
-// The callback may be called from multiple goroutines when concurrency is enabled.
-func (b World) SetPreSolveCallback(fcn PreSolve) {
-	var fn uintptr
-	if fcn != nil {
-		fn = b.keepCallback("preSolve", preSolveFcn(func(_ *_Stack, shapeIdA, shapeIdB ShapeId, manifold uintptr, _ uintptr) uint8 {
-			return boolUint8(fcn(Shape{Id: shapeIdA}, Shape{Id: shapeIdB}, derefToValue[Manifold](manifold)))
+// PreContinuous is called for shapes with pre-solve events enabled when continuous collision
+// finds a time of impact. Return false to skip the event.
+type PreContinuous = func(shapeA, shapeB Shape, point Pos, normal Vec2) bool
+
+// SetPreSolveCallback sets the worlds PreSolve and PreContinuous callbacks. Use nil to remove them.
+// The callbacks may be called from multiple goroutines when concurrency is enabled.
+func (b World) SetPreSolveCallback(preSolve PreSolve, preContinuous PreContinuous) {
+	var preSolveFn, preContinuousFn uintptr
+
+	if preSolve != nil {
+		preSolveFn = b.keepCallback("preSolve", preSolveCallback(func(_ *_Stack, shapeIdA, shapeIdB ShapeId, manifold uintptr, _ uintptr) {
+			preSolve(Shape{Id: shapeIdA}, Shape{Id: shapeIdB}, (*Manifold)(unsafe.Pointer(manifold)))
 		}))
 	}
 
-	b2World_SetPreSolveCallback(theStack, b.Id, fn, 0)
+	if preContinuous != nil {
+		preContinuousFn = b.keepCallback("preContinuous", preContinuousCallback(func(_ *_Stack, shapeIdA, shapeIdB ShapeId, point Pos, normal Vec2, _ uintptr) uint8 {
+			return boolUint8(preContinuous(Shape{Id: shapeIdA}, Shape{Id: shapeIdB}, point, normal))
+		}))
+	}
+
+	b2World_SetPreSolveCallback(theStack, b.Id, preSolveFn, preContinuousFn, 0)
 }
 
 // MakeProxy makes a proxy for use in overlap, shape cast, and related functions.
@@ -439,6 +465,18 @@ func (b World) GetContactEvents() ContactEvents {
 	}
 }
 
+type JointEvents struct {
+	JointEvents []JointEvent
+}
+
+func (b World) GetJointEvents() JointEvents {
+	events := b2World_GetJointEvents(theStack, b.Id)
+
+	return JointEvents{
+		JointEvents: copySlice[JointEvent](events.JointEvents, events.Count),
+	}
+}
+
 func copySlice[T any](data uintptr, n int32) []T {
 	event := (*T)(unsafe.Pointer(data))
 	bodyMoveEvents := unsafe.Slice(event, n)
@@ -458,6 +496,29 @@ func (b Joint) GetConstraintTuning() (hertz, dampingRatio float32) {
 
 	hertz = *(*float32)(unsafe.Pointer(buf))
 	dampingRatio = *(*float32)(unsafe.Pointer(buf + 4))
+	return
+}
+
+func (b DistanceJoint) GetSpringForceRange() (lowerForce, upperForce float32) {
+	buf := theStack.Alloc(8)
+	defer theStack.Free(8)
+
+	b2DistanceJoint_GetSpringForceRange(theStack, b.Id, buf, buf+4)
+
+	lowerForce = *(*float32)(unsafe.Pointer(buf))
+	upperForce = *(*float32)(unsafe.Pointer(buf + 4))
+	return
+}
+
+func (b World) GetContactTuning() (hertz, dampingRatio, pushSpeed float32) {
+	buf := theStack.Alloc(12)
+	defer theStack.Free(12)
+
+	b2World_GetContactTuning(theStack, b.Id, buf, buf+4, buf+8)
+
+	hertz = *(*float32)(unsafe.Pointer(buf))
+	dampingRatio = *(*float32)(unsafe.Pointer(buf + 4))
+	pushSpeed = *(*float32)(unsafe.Pointer(buf + 8))
 	return
 }
 
@@ -496,12 +557,19 @@ func (b Joint) AsWheelJoint() WheelJoint {
 
 	return WheelJoint{b}
 }
-func (b Joint) AsMouseJoint() MouseJoint {
-	if b.GetType() != JointTypeMouse {
+func (b Joint) AsMoverJoint() MoverJoint {
+	if b.GetType() != JointTypeMover {
 		panic("joint has wrong type")
 	}
 
-	return MouseJoint{b}
+	return MoverJoint{b}
+}
+func (b Joint) AsPogoJoint() PogoJoint {
+	if b.GetType() != JointTypePogo {
+		panic("joint has wrong type")
+	}
+
+	return PogoJoint{b}
 }
 func (b Joint) AsWeldJoint() WeldJoint {
 	if b.GetType() != JointTypeWeld {

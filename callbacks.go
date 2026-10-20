@@ -4,45 +4,47 @@ package b2
 // box2d only sees a uintptr, so every Go function passed to it is converted to one of these
 // types. If box2d changes a callback, the build breaks instead of memory getting corrupted.
 type (
-	taskCallback        = func(*_Stack, int32, int32, uint32, uintptr)
-	enqueueTaskCallback = func(*_Stack, uintptr, int32, int32, uintptr, uintptr) uintptr
-	finishTaskCallback  = func(*_Stack, uintptr, uintptr)
-	frictionCallback    = func(*_Stack, float32, int32, float32, int32) float32
-	restitutionCallback = func(*_Stack, float32, int32, float32, int32) float32
-	customFilterFcn     = func(*_Stack, ShapeId, ShapeId, uintptr) uint8
-	preSolveFcn         = func(*_Stack, ShapeId, ShapeId, uintptr, uintptr) uint8
-	overlapResultFcn    = func(*_Stack, ShapeId, uintptr) uint8
-	castResultFcn       = func(*_Stack, ShapeId, Vec2, Vec2, float32, uintptr) float32
-	assertFcn           = func(*_Stack, uintptr, uintptr, int32) int32
-	drawPolygonFcn      = func(*_Stack, uintptr, int32, HexColor, uintptr)
-	drawSolidPolygonFcn = func(*_Stack, Transform, uintptr, int32, float32, HexColor, uintptr)
-	drawCircleFcn       = func(*_Stack, Vec2, float32, HexColor, uintptr)
-	drawSolidCircleFcn  = func(*_Stack, Transform, float32, HexColor, uintptr)
-	drawSolidCapsuleFcn = func(*_Stack, Vec2, Vec2, float32, HexColor, uintptr)
-	drawSegmentFcn      = func(*_Stack, Vec2, Vec2, HexColor, uintptr)
-	drawTransformFcn    = func(*_Stack, Transform, uintptr)
-	drawPointFcn        = func(*_Stack, Vec2, float32, HexColor, uintptr)
-	drawStringFcn       = func(*_Stack, Vec2, uintptr, HexColor, uintptr)
+	threadFunction        = func(*_Stack, uintptr)
+	frictionCallback      = func(*_Stack, float32, uint64, float32, uint64) float32
+	restitutionCallback   = func(*_Stack, float32, uint64, float32, uint64) float32
+	customFilterCallback  = func(*_Stack, ShapeId, ShapeId, uintptr) uint8
+	preSolveCallback      = func(*_Stack, ShapeId, ShapeId, uintptr, uintptr)
+	preContinuousCallback = func(*_Stack, ShapeId, ShapeId, Pos, Vec2, uintptr) uint8
+	overlapResultCallback = func(*_Stack, ShapeId, uintptr) uint8
+	castResultCallback    = func(*_Stack, ShapeId, Pos, Vec2, float32, uintptr) float32
+	assertCallback        = func(*_Stack, uintptr, uintptr, int32) int32
+	logCallback           = func(*_Stack, uintptr)
+	drawPolygonFcn        = func(*_Stack, WorldTransform, uintptr, int32, HexColor, uintptr)
+	drawSolidPolygonFcn   = func(*_Stack, WorldTransform, uintptr, int32, float32, HexColor, uintptr)
+	drawCircleFcn         = func(*_Stack, Pos, float32, HexColor, uintptr)
+	drawSolidCircleFcn    = func(*_Stack, WorldTransform, Vec2, float32, HexColor, uintptr)
+	drawSolidCapsuleFcn   = func(*_Stack, Pos, Pos, float32, HexColor, uintptr)
+	drawLineFcn           = func(*_Stack, Pos, Pos, HexColor, uintptr)
+	drawTransformFcn      = func(*_Stack, WorldTransform, uintptr)
+	drawPointFcn          = func(*_Stack, Pos, float32, HexColor, uintptr)
+	drawStringFcn         = func(*_Stack, Pos, uintptr, HexColor, uintptr)
+	drawBoundsFcn         = func(*_Stack, AABB, HexColor, uintptr)
 )
 
 var (
-	_ taskCallback        = b2go_TaskCallback
-	_ enqueueTaskCallback = b2go_EnqueueTaskCallback
-	_ finishTaskCallback  = b2go_FinishTaskCallback
-	_ frictionCallback    = b2go_FrictionCallback
-	_ restitutionCallback = b2go_RestitutionCallback
-	_ customFilterFcn     = b2go_CustomFilterFcn
-	_ preSolveFcn         = b2go_PreSolveFcn
-	_ overlapResultFcn    = b2go_OverlapResultFcn
-	_ castResultFcn       = b2go_CastResultFcn
-	_ assertFcn           = b2go_AssertFcn
-	_ drawPolygonFcn      = b2go_DrawPolygonFcn
-	_ drawSolidPolygonFcn = b2go_DrawSolidPolygonFcn
-	_ drawCircleFcn       = b2go_DrawCircleFcn
-	_ drawSolidCircleFcn  = b2go_DrawSolidCircleFcn
-	_ drawSolidCapsuleFcn = b2go_DrawSolidCapsuleFcn
-	_ drawSegmentFcn      = b2go_DrawSegmentFcn
-	_ drawTransformFcn    = b2go_DrawTransformFcn
-	_ drawPointFcn        = b2go_DrawPointFcn
-	_ drawStringFcn       = b2go_DrawStringFcn
+	_ threadFunction        = b2go_ThreadFunction
+	_ frictionCallback      = b2go_FrictionCallbackFcn
+	_ restitutionCallback   = b2go_RestitutionCallbackFcn
+	_ customFilterCallback  = b2go_CustomFilterCallbackFcn
+	_ preSolveCallback      = b2go_PreSolveCallbackFcn
+	_ preContinuousCallback = b2go_PreContinuousCallbackFcn
+	_ overlapResultCallback = b2go_OverlapResultCallbackFcn
+	_ castResultCallback    = b2go_CastResultCallbackFcn
+	_ assertCallback        = b2go_AssertCallbackFcn
+	_ logCallback           = b2go_LogCallbackFcn
+	_ drawPolygonFcn        = b2go_DrawPolygonFcn
+	_ drawSolidPolygonFcn   = b2go_DrawSolidPolygonFcn
+	_ drawCircleFcn         = b2go_DrawCircleFcn
+	_ drawSolidCircleFcn    = b2go_DrawSolidCircleFcn
+	_ drawSolidCapsuleFcn   = b2go_DrawSolidCapsuleFcn
+	_ drawLineFcn           = b2go_DrawLineFcn
+	_ drawTransformFcn      = b2go_DrawTransformFcn
+	_ drawPointFcn          = b2go_DrawPointFcn
+	_ drawStringFcn         = b2go_DrawStringFcn
+	_ drawBoundsFcn         = b2go_DrawBoundsFcn
 )
