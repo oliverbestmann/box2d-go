@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -18,7 +19,11 @@ func main() {
 	ebiten.SetWindowSize(1200, 800)
 	ops := ebiten.RunGameOptions{}
 	ops.SingleThread = true
-	_ = ebiten.RunGameWithOptions(&viz{}, &ops)
+
+	err := ebiten.RunGameWithOptions(&viz{}, &ops)
+	if err != nil {
+		fmt.Printf("Error: %s\n", err)
+	}
 }
 
 type viz struct {
@@ -48,7 +53,7 @@ func (v *viz) Update() error {
 	}
 
 	if v.physics != nil && !v.paused {
-		var step = 1 / 60.0
+		step := 1 / 60.0
 
 		if v.slowmo {
 			step *= 0.1
@@ -83,17 +88,6 @@ func (v *viz) Draw(screen *ebiten.Image) {
 	w, h := float64(screen.Bounds().Dx()), float64(screen.Bounds().Dy())
 
 	var toScreen ebiten.GeoM
-
-	var minX, minY, maxX, maxY float64
-	for _, body := range v.bodies {
-		x, y := body.Position()
-		minX = min(minX, x)
-		maxX = max(maxX, x)
-		minY = min(minY, y)
-		maxY = max(minY, y)
-	}
-
-	_ = maxY
 
 	// scale := (h - 50) / (Layers + 5)
 	scale := w / (5 * Layers)
@@ -146,6 +140,13 @@ func (v *viz) initialize(makePhysics func(gravity float64) Physics) {
 	v.physics = ph
 	v.bodies = bodies
 	v.paused = false
+}
+
+// screenLength converts a length in world units to pixels.
+func screenLength(toScreen ebiten.GeoM, length float64) float64 {
+	x0, y0 := toScreen.Apply(0, 0)
+	x1, y1 := toScreen.Apply(length, 0)
+	return math.Hypot(x1-x0, y1-y0)
 }
 
 type Body interface {

@@ -91,7 +91,7 @@ func (d drawer) DrawCircle(pos cp.Vector, angle, radius float64, outline, fill c
 	var p vector.Path
 
 	x, y := d.toScreen.Apply(pos.X, pos.Y)
-	radius, _ = d.toScreen.Apply(radius, 0)
+	radius = screenLength(d.toScreen, radius)
 	p.Arc(float32(x), float32(y), float32(radius), 0, 2*math.Pi, vector.Clockwise)
 
 	dop := vector.DrawPathOptions{ColorScale: toColorScaleF(outline)}
@@ -149,7 +149,8 @@ func (d drawer) DrawPolygon(count int, verts []cp.Vector, radius float64, outlin
 }
 
 func (d drawer) DrawDot(size float64, pos cp.Vector, fill cp.FColor, data any) {
-	d.DrawCircle(pos, 2*math.Pi, 2, cp.FColor{}, fill, data)
+	// size is in pixels, DrawCircle takes a radius in world units
+	d.DrawCircle(pos, 0, size/2/screenLength(d.toScreen, 1), cp.FColor{}, fill, data)
 }
 
 func (d drawer) Flags() uint {
