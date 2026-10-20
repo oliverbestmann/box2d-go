@@ -57,8 +57,6 @@ var PREDEF_THREADS = `
 const PKGNAME = "b2"
 
 func main() {
-	// defer profile.Start(profile.CPUProfile).Stop()
-
 	var noTranspile bool
 
 	flag.BoolVar(&noTranspile, "no-transpile", false, "do not transpile the c sources")
@@ -78,7 +76,6 @@ func main() {
 		"-verify-types",
 		"--package-name", PKGNAME,
 		"-D", "BOX2D_DISABLE_SIMD",
-		// "-D", "NDEBUG",
 		"--predef", PREDEF_ATOMIC,
 		"--predef", PREDEF_ALLOC,
 		"--predef", PREDEF_THREADS,
@@ -142,8 +139,6 @@ func main() {
 	dst.Inspect(root, removeTypeAliases(readTypedefAliases(api)))
 	hideConsts(root)
 	removeDeadCode(root)
-
-	// dst.Inspect(root, injectCheckptr())
 
 	var decls []dst.Decl
 
@@ -210,51 +205,6 @@ func hideConsts(root dst.Node) {
 
 		return true
 	})
-}
-
-func injectCheckptr() Visitor {
-	var injectCheckptrInner Visitor = func(node dst.Node) bool {
-		// unsafe.Pointer(...)
-		ptrCall, ok := node.(*dst.CallExpr)
-		if !ok {
-			return true
-		}
-
-		// unsafe.Pointer
-		fnName, ok := ptrCall.Fun.(*dst.SelectorExpr)
-		if !ok {
-			return true
-		}
-
-		if !(identOf(fnName.X) == "unsafe" && fnName.Sel.Name == "Pointer") {
-			return true
-		}
-
-		// found the pointer, wrap with call to checkAddr
-		wrapArg := &dst.CallExpr{
-			Fun:  dst.NewIdent("checkAddr"),
-			Args: []dst.Expr{dst.NewIdent("tls"), ptrCall.Args[0]},
-		}
-
-		ptrCall.Args[0] = wrapArg
-
-		return true
-	}
-
-	return func(node dst.Node) bool {
-		fn, ok := node.(*dst.FuncDecl)
-		if ok && fn.Type.Params != nil && len(fn.Type.Params.List) > 0 {
-			if star, ok := fn.Type.Params.List[0].Type.(*dst.StarExpr); ok {
-				if identOf(star.X) == "_Stack" {
-					dst.Inspect(node, injectCheckptrInner)
-				}
-
-				return false
-			}
-		}
-
-		return true
-	}
 }
 
 type extract struct {
@@ -900,16 +850,6 @@ func createWrappers(decls *[]dst.Decl, api API) Visitor {
 
 		return true
 	}
-}
-
-func needClassTypeWrap(list []*dst.Field) bool {
-	for _, f := range list {
-		if getClassTypeById(identOf(f.Type)) != nil {
-			return true
-		}
-	}
-
-	return false
 }
 
 func identOf(expr dst.Expr) string {

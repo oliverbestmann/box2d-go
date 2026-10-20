@@ -63,10 +63,6 @@ func __builtin___atomic_compare_exchange_n(tls *_Stack, addr, expected uintptr, 
 	}
 }
 
-func remainderf(_ *_Stack, a, b float32) float32 {
-	return float32(math.Remainder(float64(a), float64(b)))
-}
-
 func __builtin_trap(_ *_Stack) {
 	panic("trap")
 }

@@ -146,8 +146,3 @@ func sliceToStack[T any](tls *_Stack, values []T) alloc {
 
 	return alloc{Addr: stack, tls: tls, size: n}
 }
-
-func derefToValue[T any](ptr uintptr) T {
-	src := toSlice[T](ptr, 1)
-	return src[0]
-}

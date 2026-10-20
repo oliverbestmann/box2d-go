@@ -13,8 +13,6 @@ import (
 const Layers = 20
 
 func main() {
-	// defer profile.Start(profile.CPUProfile).Stop()
-
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
 	ebiten.SetWindowSize(1200, 800)
 	ops := ebiten.RunGameOptions{}
