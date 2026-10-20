@@ -16,6 +16,9 @@ type _Stack struct {
 	pos    int
 
 	objects map[uintptr]any
+
+	// yields counts the calls to sched_yield, each goroutine of box2d has its own stack
+	yields uint32
 }
 
 //go:noinline

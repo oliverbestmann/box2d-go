@@ -186,11 +186,6 @@ func clock_gettime(tls *_Stack, clk clockid_t, ts uintptr) (r int32) {
 	return 0
 }
 
-func sched_yield(tls *_Stack) int32 {
-	time.Sleep(20 * time.Microsecond)
-	return 0
-}
-
 func __builtin_Gosched(tls *_Stack) {
 	pause()
 }
