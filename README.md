@@ -2,25 +2,24 @@
 
 # box2d go
 
-This is a mainly automated Golang port of Box2D v3.2. The original C code is transpiled into Go using modernc.org/ccgo/v4.
-Some post-processing creates a user-friendly Go API, concealing the low-level details of the transpiled C code.
+This is a Go port of Box2D v3.2. Most of it is generated: [ccgo](https://gitlab.com/cznic/ccgo) translates the C code
+to Go, and a generator in `transpile/` adds a Go API on top that hides the translated C code.
 
 ## API
 
-The API largely mirrors the original C API. The `b2` prefix in the C API is incorporated into the package name, allowing
-`b2CreateWorld` to be accessed as `b2.CreateWorld`.
+The API follows the C API. The `b2` prefix becomes the package name, so `b2CreateWorld` is `b2.CreateWorld`.
 
-Functions akin to classes or namespaces that operate on instances, such as `b2World_Draw(worldId, ...)`, are contained
-within a `b2.World` instance, which is a wrapper for `b2.WorldId`. The aforementioned method is accessible via
-`myWorld.Draw(...)`. This format is also applied to `Body`, `Shape`, and `Joint` methods.
+C functions that take an id as the first argument are methods on a wrapper type. For example, `b2.World` wraps
+`b2.WorldId`, so `b2World_Draw(worldId, ...)` becomes `world.Draw(...)`. `Body`, `Shape`, `Joint`, `Chain`, and
+`Contact` work the same way.
 
-`Joint` instances provide methods to convert them into specific joint types, like `AsMotorJoint()` or
-`AsPrismaticJoint()`, enabling access to methods specific to those joint types.
+To call the methods of a specific joint type, convert the `Joint` first, for example with `AsMotorJoint()` or
+`AsPrismaticJoint()`.
 
 ## Example
 
-This example is directly taken from the official [Box2D documentation](https://box2d.org/documentation/hello.html)
-and adapted to Go. The original C code is provided for comparison.
+This is the hello world example from the [Box2D documentation](https://box2d.org/documentation/hello.html), with the
+original C code in comments.
 
 ```go
 // b2WorldDef worldDef = b2DefaultWorldDef();
@@ -73,10 +72,10 @@ timeStep := float32(1 / 60.0)
 subStepCount := int32(4)
 
 // for (int i = 0; i < 90; ++i) {
-// 	 2World_Step(worldId, timeStep, subStepCount);
-// 	 2Vec2 position = b2Body_GetPosition(bodyId);
-// 	 2Rot rotation = b2Body_GetRotation(bodyId);
-// 	 rintf("%4.2f %4.2f %4.2f\n", position.x, position.y, b2Rot_GetAngle(rotation));
+//     b2World_Step(worldId, timeStep, subStepCount);
+//     b2Vec2 position = b2Body_GetPosition(bodyId);
+//     b2Rot rotation = b2Body_GetRotation(bodyId);
+//     printf("%4.2f %4.2f %4.2f\n", position.x, position.y, b2Rot_GetAngle(rotation));
 // }
 for range 90 {
     world.Step(timeStep, subStepCount)
@@ -91,15 +90,12 @@ world.DestroyWorld()
 
 ## Multithreading
 
-box2d has a built-in task scheduler that runs on `WorldDef.WorkerCount` threads. In Go, these threads are
-goroutines. Use `b2.EnableConcurrency` to pick a worker count for a new `World`, or set `WorkerCount` yourself.
+Box2D splits each step across `WorldDef.WorkerCount` threads. This port runs them as goroutines.
+`b2.EnableConcurrency(&worldDef)` sets the worker count from the number of CPUs, up to 8. You can also set
+`WorkerCount` yourself.
 
-**Caution**: The rest of the API is not thread safe. The `b2` package must not be
-accessed from multiple threads, even in read-only mode.
-
-## Use of AI
-
-AI was used solely to refine the phrasing in this README. No AI-generated content is present in the code.
+The rest of the API is not thread safe. Don't call into the `b2` package from more than one goroutine at a time, not
+even for reads.
 
 ## Development
 
@@ -109,17 +105,20 @@ Run `go vet` with the `unsafeptr` check disabled:
 go vet -unsafeptr=false ./...
 ```
 
-The code transpiled by ccgo stores all C memory as `uintptr` and converts it back to `unsafe.Pointer`,
-which `unsafeptr` reports everywhere. This cannot be fixed without changing how ccgo generates code.
+The code from ccgo keeps C pointers as `uintptr` and converts them back to `unsafe.Pointer`. `unsafeptr` reports
+each of these conversions, and only a change to ccgo could fix that.
 
-The tests use `-race` only with checkptr disabled for the same reason:
-`go test -race -gcflags=all=-d=checkptr=0 ./...`.
+For the same reason, run the race tests with checkptr disabled:
 
-### Updating box2d
+```sh
+go test -race -gcflags=all=-d=checkptr=0 ./...
+```
 
-- Callbacks: box2d only sees a `uintptr` for Go callbacks, so a changed signature would corrupt memory at runtime.
+### Updating Box2D
+
+- **Callbacks:** Box2D sees Go callbacks only as a `uintptr`, so a changed signature corrupts memory at runtime.
   `transpile/csrc/callbacks.c` repeats every callback signature the Go code implements, and `./transpile.sh`
-  checks it against the box2d headers with the host C compiler. `callbacks.go` checks the Go closures against
-  the transpiled result. Update both when the build fails there.
-- Determinism: take the expected hash and sleep step from box2d's `shared/determinism.h` and update
+  checks it against the Box2D headers with the host C compiler. `callbacks.go` checks the Go closures against
+  the transpiled code. If the build fails there, update both files.
+- **Determinism:** Copy the expected hash and sleep step from Box2D's `shared/determinism.h` into
   `determinism_test.go`.
