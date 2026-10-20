@@ -315,6 +315,31 @@ func TestWorld_CallbacksReleased(t *testing.T) {
 	assert.NotContains(t, worldCallbacks, key("customFilter"))
 }
 
+func TestUserData(t *testing.T) {
+	worldDef := DefaultWorldDef()
+	worldDef.UserData = 1
+	world, _ := newTestWorld(t, worldDef)
+	assert.EqualValues(t, 1, world.GetUserData())
+
+	bodyDef := DefaultBodyDef()
+	bodyDef.Type1 = DynamicBody
+	bodyDef.Position = Vec2{Y: 2}
+	bodyDef.UserData = 1 << 40
+	body := world.CreateBody(bodyDef)
+	assert.EqualValues(t, 1<<40, body.GetUserData())
+
+	shapeDef := DefaultShapeDef()
+	shapeDef.UserData = 3
+	shape := body.CreatePolygonShape(shapeDef, MakeBox(0.5, 0.5))
+	assert.EqualValues(t, 3, shape.GetUserData())
+
+	world.Step(1.0/60.0, 4)
+
+	events := world.GetBodyEvents()
+	require.Len(t, events.MoveEvents, 1)
+	assert.EqualValues(t, 1<<40, events.MoveEvents[0].UserData)
+}
+
 func TestShape_GetSensorData(t *testing.T) {
 	world, _ := newTestWorld(t, DefaultWorldDef())
 

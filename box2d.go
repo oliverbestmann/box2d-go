@@ -178,12 +178,11 @@ func (b World) DestroyWorld() {
 }
 
 // CreateChain creates a chain shape through points. materials holds one material for all
-// segments or one per segment, nil keeps the materials of def. def.Points and def.PointCount
-// are ignored. box2d copies both slices.
+// segments or one per segment, nil uses the default material. box2d copies both slices.
 func (b Body) CreateChain(def ChainDef, points []Vec2, materials []SurfaceMaterial) Chain {
-	def.Points, def.PointCount = sliceAddr(points), int32(len(points))
+	def.points, def.pointCount = sliceAddr(points), int32(len(points))
 	if len(materials) > 0 {
-		def.Materials, def.MaterialCount = sliceAddr(materials), int32(len(materials))
+		def.materials, def.materialCount = sliceAddr(materials), int32(len(materials))
 	}
 
 	defer runtime.KeepAlive(points)

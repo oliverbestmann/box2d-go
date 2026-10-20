@@ -2559,7 +2559,7 @@ _9:
 	_ = v1 || bool(int32FromInt32(0) != 0)
 	joint = (*b2World)(unsafe.Pointer(world)).Joints.Data + uintptr(jointId)*72
 	(*b2Joint)(unsafe.Pointer(joint)).JointId = jointId
-	(*b2Joint)(unsafe.Pointer(joint)).UserData = (*JointDef)(unsafe.Pointer(def)).UserData
+	(*b2Joint)(unsafe.Pointer(joint)).UserData = uintptr((*JointDef)(unsafe.Pointer(def)).UserData)
 	v13 = joint + 64
 	*(*uint16_t)(unsafe.Pointer(v13)) = uint16_t(int32(*(*uint16_t)(unsafe.Pointer(v13))) + int32FromInt32(1))
 	(*b2Joint)(unsafe.Pointer(joint)).SetIndex = -int32(1)

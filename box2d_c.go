@@ -918,15 +918,15 @@ type WorldDef struct {
 	ContactDampingRatio          float32
 	ContactSpeed                 float32
 	MaximumLinearSpeed           float32
-	FrictionCallback             uintptr
-	RestitutionCallback          uintptr
+	frictionCallback             uintptr
+	restitutionCallback          uintptr
 	EnableSleep                  uint8
 	EnableContinuous             uint8
 	WorkerCount                  int32
-	EnqueueTask                  uintptr
-	FinishTask                   uintptr
-	UserTaskContext              uintptr
-	UserData                     uintptr
+	enqueueTask                  uintptr
+	finishTask                   uintptr
+	userTaskContext              uintptr
+	UserData                     uint64
 	Capacity                     Capacity
 	InternalValue                int32
 }
@@ -957,8 +957,8 @@ type BodyDef struct {
 	GravityScale           float32
 	SleepThreshold         float32
 	SafetyFactor           float32
-	Name                   uintptr
-	UserData               uintptr
+	name                   uintptr
+	UserData               uint64
 	MotionLocks            MotionLocks
 	EnableSleep            uint8
 	IsAwake                uint8
@@ -1001,7 +1001,7 @@ type SurfaceMaterial struct {
 }
 
 type ShapeDef struct {
-	UserData              uintptr
+	UserData              uint64
 	Material              SurfaceMaterial
 	Density               float32
 	Filter                Filter
@@ -1017,13 +1017,13 @@ type ShapeDef struct {
 }
 
 type ChainDef struct {
-	UserData           uintptr
-	Points             uintptr
-	PointCount         int32
+	UserData           uint64
+	points             uintptr
+	pointCount         int32
 	Ghost1             Vec2
 	Ghost2             Vec2
-	Materials          uintptr
-	MaterialCount      int32
+	materials          uintptr
+	materialCount      int32
 	Filter             Filter
 	IsLoop             uint8
 	EnableSensorEvents uint8
@@ -1087,7 +1087,7 @@ const b2_weldJoint = 7
 const b2_wheelJoint = 8
 
 type JointDef struct {
-	UserData               uintptr
+	UserData               uint64
 	BodyIdA                BodyId
 	BodyIdB                BodyId
 	LocalFrameA            Transform
@@ -1266,7 +1266,7 @@ type b2ContactEvents struct {
 }
 
 type BodyMoveEvent struct {
-	UserData   uintptr
+	UserData   uint64
 	Transform  WorldTransform
 	BodyId     BodyId
 	FellAsleep uint8
@@ -1279,7 +1279,7 @@ type b2BodyEvents struct {
 
 type JointEvent struct {
 	JointId  JointId
-	UserData uintptr
+	UserData uint64
 }
 
 type b2JointEvents struct {
@@ -16821,7 +16821,7 @@ func b2RecW_BODYDEF(tls *_Stack, buf uintptr, v BodyDef) {
 	b2RecW_F32(tls, buf, v.GravityScale)
 	b2RecW_F32(tls, buf, v.SleepThreshold)
 	b2RecW_F32(tls, buf, v.SafetyFactor)
-	b2RecW_STR(tls, buf, v.Name)
+	b2RecW_STR(tls, buf, v.name)
 	// userData: not preserved
 	b2RecW_U64(tls, buf, 0)
 	b2RecW_LOCKS(tls, buf, v.MotionLocks)
@@ -16860,13 +16860,13 @@ func b2RecW_CHAINDEF(tls *_Stack, buf uintptr, v ChainDef) {
 	_, _ = i, i1
 	// userData: not preserved
 	b2RecW_U64(tls, buf, 0)
-	b2RecW_I32(tls, buf, v.PointCount)
+	b2RecW_I32(tls, buf, v.pointCount)
 	i = 0
 	for {
-		if !(i < v.PointCount) {
+		if !(i < v.pointCount) {
 			break
 		}
-		b2RecW_VEC2(tls, buf, *(*Vec2)(unsafe.Add(nil, v.Points+uintptr(i)*8)))
+		b2RecW_VEC2(tls, buf, *(*Vec2)(unsafe.Add(nil, v.points+uintptr(i)*8)))
 		goto _1
 	_1:
 		;
@@ -16874,13 +16874,13 @@ func b2RecW_CHAINDEF(tls *_Stack, buf uintptr, v ChainDef) {
 	}
 	b2RecW_VEC2(tls, buf, v.Ghost1)
 	b2RecW_VEC2(tls, buf, v.Ghost2)
-	b2RecW_I32(tls, buf, v.MaterialCount)
+	b2RecW_I32(tls, buf, v.materialCount)
 	i1 = 0
 	for {
-		if !(i1 < v.MaterialCount) {
+		if !(i1 < v.materialCount) {
 			break
 		}
-		b2RecW_MATERIAL(tls, buf, *(*SurfaceMaterial)(unsafe.Add(nil, v.Materials+uintptr(i1)*32)))
+		b2RecW_MATERIAL(tls, buf, *(*SurfaceMaterial)(unsafe.Add(nil, v.materials+uintptr(i1)*32)))
 		goto _2
 	_2:
 		;
@@ -20416,7 +20416,7 @@ func b2RecR_BODYDEF(tls *_Stack, rdr uintptr) (r BodyDef) {
 	def.SafetyFactor = b2RecR_F32(tls, rdr)
 	// b2RecR_STR handles the over-length clamp and skips the full recorded length, so the
 	// cursor stays aligned even for names longer than B2_NAME_LENGTH. Valid until the create call.
-	def.Name = b2RecR_STR(tls, rdr)
+	def.name = b2RecR_STR(tls, rdr)
 	b2RecR_U64(tls, rdr) // userData (not preserved)
 	def.MotionLocks = b2RecR_LOCKS(tls, rdr)
 	def.EnableSleep = b2RecR_BOOL(tls, rdr)
@@ -20425,7 +20425,7 @@ func b2RecR_BODYDEF(tls *_Stack, rdr uintptr) (r BodyDef) {
 	def.IsEnabled = b2RecR_BOOL(tls, rdr)
 	def.AllowFastRotation = b2RecR_BOOL(tls, rdr)
 	def.EnableContactRecycling = b2RecR_BOOL(tls, rdr)
-	def.UserData = uintptrFromInt32(0)
+	def.UserData = uint64(uintptrFromInt32(0))
 	return def
 }
 
@@ -20445,7 +20445,7 @@ func b2RecR_SHAPEDEF(tls *_Stack, rdr uintptr) (r ShapeDef) {
 	def.EnablePreSolveEvents = b2RecR_BOOL(tls, rdr)
 	def.InvokeContactCreation = b2RecR_BOOL(tls, rdr)
 	def.UpdateBodyMass = b2RecR_BOOL(tls, rdr)
-	def.UserData = uintptrFromInt32(0)
+	def.UserData = uint64(uintptrFromInt32(0))
 	return def
 }
 
@@ -20479,8 +20479,8 @@ func b2RecR_CHAINDEF(tls *_Stack, rdr uintptr) (r ChainDef) {
 	} else {
 		v2 = uintptrFromInt32(0)
 	}
-	def.Points = v2
-	def.PointCount = pointCount
+	def.points = v2
+	def.pointCount = pointCount
 	def.Ghost1 = b2RecR_VEC2(tls, rdr)
 	def.Ghost2 = b2RecR_VEC2(tls, rdr)
 	materialCount = b2RecR_I32(tls, rdr)
@@ -20506,12 +20506,12 @@ func b2RecR_CHAINDEF(tls *_Stack, rdr uintptr) (r ChainDef) {
 	} else {
 		v2 = uintptrFromInt32(0)
 	}
-	def.Materials = v2
-	def.MaterialCount = materialCount
+	def.materials = v2
+	def.materialCount = materialCount
 	def.Filter = b2RecR_FILTER(tls, rdr)
 	def.IsLoop = b2RecR_BOOL(tls, rdr)
 	def.EnableSensorEvents = b2RecR_BOOL(tls, rdr)
-	def.UserData = uintptrFromInt32(0)
+	def.UserData = uint64(uintptrFromInt32(0))
 	return def
 }
 
@@ -20542,7 +20542,7 @@ func b2RecR_JointBase(tls *_Stack, rdr uintptr, base uintptr) {
 	(*JointDef)(unsafe.Pointer(base)).ConstraintDampingRatio = b2RecR_F32(tls, rdr)
 	(*JointDef)(unsafe.Pointer(base)).DrawScale = b2RecR_F32(tls, rdr)
 	(*JointDef)(unsafe.Pointer(base)).CollideConnected = b2RecR_BOOL(tls, rdr)
-	(*JointDef)(unsafe.Pointer(base)).UserData = uintptrFromInt32(0)
+	(*JointDef)(unsafe.Pointer(base)).UserData = uint64(uintptrFromInt32(0))
 }
 
 func b2RecR_DISTANCEJOINTDEF(tls *_Stack, rdr uintptr) (r DistanceJointDef) {
@@ -24868,16 +24868,16 @@ func b2CreateChain(tls *_Stack, bodyId BodyId, def uintptr) (r ChainId) {
 	}
 	_ = v1 || bool(int32FromInt32(0) != 0)
 	if (*ChainDef)(unsafe.Pointer(def)).IsLoop != 0 {
-		v2 = boolInt32((*ChainDef)(unsafe.Pointer(def)).PointCount >= int32(3))
+		v2 = boolInt32((*ChainDef)(unsafe.Pointer(def)).pointCount >= int32(3))
 	} else {
-		v2 = boolInt32((*ChainDef)(unsafe.Pointer(def)).PointCount >= int32(2))
+		v2 = boolInt32((*ChainDef)(unsafe.Pointer(def)).pointCount >= int32(2))
 	}
 	if v2 == false1 {
 		b2Log(tls, __ccgo_ts+1116, vaList(bp+264, __ccgo_ts+22682, uintptr(unsafe.Pointer(&__func__120))))
 		if (*ChainDef)(unsafe.Pointer(def)).IsLoop != 0 {
-			v2 = boolInt32((*ChainDef)(unsafe.Pointer(def)).PointCount >= int32(3))
+			v2 = boolInt32((*ChainDef)(unsafe.Pointer(def)).pointCount >= int32(3))
 		} else {
-			v2 = boolInt32((*ChainDef)(unsafe.Pointer(def)).PointCount >= int32(2))
+			v2 = boolInt32((*ChainDef)(unsafe.Pointer(def)).pointCount >= int32(2))
 		}
 		if v1 = !!(v2 != 0); !v1 {
 			b2InternalAssert(tls, __ccgo_ts+22682, __ccgo_ts+21995, int32FromInt32(504))
@@ -24886,14 +24886,14 @@ func b2CreateChain(tls *_Stack, bodyId BodyId, def uintptr) (r ChainId) {
 		return ChainId{}
 	}
 	if (*ChainDef)(unsafe.Pointer(def)).IsLoop != 0 {
-		v2 = (*ChainDef)(unsafe.Pointer(def)).PointCount
+		v2 = (*ChainDef)(unsafe.Pointer(def)).pointCount
 	} else {
-		v2 = (*ChainDef)(unsafe.Pointer(def)).PointCount - int32(1)
+		v2 = (*ChainDef)(unsafe.Pointer(def)).pointCount - int32(1)
 	}
 	segmentCount = v2
-	if boolInt32((*ChainDef)(unsafe.Pointer(def)).MaterialCount == int32(1) || (*ChainDef)(unsafe.Pointer(def)).MaterialCount == segmentCount) == false1 {
+	if boolInt32((*ChainDef)(unsafe.Pointer(def)).materialCount == int32(1) || (*ChainDef)(unsafe.Pointer(def)).materialCount == segmentCount) == false1 {
 		b2Log(tls, __ccgo_ts+1116, vaList(bp+264, __ccgo_ts+22740, uintptr(unsafe.Pointer(&__func__120))))
-		if v1 = !!((*ChainDef)(unsafe.Pointer(def)).MaterialCount == int32(1) || (*ChainDef)(unsafe.Pointer(def)).MaterialCount == segmentCount); !v1 {
+		if v1 = !!((*ChainDef)(unsafe.Pointer(def)).materialCount == int32(1) || (*ChainDef)(unsafe.Pointer(def)).materialCount == segmentCount); !v1 {
 			b2InternalAssert(tls, __ccgo_ts+22740, __ccgo_ts+21995, int32FromInt32(508))
 		}
 		_ = v1 || bool(int32FromInt32(0) != 0)
@@ -24901,12 +24901,12 @@ func b2CreateChain(tls *_Stack, bodyId BodyId, def uintptr) (r ChainId) {
 	}
 	i = 0
 	for {
-		if !(i < (*ChainDef)(unsafe.Pointer(def)).PointCount) {
+		if !(i < (*ChainDef)(unsafe.Pointer(def)).pointCount) {
 			break
 		}
-		if int32FromUint8(b2IsValidVec2(tls, *(*Vec2)(unsafe.Add(nil, (*ChainDef)(unsafe.Pointer(def)).Points+uintptr(i)*8)))) == false1 {
+		if int32FromUint8(b2IsValidVec2(tls, *(*Vec2)(unsafe.Add(nil, (*ChainDef)(unsafe.Pointer(def)).points+uintptr(i)*8)))) == false1 {
 			b2Log(tls, __ccgo_ts+1116, vaList(bp+264, __ccgo_ts+22802, uintptr(unsafe.Pointer(&__func__120))))
-			if v1 = !!(b2IsValidVec2(tls, *(*Vec2)(unsafe.Add(nil, (*ChainDef)(unsafe.Pointer(def)).Points+uintptr(i)*8))) != 0); !v1 {
+			if v1 = !!(b2IsValidVec2(tls, *(*Vec2)(unsafe.Add(nil, (*ChainDef)(unsafe.Pointer(def)).points+uintptr(i)*8))) != 0); !v1 {
 				b2InternalAssert(tls, __ccgo_ts+22802, __ccgo_ts+21995, int32FromInt32(512))
 			}
 			_ = v1 || bool(int32FromInt32(0) != 0)
@@ -24919,12 +24919,12 @@ func b2CreateChain(tls *_Stack, bodyId BodyId, def uintptr) (r ChainId) {
 	}
 	i1 = 0
 	for {
-		if !(i1 < (*ChainDef)(unsafe.Pointer(def)).MaterialCount) {
+		if !(i1 < (*ChainDef)(unsafe.Pointer(def)).materialCount) {
 			break
 		}
-		if int32FromUint8(b2IsValidMaterial(tls, (*ChainDef)(unsafe.Pointer(def)).Materials+uintptr(i1)*32)) == false1 {
+		if int32FromUint8(b2IsValidMaterial(tls, (*ChainDef)(unsafe.Pointer(def)).materials+uintptr(i1)*32)) == false1 {
 			b2Log(tls, __ccgo_ts+1116, vaList(bp+264, __ccgo_ts+22834, uintptr(unsafe.Pointer(&__func__120))))
-			if v1 = !!(b2IsValidMaterial(tls, (*ChainDef)(unsafe.Pointer(def)).Materials+uintptr(i1)*32) != 0); !v1 {
+			if v1 = !!(b2IsValidMaterial(tls, (*ChainDef)(unsafe.Pointer(def)).materials+uintptr(i1)*32) != 0); !v1 {
 				b2InternalAssert(tls, __ccgo_ts+22834, __ccgo_ts+21995, int32FromInt32(517))
 			}
 			_ = v1 || bool(int32FromInt32(0) != 0)
@@ -24994,15 +24994,15 @@ func b2CreateChain(tls *_Stack, bodyId BodyId, def uintptr) (r ChainId) {
 	(*b2ChainShape)(unsafe.Pointer(chainShape)).SegmentCount = segmentCount
 	v16 = chainShape + 16
 	*(*uint16_t)(unsafe.Pointer(v16)) = uint16_t(int32(*(*uint16_t)(unsafe.Pointer(v16))) + int32FromInt32(1))
-	materialCount = (*ChainDef)(unsafe.Pointer(def)).MaterialCount
+	materialCount = (*ChainDef)(unsafe.Pointer(def)).materialCount
 	(*b2Body)(unsafe.Pointer(body)).HeadChainId = chainId
 	*(*ShapeDef)(unsafe.Add(nil, bp)) = b2DefaultShapeDef(tls)
-	(*(*ShapeDef)(unsafe.Add(nil, bp))).UserData = (*ChainDef)(unsafe.Pointer(def)).UserData
+	(*(*ShapeDef)(unsafe.Add(nil, bp))).UserData = uint64(uintptr((*ChainDef)(unsafe.Pointer(def)).UserData))
 	(*(*ShapeDef)(unsafe.Add(nil, bp))).Filter = (*ChainDef)(unsafe.Pointer(def)).Filter
 	(*(*ShapeDef)(unsafe.Add(nil, bp))).EnableSensorEvents = (*ChainDef)(unsafe.Pointer(def)).EnableSensorEvents
 	(*(*ShapeDef)(unsafe.Add(nil, bp))).EnableContactEvents = boolUint8(false1 != 0)
 	(*(*ShapeDef)(unsafe.Add(nil, bp))).EnableHitEvents = boolUint8(false1 != 0)
-	points = (*ChainDef)(unsafe.Pointer(def)).Points
+	points = (*ChainDef)(unsafe.Pointer(def)).points
 	n = segmentCount
 	(*b2ChainShape)(unsafe.Pointer(chainShape)).ShapeIndices = b2Alloc(tls, uint64FromInt32(n)*uint64(4))
 	tolSqr = float32(float32(float32FromFloat32(0.005)*b2_lengthUnitsPerMeter) * float32(float32FromFloat32(0.005)*b2_lengthUnitsPerMeter))
@@ -25054,7 +25054,7 @@ func b2CreateChain(tls *_Stack, bodyId BodyId, def uintptr) (r ChainId) {
 				v2 = i2
 			}
 			materialIndex = v2
-			(*(*ShapeDef)(unsafe.Add(nil, bp))).Material = *(*SurfaceMaterial)(unsafe.Add(nil, (*ChainDef)(unsafe.Pointer(def)).Materials+uintptr(materialIndex)*32))
+			(*(*ShapeDef)(unsafe.Add(nil, bp))).Material = *(*SurfaceMaterial)(unsafe.Add(nil, (*ChainDef)(unsafe.Pointer(def)).materials+uintptr(materialIndex)*32))
 			shape = b2CreateShapeInternal(tls, world, body, transform, bp, bp+88, int32(b2_chainSegmentShape))
 			*(*int32)(unsafe.Add(nil, (*b2ChainShape)(unsafe.Pointer(chainShape)).ShapeIndices+uintptr(i2)*4)) = (*b2Shape)(unsafe.Pointer(shape)).Id
 			goto _17
@@ -25068,7 +25068,7 @@ func b2CreateChain(tls *_Stack, bodyId BodyId, def uintptr) (r ChainId) {
 			if !(i3 < n) {
 				break
 			}
-			if v1 = !!(i3+int32FromInt32(1) < (*ChainDef)(unsafe.Pointer(def)).PointCount); !v1 {
+			if v1 = !!(i3+int32FromInt32(1) < (*ChainDef)(unsafe.Pointer(def)).pointCount); !v1 {
 				b2InternalAssert(tls, __ccgo_ts+23151, __ccgo_ts+21995, int32FromInt32(604))
 			}
 			_ = v1 || bool(int32FromInt32(0) != 0)
@@ -25135,7 +25135,7 @@ func b2CreateChain(tls *_Stack, bodyId BodyId, def uintptr) (r ChainId) {
 				v2 = i3
 			}
 			materialIndex1 = v2
-			(*(*ShapeDef)(unsafe.Add(nil, bp))).Material = *(*SurfaceMaterial)(unsafe.Add(nil, (*ChainDef)(unsafe.Pointer(def)).Materials+uintptr(materialIndex1)*32))
+			(*(*ShapeDef)(unsafe.Add(nil, bp))).Material = *(*SurfaceMaterial)(unsafe.Add(nil, (*ChainDef)(unsafe.Pointer(def)).materials+uintptr(materialIndex1)*32))
 			shape1 = b2CreateShapeInternal(tls, world, body, transform, bp, bp+124, int32(b2_chainSegmentShape))
 			*(*int32)(unsafe.Add(nil, (*b2ChainShape)(unsafe.Pointer(chainShape)).ShapeIndices+uintptr(i3)*4)) = (*b2Shape)(unsafe.Pointer(shape1)).Id
 			goto _29
@@ -27287,7 +27287,7 @@ func b2FinalizeBodiesTask(tls *_Stack, startIndex int32, endIndex int32, workerI
 			World0:     worldId,
 			Generation: (*b2Body)(unsafe.Pointer(body)).Generation,
 		}
-		(*(*BodyMoveEvent)(unsafe.Add(nil, moveEvents+uintptr(simIndex)*40))).UserData = (*b2Body)(unsafe.Pointer(body)).UserData
+		(*(*BodyMoveEvent)(unsafe.Add(nil, moveEvents+uintptr(simIndex)*40))).UserData = uint64((*b2Body)(unsafe.Pointer(body)).UserData)
 		(*(*BodyMoveEvent)(unsafe.Add(nil, moveEvents+uintptr(simIndex)*40))).FellAsleep = boolUint8(false1 != 0)
 		// reset applied force and torque
 		(*b2BodySim)(unsafe.Pointer(sim)).Force = b2Vec2_zero
@@ -28863,8 +28863,8 @@ func b2DefaultChainDef(tls *_Stack) (r ChainDef) {
 	var def ChainDef
 	_ = def
 	def = ChainDef{}
-	def.Materials = uintptr(unsafe.Pointer(&defaultMaterial))
-	def.MaterialCount = int32(1)
+	def.materials = uintptr(unsafe.Pointer(&defaultMaterial))
+	def.materialCount = int32(1)
 	// using infinity as a sentinel
 	def.Ghost1.X = __builtin_inff(tls)
 	def.Ghost1.Y = __builtin_inff(tls)

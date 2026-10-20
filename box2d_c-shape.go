@@ -1012,7 +1012,7 @@ func b2CreateShapeInternal(tls *_Stack, world uintptr, body uintptr, transform W
 	(*b2Shape)(unsafe.Pointer(shape)).Density = (*ShapeDef)(unsafe.Pointer(def)).Density
 	(*b2Shape)(unsafe.Pointer(shape)).Material = (*ShapeDef)(unsafe.Pointer(def)).Material
 	(*b2Shape)(unsafe.Pointer(shape)).Filter = (*ShapeDef)(unsafe.Pointer(def)).Filter
-	(*b2Shape)(unsafe.Pointer(shape)).UserData = (*ShapeDef)(unsafe.Pointer(def)).UserData
+	(*b2Shape)(unsafe.Pointer(shape)).UserData = uintptr((*ShapeDef)(unsafe.Pointer(def)).UserData)
 	(*b2Shape)(unsafe.Pointer(shape)).EnableSensorEvents = (*ShapeDef)(unsafe.Pointer(def)).EnableSensorEvents
 	(*b2Shape)(unsafe.Pointer(shape)).EnableContactEvents = (*ShapeDef)(unsafe.Pointer(def)).EnableContactEvents
 	(*b2Shape)(unsafe.Pointer(shape)).EnableCustomFiltering = (*ShapeDef)(unsafe.Pointer(def)).EnableCustomFiltering

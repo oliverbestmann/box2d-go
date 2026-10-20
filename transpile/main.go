@@ -145,6 +145,7 @@ func main() {
 	hideConsts(root)
 	hideInternals(root.(*dst.File), api)
 	removeDeadCode(root)
+	fixApiFields(root.(*dst.File))
 
 	var decls []dst.Decl
 
@@ -710,6 +711,14 @@ func createWrappers(decls *[]dst.Decl, api API) Visitor {
 							},
 						}
 					}
+				} else if isUintptr(param.Type) {
+					// box2d never reads user data, it is an opaque number in Go
+					if api.PointerTypes[decl.Name.Name][name.Name].CType != "void" || name.Name != "userData" {
+						panic(fmt.Sprintf("%s: parameter %s must not be a uintptr in the Go API", decl.Name.Name, name.Name))
+					}
+
+					paramType = dst.NewIdent("uint64")
+					arg = &dst.CallExpr{Fun: dst.NewIdent("uintptr"), Args: []dst.Expr{arg}}
 				}
 
 				if classType := getClassTypeById(identOf(paramType)); classType != nil {
@@ -730,10 +739,26 @@ func createWrappers(decls *[]dst.Decl, api API) Visitor {
 			}
 		}
 
+		call := &dst.CallExpr{
+			Fun:  decl.Name,
+			Args: args,
+		}
+
+		var result dst.Expr = call
+
 		var returnTypes []*dst.Field
 		if decl.Type.Results != nil {
 			for _, param := range decl.Type.Results.List {
 				ty := renameApiIdent(param, api.ExposedTypes)
+
+				if isUintptr(ty) {
+					if !strings.HasSuffix(decl.Name.Name, "_GetUserData") {
+						panic(fmt.Sprintf("%s: result must not be a uintptr in the Go API", decl.Name.Name))
+					}
+
+					ty = dst.NewIdent("uint64")
+					result = &dst.CallExpr{Fun: dst.NewIdent("uint64"), Args: []dst.Expr{call}}
+				}
 
 				wrapTy := getClassTypeById(identOf(ty))
 				if wrapTy != nil {
@@ -754,15 +779,10 @@ func createWrappers(decls *[]dst.Decl, api API) Visitor {
 			}
 		}
 
-		call := &dst.CallExpr{
-			Fun:  decl.Name,
-			Args: args,
-		}
-
 		if decl.Type.Results != nil && len(decl.Type.Results.List) > 0 {
 			assign := &dst.AssignStmt{
 				Tok: token.ASSIGN,
-				Rhs: []dst.Expr{call},
+				Rhs: []dst.Expr{result},
 			}
 
 			for _, ret := range decl.Type.Results.List {

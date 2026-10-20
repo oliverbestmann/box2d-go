@@ -2478,7 +2478,7 @@ _18:
 					World0:     worldIndex0,
 					Generation: (*b2Joint)(unsafe.Pointer(joint)).Generation,
 				},
-				UserData: (*b2Joint)(unsafe.Pointer(joint)).UserData,
+				UserData: uint64((*b2Joint)(unsafe.Pointer(joint)).UserData),
 			}
 			elementSize = int32(16)
 			if (*b2World)(unsafe.Pointer(world1)).JointEvents.Count >= (*b2World)(unsafe.Pointer(world1)).JointEvents.Capacity {

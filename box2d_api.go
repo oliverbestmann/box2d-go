@@ -124,11 +124,11 @@ func (b Body) ApplyLinearImpulseToCenter(impulse Vec2, wake uint8) {
 func (b Body) ApplyAngularImpulse(impulse float32, wake uint8) {
 	b2Body_ApplyAngularImpulse(theStack, b.Id, impulse, wake)
 }
-func (b Body) GetType() (r BodyType)        { r = b2Body_GetType(theStack, b.Id); return }
-func (b Body) SetType(type1 BodyType)       { b2Body_SetType(theStack, b.Id, type1) }
-func (b Body) SetUserData(userData uintptr) { b2Body_SetUserData(theStack, b.Id, userData) }
-func (b Body) GetUserData() (r uintptr)     { r = b2Body_GetUserData(theStack, b.Id); return }
-func (b Body) GetMass() (r float32)         { r = b2Body_GetMass(theStack, b.Id); return }
+func (b Body) GetType() (r BodyType)       { r = b2Body_GetType(theStack, b.Id); return }
+func (b Body) SetType(type1 BodyType)      { b2Body_SetType(theStack, b.Id, type1) }
+func (b Body) SetUserData(userData uint64) { b2Body_SetUserData(theStack, b.Id, uintptr(userData)) }
+func (b Body) GetUserData() (r uint64)     { r = uint64(b2Body_GetUserData(theStack, b.Id)); return }
+func (b Body) GetMass() (r float32)        { r = b2Body_GetMass(theStack, b.Id); return }
 func (b Body) GetRotationalInertia() (r float32) {
 	r = b2Body_GetRotationalInertia(theStack, b.Id)
 	return
@@ -561,8 +561,8 @@ func (b Joint) GetCollideConnected() (r uint8) {
 	r = b2Joint_GetCollideConnected(theStack, b.Id)
 	return
 }
-func (b Joint) SetUserData(userData uintptr) { b2Joint_SetUserData(theStack, b.Id, userData) }
-func (b Joint) GetUserData() (r uintptr)     { r = b2Joint_GetUserData(theStack, b.Id); return }
+func (b Joint) SetUserData(userData uint64)  { b2Joint_SetUserData(theStack, b.Id, uintptr(userData)) }
+func (b Joint) GetUserData() (r uint64)      { r = uint64(b2Joint_GetUserData(theStack, b.Id)); return }
 func (b Joint) WakeBodies()                  { b2Joint_WakeBodies(theStack, b.Id) }
 func (b Joint) GetConstraintForce() (r Vec2) { r = b2Joint_GetConstraintForce(theStack, b.Id); return }
 func (b Joint) GetConstraintTorque() (r float32) {
@@ -864,8 +864,8 @@ func (b World) GetMaxLinearSpeed() (r float32) { r = b2World_GetMaxLinearSpeed(t
 func (b World) GetProfile() (r Profile)        { r = b2World_GetProfile(theStack, b.Id); return }
 func (b World) GetCounters() (r Counters)      { r = b2World_GetCounters(theStack, b.Id); return }
 func (b World) GetMaxCapacity() (r Capacity)   { r = b2World_GetMaxCapacity(theStack, b.Id); return }
-func (b World) SetUserData(userData uintptr)   { b2World_SetUserData(theStack, b.Id, userData) }
-func (b World) GetUserData() (r uintptr)       { r = b2World_GetUserData(theStack, b.Id); return }
+func (b World) SetUserData(userData uint64)    { b2World_SetUserData(theStack, b.Id, uintptr(userData)) }
+func (b World) GetUserData() (r uint64)        { r = uint64(b2World_GetUserData(theStack, b.Id)); return }
 func (b World) SetWorkerCount(count int32)     { b2World_SetWorkerCount(theStack, b.Id, count) }
 func (b World) GetWorkerCount() (r int32)      { r = b2World_GetWorkerCount(theStack, b.Id); return }
 func (b World) CastRayClosest(origin Pos, translation Vec2, filter QueryFilter) (r RayResult) {
@@ -1127,8 +1127,8 @@ func (b Chain) GetSurfaceMaterial(segmentIndex int32) (r SurfaceMaterial) {
 }
 func (b Shape) GetBody() (r Body)             { r.Id = b2Shape_GetBody(theStack, b.Id); return }
 func (b Shape) GetWorld() (r World)           { r.Id = b2Shape_GetWorld(theStack, b.Id); return }
-func (b Shape) SetUserData(userData uintptr)  { b2Shape_SetUserData(theStack, b.Id, userData) }
-func (b Shape) GetUserData() (r uintptr)      { r = b2Shape_GetUserData(theStack, b.Id); return }
+func (b Shape) SetUserData(userData uint64)   { b2Shape_SetUserData(theStack, b.Id, uintptr(userData)) }
+func (b Shape) GetUserData() (r uint64)       { r = uint64(b2Shape_GetUserData(theStack, b.Id)); return }
 func (b Shape) IsSensor() (r uint8)           { r = b2Shape_IsSensor(theStack, b.Id); return }
 func (b Shape) TestPoint(point Pos) (r uint8) { r = b2Shape_TestPoint(theStack, b.Id, point); return }
 func (b Shape) CastRay(origin Pos, translation Vec2) (r1 WorldCastOutput) {

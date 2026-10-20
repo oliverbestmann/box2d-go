@@ -714,11 +714,11 @@ _161:
 _168:
 	(*b2World)(unsafe.Pointer(world)).ContactDampingRatio = v132
 	(*b2World)(unsafe.Pointer(world)).ContactRecycleDistance = float32(float32FromFloat32(10) * float32(float32FromFloat32(0.005)*b2_lengthUnitsPerMeter))
-	if (*WorldDef)(unsafe.Pointer(def)).FrictionCallback != uintptrFromInt32(0) {
-		(*b2World)(unsafe.Pointer(world)).FrictionCallback = (*WorldDef)(unsafe.Pointer(def)).FrictionCallback
+	if (*WorldDef)(unsafe.Pointer(def)).frictionCallback != uintptrFromInt32(0) {
+		(*b2World)(unsafe.Pointer(world)).FrictionCallback = (*WorldDef)(unsafe.Pointer(def)).frictionCallback
 	}
-	if (*WorldDef)(unsafe.Pointer(def)).RestitutionCallback != uintptrFromInt32(0) {
-		(*b2World)(unsafe.Pointer(world)).RestitutionCallback = (*WorldDef)(unsafe.Pointer(def)).RestitutionCallback
+	if (*WorldDef)(unsafe.Pointer(def)).restitutionCallback != uintptrFromInt32(0) {
+		(*b2World)(unsafe.Pointer(world)).RestitutionCallback = (*WorldDef)(unsafe.Pointer(def)).restitutionCallback
 	}
 	(*b2World)(unsafe.Pointer(world)).EnableSleep = (*WorldDef)(unsafe.Pointer(def)).EnableSleep
 	(*b2World)(unsafe.Pointer(world)).Locked = boolUint8(false1 != 0)
@@ -726,8 +726,8 @@ _168:
 	(*b2World)(unsafe.Pointer(world)).EnableContinuous = (*WorldDef)(unsafe.Pointer(def)).EnableContinuous
 	(*b2World)(unsafe.Pointer(world)).SimdWidth = b2GetSIMDWidth(tls)
 	(*b2World)(unsafe.Pointer(world)).UserTreeTask = uintptrFromInt32(0)
-	(*b2World)(unsafe.Pointer(world)).UserData = (*WorldDef)(unsafe.Pointer(def)).UserData
-	if (*WorldDef)(unsafe.Pointer(def)).WorkerCount > 0 && (*WorldDef)(unsafe.Pointer(def)).EnqueueTask != uintptrFromInt32(0) && (*WorldDef)(unsafe.Pointer(def)).FinishTask != uintptrFromInt32(0) {
+	(*b2World)(unsafe.Pointer(world)).UserData = uintptr((*WorldDef)(unsafe.Pointer(def)).UserData)
+	if (*WorldDef)(unsafe.Pointer(def)).WorkerCount > 0 && (*WorldDef)(unsafe.Pointer(def)).enqueueTask != uintptrFromInt32(0) && (*WorldDef)(unsafe.Pointer(def)).finishTask != uintptrFromInt32(0) {
 		// External task system
 		v13 = (*WorldDef)(unsafe.Pointer(def)).WorkerCount
 		v14 = int32(_B2_MAX_WORKERS)
@@ -740,9 +740,9 @@ _168:
 		goto _174
 	_174:
 		(*b2World)(unsafe.Pointer(world)).WorkerCount = v15
-		(*b2World)(unsafe.Pointer(world)).EnqueueTaskFcn = (*WorldDef)(unsafe.Pointer(def)).EnqueueTask
-		(*b2World)(unsafe.Pointer(world)).FinishTaskFcn = (*WorldDef)(unsafe.Pointer(def)).FinishTask
-		(*b2World)(unsafe.Pointer(world)).UserTaskContext = (*WorldDef)(unsafe.Pointer(def)).UserTaskContext
+		(*b2World)(unsafe.Pointer(world)).EnqueueTaskFcn = (*WorldDef)(unsafe.Pointer(def)).enqueueTask
+		(*b2World)(unsafe.Pointer(world)).FinishTaskFcn = (*WorldDef)(unsafe.Pointer(def)).finishTask
+		(*b2World)(unsafe.Pointer(world)).UserTaskContext = (*WorldDef)(unsafe.Pointer(def)).userTaskContext
 		(*b2World)(unsafe.Pointer(world)).Scheduler = uintptrFromInt32(0)
 	} else {
 		if (*WorldDef)(unsafe.Pointer(def)).WorkerCount > int32(1) {
@@ -4778,9 +4778,9 @@ func b2CreateWorldFromSnapshot(tls *_Stack, image uintptr, size int32, workerCou
 	// Build a minimal valid def so b2CreateWorld produces a fully valid shell
 	*(*WorldDef)(unsafe.Add(nil, bp+24)) = b2DefaultWorldDef(tls)
 	(*(*WorldDef)(unsafe.Add(nil, bp+24))).WorkerCount = workerCount
-	(*(*WorldDef)(unsafe.Add(nil, bp+24))).EnqueueTask = uintptrFromInt32(0)
-	(*(*WorldDef)(unsafe.Add(nil, bp+24))).FinishTask = uintptrFromInt32(0)
-	(*(*WorldDef)(unsafe.Add(nil, bp+24))).UserTaskContext = uintptrFromInt32(0)
+	(*(*WorldDef)(unsafe.Add(nil, bp+24))).enqueueTask = uintptrFromInt32(0)
+	(*(*WorldDef)(unsafe.Add(nil, bp+24))).finishTask = uintptrFromInt32(0)
+	(*(*WorldDef)(unsafe.Add(nil, bp+24))).userTaskContext = uintptrFromInt32(0)
 	// Capacity is only a sizing hint. Every container is resized from the image below
 	id = b2CreateWorld(tls, bp+24)
 	if !(b2World_IsValid(tls, id) != 0) {

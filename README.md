@@ -30,14 +30,14 @@ C functions that take an id as the first argument are methods on a wrapper type.
 To call the methods of a specific joint type, convert the `Joint` first, for example with `AsMotorJoint()` or
 `AsPrismaticJoint()`.
 
-C pointers stay `uintptr` fields in the definitions. Box2D never reads the `UserData` fields, so any value works there.
-For the other pointer fields, use the Go API instead:
+The API has no `uintptr`, so Go memory can't reach Box2D by accident. User data is an opaque `uint64`, for example
+an index into your own slice. The C pointer fields of the definitions are not exported. Use these instead:
 
-- `ChainDef.Points` and `ChainDef.Materials`: pass slices to `Body.CreateChain`.
-- `BodyDef.Name`: call `Body.SetName` after creating the body.
-- `WorldDef.FrictionCallback` and `WorldDef.RestitutionCallback`: call `World.SetFrictionCallback` and
-  `World.SetRestitutionCallback` after creating the world.
-- `WorldDef.EnqueueTask` and `WorldDef.FinishTask`: not supported, the built-in scheduler runs the workers, see below.
+- Chain points and materials: pass slices to `Body.CreateChain`.
+- Body name: call `Body.SetName` after creating the body.
+- Friction and restitution callbacks: call `World.SetFrictionCallback` and `World.SetRestitutionCallback` after
+  creating the world.
+- Custom task system: not supported, the built-in scheduler runs the workers, see below.
 
 ## Example
 
@@ -159,6 +159,9 @@ go test -race -gcflags=all=-d=checkptr=0 ./...
 ```
 
 ### Updating Box2D
+
+- **Public API:** `TestPublicAPIHasNoUintptr` fails if a new C pointer shows up in the Go API. Unexport or
+  retype the field in `apiFields` in `transpile/publicapi.go`, and wrap the function by hand if needed.
 
 - **Callbacks:** Box2D sees Go callbacks only as a `uintptr`, so a changed signature corrupts memory at runtime.
   `transpile/csrc/callbacks.c` repeats every callback signature the Go code implements, and `./transpile.sh`

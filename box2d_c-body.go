@@ -554,13 +554,13 @@ _25:
 	}
 	_ = v1 || bool(int32FromInt32(0) != 0)
 	body = (*b2World)(unsafe.Pointer(world)).Bodies.Data + uintptr(bodyId)*104
-	if (*BodyDef)(unsafe.Pointer(def)).Name != 0 {
-		strncpy(tls, body+90, (*BodyDef)(unsafe.Pointer(def)).Name, uint64(_B2_NAME_LENGTH))
+	if (*BodyDef)(unsafe.Pointer(def)).name != 0 {
+		strncpy(tls, body+90, (*BodyDef)(unsafe.Pointer(def)).name, uint64(_B2_NAME_LENGTH))
 		*(*uint8)(unsafe.Add(nil, body+90+10)) = uint8(0)
 	} else {
 		memset(tls, body+90, 0, uint64(11))
 	}
-	(*b2Body)(unsafe.Pointer(body)).UserData = (*BodyDef)(unsafe.Pointer(def)).UserData
+	(*b2Body)(unsafe.Pointer(body)).UserData = uintptr((*BodyDef)(unsafe.Pointer(def)).UserData)
 	(*b2Body)(unsafe.Pointer(body)).SetIndex = setId
 	(*b2Body)(unsafe.Pointer(body)).LocalIndex = (*b2SolverSet)(unsafe.Pointer(set)).BodySims.Count - int32(1)
 	v19 = body + 88
