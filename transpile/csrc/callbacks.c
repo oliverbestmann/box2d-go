@@ -6,39 +6,43 @@
 
 #include "box2d/box2d.h"
 
-void b2go_TaskCallback( int startIndex, int endIndex, uint32_t workerIndex, void* taskContext ) {}
-void* b2go_EnqueueTaskCallback( b2TaskCallback* task, int itemCount, int minRange, void* taskContext, void* userContext ) { return 0; }
-void b2go_FinishTaskCallback( void* userTask, void* userContext ) {}
-float b2go_FrictionCallback( float frictionA, int userMaterialIdA, float frictionB, int userMaterialIdB ) { return 0; }
-float b2go_RestitutionCallback( float restitutionA, int userMaterialIdA, float restitutionB, int userMaterialIdB ) { return 0; }
-bool b2go_CustomFilterFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, void* context ) { return 0; }
-bool b2go_PreSolveFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Manifold* manifold, void* context ) { return 0; }
-bool b2go_OverlapResultFcn( b2ShapeId shapeId, void* context ) { return 0; }
-float b2go_CastResultFcn( b2ShapeId shapeId, b2Vec2 point, b2Vec2 normal, float fraction, void* context ) { return 0; }
-int b2go_AssertFcn( const char* condition, const char* fileName, int lineNumber ) { return 0; }
+// for b2ThreadFunction, implemented in Go by threads.go
+#include "../../box2d-c/src/core.h"
 
-void b2go_DrawPolygonFcn( const b2Vec2* vertices, int vertexCount, b2HexColor color, void* context ) {}
-void b2go_DrawSolidPolygonFcn( b2Transform transform, const b2Vec2* vertices, int vertexCount, float radius, b2HexColor color, void* context ) {}
-void b2go_DrawCircleFcn( b2Vec2 center, float radius, b2HexColor color, void* context ) {}
-void b2go_DrawSolidCircleFcn( b2Transform transform, float radius, b2HexColor color, void* context ) {}
-void b2go_DrawSolidCapsuleFcn( b2Vec2 p1, b2Vec2 p2, float radius, b2HexColor color, void* context ) {}
-void b2go_DrawSegmentFcn( b2Vec2 p1, b2Vec2 p2, b2HexColor color, void* context ) {}
-void b2go_DrawTransformFcn( b2Transform transform, void* context ) {}
-void b2go_DrawPointFcn( b2Vec2 p, float size, b2HexColor color, void* context ) {}
-void b2go_DrawStringFcn( b2Vec2 p, const char* s, b2HexColor color, void* context ) {}
+void b2go_ThreadFunction( void* context ) {}
+float b2go_FrictionCallbackFcn( float frictionA, uint64_t userMaterialIdA, float frictionB, uint64_t userMaterialIdB ) { return 0; }
+float b2go_RestitutionCallbackFcn( float restitutionA, uint64_t userMaterialIdA, float restitutionB, uint64_t userMaterialIdB ) { return 0; }
+bool b2go_CustomFilterCallbackFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, void* context ) { return 0; }
+void b2go_PreSolveCallbackFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Manifold* manifold, void* context ) {}
+bool b2go_PreContinuousCallbackFcn( b2ShapeId shapeIdA, b2ShapeId shapeIdB, b2Pos point, b2Vec2 normal, void* context ) { return 0; }
+bool b2go_OverlapResultCallbackFcn( b2ShapeId shapeId, void* context ) { return 0; }
+float b2go_CastResultCallbackFcn( b2ShapeId shapeId, b2Pos point, b2Vec2 normal, float fraction, void* context ) { return 0; }
+int b2go_AssertCallbackFcn( const char* condition, const char* fileName, int lineNumber ) { return 0; }
+void b2go_LogCallbackFcn( const char* message ) {}
+
+void b2go_DrawPolygonFcn( b2WorldTransform transform, const b2Vec2* vertices, int vertexCount, b2HexColor color, void* context ) {}
+void b2go_DrawSolidPolygonFcn( b2WorldTransform transform, const b2Vec2* vertices, int vertexCount, float radius, b2HexColor color, void* context ) {}
+void b2go_DrawCircleFcn( b2Pos center, float radius, b2HexColor color, void* context ) {}
+void b2go_DrawSolidCircleFcn( b2WorldTransform transform, b2Vec2 center, float radius, b2HexColor color, void* context ) {}
+void b2go_DrawSolidCapsuleFcn( b2Pos p1, b2Pos p2, float radius, b2HexColor color, void* context ) {}
+void b2go_DrawLineFcn( b2Pos p1, b2Pos p2, b2HexColor color, void* context ) {}
+void b2go_DrawTransformFcn( b2WorldTransform transform, void* context ) {}
+void b2go_DrawPointFcn( b2Pos p, float size, b2HexColor color, void* context ) {}
+void b2go_DrawStringFcn( b2Pos p, const char* s, b2HexColor color, void* context ) {}
+void b2go_DrawBoundsFcn( b2AABB aabb, b2HexColor color, void* context ) {}
 
 void b2go_check( void )
 {
-	b2TaskCallback* task = b2go_TaskCallback;
-	b2EnqueueTaskCallback* enqueueTask = b2go_EnqueueTaskCallback;
-	b2FinishTaskCallback* finishTask = b2go_FinishTaskCallback;
-	b2FrictionCallback* friction = b2go_FrictionCallback;
-	b2RestitutionCallback* restitution = b2go_RestitutionCallback;
-	b2CustomFilterFcn* customFilter = b2go_CustomFilterFcn;
-	b2PreSolveFcn* preSolve = b2go_PreSolveFcn;
-	b2OverlapResultFcn* overlapResult = b2go_OverlapResultFcn;
-	b2CastResultFcn* castResult = b2go_CastResultFcn;
-	b2AssertFcn* assert = b2go_AssertFcn;
+	b2ThreadFunction* thread = b2go_ThreadFunction;
+	b2FrictionCallbackFcn* friction = b2go_FrictionCallbackFcn;
+	b2RestitutionCallbackFcn* restitution = b2go_RestitutionCallbackFcn;
+	b2CustomFilterCallbackFcn* customFilter = b2go_CustomFilterCallbackFcn;
+	b2PreSolveCallbackFcn* preSolve = b2go_PreSolveCallbackFcn;
+	b2PreContinuousCallbackFcn* preContinuous = b2go_PreContinuousCallbackFcn;
+	b2OverlapResultCallbackFcn* overlapResult = b2go_OverlapResultCallbackFcn;
+	b2CastResultCallbackFcn* castResult = b2go_CastResultCallbackFcn;
+	b2AssertCallbackFcn* assert = b2go_AssertCallbackFcn;
+	b2LogCallbackFcn* log = b2go_LogCallbackFcn;
 
 	b2DebugDraw draw = {
 		.DrawPolygonFcn = b2go_DrawPolygonFcn,
@@ -46,9 +50,10 @@ void b2go_check( void )
 		.DrawCircleFcn = b2go_DrawCircleFcn,
 		.DrawSolidCircleFcn = b2go_DrawSolidCircleFcn,
 		.DrawSolidCapsuleFcn = b2go_DrawSolidCapsuleFcn,
-		.DrawSegmentFcn = b2go_DrawSegmentFcn,
+		.DrawLineFcn = b2go_DrawLineFcn,
 		.DrawTransformFcn = b2go_DrawTransformFcn,
 		.DrawPointFcn = b2go_DrawPointFcn,
 		.DrawStringFcn = b2go_DrawStringFcn,
+		.DrawBoundsFcn = b2go_DrawBoundsFcn,
 	};
 }

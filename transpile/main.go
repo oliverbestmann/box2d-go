@@ -36,6 +36,21 @@ var PREDEF_ALLOC = `
 extern void* __builtin_aligned_alloc(size_t align, size_t size);
 `
 
+// box2d's threading primitives are implemented in Go, see threads.go.
+// ccgo only leaves calls to undefined functions unresolved for __builtin_ names.
+var PREDEF_THREADS = `
+#define b2CreateMutex __builtin_b2CreateMutex
+#define b2DestroyMutex __builtin_b2DestroyMutex
+#define b2LockMutex __builtin_b2LockMutex
+#define b2UnlockMutex __builtin_b2UnlockMutex
+#define b2CreateSemaphore __builtin_b2CreateSemaphore
+#define b2DestroySemaphore __builtin_b2DestroySemaphore
+#define b2WaitSemaphore __builtin_b2WaitSemaphore
+#define b2SignalSemaphore __builtin_b2SignalSemaphore
+#define b2CreateThread __builtin_b2CreateThread
+#define b2JoinThread __builtin_b2JoinThread
+`
+
 const PKGNAME = "b2"
 
 func main() {
@@ -63,6 +78,7 @@ func main() {
 		// "-D", "NDEBUG",
 		"--predef", PREDEF_ATOMIC,
 		"--predef", PREDEF_ALLOC,
+		"--predef", PREDEF_THREADS,
 		"--prefix-field", PrefixField,
 		"-o", "../box2d_c.go",
 		"-I", "../box2d-c/include/",
@@ -120,7 +136,7 @@ func main() {
 	root = dstutil.Apply(root, nil, useApiTypes(api.ExposedTypes))
 	root = dstutil.Apply(root, nil, forwardDefaultAssertFcnToGo())
 	dst.Inspect(root, renameApiTypes(api.ExposedTypes))
-	dst.Inspect(root, removeTypeAliases())
+	dst.Inspect(root, removeTypeAliases(readTypedefAliases(api)))
 	hideConsts(root)
 	removeDeadCode(root)
 
@@ -393,10 +409,48 @@ func renameApiTypes(api map[string]bool) Visitor {
 	}
 }
 
-func removeTypeAliases() Visitor {
+// readTypedefAliases finds typedefs of other box2d types, like typedef b2Vec2 b2Pos.
+// ccgo emits them as separate struct types, but they must stay assignable to each other.
+func readTypedefAliases(api API) map[string]string {
+	files, err := filepath.Glob("../box2d-c/src/*.h")
+	must(err)
+
+	headers, err := filepath.Glob("../box2d-c/include/box2d/*.h")
+	must(err)
+
+	goName := func(name string) string {
+		if api.ExposedTypes[name] {
+			return name[2:]
+		}
+
+		return name
+	}
+
+	reTypedef := regexp.MustCompile(`(?m)^typedef (b2[A-Za-z0-9_]+) (b2[A-Za-z0-9_]+);`)
+
+	aliases := map[string]string{}
+	for _, file := range append(files, headers...) {
+		src, err := os.ReadFile(file)
+		must(err)
+
+		for _, match := range reTypedef.FindAllStringSubmatch(string(src), -1) {
+			aliases[goName(match[2])] = goName(match[1])
+		}
+	}
+
+	return aliases
+}
+
+func removeTypeAliases(aliases map[string]string) Visitor {
 	return func(node dst.Node) bool {
 		switch node := node.(type) {
 		case *dst.TypeSpec:
+			if target, ok := aliases[node.Name.Name]; ok {
+				node.Type = dst.NewIdent(target)
+				node.Assign = true
+				return true
+			}
+
 			_, ok := node.Type.(*dst.StructType)
 			if ok {
 				node.Assign = false
@@ -927,8 +981,6 @@ func readAPI() API {
 		src, err := os.ReadFile(header)
 		must(err)
 
-		lines := strings.Split(string(src), "\n")
-
 		for _, match := range reType.FindAllStringSubmatch(string(src), -1) {
 			api.ExposedTypes[match[1]] = true
 			api.Exposed[match[1]] = true
@@ -942,15 +994,14 @@ func readAPI() API {
 			api.Exposed[match[1]] = true
 		}
 
-		for _, line := range lines {
-			match := reFunc.FindStringSubmatch(line)
-			if len(match) == 0 {
-				continue
-			}
+		// a declaration may span multiple lines, up to the semicolon
+		for _, loc := range reFunc.FindAllStringSubmatchIndex(string(src), -1) {
+			fn := string(src[loc[2]:loc[3]])
 
-			fn := match[1]
+			decl := string(src[loc[0]:])
+			decl = decl[:strings.IndexByte(decl, ';')]
 
-			for _, match := range rePointerTypes.FindAllStringSubmatch(line, -1) {
+			for _, match := range rePointerTypes.FindAllStringSubmatch(decl, -1) {
 				co, ty, param := match[1], match[2], match[3]
 				api.addPointerType(fn, param, ParamType{
 					CType: ty,
@@ -960,9 +1011,10 @@ func readAPI() API {
 		}
 	}
 
-	api.Exposed["b2InternalAssertFcn"] = false
+	api.Exposed["b2InternalAssert"] = false
 
-	api.Exposed["b2SetAssertFcn"] = false
+	api.Exposed["b2SetAssertCallback"] = false
+	api.Exposed["b2SetLogCallback"] = false
 	api.Exposed["b2SetAllocator"] = false
 
 	api.Exposed["b2Body_SetName"] = false
@@ -971,11 +1023,11 @@ func readAPI() API {
 	api.Exposed["b2Body_GetJoints"] = false
 	api.Exposed["b2Body_GetShapes"] = false
 	api.Exposed["b2Chain_GetSegments"] = false
-	api.Exposed["b2Shape_GetSensorOverlaps"] = false
+	api.Exposed["b2Shape_GetSensorData"] = false
 	api.Exposed["b2Body_GetContactData"] = false
 	api.Exposed["b2Shape_GetContactData"] = false
 	api.Exposed["b2SolvePlanes"] = false
-	api.Exposed["b2ShapeDistance"] = false
+	api.Exposed["b2ComputeShapeDistance"] = false
 
 	api.Exposed["b2World_CollideMover"] = false
 	api.Exposed["b2World_SetRestitutionCallback"] = false
@@ -990,6 +1042,7 @@ func readAPI() API {
 
 	api.ExposedTypes["b2DebugDraw"] = false
 	api.Exposed["b2World_Draw"] = false
+	api.Exposed["b2DefaultDebugDraw"] = false
 
 	api.ExposedTypes["b2BodyEvents"] = false
 	api.Exposed["b2World_GetBodyEvents"] = false
@@ -1000,7 +1053,12 @@ func readAPI() API {
 	api.ExposedTypes["b2ContactEvents"] = false
 	api.Exposed["b2World_GetContactEvents"] = false
 
+	api.ExposedTypes["b2JointEvents"] = false
+	api.Exposed["b2World_GetJointEvents"] = false
+
 	api.Exposed["b2Joint_GetConstraintTuning"] = false
+	api.Exposed["b2DistanceJoint_GetSpringForceRange"] = false
+	api.Exposed["b2World_GetContactTuning"] = false
 
 	// we do not really need those, do we?
 	api.Exposed["b2GetMillisecondsAndReset"] = false
@@ -1012,9 +1070,12 @@ func readAPI() API {
 	api.Exposed["b2MakeOffsetProxy"] = false
 	api.Exposed["b2ClipVector"] = false
 
+	// recording, replay and snapshots are experimental and work on raw memory and files
+	reExcluded := regexp.MustCompile(`DynamicTree|TreeProxy|Recording|Replay|replay|Snapshot`)
 	for key := range api.Exposed {
-		if strings.Contains(key, "DynamicTree") {
+		if reExcluded.MatchString(key) {
 			api.Exposed[key] = false
+			api.ExposedTypes[key] = false
 		}
 	}
 
@@ -1027,7 +1088,7 @@ func must(err error) {
 	}
 }
 
-var reSimpleType = regexp.MustCompile("u?int(?:8|16|32|64)_t")
+var reSimpleType = regexp.MustCompile("^u?int(?:8|16|32|64)_t$")
 
 func renameSimpleType(name string) (string, bool) {
 	if reSimpleType.MatchString(name) {
@@ -1110,6 +1171,11 @@ var classTypes = []ClassTypes{
 		FnPrefix: "b2Chain_",
 	},
 	{
+		Name:     "Contact",
+		IdType:   "ContactId",
+		FnPrefix: "b2Contact_",
+	},
+	{
 		Name:     "PrismaticJoint",
 		Extends:  "Joint",
 		IdType:   "JointId",
@@ -1146,10 +1212,16 @@ var classTypes = []ClassTypes{
 		FnPrefix: "b2WeldJoint_",
 	},
 	{
-		Name:     "MouseJoint",
+		Name:     "MoverJoint",
 		Extends:  "Joint",
 		IdType:   "JointId",
-		FnPrefix: "b2MouseJoint_",
+		FnPrefix: "b2MoverJoint_",
+	},
+	{
+		Name:     "PogoJoint",
+		Extends:  "Joint",
+		IdType:   "JointId",
+		FnPrefix: "b2PogoJoint_",
 	},
 	{
 		Name:     "FilterJoint",
