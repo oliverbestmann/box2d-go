@@ -9,11 +9,13 @@ import (
 	b2 "github.com/oliverbestmann/box2d-go/v3"
 )
 
-func b2New(gravity float64) Physics {
+func b2New(gravity float64, concurrent bool) Physics {
 	def := b2.DefaultWorldDef()
 	def.Gravity = b2.Vec2{Y: float32(gravity)}
 
-	b2.EnableConcurrency(&def)
+	if concurrent {
+		b2.EnableConcurrency(&def)
+	}
 
 	return &Box2D{
 		World: b2.CreateWorld(def),
@@ -26,6 +28,10 @@ type Box2D struct {
 
 func (ph Box2D) Step(dt float64, subSteps int) {
 	ph.World.Step(float32(dt), int32(subSteps))
+}
+
+func (ph Box2D) Destroy() {
+	ph.World.DestroyWorld()
 }
 
 func (ph Box2D) Draw(screen *ebiten.Image, toScreen ebiten.GeoM) {

@@ -8,7 +8,8 @@ import (
 	"github.com/jakecoffman/cp/v2"
 )
 
-func cpNew(gravity float64) Physics {
+// cpNew ignores concurrent, chipmunk is single threaded.
+func cpNew(gravity float64, _ bool) Physics {
 	space := cp.NewSpace()
 	space.SetGravity(cp.Vector{Y: gravity})
 	return Chipmunk{Space: space}
@@ -22,6 +23,8 @@ func (ph Chipmunk) Step(dt float64, subSteps int) {
 	ph.Space.Iterations = uint(subSteps)
 	ph.Space.Step(dt)
 }
+
+func (ph Chipmunk) Destroy() {}
 
 func (ph Chipmunk) Draw(screen *ebiten.Image, toScreen ebiten.GeoM) {
 	cp.DrawSpace(ph.Space, drawer{screen, toScreen})
