@@ -177,6 +177,24 @@ func (b World) DestroyWorld() {
 	})
 }
 
+// CreateChain creates a chain shape through points. materials holds one material for all
+// segments or one per segment, nil keeps the materials of def. def.Points and def.PointCount
+// are ignored. box2d copies both slices.
+func (b Body) CreateChain(def ChainDef, points []Vec2, materials []SurfaceMaterial) Chain {
+	def.Points, def.PointCount = sliceAddr(points), int32(len(points))
+	if len(materials) > 0 {
+		def.Materials, def.MaterialCount = sliceAddr(materials), int32(len(materials))
+	}
+
+	defer runtime.KeepAlive(points)
+	defer runtime.KeepAlive(materials)
+
+	defStack := copyToStack(theStack, def)
+	defer defStack.Free()
+
+	return Chain{Id: b2CreateChain(theStack, b.Id, defStack.Addr)}
+}
+
 // SetRestitutionCallback sets the worlds RestitutionCallback. Use nil to restore the default.
 // The callback may be called from multiple goroutines when concurrency is enabled.
 func (b World) SetRestitutionCallback(callback RestitutionCallback) {

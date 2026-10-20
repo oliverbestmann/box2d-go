@@ -1108,15 +1108,9 @@ func (b Body) CreateChainSegmentShape(def ShapeDef, chainSegment ChainSegment) (
 	return
 }
 func (b Shape) DestroyShape(updateBodyMass uint8) { b2DestroyShape(theStack, b.Id, updateBodyMass) }
-func (b Body) CreateChain(def ChainDef) (r Chain) {
-	defStack := copyToStack(theStack, def)
-	defer defStack.Free()
-	r.Id = b2CreateChain(theStack, b.Id, defStack.Addr)
-	return
-}
-func (b Chain) DestroyChain()              { b2DestroyChain(theStack, b.Id) }
-func (b Chain) GetWorld() (r World)        { r.Id = b2Chain_GetWorld(theStack, b.Id); return }
-func (b Chain) GetSegmentCount() (r int32) { r = b2Chain_GetSegmentCount(theStack, b.Id); return }
+func (b Chain) DestroyChain()                     { b2DestroyChain(theStack, b.Id) }
+func (b Chain) GetWorld() (r World)               { r.Id = b2Chain_GetWorld(theStack, b.Id); return }
+func (b Chain) GetSegmentCount() (r int32)        { r = b2Chain_GetSegmentCount(theStack, b.Id); return }
 func (b Chain) SetSurfaceMaterial(material SurfaceMaterial, segmentIndex int32) {
 	materialStack := copyToStack(theStack, material)
 	defer materialStack.Free()

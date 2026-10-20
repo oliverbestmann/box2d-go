@@ -1057,6 +1057,7 @@ func readAPI() API {
 
 	// these take a pointer to an array, wrapped by hand to accept a slice
 	api.Exposed["b2ComputeHull"] = false
+	api.Exposed["b2CreateChain"] = false
 	api.Exposed["b2MakeProxy"] = false
 	api.Exposed["b2MakeOffsetProxy"] = false
 	api.Exposed["b2ClipVector"] = false

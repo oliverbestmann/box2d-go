@@ -129,16 +129,19 @@ func TestChain_GetSegments(t *testing.T) {
 
 	points := []Vec2{{X: -2, Y: 0}, {X: -1, Y: 0}, {X: 0, Y: 0}, {X: 1, Y: 0}, {X: 2, Y: 0}}
 	material := DefaultSurfaceMaterial()
+	material.Friction = 0.25
 
 	chainDef := DefaultChainDef()
-	chainDef.Points = uintptr(unsafe.Pointer(&points[0]))
-	chainDef.PointCount = int32(len(points))
 	chainDef.Ghost1 = Vec2{X: -3}
 	chainDef.Ghost2 = Vec2{X: 3}
-	chainDef.Materials = uintptr(unsafe.Pointer(&material))
-	chainDef.MaterialCount = 1
 
-	chain := world.CreateBody(DefaultBodyDef()).CreateChain(chainDef)
+	chain := world.CreateBody(DefaultBodyDef()).CreateChain(chainDef, points, []SurfaceMaterial{material})
+	require.True(t, chain.IsValid() != 0)
+	assert.Equal(t, float32(0.25), chain.GetSurfaceMaterial(0).Friction)
+
+	// nil keeps the default material of the def
+	defaultChain := world.CreateBody(DefaultBodyDef()).CreateChain(chainDef, points, nil)
+	assert.Equal(t, float32(0.6), defaultChain.GetSurfaceMaterial(0).Friction)
 
 	// every segment of an open chain collides, the ghost vertices are extra
 	segments := chain.GetSegments(nil)

@@ -29,6 +29,15 @@ C functions that take an id as the first argument are methods on a wrapper type.
 To call the methods of a specific joint type, convert the `Joint` first, for example with `AsMotorJoint()` or
 `AsPrismaticJoint()`.
 
+C pointers stay `uintptr` fields in the definitions. Box2D never reads the `UserData` fields, so any value works there.
+For the other pointer fields, use the Go API instead:
+
+- `ChainDef.Points` and `ChainDef.Materials`: pass slices to `Body.CreateChain`.
+- `BodyDef.Name`: call `Body.SetName` after creating the body.
+- `WorldDef.FrictionCallback` and `WorldDef.RestitutionCallback`: call `World.SetFrictionCallback` and
+  `World.SetRestitutionCallback` after creating the world.
+- `WorldDef.EnqueueTask` and `WorldDef.FinishTask`: not supported, the built-in scheduler runs the workers, see below.
+
 ## Example
 
 This is the hello world example from the [Box2D documentation](https://box2d.org/documentation/hello.html), with the
